@@ -1,14 +1,21 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": ["**/.env.*local"],
+  "globalDependencies": [
+    "**/.env.*local"
+  ],
   "pipeline": {
     "build": {
-      "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**, dist/**"]
-    },
-    "main#build": {
-      "dependsOn": ["^build", "$AUTH_URL", "$ADMIN_URL"],
-      "outputs": [".next/**", "!.next/cache/**"]
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "dist/**",
+        ".next/**",
+        "!.next/cache/**",
+        "build/**",
+        "api/**",
+        "public/build/**"
+      ]
     },
     "clean": {
       "cache": false,
@@ -21,7 +28,9 @@
       "outputs": []
     },
     "dev": {
-      "cache": false
+      "dependsOn": ["^build"],
+      "cache": false,
+      "persistent": true
     },
     "format:check": {
       "outputs": []
@@ -30,20 +39,30 @@
       "outputs": []
     },
     "generate": {
-      "dependsOn": ["^generate"],
+      "dependsOn": [
+        "^generate"
+      ],
       "outputs": []
     },
     "lint": {
-      "dependsOn": ["format:check"],
+      "dependsOn": [
+        "format:check"
+      ],
       "outputs": []
     },
     "lint:fix": {
-      "dependsOn": ["format:write"],
+      "dependsOn": [
+        "format:write"
+      ],
       "outputs": []
     },
     "lint:report": {
-      "dependsOn": ["format:check"],
-      "outputs": ["lint-results/**"]
+      "dependsOn": [
+        "format:check"
+      ],
+      "outputs": [
+        "lint-results/**"
+      ]
     },
     "preview": {
       "outputs": []
@@ -52,11 +71,17 @@
       "outputs": []
     },
     "supabase#lint": {
-      "dependsOn": ["supabase#start", "format:check"],
+      "dependsOn": [
+        "supabase#start",
+        "format:check"
+      ],
       "outputs": []
     },
     "supabase#lint:report": {
-      "dependsOn": ["supabase#start", "format:check"],
+      "dependsOn": [
+        "supabase#start",
+        "format:check"
+      ],
       "outputs": []
     },
     "supabase#start": {
@@ -64,25 +89,32 @@
       "outputs": []
     },
     "supabase#test": {
-      "dependsOn": ["supabase#start", "^build"],
+      "dependsOn": [
+        "supabase#start",
+        "^build"
+      ],
       "outputs": []
     },
     "test": {
-      "dependsOn": ["^build"],
-      "outputs": ["coverage/**"]
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "coverage/**"
+      ]
     },
     "typecheck": {
-      "dependsOn": ["^build"],
+      "dependsOn": [
+        "^build"
+      ],
       "outputs": []
     },
     "types#generate": {
-      "dependsOn": ["supabase#start", "^generate"],
+      "dependsOn": [
+        "supabase#start",
+        "^generate"
+      ],
       "outputs": []
     }
-  },
-  "globalEnv": [
-    "SUPABASE_URL",
-    "SUPABASE_ANON_KEY",
-    "SUPABASE_SERVICE_KEY"
-  ]
+  }
 }

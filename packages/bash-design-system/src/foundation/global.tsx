@@ -1,7 +1,7 @@
 import { globalCss } from '@stitches/react'
 
 import { fontSizes, sizes } from './constants'
-import { fluidType } from './utils'
+import { fluidType } from '../utils'
 
 export const globalStyles = globalCss({
   [`*,

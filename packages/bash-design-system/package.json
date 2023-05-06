@@ -1,5 +1,5 @@
 {
-  "name": "pages",
+  "name": "@bash/design-system",
   "version": "0.0.1",
   "license": "MIT",
   "scripts": {
@@ -22,14 +22,6 @@
   "files": [
     "dist"
   ],
-  "typesVersions": {
-    "*": {
-      "*": [
-        "src/*",
-        "src/*/index"
-      ]
-    }
-  },
   "publishConfig": {
     "typesVersions": {
       "*": {
@@ -42,22 +34,23 @@
   },
   "peerDependencies": {
     "next": "*",
-    "react": "^17.0.0 || ^18.0.0-0",
-    "react-dom": "^17.0.0 || ^18.0.0-0"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "dependencies": {
-    "ui": "workspace:*",
-    "@swc/helpers": "latest"
+    "@swc/helpers": "^0.5.1"
   },
   "devDependencies": {
     "@swc/cli": "latest",
     "@swc/core": "latest",
-    "@types/react": "^18.0.37",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
     "chokidar": "latest",
     "eslint": "^7.32.0",
     "eslint-config-custom": "workspace:*",
+    "react": "^18.2.0",
     "tsconfig": "workspace:*",
-    "typescript": "^4.5.2",
-    "@stitches/react": "^1.2.8"
+    "tsup": "^6.7.0",
+    "typescript": "^5.0.4"
   }
 }

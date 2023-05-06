@@ -3,11 +3,7 @@
   "scripts": {
     "turbo": "dotenv -- turbo",
     "build": "turbo run build",
-    "build:main": "turbo run build --filter=main...",
-    "build:admin": "turbo run build --filter=admin...",
-    "build:auth": "turbo run build --filter=auth...",
-    "build:packages": "turbo run build --filter=./packages/*",
-    "dev": "dotenv -- turbo run dev --parallel",
+    "dev": "turbo run dev --no-cache  --continue",
     "lint": "turbo run lint",
     "lint:report": "turbo run lint:report",
     "lint:fix": "turbo run lint:fix",
@@ -18,9 +14,7 @@
     "clean": "turbo run clean && rm -rf node_modules",
     "test": "turbo run test",
     "test:watch": "turbo run test:watch",
-    "format": "prettier --write .",
-    "format:write": "turbo run format:write",
-    "format:check": "turbo run format:check",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "generate": "turbo run generate"
   },
   "devDependencies": {

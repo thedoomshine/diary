@@ -3,7 +3,6 @@
   "module": {
     "type": "es6"
   },
-  "exclude": ".*\\.stories\\..*$",
   "jsc": {
     "target": "es2016",
     "loose": true,

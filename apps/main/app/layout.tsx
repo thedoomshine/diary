@@ -1,6 +1,5 @@
 import React from 'react'
-import { globalStyles } from 'ui'
-import { ServerStylesheet } from './registry'
+import { getCssText, globalStyles } from '@bash/design-system'
 
 export const metadata = {
   title: 'Bash',
@@ -11,11 +10,15 @@ export default function RootLayout({
 }: {
   children: React.ReactNode,
   }) {
-  globalStyles()
+
   return (
     <html lang="en">
+      <head>
+        <style id='stitches' dangerouslySetInnerHTML={{ __html: getCssText() }} />
+      </head>
       <body>
-        <ServerStylesheet>{children}</ServerStylesheet>
+        {children}
+        {globalStyles()}
       </body>
     </html>
   );
