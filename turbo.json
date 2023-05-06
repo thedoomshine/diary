@@ -4,12 +4,85 @@
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],
+      "outputs": [".next/**", "!.next/cache/**, dist/**"]
+    },
+    "main#build": {
+      "dependsOn": ["^build", "$AUTH_URL", "$ADMIN_URL"],
       "outputs": [".next/**", "!.next/cache/**"]
     },
-    "lint": {},
-    "dev": {
+    "clean": {
       "cache": false,
-      "persistent": true
+      "outputs": []
+    },
+    "cleanup-preview": {
+      "outputs": []
+    },
+    "deploy": {
+      "outputs": []
+    },
+    "dev": {
+      "cache": false
+    },
+    "format:check": {
+      "outputs": []
+    },
+    "format:write": {
+      "outputs": []
+    },
+    "generate": {
+      "dependsOn": ["^generate"],
+      "outputs": []
+    },
+    "lint": {
+      "dependsOn": ["format:check"],
+      "outputs": []
+    },
+    "lint:fix": {
+      "dependsOn": ["format:write"],
+      "outputs": []
+    },
+    "lint:report": {
+      "dependsOn": ["format:check"],
+      "outputs": ["lint-results/**"]
+    },
+    "preview": {
+      "outputs": []
+    },
+    "start": {
+      "outputs": []
+    },
+    "supabase#lint": {
+      "dependsOn": ["supabase#start", "format:check"],
+      "outputs": []
+    },
+    "supabase#lint:report": {
+      "dependsOn": ["supabase#start", "format:check"],
+      "outputs": []
+    },
+    "supabase#start": {
+      "cache": false,
+      "outputs": []
+    },
+    "supabase#test": {
+      "dependsOn": ["supabase#start", "^build"],
+      "outputs": []
+    },
+    "test": {
+      "dependsOn": ["^build"],
+      "outputs": ["coverage/**"]
+    },
+    "typecheck": {
+      "dependsOn": ["^build"],
+      "outputs": []
+    },
+    "types#generate": {
+      "dependsOn": ["supabase#start", "^generate"],
+      "outputs": []
     }
-  }
+  },
+  "globalEnv": [
+    "SUPABASE_URL",
+    "SUPABASE_ANON_KEY",
+    "SUPABASE_SERVICE_KEY"
+  ]
 }

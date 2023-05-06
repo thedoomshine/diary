@@ -1,17 +1,42 @@
 {
   "private": true,
   "scripts": {
+    "turbo": "dotenv -- turbo",
     "build": "turbo run build",
-    "dev": "turbo run dev",
+    "build:main": "turbo run build --filter=main...",
+    "build:admin": "turbo run build --filter=admin...",
+    "build:auth": "turbo run build --filter=auth...",
+    "build:packages": "turbo run build --filter=./packages/*",
+    "dev": "dotenv -- turbo run dev --parallel",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "lint:report": "turbo run lint:report",
+    "lint:fix": "turbo run lint:fix",
+    "typecheck": "turbo run typecheck",
+    "preview": "turbo run preview",
+    "cleanup-preview": "turbo run cleanup-preview",
+    "deploy": "turbo run deploy",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "test": "turbo run test",
+    "test:watch": "turbo run test:watch",
+    "format": "prettier --write .",
+    "format:write": "turbo run format:write",
+    "format:check": "turbo run format:check",
+    "generate": "turbo run generate"
   },
   "devDependencies": {
+    "dotenv-cli": "latest",
     "eslint": "^7.32.0",
     "eslint-config-custom": "workspace:*",
-    "prettier": "^2.5.1",
+    "prettier": "latest",
     "turbo": "latest"
   },
   "packageManager": "pnpm@7.15.0",
-  "name": "bash"
+  "name": "bash",
+  "dependencies": {
+    "@types/react": "^18.2.5",
+    "@types/react-dom": "^18.2.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^5.0.4"
+  }
 }
