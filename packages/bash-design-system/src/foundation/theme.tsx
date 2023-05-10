@@ -1,29 +1,19 @@
-import { createStitches, createTheme } from '@stitches/react'
-
 import {
-  colors,
-  fontSizes,
-  fontWeights,
-  fonts,
+  color,
+  fontSize,
+  fontWeight,
+  font,
   media,
-  sizes,
+  size,
   space,
 } from './constants'
 
-export const { styled, css, getCssText } = createStitches({
-  theme: {
-    colors,
-    space,
-    fontSizes,
-    fonts,
-    fontWeights,
-    media,
-    sizes,
-  },
-})
-
-export const dark = createTheme({
-  colors: {
-    primary: 'white',
-  },
-})
+export const theme = {
+  color,
+  fontSize,
+  fontWeight,
+  font,
+  media,
+  size,
+  space,
+}

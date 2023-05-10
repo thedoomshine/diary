@@ -4,15 +4,15 @@
  * For more information, see https://remix.run/file-conventions/entry.server
  */
 
-import { PassThrough, Transform } from 'node:stream'
-
-import { getCssText } from '@bash/design-system'
+import { PassThrough } from 'node:stream'
 
 import type { EntryContext } from '@remix-run/node'
 import { Response } from '@remix-run/node'
 import { RemixServer } from '@remix-run/react'
 import isbot from 'isbot'
 import { renderToPipeableStream } from 'react-dom/server'
+
+import { ServerStyleSheet } from 'styled-components'
 
 const ABORT_DELAY = 5_000
 
@@ -44,23 +44,31 @@ function handleBotRequest(
   remixContext: EntryContext
 ) {
   return new Promise((resolve, reject) => {
+    const sheet = new ServerStyleSheet()
+
     const { pipe, abort } = renderToPipeableStream(
-      <RemixServer
-        context={remixContext}
-        url={request.url}
-        abortDelay={ABORT_DELAY}
-      />,
+      sheet.collectStyles(
+        <RemixServer
+          context={remixContext}
+          url={request.url}
+          abortDelay={ABORT_DELAY}
+        />),
       {
         onAllReady() {
-          // const body = new PassThrough()
-          const body = new Transform({
-            transform (chunk, _, callback)  {
-              this.push(chunk.toString().replace(/<\/head>/, `<style id="stitches">${getCssText()}</style></head>`))
-              callback(null, chunk)
+          responseHeaders.set('Content-Type', 'text/html')
+          const body = new PassThrough({
+            transform: (chunk, _, callback) => {
+              const stringChunk = (chunk as Buffer).toString();
+              callback(
+                undefined,
+                Buffer.from(
+                  stringChunk.replace('__STYLES__', sheet.getStyleTags())
+                )
+              )
             }
           })
 
-          responseHeaders.set('Content-Type', 'text/html')
+          pipe(body)
 
           resolve(
             new Response(body, {
@@ -68,8 +76,6 @@ function handleBotRequest(
               status: responseStatusCode,
             })
           )
-
-          pipe(body)
         },
         onShellError(error: unknown) {
           reject(error)
@@ -92,23 +98,31 @@ function handleBrowserRequest(
   remixContext: EntryContext
 ) {
   return new Promise((resolve, reject) => {
+    const sheet = new ServerStyleSheet()
+
     const { pipe, abort } = renderToPipeableStream(
-      <RemixServer
-        context={remixContext}
-        url={request.url}
-        abortDelay={ABORT_DELAY}
-      />,
+      sheet.collectStyles(
+        <RemixServer
+          context={remixContext}
+          url={request.url}
+          abortDelay={ABORT_DELAY}
+        />),
       {
         onShellReady() {
-          // const body = new PassThrough()
-          const body = new Transform({
-            transform (chunk, _, callback)  {
-              this.push(chunk.toString().replace(/<\/head>/, `<style id="stitches">${getCssText()}</style></head>`))
-              callback(null, chunk)
+          responseHeaders.set('Content-Type', 'text/html')
+          const body = new PassThrough({
+            transform: (chunk, _, callback) => {
+              const stringChunk = (chunk as Buffer).toString();
+              callback(
+                undefined,
+                Buffer.from(
+                  stringChunk.replace('__STYLES__', sheet.getStyleTags())
+                )
+              )
             }
           })
 
-          responseHeaders.set('Content-Type', 'text/html')
+          pipe(body)
 
           resolve(
             new Response(body, {
@@ -116,8 +130,6 @@ function handleBrowserRequest(
               status: responseStatusCode,
             })
           )
-
-          pipe(body)
         },
         onShellError(error: unknown) {
           reject(error)

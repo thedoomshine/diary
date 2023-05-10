@@ -19,17 +19,25 @@
     "lint": "TIMING=1 eslint \"**/*.{ts,tsx,js,jsx}\" --fix",
     "types": "tsc"
   },
+  "dependencies": {
+    "styled-components": "^6.0.0-rc.1"
+  },
   "peerDependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.21.5",
+    "@babel/preset-react": "^7.18.6",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
+    "autoprefixer": "^10.4.14",
+    "babel-plugin-styled-components": "^2.1.1",
     "eslint": "^7.32.0",
     "eslint-config-bash": "workspace:*",
     "prettier": "^2.8.8",
     "prettier-config-bash": "workspace:*",
+    "the-new-css-reset": "^1.8.4",
     "react": "^18.2.0",
     "tsconfig": "workspace:*",
     "tsup": "^6.7.0",

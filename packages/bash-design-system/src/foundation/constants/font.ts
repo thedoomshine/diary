@@ -4,26 +4,26 @@ const fallbacks = {
   [`system-serif`]: `Iowan Old Style, Apple Garamond, Baskerville, Times New Roman, Droid Serif, Times, Source Serif Pro, serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol`,
 }
 
-export const fonts = {
+export const font = {
   mono: `'IBM Plex Mono', ${fallbacks['system-mono']}`,
   sans: `${fallbacks['system-sans']}`,
   serif: `'Playfair Display', ${fallbacks['system-serif']}`,
-}
+} as const
 
-export const fontSizes = {
+export const fontSize = {
   min: `16px`,
   max: `20px`,
   xl: `3rem`,
-}
+} as const
 
-export const fontWeights = {
-  100: 100,
-  200: 200,
-  300: 300,
-  400: 400,
-  500: 500,
-  600: 600,
-  700: 700,
-  800: 800,
-  900: 900,
-}
+export const fontWeight = {
+  '100': '100',
+  '200': '200',
+  '300': '300',
+  '400': '400',
+  '500': '500',
+  '600': '600',
+  '700': '700',
+  '800': '800',
+  '900': '900',
+} as const

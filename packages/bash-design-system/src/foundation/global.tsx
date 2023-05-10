@@ -1,95 +1,48 @@
-import { globalCss } from '@stitches/react'
+import { createGlobalStyle } from 'styled-components'
 
-import { fontSizes, sizes } from './constants'
+import { color, font, fontSize, size, space } from './constants'
 import { fluidType } from '../utils'
+import { reset } from './reset'
 
-export const globalStyles = globalCss({
-  [`*:where(:not(html, iframe, canvas, img, svg, video, audio):not(svg *, symbol *))`]:
-    {
-      all: `unset`,
-      display: `revert`,
-    },
-  [`*,
-    *::after,
-    *::before`]: {
-    boxSizing: `border-box`,
-  },
-  html: {
-    [`-webkit-font-smoothing`]: `antialiased`,
-    [`-moz-osx-font-smoothing`]: `grayscale`,
-    backgroundColor: `$colors$black`,
-    color: `$colors$white`,
-    fontSize: fluidType(sizes.sm, sizes.lg, fontSizes.min, fontSizes.max),
-    height: `100vh`,
-    display: `flex`,
-  },
-  body: {
-    fontFamily: `$fonts$sans`,
-    fontStyle: `normal`,
-    fontWeight: 400,
-    lineHeight: 1.5,
-    padding: `$space$sm`,
-    flex: `1 1 auto`,
-    overflow: `auto`,
-  },
-  [`h1, h2, h3`]: {
-    letterSpacing: `1px`,
-  },
-  [`a, button`]: {
-    cursor: `revert`,
-  },
-  a: {
-    color: `inherit`,
-    [`&:visited`]: {
-      color: `$colors$blue`,
-    },
-    [`&:hover`]: {
-      color: `$colors$yellow`,
-    },
-  },
-  [`ol, ul, menu`]: {
-    listStyle: `none`,
-  },
-  img: {
-    [`max-inline-size`]: `100%`,
-    [`max-block-size`]: `100%`,
-  },
-  table: {
-    borderCollapse: `collapse`,
-  },
-  [`input, textarea`]: {
-    [`-webkit-user-select`]: `auto`,
-  },
-  textarea: {
-    whiteSpace: `revert`,
-  },
-  meter: {
-    [`-webkit-appearance`]: `revert`,
-    appearance: `revert`,
-  },
-  [`:where(pre)`]: {
-    all: `revert`,
-  },
-  [`::placeholder`]: {
-    color: `unset`,
-  },
-  [`::marker`]: {
-    content: `initial`,
-  },
-  [`:where([hidden])`]: {
-    display: `none`,
-  },
-  [`:where([contenteditable]:not([contenteditable="false"]))`]: {
-    [`-moz-user-modify`]: `read-write`,
-    [`-webkit-user-modify`]: `read-write`,
-    [`overflow-wrap`]: `break-word`,
-    [`-webkit-line-break`]: `after-white-space`,
-    [`-webkit-user-select`]: `auto`,
-  },
-  [`:where([draggable="true"])`]: {
-    [`-webkit-user-drag`]: `element`,
-  },
-  [`:where(dialog:modal)`]: {
-    all: `revert`,
-  },
-})
+export const GlobalStyle = createGlobalStyle`
+  ${reset}
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    text-size-adjust: 100%;
+    font-smooth: antialiased;
+    background-color: ${color.black};
+    color: ${color.white};
+    font-size: ${fluidType(size.sm, size.lg, fontSize.min, fontSize.max)};
+    height: 100vh;
+    display: flex;
+    line-height: 1.15;
+  }
+
+  body {
+    font-family: ${font.sans};
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.5;
+    margin: 0;
+    padding: ${space.sm};
+    flex: 1 1 auto;
+    overflow: auto;
+  }
+
+  a {
+    color: ${color.blue};
+    text-decoration: underline;
+    &:visited {
+      color: ${color.purple};
+    }
+    &:hover {
+      color:  ${color.yellow};
+    }
+  }
+`
