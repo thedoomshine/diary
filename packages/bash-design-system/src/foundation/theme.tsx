@@ -1,4 +1,4 @@
-import { createStitches } from '@stitches/react'
+import { createStitches, createTheme } from '@stitches/react'
 
 import {
   colors,
@@ -19,5 +19,11 @@ export const { styled, css, getCssText } = createStitches({
     fontWeights,
     media,
     sizes,
+  },
+})
+
+export const dark = createTheme({
+  colors: {
+    primary: 'white',
   },
 })

@@ -15,16 +15,20 @@
     "test": "turbo run test",
     "test:watch": "turbo run test:watch",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "generate": "turbo run generate"
+    "generate": "turbo run generate",
+    "preinstall": "npx only-allow pnpm"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.59.5",
+    "@typescript-eslint/parser": "^5.59.5",
     "dotenv-cli": "latest",
     "eslint": "^7.32.0",
-    "eslint-config-custom": "workspace:*",
+    "eslint-config-bash": "workspace:*",
     "prettier": "latest",
+    "prettier-config-bash": "workspace:*",
     "turbo": "latest"
   },
-  "packageManager": "pnpm@7.15.0",
+  "packageManager": "pnpm@8.5.0",
   "name": "bash",
   "dependencies": {
     "@types/react": "^18.2.5",

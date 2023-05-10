@@ -1,21 +1,15 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": [
-    "**/.env.*local"
+    "**/.env.*local",
+    ".env",
+    ".env/local"
   ],
+  "globalEnv": ["NODE_ENV"],
   "pipeline": {
     "build": {
-      "dependsOn": [
-        "^build"
-      ],
-      "outputs": [
-        "dist/**",
-        ".next/**",
-        "!.next/cache/**",
-        "build/**",
-        "api/**",
-        "public/build/**"
-      ]
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", "umd/**", "build/**", "api/**", "public/build/**"]
     },
     "clean": {
       "cache": false,
@@ -28,41 +22,32 @@
       "outputs": []
     },
     "dev": {
-      "dependsOn": ["^build"],
       "cache": false,
+      "dependsOn": ["^build"],
       "persistent": true
     },
-    "format:check": {
+    "format": {
       "outputs": []
     },
     "format:write": {
       "outputs": []
     },
     "generate": {
-      "dependsOn": [
-        "^generate"
-      ],
+      "dependsOn": ["^generate"],
       "outputs": []
     },
     "lint": {
-      "dependsOn": [
-        "format:check"
-      ],
+      "dependsOn": ["format"],
+      "inputs": ["!supabase"],
       "outputs": []
     },
     "lint:fix": {
-      "dependsOn": [
-        "format:write"
-      ],
+      "dependsOn": ["format:write"],
       "outputs": []
     },
     "lint:report": {
-      "dependsOn": [
-        "format:check"
-      ],
-      "outputs": [
-        "lint-results/**"
-      ]
+      "dependsOn": ["format"],
+      "outputs": ["lint-results/**"]
     },
     "preview": {
       "outputs": []
@@ -71,17 +56,11 @@
       "outputs": []
     },
     "supabase#lint": {
-      "dependsOn": [
-        "supabase#start",
-        "format:check"
-      ],
+      "dependsOn": ["supabase#start", "format"],
       "outputs": []
     },
     "supabase#lint:report": {
-      "dependsOn": [
-        "supabase#start",
-        "format:check"
-      ],
+      "dependsOn": ["supabase#start", "format"],
       "outputs": []
     },
     "supabase#start": {
@@ -89,31 +68,19 @@
       "outputs": []
     },
     "supabase#test": {
-      "dependsOn": [
-        "supabase#start",
-        "^build"
-      ],
+      "dependsOn": ["supabase#start", "^build"],
       "outputs": []
     },
     "test": {
-      "dependsOn": [
-        "^build"
-      ],
-      "outputs": [
-        "coverage/**"
-      ]
+      "dependsOn": ["^build"],
+      "outputs": ["coverage/**"]
     },
     "typecheck": {
-      "dependsOn": [
-        "^build"
-      ],
+      "dependsOn": ["^build"],
       "outputs": []
     },
     "types#generate": {
-      "dependsOn": [
-        "supabase#start",
-        "^generate"
-      ],
+      "dependsOn": ["supabase#start", "^generate"],
       "outputs": []
     }
   }

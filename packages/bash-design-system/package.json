@@ -1,61 +1,35 @@
 {
   "name": "@bash/design-system",
-  "version": "0.0.1",
+  "private": true,
   "license": "MIT",
-  "scripts": {
-    "dev": "pnpm build:swc -w",
-    "build": "rm -rf dist && pnpm build:swc && pnpm types",
-    "build:swc": "swc src -d dist",
-    "types": "tsc --emitDeclarationOnly",
-    "lint": "TIMING=1 eslint \"**/*.{ts,tsx,js,jsx}\" --fix",
-    "clean": "rm -rf ./dist && rm -rf .turbo"
-  },
   "sideEffects": false,
-  "type": "module",
-  "exports": {
-    ".": "./dist/index.js",
-    "./*": [
-      "./dist/*.js",
-      "./dist/*/index.js"
-    ]
-  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "files": [
-    "dist"
+    "dist/**"
   ],
-  "typesVersions": {
-    "*": {
-      "*": [
-        "src/*",
-        "src/*/index"
-      ]
-    }
-  },
-  "publishConfig": {
-    "typesVersions": {
-      "*": {
-        "*": [
-          "dist/*.d.ts",
-          "dist/*/index.d.ts"
-        ]
-      }
-    }
+  "scripts": {
+    "build": "tsup src/index.tsx --format esm,cjs --dts --external react",
+    "clean": "rm -rf dist",
+    "dev": "tsup src/index.tsx --format esm,cjs --watch --dts --external react",
+    "format": "prettier '*/**.{ts,tsx,js,jsx,json}'",
+    "format:check": "yarn format --check",
+    "format:fix": "yarn format --write",
+    "lint": "TIMING=1 eslint \"**/*.{ts,tsx,js,jsx}\" --fix",
+    "types": "tsc"
   },
   "peerDependencies": {
-    "next": "*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
-  "dependencies": {
-    "@swc/helpers": "^0.5.1"
-  },
   "devDependencies": {
-    "@swc/cli": "latest",
-    "@swc/core": "latest",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
-    "chokidar": "latest",
     "eslint": "^7.32.0",
-    "eslint-config-custom": "workspace:*",
+    "eslint-config-bash": "workspace:*",
+    "prettier": "^2.8.8",
+    "prettier-config-bash": "workspace:*",
     "react": "^18.2.0",
     "tsconfig": "workspace:*",
     "tsup": "^6.7.0",
