@@ -6,6 +6,7 @@
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
+  "source": "./src/index.tsx",
   "files": [
     "dist/**"
   ],
@@ -31,13 +32,13 @@
     "@babel/preset-react": "^7.18.6",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
+    "@types/styled-components": "^5.1.26",
     "autoprefixer": "^10.4.14",
     "babel-plugin-styled-components": "^2.1.1",
     "eslint": "^7.32.0",
     "eslint-config-bash": "workspace:*",
     "prettier": "^2.8.8",
     "prettier-config-bash": "workspace:*",
-    "the-new-css-reset": "^1.8.4",
     "react": "^18.2.0",
     "tsconfig": "workspace:*",
     "tsup": "^6.7.0",

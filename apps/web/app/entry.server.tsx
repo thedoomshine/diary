@@ -13,8 +13,14 @@ import isbot from 'isbot'
 import { renderToPipeableStream } from 'react-dom/server'
 
 import { ServerStyleSheet } from 'styled-components'
+import { renderHeadToString } from 'remix-island'
+import { Head } from './root';
 
 const ABORT_DELAY = 5_000
+const COMMON_HEAD = `
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+`;
 
 export default function handleRequest(
   request: Request,
@@ -56,19 +62,25 @@ function handleBotRequest(
       {
         onAllReady() {
           responseHeaders.set('Content-Type', 'text/html')
-          const body = new PassThrough({
-            transform: (chunk, _, callback) => {
-              const stringChunk = (chunk as Buffer).toString();
-              callback(
-                undefined,
-                Buffer.from(
-                  stringChunk.replace('__STYLES__', sheet.getStyleTags())
-                )
-              )
-            }
-          })
+          const head = renderHeadToString({ request, remixContext, Head })
+          // const body = new PassThrough({
+          //   transform: (chunk, _, callback) => {
+          //     const stringChunk = (chunk as Buffer).toString();
+          //     callback(
+          //       undefined,
+          //       Buffer.from(
+          //         stringChunk.replace('__STYLES__', sheet.getStyleTags())
+          //       )
+          //     )
+          //   }
+          // })
+          const body = new PassThrough()
 
+          body.write(
+            `<!DOCTYPE html><html charset="utf8"><head>${COMMON_HEAD}${head}${sheet.getStyleTags()}</head><body><div id="root">`,
+          )
           pipe(body)
+          body.write(`</div></body></html>`)
 
           resolve(
             new Response(body, {
@@ -110,19 +122,25 @@ function handleBrowserRequest(
       {
         onShellReady() {
           responseHeaders.set('Content-Type', 'text/html')
-          const body = new PassThrough({
-            transform: (chunk, _, callback) => {
-              const stringChunk = (chunk as Buffer).toString();
-              callback(
-                undefined,
-                Buffer.from(
-                  stringChunk.replace('__STYLES__', sheet.getStyleTags())
-                )
-              )
-            }
-          })
+          const head = renderHeadToString({ request, remixContext, Head })
+          // const body = new PassThrough({
+          //   transform: (chunk, _, callback) => {
+          //     const stringChunk = (chunk as Buffer).toString();
+          //     callback(
+          //       undefined,
+          //       Buffer.from(
+          //         stringChunk.replace('__STYLES__', sheet.getStyleTags())
+          //       )
+          //     )
+          //   }
+          // })
+          const body = new PassThrough()
 
+          body.write(
+            `<!DOCTYPE html><html charset="utf8"><head>${COMMON_HEAD}${head}${sheet.getStyleTags()}</head><body><div id="root">`,
+          )
           pipe(body)
+          body.write(`</div></body></html>`)
 
           resolve(
             new Response(body, {

@@ -1,4 +1,4 @@
-import { defineConfig } from 'tsup';
+import { defineConfig } from 'tsup'
 
 export default defineConfig(() => ({
   clean: true,
@@ -7,8 +7,9 @@ export default defineConfig(() => ({
   external: ['react'],
   format: 'cjs',
   outDir: 'dist',
+  declarationDir: './dist',
   sourcemap: true,
   splitting: true,
   treeshake: true,
   minify: true,
-}));
+}))

@@ -16,4 +16,7 @@ export const theme = {
   media,
   size,
   space,
-}
+} as const
+
+export type BashThemeShape = typeof theme
+export type BashTheme = BashThemeShape

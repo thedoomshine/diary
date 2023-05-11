@@ -1,29 +1,31 @@
-const fallbacks = {
+const FONT_FALLBACK = {
   [`system-mono`]: `Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace`,
   [`system-sans`]: `-apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Ubuntu, roboto, noto, arial, sans-serif`,
   [`system-serif`]: `Iowan Old Style, Apple Garamond, Baskerville, Times New Roman, Droid Serif, Times, Source Serif Pro, serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol`,
 }
 
 export const font = {
-  mono: `'IBM Plex Mono', ${fallbacks['system-mono']}`,
-  sans: `${fallbacks['system-sans']}`,
-  serif: `'Playfair Display', ${fallbacks['system-serif']}`,
+  mono: `'IBM Plex Mono', ${FONT_FALLBACK['system-mono']}`,
+  sans: `'Atkinson Hyperlegible', ${FONT_FALLBACK['system-sans']}`,
+  serif: `'Playfair Display', ${FONT_FALLBACK['system-serif']}`,
 } as const
+
+const TYPE_SCALE = Array.from(
+  { length: 6 },
+  (_, i) => `${(i + 1) / Math.sqrt(2)}em`
+).reduce((a, v, i) => ({ ...a, [i + 1]: v }), {})
 
 export const fontSize = {
   min: `16px`,
-  max: `20px`,
-  xl: `3rem`,
+  max: `22.63px`,
+  ...TYPE_SCALE,
 } as const
 
+const FONT_WEIGHT = Array.from({ length: 8 }, (_, i) => (i + 1) * 100).reduce(
+  (a, v) => ({ ...a, [v]: v }),
+  {}
+)
+
 export const fontWeight = {
-  '100': '100',
-  '200': '200',
-  '300': '300',
-  '400': '400',
-  '500': '500',
-  '600': '600',
-  '700': '700',
-  '800': '800',
-  '900': '900',
+  ...FONT_WEIGHT,
 } as const

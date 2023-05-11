@@ -3,7 +3,7 @@ export const fluidType = (
   maxVW: string,
   minFontSize: string,
   maxFontSize: string
-) => `clamp(
+): string => `clamp(
       ${minFontSize},
       calc(
         ${minFontSize} + ${parseFloat(maxFontSize) - parseFloat(minFontSize)} *
