@@ -25,9 +25,10 @@
     "dotenv-cli": "latest",
     "eslint": "^7.32.0",
     "eslint-config-bash": "workspace:*",
+    "polished": "^4.2.2",
     "prettier": "latest",
     "prettier-config-bash": "workspace:*",
-    "turbo": "latest"
+    "turbo": "^1.9.4"
   },
   "dependencies": {
     "@types/react": "^18.2.5",

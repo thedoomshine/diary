@@ -19,6 +19,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
+    display: flex;
     font-family: ${font.sans};
     font-style: normal;
     font-weight: ${({ theme }) => theme.fontSize[`400`]};
@@ -27,6 +28,12 @@ export const GlobalStyle = createGlobalStyle`
     padding: ${space.sm};
     flex: 1 1 auto;
     overflow: auto;
+  }
+
+  #root {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto
   }
 
   h1, h2, h3, h4, h5, h6 {

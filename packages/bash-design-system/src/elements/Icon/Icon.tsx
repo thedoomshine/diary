@@ -1,5 +1,5 @@
 import React from 'react'
-
+import styled from 'styled-components'
 import { Icons, IconNames } from './Library'
 
 interface IconProperties {
@@ -10,6 +10,15 @@ interface IconProperties {
   size?: '16' | '24' | '32' | '40' | '64'
   name: string
 }
+
+const StyledSVG = styled.svg`
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor;
+`
 
 export const Icon: React.FC<IconProperties> = ({
   viewBox,
@@ -22,10 +31,10 @@ export const Icon: React.FC<IconProperties> = ({
   const icon = Icons[iconName]
 
   return (
-    <svg width={size} height={size} viewBox={viewBox} {...props}>
+    <StyledSVG width={size} height={size} viewBox={viewBox} {...props}>
       {title && <title>{title}</title>}
       {icon}
-    </svg>
+    </StyledSVG>
   )
 }
 
