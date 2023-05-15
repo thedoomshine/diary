@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components'
 
-import { color, font, fontSize, size, space } from './constants'
+import { color, font, fontSize, size } from './constants'
 import { fluidType } from '../utils'
 import { reset } from './reset'
 
@@ -12,7 +12,7 @@ export const GlobalStyle = createGlobalStyle`
     font-smooth: antialiased;
     background-color: ${color.black};
     color: ${color.white};
-    font-size: ${fluidType(size.sm, size.lg, fontSize.min, fontSize.max)};
+    font-size: ${fluidType(size.sm, size.xl, fontSize.min, fontSize.max)};
     height: 100vh;
     display: flex;
     line-height: 1.15;
@@ -37,7 +37,7 @@ export const GlobalStyle = createGlobalStyle`
 
   h1, h2, h3, h4, h5, h6 {
     font-weight: ${({ theme }) => theme.fontWeight[`800`]};
-    line-height: 1;
+    line-height: 1.15;
   }
 
   h1 {

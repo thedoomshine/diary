@@ -1,11 +1,12 @@
 import { Form } from '@remix-run/react'
 
 import styled from 'styled-components'
+
 import { Button } from '@bash/design-system'
 
 const StyledForm = styled(Form)`
   background-color: ${({theme}) => theme.color.grey};
-  color: ${({ theme }) => theme.color.white};
+  color: ${({theme}) => theme.color.white};
   border: solid 0.0125rem currentColor;
   border-radius: 0.5rem;
   padding: 1rem;
@@ -35,7 +36,7 @@ const Input = styled.input`
   border: solid 0.0125rem currentColor;
   border-radius: 0.25rem;
   padding: 0.5rem;
-  font-size: ${({ theme }) => theme.fontSize['1']};
+  font-size: ${({theme}) => theme.fontSize['1']};
   margin-top: 0.25rem;
   line-height: 1;
 `
@@ -45,7 +46,7 @@ const StyledButton = styled(Button)`
   width: 100%;
 `
 
-export default function SignUp() {
+export default function SignIn() {
   return (
     <StyledForm>
       <Fieldset>
@@ -58,12 +59,7 @@ export default function SignUp() {
         <Input type="password" name="password" />
       </Fieldset>
 
-      <Fieldset>
-        <Label>confirm password</Label>
-        <Input type="password" name="confirm-password" />
-      </Fieldset>
-
-      <StyledButton>create account</StyledButton>
+      <StyledButton>sign in</StyledButton>
     </StyledForm>
   )
 }

@@ -28,7 +28,7 @@
     "polished": "^4.2.2",
     "prettier": "latest",
     "prettier-config-bash": "workspace:*",
-    "turbo": "^1.9.4"
+    "turbo": "^1.9.5"
   },
   "dependencies": {
     "@types/react": "^18.2.5",

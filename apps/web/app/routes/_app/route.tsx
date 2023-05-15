@@ -12,7 +12,7 @@ const StyledLayout = styled.div`
   margin: 0 auto;
   min-height: 100%;
   width: 100%;
-  max-width: ${({theme}) => theme.size.lg};
+  max-width: ${({theme}) => theme.size.xl};
 `
 
 const StyledMain = styled.main`

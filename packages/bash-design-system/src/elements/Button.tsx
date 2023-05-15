@@ -44,30 +44,25 @@ export const ButtonStyles = css`
   display: flex;
   flex: 0 0 auto;
   align-items: center;
+  justify-content: center;
   border-radius: 0.5rem;
   border-width: 0.0125rem;
   border-style: solid;
   border-color: transparent;
-  padding: 0.25rem 0.5rem;
+  padding: 0.5rem;
+  text-align: center;
   color: inherit;
   cursor: pointer;
   text-decoration: none;
   ${ButtonSelectors.HOVER} {
-    color: ${({ theme }) => theme.color.yellow};
     background-color: ${({ theme }) => rgba(theme.color.white, 0.05)};
   }
 `
-
-export const OutlineButtonStyles = css`
-  ${ButtonStyles};
-  border-color: ${({ theme }) => theme.color.white};
-`
-
 export const StyledButton = styled.button`
   ${ButtonStyles};
 `
 
-export const ButtonBase = forwardRef<ButtonBaseElements, any>(
+export const Button = forwardRef<ButtonBaseElements, any>(
   (
     { href, disabled, children, role, type = 'button', classNames, ...rest },
     ref
@@ -87,12 +82,13 @@ export const ButtonBase = forwardRef<ButtonBaseElements, any>(
   )
 )
 
-export const OutlineButton: React.FC<ButtonBaseElementProps> = ({
-  children,
-  ...props
-}) => <ButtonBase {...props}>{children}</ButtonBase>
+export const OutlineButtonStyles = css`
+  ${ButtonStyles};
+  border-color: currentColor;
+`
 
-export const Button: React.FC<ButtonBaseElementProps> = ({
-  children,
-  ...props
-}) => <ButtonBase {...props}>{children}</ButtonBase>
+export const OutlineButton = styled(Button)`
+  ${OutlineButtonStyles};
+`
+
+

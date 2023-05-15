@@ -21,8 +21,10 @@ export const fontSize = {
   ...TYPE_SCALE,
 } as const
 
-const FONT_WEIGHT = Array.from({ length: 8 }, (_, i) => (i + 1) * 100).reduce(
-  (a, v) => ({ ...a, v }),
+const FONT_WEIGHT = Array.from(
+  { length: 8 },
+  (_, i) => ((i + 1) * 100).toString()).reduce(
+  (a, v) => ({ ...a, [v]: v }),
   {}
 )
 

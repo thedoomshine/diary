@@ -1,13 +1,15 @@
 export const size = {
   sm: `320px`,
-  md: `768px`,
-  lg: `1280px`,
+  md: `480px`,
+  lg: `768px`,
+  xl: `1280px`,
 } as const
 
 export const media = {
   sm: `(min-width: ${size.sm})`,
   md: `(min-width: ${size.md})`,
   lg: `(min-width: ${size.lg})`,
+  xl: `(min-width: ${size.xl})`,
 } as const
 
 export const space = {
