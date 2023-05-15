@@ -7,7 +7,8 @@ module.exports = {
   // assetsBuildDirectory: 'public/build',
   // publicPath: '/build/',
   serverModuleFormat: 'cjs',
-  watchPaths: ['../../packages/bash-design-system/dist/index.js'],
+  // watchPaths: ['./node_modules/@bash/design-system/dist/index'],
+  watchPaths: ['../../packages/bash-design-system/dist/index.d.ts'],
   future: {
     v2_errorBoundary: true,
     v2_meta: true,

@@ -12,9 +12,11 @@ interface IconProperties {
 }
 
 const StyledSVG = styled.svg`
-  display: inline-block;
-  width: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 1em;
+  width: 1em;
   stroke-width: 0;
   stroke: currentColor;
   fill: currentColor;
@@ -23,7 +25,6 @@ const StyledSVG = styled.svg`
 export const Icon: React.FC<IconProperties> = ({
   viewBox,
   title,
-  size,
   name,
   ...props
 }) => {
@@ -31,7 +32,7 @@ export const Icon: React.FC<IconProperties> = ({
   const icon = Icons[iconName]
 
   return (
-    <StyledSVG width={size} height={size} viewBox={viewBox} {...props}>
+    <StyledSVG viewBox={viewBox} {...props}>
       {title && <title>{title}</title>}
       {icon}
     </StyledSVG>

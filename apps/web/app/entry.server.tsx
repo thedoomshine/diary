@@ -9,11 +9,12 @@ import { PassThrough } from 'node:stream'
 import type { EntryContext } from '@remix-run/node'
 import { Response } from '@remix-run/node'
 import { RemixServer } from '@remix-run/react'
-import isbot from 'isbot'
-import { renderToPipeableStream } from 'react-dom/server'
-
-import { ServerStyleSheet } from 'styled-components'
 import { renderHeadToString } from 'remix-island'
+import { renderToPipeableStream } from 'react-dom/server'
+import { ServerStyleSheet } from 'styled-components'
+
+import isbot from 'isbot'
+
 import { Head } from './root';
 
 const ABORT_DELAY = 5_000

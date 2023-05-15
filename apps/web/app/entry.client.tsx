@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { startTransition, StrictMode } from 'react';
+import { startTransition, StrictMode } from 'react'
 import { hydrateRoot } from 'react-dom/client'
-import { RemixBrowser } from '@remix-run/react';
-import { ThemeProvider } from 'styled-components';
+import { RemixBrowser } from '@remix-run/react'
+import { ThemeProvider } from 'styled-components'
 
 import { GlobalStyle, theme } from '@bash/design-system'
 
@@ -16,12 +16,12 @@ function hydrate() {
           <RemixBrowser />
         </ThemeProvider>
       </StrictMode>,
-    );
-  });
+    )
+  })
 }
 
 if (typeof requestIdleCallback === 'function') {
-  requestIdleCallback(hydrate);
+  requestIdleCallback(hydrate)
 } else {
-  setTimeout(hydrate, 1);
+  setTimeout(hydrate, 1)
 }

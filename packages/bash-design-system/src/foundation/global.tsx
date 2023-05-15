@@ -25,7 +25,6 @@ export const GlobalStyle = createGlobalStyle`
     font-weight: ${({ theme }) => theme.fontSize[`400`]};
     line-height: 1.5;
     margin: 0;
-    padding: ${space.sm};
     flex: 1 1 auto;
     overflow: auto;
   }
@@ -33,7 +32,7 @@ export const GlobalStyle = createGlobalStyle`
   #root {
     display: flex;
     flex-direction: column;
-    flex: 1 1 auto
+    flex: 1 1 auto;
   }
 
   h1, h2, h3, h4, h5, h6 {
