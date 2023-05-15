@@ -38,7 +38,6 @@ export const GlobalStyle = createGlobalStyle`
   h1, h2, h3, h4, h5, h6 {
     font-weight: ${({ theme }) => theme.fontWeight[`800`]};
     line-height: 1;
-    letter-spacing: 1px;
   }
 
   h1 {
@@ -68,11 +67,5 @@ export const GlobalStyle = createGlobalStyle`
   a {
     color: ${color.blue};
     text-decoration: underline;
-    &:visited {
-      color: ${color.purple};
-    }
-    &:hover {
-      color:  ${color.yellow};
-    }
   }
 `

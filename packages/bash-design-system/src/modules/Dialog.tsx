@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useLayoutEffect, useRef } from 'react'
 
 import styled, { keyframes } from 'styled-components'
 import { rgba } from 'polished'
@@ -27,14 +27,23 @@ const StyledDialog = styled.dialog`
   max-width: 450px;
   max-height: 85vh;
   padding: 1em;
-
-  &[open] {
-    animation: ${contentShow} 150ms cubic-bezier(0.16, 1, 0.3, 1);
-  }
+  animation: ${contentShow} 150ms cubic-bezier(0.16, 1, 0.3, 1) normal;
 
   &::backdrop {
     background-color: ${({ theme }) => rgba(theme.color.black, 0.75)};
-    animation: ${overlayShow} 150ms cubic-bezier(0.16, 1, 0.3, 1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    animation: none;
+  }
+
+  &[open] {
+    animation: ${contentShow} 150ms cubic-bezier(0.16, 1, 0.3, 1) normal;
+    &::backdrop {
+      animation: ${overlayShow} 150ms cubic-bezier(0.16, 1, 0.3, 1) normal;
+    }
   }
 `
 
@@ -47,13 +56,13 @@ const StyledCloseButton = styled(Button)`
 type DialogProps = {
   isOpen: boolean
   handleClose: () => void
-  children: React.ReactNode[] | React.ReactNode
+  children: React.ReactNode | React.ReactNode[]
 }
 
 export const Dialog = ({ isOpen, handleClose, children }: DialogProps) => {
   const ref = useRef<HTMLDialogElement>(null)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const dialog = ref.current
 
     if (isOpen) {

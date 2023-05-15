@@ -27,7 +27,7 @@ const Input = styled.input`
   height: 35;
 `
 
-export default () => {
+export default function SignUp() {
   return (
     <>
       <h1>Sign Up</h1>

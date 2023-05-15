@@ -3,7 +3,9 @@ import { Outlet, useNavigate } from '@remix-run/react'
 
 import { Dialog } from '@bash/design-system'
 
-export default () => {
+import LandingPage from './_index'
+
+export default function Auth() {
   const [isOpen, setIsOpen] = useState(true)
   const navigate = useNavigate()
 
@@ -13,9 +15,12 @@ export default () => {
   }
 
   return (
-    <Dialog isOpen={isOpen} handleClose={handleClose}>
-      <Outlet />
-    </Dialog>
+    <>
+      <LandingPage />
+      <Dialog isOpen={isOpen} handleClose={handleClose}>
+        <Outlet />
+      </Dialog>
+    </>
   )
 }
 

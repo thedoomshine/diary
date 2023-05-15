@@ -48,8 +48,10 @@ export const ButtonStyles = css`
   border-width: 0.0125rem;
   border-style: solid;
   border-color: transparent;
+  padding: 0.25rem 0.5rem;
   color: inherit;
   cursor: pointer;
+  text-decoration: none;
   ${ButtonSelectors.HOVER} {
     color: ${({ theme }) => theme.color.yellow};
     background-color: ${({ theme }) => rgba(theme.color.white, 0.05)};
@@ -57,12 +59,12 @@ export const ButtonStyles = css`
 `
 
 export const OutlineButtonStyles = css`
-  ${ButtonStyles}
+  ${ButtonStyles};
   border-color: ${({ theme }) => theme.color.white};
 `
 
 export const StyledButton = styled.button`
-  ${ButtonStyles}
+  ${ButtonStyles};
 `
 
 export const ButtonBase = forwardRef<ButtonBaseElements, any>(
