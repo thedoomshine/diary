@@ -1,14 +1,26 @@
+
+import { useState } from 'react'
+import { redirect } from '@remix-run/node'
 import { Form } from '@remix-run/react'
 
-import styled from 'styled-components'
+import { useSignIn } from '@clerk/remix'
 
+import type { SubmitHandler } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
+
+import styled from 'styled-components'
 import { Button } from '@bash/design-system'
+
+import type { APIResponseError } from './_auth/utils/errors';
+import { parseError } from './_auth/utils/errors'
+import { Validations } from './_auth/utils/formValidations'
 
 const StyledForm = styled(Form)`
   background-color: ${({theme}) => theme.color.grey};
   color: ${({theme}) => theme.color.white};
   border: solid 0.0125rem currentColor;
   border-radius: 0.5rem;
+  box-shadow: 0 .25rem .5rem 0 rgba(0,0,0,0.5);
   padding: 1rem;
   margin-top: 1rem;
   width: 100%;
@@ -47,19 +59,68 @@ const StyledButton = styled(Button)`
 `
 
 export default function SignIn() {
+  const { isLoaded, setActive, signIn } = useSignIn()
+  const [hasSubmitted, setHasSubmitted] = useState(false)
+
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm<{ email: string, password: string }>()
+
+  const onSubmit: SubmitHandler<{ email: string, password: string }> = async ({
+    email,
+    password,
+  }) => {
+    console.log(email, password, isLoaded)
+    if (!isLoaded) return null
+    try {
+      setHasSubmitted(true)
+      await signIn.create({
+        identifier: email,
+        password,
+      }).then(response => {
+        if (response?.status === 'complete') {
+          setActive({ session: response?.createdSessionId })
+          redirect('/dashboard', 302)
+        }
+      })
+    } catch (err) {
+      setError('password', {
+        type: 'manual',
+        message: parseError(err as APIResponseError),
+      })
+    } finally {
+      setHasSubmitted(false)
+    }
+  }
+
   return (
-    <StyledForm>
+    <StyledForm method="post" onSubmit={handleSubmit(onSubmit)}>
       <Fieldset>
-        <Label>username or email address</Label>
-        <Input type="text" name="email" />
+        <Label htmlFor='email'>email address</Label>
+        <Input
+          type='text'
+          id='email'
+          {...register('email', Validations.emailAddress)}
+          aria-invalid={Boolean(errors.email)}
+        />
+        {errors.email?.message}
       </Fieldset>
 
       <Fieldset>
-        <Label>password</Label>
-        <Input type="password" name="password" />
+        <Label htmlFor='password'>password</Label>
+        <Input
+          type='password'
+          id='password'
+          {...register('password', Validations.password)}
+          aria-invalid={Boolean(errors.password)}
+        />
+        {errors.password?.message}
       </Fieldset>
 
-      <StyledButton>sign in</StyledButton>
+      <StyledButton disabled={hasSubmitted} type='submit'>sign in</StyledButton>
     </StyledForm>
   )
 }

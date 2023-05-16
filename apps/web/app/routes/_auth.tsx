@@ -40,6 +40,7 @@ const StyledContainer = styled.div`
   background-color: ${({theme}) => theme.color.grey};
   border-radius: ${({theme}) => theme.space.xxs};
   border: solid 0.0125rem currentColor;
+  box-shadow: 0 .25rem .5rem 0 rgba(0,0,0,0.5);
   margin-top: ${({ theme }) => theme.space.md};
   padding: ${({ theme }) => theme.space.xs};
   width: 100%;
@@ -71,19 +72,19 @@ const LINK_COPY = {
   [Route.SIGN_UP]: {
     cta: 'sign in',
     message: 'already have an account?',
-    route: '/sign-in',
+    route: Route.SIGN_IN,
   },
   [Route.SIGN_IN]: {
     cta: 'create an account',
     message: 'new to bash?',
-    route: '/sign-up',
+    route: Route.SIGN_UP,
   }
 } as const
 
 const HEADER_COPY = {
   [Route.SIGN_IN]: 'sign in to',
   [Route.SIGN_UP]: 'sign up for',
-}
+} as const
 
 interface RedirectLinkProps {
   pathname: Route
@@ -117,7 +118,7 @@ export default function Auth() {
   return (
     <StyledLayout>
       <StyledMain>
-        <NavLink title="bash." to="/" end>
+        <NavLink title="bash." to="/">
           <StyledLogo name="logo-mobile" />
         </NavLink>
         <StyledH1>{title} bash.</StyledH1>

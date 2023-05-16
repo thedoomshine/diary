@@ -8,6 +8,7 @@ const StyledForm = styled(Form)`
   color: ${({ theme }) => theme.color.white};
   border: solid 0.0125rem currentColor;
   border-radius: 0.5rem;
+  box-shadow: 0 .25rem .5rem 0 rgba(0,0,0,0.5);
   padding: 1rem;
   margin-top: 1rem;
   width: 100%;

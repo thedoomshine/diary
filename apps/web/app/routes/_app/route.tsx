@@ -1,10 +1,11 @@
+import { createClerkClient } from '@clerk/remix/api.server'
 import { getAuth } from "@clerk/remix/ssr.server"
 import type { LoaderFunction} from "@remix-run/node"
 import { redirect } from "@remix-run/node"
+import { Outlet, useLoaderData } from '@remix-run/react'
 
-import { Outlet } from '@remix-run/react'
+
 import styled from 'styled-components'
-
 import { PrimaryNav } from './primary-nav'
 
 const StyledLayout = styled.div`
@@ -29,15 +30,22 @@ export const loader: LoaderFunction = async (args) => {
 
   if (!userId) {
     return redirect('/sign-in', 302)
-  } else {
-    return redirect('/dashboard', 302)
   }
+
+  const user = await createClerkClient({
+    secretKey: process.env.CLERK_SECRET_KEY
+  }).users.getUser(userId)
+
+  return { serializedUser: JSON.stringify(user) }
 }
 
-export default () => {
+export default function AppLayout() {
+  const user = useLoaderData()
+  console.log(user)
+
   return (
     <StyledLayout>
-      <PrimaryNav />
+      <PrimaryNav user={user} />
       <StyledMain>
         <Outlet />
       </StyledMain>

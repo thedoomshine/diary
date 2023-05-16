@@ -1,7 +1,9 @@
+import type { FC } from 'react'
 import { NavLink } from '@remix-run/react'
 import styled from 'styled-components'
 
-import { Icon, ButtonStyles, Selectors } from '@bash/design-system'
+import { Avatar, Icon, ButtonStyles, Selectors } from '@bash/design-system'
+import type { User } from '@clerk/remix/api.server'
 
 const StyledIcon = styled(Icon)`
   font-size: ${({ theme }) => theme.fontSize['2']};
@@ -107,7 +109,12 @@ const LINKS = [
   }
 ]
 
-export const PrimaryNav = () => {
+interface PrimaryNavProps {
+  user: User
+}
+
+export const PrimaryNav: FC<PrimaryNavProps> = ({ user }) => {
+  console.log(user)
   return (
     <StyledHeader>
       <StyledLogo id="logo">bash.</StyledLogo>
@@ -123,6 +130,9 @@ export const PrimaryNav = () => {
               )}
           </StyledNavLink>
         ))}
+        {user && (
+          <Avatar url={user?.experimental_imageUrl} name={`${user?.firstName} ${user?.lastName}`} />
+        )}
       </StyledNav>
     </StyledHeader>
   )
