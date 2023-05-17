@@ -126,7 +126,7 @@ const IconButton = styled(Button)`
 
 type PopoverProps = {
   children: ReactNode | ReactNode[],
-  sideOffset: number
+  sideOffset?: number
 }
 
 export const PopoverContent = forwardRef<HTMLDivElement, PopoverProps>(
