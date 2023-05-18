@@ -2,7 +2,7 @@ import { NavLink, Outlet, useLocation } from '@remix-run/react'
 import type { LoaderFunction } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
 import { getAuth } from '@clerk/remix/ssr.server'
-
+import { AUTH_ROUTE } from './@types'
 import styled from 'styled-components'
 import { Icon } from '@bash/design-system'
 
@@ -63,34 +63,34 @@ const StyledH1 = styled.h1`
   font-size: ${({theme}) => theme.fontSize['2']};
 `
 
-enum Route {
-  SIGN_UP = '/sign-up',
-  SIGN_IN = '/sign-in'
-}
+const HEADER_COPY = {
+  [AUTH_ROUTE.SIGN_IN]: 'sign in to',
+  [AUTH_ROUTE.SIGN_UP]: 'sign up for',
+} as const
 
 const LINK_COPY = {
-  [Route.SIGN_UP]: {
+  [AUTH_ROUTE.SIGN_UP]: {
     cta: 'sign in',
     message: 'already have an account?',
-    route: Route.SIGN_IN,
+    route: AUTH_ROUTE.SIGN_IN,
   },
-  [Route.SIGN_IN]: {
+  [AUTH_ROUTE.SIGN_IN]: {
     cta: 'create an account',
     message: 'new to bash?',
-    route: Route.SIGN_UP,
+    route: AUTH_ROUTE.SIGN_UP,
   }
 } as const
 
-const HEADER_COPY = {
-  [Route.SIGN_IN]: 'sign in to',
-  [Route.SIGN_UP]: 'sign up for',
-} as const
-
-interface RedirectLinkProps {
-  pathname: Route
+enum AUTH_LINK_ROUTE {
+  SIGN_IN = AUTH_ROUTE.SIGN_IN,
+  SIGN_UP = AUTH_ROUTE.SIGN_UP
 }
 
-const RedirectLink: React.FC<RedirectLinkProps> = ({ pathname }) => {
+interface AuthLinkProps {
+  pathname: AUTH_LINK_ROUTE
+}
+
+const RedirectLink: React.FC<AuthLinkProps> = ({ pathname }) => {
   const { cta, message, route } = LINK_COPY[pathname]
 
   return (
@@ -103,7 +103,6 @@ const RedirectLink: React.FC<RedirectLinkProps> = ({ pathname }) => {
 
 export const loader: LoaderFunction = async (args) => {
   const { userId } = await getAuth(args)
-
   if (userId) {
     return redirect('/dashboard', 302)
   }
@@ -113,7 +112,7 @@ export const loader: LoaderFunction = async (args) => {
 
 export default function Auth() {
   const { pathname } = useLocation()
-  const title = HEADER_COPY[pathname as Route]
+  const title = HEADER_COPY[pathname as AUTH_LINK_ROUTE]
 
   return (
     <StyledLayout>
@@ -123,7 +122,7 @@ export default function Auth() {
         </NavLink>
         <StyledH1>{title} bash.</StyledH1>
         <Outlet />
-        <RedirectLink pathname={pathname as Route} />
+        <RedirectLink pathname={pathname as AUTH_LINK_ROUTE} />
       </StyledMain>
     </StyledLayout>
   )

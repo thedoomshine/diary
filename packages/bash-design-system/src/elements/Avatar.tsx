@@ -2,7 +2,6 @@ import type { FC } from 'react'
 import * as AvatarPrimitive from '@radix-ui/react-avatar'
 
 import styled from 'styled-components'
-import { Popover, PopoverContent, PopoverTrigger } from './index'
 
 const AvatarRoot = styled(AvatarPrimitive.Root)`
   display: inline-flex;
@@ -44,20 +43,13 @@ interface AvatarProps {
 }
 
 export const Avatar: FC<AvatarProps> = ({ url, name, initials, ...props }) => (
-  <Popover>
-    <PopoverTrigger>
-      <AvatarRoot {...props}>
-        <AvatarImage
-          src={url}
-          alt={name}
-        />
-        <AvatarFallback delayMs={600}>
-          {initials}
-        </AvatarFallback>
-      </AvatarRoot>
-    </PopoverTrigger>
-    <PopoverContent>
-      Popover content
-    </PopoverContent>
-  </Popover>
+  <AvatarRoot {...props}>
+    <AvatarImage
+      src={url}
+      alt={name}
+    />
+    <AvatarFallback delayMs={600}>
+      {initials}
+    </AvatarFallback>
+  </AvatarRoot>
 );

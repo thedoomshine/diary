@@ -1,19 +1,15 @@
 
-import { useState } from 'react'
 import { redirect } from '@remix-run/node'
-import { Form } from '@remix-run/react'
-
-import { useSignIn } from '@clerk/remix'
-
-import type { SubmitHandler } from 'react-hook-form'
-import { useForm } from 'react-hook-form'
+import type { ActionArgs, LoaderFunction } from '@remix-run/node'
+import { Form, useActionData, useNavigation } from '@remix-run/react'
 
 import styled from 'styled-components'
 import { Button } from '@bash/design-system'
 
-import type { APIResponseError } from './_auth/utils/errors';
+import type { APIResponseError } from './_auth/utils/errors'
 import { parseError } from './_auth/utils/errors'
 import { Validations } from './_auth/utils/formValidations'
+import { ROUTES } from './@types/index'
 
 const StyledForm = styled(Form)`
   background-color: ${({theme}) => theme.color.grey};
@@ -58,69 +54,42 @@ const StyledButton = styled(Button)`
   width: 100%;
 `
 
+export const action = () => {
+
+}
+
 export default function SignIn() {
-  const { isLoaded, setActive, signIn } = useSignIn()
-  const [hasSubmitted, setHasSubmitted] = useState(false)
+  const formData = useActionData<typeof action>()
+  const navigation = useNavigation()
 
-  const {
-    register,
-    handleSubmit,
-    setError,
-    formState: { errors },
-  } = useForm<{ email: string, password: string }>()
+  const isSubmitting = navigation.state === 'submitting'
 
-  const onSubmit: SubmitHandler<{ email: string, password: string }> = async ({
-    email,
-    password,
-  }) => {
-    console.log(email, password, isLoaded)
-    if (!isLoaded) return null
-    try {
-      setHasSubmitted(true)
-      await signIn.create({
-        identifier: email,
-        password,
-      }).then(response => {
-        if (response?.status === 'complete') {
-          setActive({ session: response?.createdSessionId })
-          redirect('/dashboard', 302)
-        }
-      })
-    } catch (err) {
-      setError('password', {
-        type: 'manual',
-        message: parseError(err as APIResponseError),
-      })
-    } finally {
-      setHasSubmitted(false)
-    }
-  }
 
   return (
-    <StyledForm method="post" onSubmit={handleSubmit(onSubmit)}>
-      <Fieldset>
+    <StyledForm method="post">
+      <Fieldset disabled={isSubmitting}>
         <Label htmlFor='email'>email address</Label>
         <Input
           type='text'
           id='email'
-          {...register('email', Validations.emailAddress)}
-          aria-invalid={Boolean(errors.email)}
+          name='email'
+          defaultValue={formData?.values?.email}
+          aria-invalid={Boolean(formData?.errors?.email)}
         />
-        {errors.email?.message}
       </Fieldset>
 
-      <Fieldset>
+      <Fieldset disabled={isSubmitting}>
         <Label htmlFor='password'>password</Label>
         <Input
           type='password'
           id='password'
-          {...register('password', Validations.password)}
-          aria-invalid={Boolean(errors.password)}
+          name='password'
+          defaultValue={formData?.values?.password}
+          aria-invalid={Boolean(formData?.errors?.password)}
         />
-        {errors.password?.message}
       </Fieldset>
 
-      <StyledButton disabled={hasSubmitted} type='submit'>sign in</StyledButton>
+        <StyledButton disabled={isSubmitting} type='submit'>sign in</StyledButton>
     </StyledForm>
   )
 }

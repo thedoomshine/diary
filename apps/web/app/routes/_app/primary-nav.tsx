@@ -2,8 +2,10 @@ import type { FC } from 'react'
 import { NavLink } from '@remix-run/react'
 import styled from 'styled-components'
 
-import { Avatar, Icon, ButtonStyles, Selectors } from '@bash/design-system'
 import type { User } from '@clerk/remix/api.server'
+import { Avatar, Icon, ButtonStyles, Selectors } from '@bash/design-system'
+
+import { NAV_LINKS } from '../@types'
 
 const StyledIcon = styled(Icon)`
   font-size: ${({ theme }) => theme.fontSize['2']};
@@ -81,34 +83,6 @@ const StyledLinkName = styled.span`
   }
 `
 
-const LINKS = [
-  {
-    name: 'home',
-    route: '/dashboard',
-    icon: 'home'
-  },
-  {
-    name: 'explore',
-    route: '/explore',
-    icon: 'bullhorn'
-  },
-  {
-    name: 'notifications',
-    route: '/notifications',
-    icon: 'bell'
-  },
-  {
-    name: 'bookmarks',
-    route: '/bookmarks',
-    icon: 'bookmark'
-  },
-  {
-    name: 'settings',
-    route: '/settings',
-    icon: 'gear'
-  }
-]
-
 interface PrimaryNavProps {
   user: User
 }
@@ -120,7 +94,7 @@ export const PrimaryNav: FC<PrimaryNavProps> = ({ user }) => {
       <StyledLogo id="logo">bash.</StyledLogo>
       <StyledMobileLogo name='logo-mobile' aria-hidden />
       <StyledNav aria-labelledby="logo">
-        {LINKS.map(({icon, name, route}) => (
+        {NAV_LINKS.map(({icon, name, route}) => (
           <StyledNavLink key={name} to={`${route}`}>
             {({ isActive }) => (
               <>
