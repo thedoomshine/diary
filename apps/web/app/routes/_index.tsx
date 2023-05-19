@@ -1,10 +1,11 @@
 import { NavLink } from '@remix-run/react'
 import type { LoaderFunction } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
-import { getAuth } from '@clerk/remix/ssr.server'
 
 import styled from 'styled-components'
 import { ButtonStyles, OutlineButtonStyles } from '@bash/design-system'
+import { ROUTES } from './@types'
+import { createServerClient } from '../utils/db.server'
 
 const StyledLayout = styled.div`
   display: flex;
@@ -50,15 +51,19 @@ const StyledSignUpLink = styled(StyledNavLink)`
   padding: 0.25rem 0.5rem;
 `
 
+export const loader: LoaderFunction = async ({ request }) => {
+  const response = new Response()
+  const supabase = createServerClient({ request, response })
 
-export const loader: LoaderFunction = async (args) => {
-  const { userId } = await getAuth(args)
+  const {
+    data: { session }
+  } = await supabase.auth.getSession()
 
-  if (userId) {
-    return redirect('/dashboard', 302)
+  if (session) {
+    return redirect(ROUTES.DASHBOARD, {
+      headers: response.headers
+    })
   }
-
-  return null
 }
 
 export default function LandingPage() {

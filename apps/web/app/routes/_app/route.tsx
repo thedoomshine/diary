@@ -1,12 +1,14 @@
-import { createClerkClient } from '@clerk/remix/api.server'
-import { getAuth } from "@clerk/remix/ssr.server"
-import type { LoaderFunction} from "@remix-run/node"
-import { redirect } from "@remix-run/node"
+import { json, redirect } from "@remix-run/node"
 import { Outlet, useLoaderData } from '@remix-run/react'
 
+import type { LoaderFunction } from "@remix-run/node"
+
+import { createServerClient } from '../../utils/db.server'
 
 import styled from 'styled-components'
 import { PrimaryNav } from './primary-nav'
+
+import { ROUTES } from "../@types"
 
 const StyledLayout = styled.div`
   display: flex;
@@ -25,22 +27,35 @@ const StyledMain = styled.main`
   padding: ${({theme}) => theme.space.sm};
 `
 
-export const loader: LoaderFunction = async (args) => {
-  const { userId } = await getAuth(args)
+export const loader: LoaderFunction = async ({ request }) => {
+  const response = new Response()
+  const supabase = createServerClient({ request, response })
 
-  if (!userId) {
-    return redirect('/sign-in', 302)
+  const {
+    data: { session }
+  } = await supabase.auth.getSession()
+
+  if (!session) {
+    return redirect(ROUTES.SIGN_IN, {
+      headers: response.headers
+    })
   }
 
-  const user = await createClerkClient({
-    secretKey: process.env.CLERK_SECRET_KEY
-  }).users.getUser(userId)
+  const { data } = await supabase
+    .from('profiles')
+    .select('*')
+    .eq('id', session.user.id)
 
-  return { serializedUser: JSON.stringify(user) }
+  return json(
+    { user: data, session },
+    {
+      headers: response.headers
+    }
+  )
 }
 
 export default function AppLayout() {
-  const user = useLoaderData()
+  const {user} = useLoaderData()
   console.log(user)
 
   return (

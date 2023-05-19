@@ -1,10 +1,13 @@
 import { NavLink, Outlet, useLocation } from '@remix-run/react'
 import type { LoaderFunction } from '@remix-run/node'
-import { redirect } from '@remix-run/node'
-import { getAuth } from '@clerk/remix/ssr.server'
-import { AUTH_ROUTE } from './@types'
+import { json, redirect } from '@remix-run/node'
+
+import { AUTH_ROUTE, ROUTES } from '../@types'
+
 import styled from 'styled-components'
 import { Icon } from '@bash/design-system'
+
+import { createServerClient } from '../../utils/db.server'
 
 const StyledLayout = styled.div`
   display: flex;
@@ -101,13 +104,26 @@ const RedirectLink: React.FC<AuthLinkProps> = ({ pathname }) => {
   )
 }
 
-export const loader: LoaderFunction = async (args) => {
-  const { userId } = await getAuth(args)
-  if (userId) {
-    return redirect('/dashboard', 302)
+export const loader: LoaderFunction = async ({ request }) => {
+  const response = new Response()
+  const supabase = createServerClient({ request, response })
+
+  const {
+    data: { session }
+  } = await supabase.auth.getSession()
+
+  if (session) {
+    return redirect(ROUTES.DASHBOARD, {
+      headers: response.headers
+    })
   }
 
-  return null
+  return json(
+    { session },
+    {
+      headers: response.headers
+    }
+  )
 }
 
 export default function Auth() {
