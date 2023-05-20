@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import { NavLink, useOutletContext } from '@remix-run/react'
+import { NavLink } from '@remix-run/react'
 import styled from 'styled-components'
 
 import {
@@ -11,9 +11,7 @@ import {
   Selectors,
 } from '@bash/design-system'
 
-import { NAV_LINKS, ROUTES } from '../_auth/@types'
-import { redirect } from '@remix-run/node'
-import type { DBContext } from './route'
+import { NAV_LINKS } from '../_auth/@types'
 
 const StyledIcon = styled(Icon)`
   font-size: ${({ theme }) => theme.fontSize.xl};
@@ -124,8 +122,8 @@ interface User {
 }
 
 interface PrimaryNavProps {
-  user: User,
-  handleSignOut: () => void,
+  user: User
+  handleSignOut: () => void
 }
 
 export const PrimaryNav: FC<PrimaryNavProps> = ({ user, handleSignOut }) => {

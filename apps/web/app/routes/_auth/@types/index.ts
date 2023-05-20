@@ -22,26 +22,26 @@ export const NAV_LINKS = [
   {
     name: 'dashboard',
     route: APP_ROUTES.DASHBOARD,
-    icon: 'home'
+    icon: 'home',
   },
   {
     name: 'explore',
     route: APP_ROUTES.EXPLORE,
-    icon: 'bullhorn'
+    icon: 'bullhorn',
   },
   {
     name: 'notifications',
     route: APP_ROUTES.NOTIFICATIONS,
-    icon: 'bell'
+    icon: 'bell',
   },
   {
     name: 'bookmarks',
     route: APP_ROUTES.BOOKMARKS,
-    icon: 'bookmark'
+    icon: 'bookmark',
   },
   {
     name: 'settings',
     route: APP_ROUTES.SETTINGS,
-    icon: 'gear'
+    icon: 'gear',
   },
 ]

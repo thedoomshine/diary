@@ -1,5 +1,11 @@
 import { FC, ReactNode } from 'react'
-import { Avatar, ButtonStyles, Popover, PopoverContent, PopoverTrigger } from '../elements'
+import {
+  Avatar,
+  ButtonStyles,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '../elements'
 
 import styled from 'styled-components'
 
@@ -39,7 +45,7 @@ const StyledUserDisplayName = styled.span`
 
 const StyledUsername = styled.span`
   color: ${({ theme }) => theme.color.silver};
-  font-size: ${({theme}) => theme.fontSize.sm};
+  font-size: ${({ theme }) => theme.fontSize.sm};
 `
 
 interface AvatarMenuProps {
@@ -50,7 +56,14 @@ interface AvatarMenuProps {
   children?: ReactNode | ReactNode[]
 }
 
-export const AvatarMenu: FC<AvatarMenuProps> = ({ url, displayName, username, initials, children, ...props }) => {
+export const AvatarMenu: FC<AvatarMenuProps> = ({
+  url,
+  displayName,
+  username,
+  initials,
+  children,
+  ...props
+}) => {
   return (
     <Popover>
       <StyledPopoverTrigger {...props}>
@@ -59,7 +72,6 @@ export const AvatarMenu: FC<AvatarMenuProps> = ({ url, displayName, username, in
           <StyledUserDisplayName>{displayName}</StyledUserDisplayName>
           <StyledUsername>@{username}</StyledUsername>
         </StyledUserNames>
-
       </StyledPopoverTrigger>
       {children}
     </Popover>

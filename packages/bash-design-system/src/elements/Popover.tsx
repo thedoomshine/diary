@@ -52,8 +52,9 @@ const slideLeftAndFade = keyframes`
 const StyledPopoverContent = styled(PopoverPrimitive.Content)`
   border-radius: 0.5rem;
   padding: 2rem;
-  background-color: ${({theme}) => theme.color.charcoal};
-  box-shadow: hsl(206 22% 7% / 35%) 0 0.5rem 2rem -0.5rem, hsl(206 22% 7% / 20%) 0 0.5rem 1.5rem -1rem;
+  background-color: ${({ theme }) => theme.color.charcoal};
+  box-shadow: hsl(206 22% 7% / 35%) 0 0.5rem 2rem -0.5rem,
+    hsl(206 22% 7% / 20%) 0 0.5rem 1.5rem -1rem;
   animation-duration: 400ms;
   animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform, opacity;
@@ -62,7 +63,7 @@ const StyledPopoverContent = styled(PopoverPrimitive.Content)`
 
   /* &:focus {
     box-shadow: hsl(206 22% 7% / 35%) 0 0.5rem 2rem -0.5rem, hsl(206 22% 7% / 20%) 0 0.5rem 1.5rem -1rem,
-    0 0 0 0.125rem ${({theme}) => theme.color.purple};
+    0 0 0 0.125rem ${({ theme }) => theme.color.purple};
   } */
 
   &[data-state='open'][data-side='top'] {
@@ -80,27 +81,31 @@ const StyledPopoverContent = styled(PopoverPrimitive.Content)`
 `
 
 const PopoverArrow = styled(PopoverPrimitive.Arrow)`
-  fill: ${({theme}) => theme.color.charcoal};
+  fill: ${({ theme }) => theme.color.charcoal};
 `
 const StyledPopoverClose = styled(PopoverPrimitive.Close)`
   ${ButtonStyles};
   align-items: center;
   justify-content: center;
-  color: ${({theme}) => theme.color.white};
+  color: ${({ theme }) => theme.color.white};
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
 `
 
 type PopoverProps = {
-  children: ReactNode | ReactNode[],
+  children: ReactNode | ReactNode[]
   sideOffset?: number
 }
 
 export const PopoverContent = forwardRef<HTMLDivElement, PopoverProps>(
-  ({ children, sideOffset = 8,  ...props }, forwardedRef) => (
+  ({ children, sideOffset = 8, ...props }, forwardedRef) => (
     <PopoverPrimitive.Portal>
-      <StyledPopoverContent sideOffset={sideOffset} {...props} ref={forwardedRef}>
+      <StyledPopoverContent
+        sideOffset={sideOffset}
+        {...props}
+        ref={forwardedRef}
+      >
         {children}
         <PopoverArrow height={8} width={16} />
       </StyledPopoverContent>
@@ -109,8 +114,8 @@ export const PopoverContent = forwardRef<HTMLDivElement, PopoverProps>(
 )
 
 export const PopoverClose = () => (
-  <StyledPopoverClose aria-label="Close">
-    <Icon name="close" />
+  <StyledPopoverClose aria-label='Close'>
+    <Icon name='close' />
   </StyledPopoverClose>
 )
 

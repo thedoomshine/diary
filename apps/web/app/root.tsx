@@ -14,10 +14,10 @@ import {
   Meta,
   Outlet,
   Scripts,
-  ScrollRestoration
+  ScrollRestoration,
 } from '@remix-run/react'
 
-export const meta: V2_MetaFunction = () => ([{ title: 'bash.' }])
+export const meta: V2_MetaFunction = () => [{ title: 'bash.' }]
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: 'stylesheet', href: cssBundleHref }] : []),

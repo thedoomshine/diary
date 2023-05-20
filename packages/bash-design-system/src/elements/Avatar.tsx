@@ -10,7 +10,7 @@ const AvatarRoot = styled(AvatarPrimitive.Root)`
   vertical-align: middle;
   overflow: hidden;
   user-select: none;
-  font-size: ${({theme}) => theme.fontSize.xl};
+  font-size: ${({ theme }) => theme.fontSize.xl};
   width: 1em;
   height: 1em;
   border-radius: 100%;
@@ -45,12 +45,7 @@ interface AvatarProps {
 
 export const Avatar: FC<AvatarProps> = ({ url, name, initials, ...props }) => (
   <AvatarRoot {...props}>
-    <AvatarImage
-      src={url}
-      alt={name}
-    />
-    <AvatarFallback delayMs={600}>
-      {initials}
-    </AvatarFallback>
+    <AvatarImage src={url} alt={name} />
+    <AvatarFallback delayMs={600}>{initials}</AvatarFallback>
   </AvatarRoot>
-);
+)

@@ -4,10 +4,10 @@ import styled from 'styled-components'
 import { Button } from '@bash/design-system'
 
 const StyledForm = styled(Form)`
-  background-color: ${({theme}) => theme.color.charcoal};
+  background-color: ${({ theme }) => theme.color.charcoal};
   color: ${({ theme }) => theme.color.white};
   border-radius: 0.5rem;
-  box-shadow: 0 .25rem .5rem 0 rgba(0,0,0,0.5);
+  box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 0.5);
   padding: 1rem;
   margin-top: 1rem;
   width: 100%;
@@ -25,8 +25,8 @@ const Label = styled.label`
 `
 
 const Input = styled.input`
-  background-color: ${({theme}) => theme.color.black};
-  color: ${({theme}) => theme.color.white};
+  background-color: ${({ theme }) => theme.color.black};
+  color: ${({ theme }) => theme.color.white};
   width: 100%;
   flex: 1;
   display: inline-flex;
@@ -51,17 +51,17 @@ export default function SignUp() {
     <StyledForm>
       <Fieldset>
         <Label>username or email address</Label>
-        <Input type="text" name="email" />
+        <Input type='text' name='email' />
       </Fieldset>
 
       <Fieldset>
         <Label>password</Label>
-        <Input type="password" name="password" />
+        <Input type='password' name='password' />
       </Fieldset>
 
       <Fieldset>
         <Label>confirm password</Label>
-        <Input type="password" name="confirm-password" />
+        <Input type='password' name='confirm-password' />
       </Fieldset>
 
       <StyledButton>create account</StyledButton>

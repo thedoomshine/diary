@@ -16,21 +16,18 @@ const prefix = ['sm', 'md', 'lg', 'xl', 'xxl', 'xxxl', 'xxxxl']
 // fᵢ = f₀rᶦ
 const TYPE_SCALE = Array.from(
   { length: 7 },
-  (_, i) => `${Number(Math.pow(Math.sqrt(2), (i - 1)).toFixed(4))}em`
+  (_, i) => `${Number(Math.pow(Math.sqrt(2), i - 1).toFixed(4))}em`
 ).reduce((a, v, i) => ({ ...a, [prefix[i]]: v }), {})
 
 export const fontSize = {
   _min: `16px`,
   _max: `22.63px`,
-  ...TYPE_SCALE
+  ...TYPE_SCALE,
 } as const
 
-const FONT_WEIGHT = Array.from(
-  { length: 8 },
-  (_, i) => ((i + 1) * 100).toString()).reduce(
-  (a, v) => ({ ...a, [v]: v }),
-  {}
-)
+const FONT_WEIGHT = Array.from({ length: 8 }, (_, i) =>
+  ((i + 1) * 100).toString()
+).reduce((a, v) => ({ ...a, [v]: v }), {})
 
 export const fontWeight = {
   ...FONT_WEIGHT,

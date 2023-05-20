@@ -15,13 +15,13 @@ import { ServerStyleSheet } from 'styled-components'
 
 import isbot from 'isbot'
 
-import { Head } from './root';
+import { Head } from './root'
 
 const ABORT_DELAY = 5_000
 const COMMON_HEAD = `
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-`;
+`
 
 export default function handleRequest(
   request: Request,
@@ -59,7 +59,8 @@ function handleBotRequest(
           context={remixContext}
           url={request.url}
           abortDelay={ABORT_DELAY}
-        />),
+        />
+      ),
       {
         onAllReady() {
           responseHeaders.set('Content-Type', 'text/html')
@@ -78,7 +79,7 @@ function handleBotRequest(
           const body = new PassThrough()
 
           body.write(
-            `<!DOCTYPE html><html charset="utf8"><head>${COMMON_HEAD}${head}${sheet.getStyleTags()}</head><body><div id="root">`,
+            `<!DOCTYPE html><html charset="utf8"><head>${COMMON_HEAD}${head}${sheet.getStyleTags()}</head><body><div id="root">`
           )
           pipe(body)
           body.write(`</div></body></html>`)
@@ -119,7 +120,8 @@ function handleBrowserRequest(
           context={remixContext}
           url={request.url}
           abortDelay={ABORT_DELAY}
-        />),
+        />
+      ),
       {
         onShellReady() {
           responseHeaders.set('Content-Type', 'text/html')
@@ -138,7 +140,7 @@ function handleBrowserRequest(
           const body = new PassThrough()
 
           body.write(
-            `<!DOCTYPE html><html charset="utf8"><head>${COMMON_HEAD}${head}${sheet.getStyleTags()}</head><body><div id="root">`,
+            `<!DOCTYPE html><html charset="utf8"><head>${COMMON_HEAD}${head}${sheet.getStyleTags()}</head><body><div id="root">`
           )
           pipe(body)
           body.write(`</div></body></html>`)

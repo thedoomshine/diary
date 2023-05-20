@@ -23,8 +23,8 @@ const StyledMain = styled.main`
   align-items: center;
   flex: 1 1 auto;
   width: 100%;
-  padding: ${({theme}) => theme.space.sm};
-  max-width: ${({theme}) => theme.size.md};
+  padding: ${({ theme }) => theme.space.sm};
+  max-width: ${({ theme }) => theme.size.md};
 `
 
 const StyledNavLink = styled(NavLink)`
@@ -39,9 +39,9 @@ const StyledContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${({theme}) => theme.color.charcoal};
-  border-radius: ${({theme}) => theme.space.xxs};
-  box-shadow: 0 .25rem .5rem 0 rgba(0,0,0,0.5);
+  background-color: ${({ theme }) => theme.color.charcoal};
+  border-radius: ${({ theme }) => theme.space.xxs};
+  box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 0.5);
   margin-top: ${({ theme }) => theme.space.md};
   padding: ${({ theme }) => theme.space.xs};
   width: 100%;
@@ -61,7 +61,7 @@ const StyledLogo = styled(Icon)`
 `
 
 const StyledH1 = styled.h1`
-  font-size: ${({theme}) => theme.fontSize.xl};
+  font-size: ${({ theme }) => theme.fontSize.xl};
 `
 
 const HEADER_COPY = {
@@ -79,12 +79,12 @@ const LINK_COPY = {
     cta: 'create an account',
     message: 'new to bash?',
     route: AUTH_ROUTES.SIGN_UP,
-  }
+  },
 } as const
 
 enum AUTH_LINK_ROUTE {
   SIGN_IN = AUTH_ROUTES.SIGN_IN,
-  SIGN_UP = AUTH_ROUTES.SIGN_UP
+  SIGN_UP = AUTH_ROUTES.SIGN_UP,
 }
 
 interface AuthLinkProps {
@@ -107,19 +107,19 @@ export const loader: LoaderFunction = async ({ request }) => {
   const db = createServerClient({ request, response })
 
   const {
-    data: { session }
+    data: { session },
   } = await db.auth.getSession()
 
   if (session) {
     return redirect(ROUTES.DASHBOARD, {
-      headers: response.headers
+      headers: response.headers,
     })
   }
 
   return json(
     { session },
     {
-      headers: response.headers
+      headers: response.headers,
     }
   )
 }
@@ -131,8 +131,8 @@ export default function Auth() {
   return (
     <StyledLayout>
       <StyledMain>
-        <NavLink title="bash." to="/">
-          <StyledLogo name="logo-mobile" />
+        <NavLink title='bash.' to='/'>
+          <StyledLogo name='logo-mobile' />
         </NavLink>
         <StyledH1>{title} bash.</StyledH1>
         <Outlet />

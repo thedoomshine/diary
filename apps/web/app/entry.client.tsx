@@ -15,7 +15,7 @@ function hydrate() {
           <GlobalStyle />
           <RemixBrowser />
         </ThemeProvider>
-      </StrictMode>,
+      </StrictMode>
     )
   })
 }

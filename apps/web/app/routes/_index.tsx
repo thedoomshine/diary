@@ -13,7 +13,7 @@ const StyledLayout = styled.div`
   margin: 0 auto;
   min-height: 100%;
   width: 100%;
-  max-width: ${({theme}) => theme.size.xl};
+  max-width: ${({ theme }) => theme.size.xl};
 `
 
 const StyledHeader = styled.header`
@@ -32,13 +32,13 @@ const StyledMain = styled.main`
   flex-direction: column;
   flex: 1 1 auto;
   width: 100%;
-  padding: ${({theme}) => theme.space.sm};
+  padding: ${({ theme }) => theme.space.sm};
 `
 
 const StyledNavLink = styled(NavLink)`
   ${ButtonStyles};
   flex: 0 1 auto;
-  padding: 0.25rem .5rem;
+  padding: 0.25rem 0.5rem;
   &:last-of-type {
     margin-left: 0.5rem;
   }
@@ -56,20 +56,18 @@ export const loader: LoaderFunction = async ({ request }) => {
   const db = createServerClient({ request, response })
 
   const {
-    data: { session }
+    data: { session },
   } = await db.auth.getSession()
 
   if (session) {
     return redirect(ROUTES.DASHBOARD, {
-      headers: response.headers
+      headers: response.headers,
     })
   }
 
-  return json(
-    {
-      headers: response.headers
-    }
-  )
+  return json({
+    headers: response.headers,
+  })
 }
 
 export default function LandingPage() {
@@ -77,8 +75,8 @@ export default function LandingPage() {
     <StyledLayout>
       <StyledHeader>
         <StyledButtonsContainer>
-          <StyledSignInLink to="/sign-in">sign in</StyledSignInLink>
-          <StyledSignUpLink to="/sign-up">sign up</StyledSignUpLink>
+          <StyledSignInLink to='/sign-in'>sign in</StyledSignInLink>
+          <StyledSignUpLink to='/sign-up'>sign up</StyledSignUpLink>
         </StyledButtonsContainer>
       </StyledHeader>
       <StyledMain>

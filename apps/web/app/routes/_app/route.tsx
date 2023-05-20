@@ -100,10 +100,10 @@ export default function AppLayout() {
   }, [serverAccessToken, db, refreshFetcher])
 
   const handleSignOut = async () => {
-    const { error } = await db.auth.signOut();
+    const { error } = await db.auth.signOut()
 
     if (error) {
-      console.log(error);
+      console.log(error)
     }
   }
 
