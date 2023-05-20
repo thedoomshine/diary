@@ -1,4 +1,4 @@
-export enum APP_ROUTE {
+export enum APP_ROUTES {
   DASHBOARD = '/dashboard',
   EXPLORE = '/explore',
   NOTIFICATIONS = '/notifications',
@@ -7,41 +7,41 @@ export enum APP_ROUTE {
   HOME = '/',
 }
 
-export enum AUTH_ROUTE {
+export enum AUTH_ROUTES {
   SIGN_UP = '/sign-up',
   SIGN_IN = '/sign-in',
   SIGN_OUT = '/sign-out',
 }
 
 export const ROUTES = {
-  ...APP_ROUTE,
-  ...AUTH_ROUTE,
+  ...APP_ROUTES,
+  ...AUTH_ROUTES,
 } as const
 
 export const NAV_LINKS = [
   {
-    name: 'home',
-    route: APP_ROUTE.HOME,
+    name: 'dashboard',
+    route: APP_ROUTES.DASHBOARD,
     icon: 'home'
   },
   {
     name: 'explore',
-    route: APP_ROUTE.EXPLORE,
+    route: APP_ROUTES.EXPLORE,
     icon: 'bullhorn'
   },
   {
     name: 'notifications',
-    route: APP_ROUTE.NOTIFICATIONS,
+    route: APP_ROUTES.NOTIFICATIONS,
     icon: 'bell'
   },
   {
     name: 'bookmarks',
-    route: APP_ROUTE.BOOKMARKS,
+    route: APP_ROUTES.BOOKMARKS,
     icon: 'bookmark'
   },
   {
     name: 'settings',
-    route: APP_ROUTE.SETTINGS,
+    route: APP_ROUTES.SETTINGS,
     icon: 'gear'
   },
 ]

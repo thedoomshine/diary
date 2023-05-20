@@ -10,8 +10,9 @@ const AvatarRoot = styled(AvatarPrimitive.Root)`
   vertical-align: middle;
   overflow: hidden;
   user-select: none;
-  width: 45px;
-  height: 45px;
+  font-size: ${({theme}) => theme.fontSize.xl};
+  width: 1em;
+  height: 1em;
   border-radius: 100%;
   background-color: ${({ theme }) => theme.color.black};
 `
@@ -30,8 +31,8 @@ const AvatarFallback = styled(AvatarPrimitive.Fallback)`
   align-items: center;
   justify-content: center;
   background-color: ${({ theme }) => theme.color.white};
-  color: ${({ theme }) => theme.color.black};
-  font-size: ${({ theme }) => theme.fontSize['0']};
+  color: ${({ theme }) => theme.color.purple};
+  font-size: ${({ theme }) => theme.fontSize.md};
   line-height: 1;
   font-weight: 500;
 `

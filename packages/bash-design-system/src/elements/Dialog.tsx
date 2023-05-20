@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react'
 import styled, { keyframes } from 'styled-components'
 import { rgba } from 'polished'
 
-import { Button, Icon } from '../elements'
+import { Button, Icon } from '.'
 
 const overlayShow = keyframes({
   '0%': { opacity: 0 },

@@ -1,12 +1,9 @@
-import type { RegisterOptions } from "react-hook-form"
 
 const EMAIL_REGEX_PATTERN = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
 const PASSWORD_PATTERN = /^(?=.*\d)(?=.*[!@#$%^&*/\\])(?=.*[a-z])(?=.*[A-Z]).{8,128}$/
 const PHONE_NUMBER_PATTERN = /^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/
 
-export const Validations: {
-  [x: string]: RegisterOptions
-} = {
+export const Validations = {
   emailAddress: {
     required: { value: true, message: "Enter email address" },
     pattern: {

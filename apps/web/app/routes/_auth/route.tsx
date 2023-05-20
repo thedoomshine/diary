@@ -2,12 +2,11 @@ import { NavLink, Outlet, useLocation } from '@remix-run/react'
 import type { LoaderFunction } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
 
-import { AUTH_ROUTE, ROUTES } from '../@types'
-
 import styled from 'styled-components'
 import { Icon } from '@bash/design-system'
 
-import { createServerClient } from '../../utils/db.server'
+import { createServerClient } from '~/services/db.server'
+import { AUTH_ROUTES, ROUTES } from './@types'
 
 const StyledLayout = styled.div`
   display: flex;
@@ -40,9 +39,8 @@ const StyledContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${({theme}) => theme.color.grey};
+  background-color: ${({theme}) => theme.color.charcoal};
   border-radius: ${({theme}) => theme.space.xxs};
-  border: solid 0.0125rem currentColor;
   box-shadow: 0 .25rem .5rem 0 rgba(0,0,0,0.5);
   margin-top: ${({ theme }) => theme.space.md};
   padding: ${({ theme }) => theme.space.xs};
@@ -53,7 +51,7 @@ const StyledLogo = styled(Icon)`
   display: block;
   background-color: ${({ theme }) => theme.color.white};
   color: ${({ theme }) => theme.color.black};
-  font-size: ${({ theme }) => theme.fontSize['3']};
+  font-size: ${({ theme }) => theme.fontSize.xxl};
   height: 2em;
   width: 2em;
   padding: 0.5rem;
@@ -63,30 +61,30 @@ const StyledLogo = styled(Icon)`
 `
 
 const StyledH1 = styled.h1`
-  font-size: ${({theme}) => theme.fontSize['2']};
+  font-size: ${({theme}) => theme.fontSize.xl};
 `
 
 const HEADER_COPY = {
-  [AUTH_ROUTE.SIGN_IN]: 'sign in to',
-  [AUTH_ROUTE.SIGN_UP]: 'sign up for',
+  [AUTH_ROUTES.SIGN_IN]: 'sign in to',
+  [AUTH_ROUTES.SIGN_UP]: 'sign up for',
 } as const
 
 const LINK_COPY = {
-  [AUTH_ROUTE.SIGN_UP]: {
+  [AUTH_ROUTES.SIGN_UP]: {
     cta: 'sign in',
     message: 'already have an account?',
-    route: AUTH_ROUTE.SIGN_IN,
+    route: AUTH_ROUTES.SIGN_IN,
   },
-  [AUTH_ROUTE.SIGN_IN]: {
+  [AUTH_ROUTES.SIGN_IN]: {
     cta: 'create an account',
     message: 'new to bash?',
-    route: AUTH_ROUTE.SIGN_UP,
+    route: AUTH_ROUTES.SIGN_UP,
   }
 } as const
 
 enum AUTH_LINK_ROUTE {
-  SIGN_IN = AUTH_ROUTE.SIGN_IN,
-  SIGN_UP = AUTH_ROUTE.SIGN_UP
+  SIGN_IN = AUTH_ROUTES.SIGN_IN,
+  SIGN_UP = AUTH_ROUTES.SIGN_UP
 }
 
 interface AuthLinkProps {
@@ -106,11 +104,11 @@ const RedirectLink: React.FC<AuthLinkProps> = ({ pathname }) => {
 
 export const loader: LoaderFunction = async ({ request }) => {
   const response = new Response()
-  const supabase = createServerClient({ request, response })
+  const db = createServerClient({ request, response })
 
   const {
     data: { session }
-  } = await supabase.auth.getSession()
+  } = await db.auth.getSession()
 
   if (session) {
     return redirect(ROUTES.DASHBOARD, {

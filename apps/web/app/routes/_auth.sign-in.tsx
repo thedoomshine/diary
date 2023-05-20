@@ -1,20 +1,17 @@
 
-import { redirect } from '@remix-run/node'
-import type { ActionArgs, LoaderFunction } from '@remix-run/node'
+import { json, redirect } from '@remix-run/node'
+import type { ActionFunction } from '@remix-run/node'
 import { Form, useActionData, useNavigation } from '@remix-run/react'
 
 import styled from 'styled-components'
 import { Button } from '@bash/design-system'
 
-import type { APIResponseError } from './_auth/utils/errors'
-import { parseError } from './_auth/utils/errors'
-import { Validations } from './_auth/utils/formValidations'
-import { ROUTES } from './@types/index'
+import { createServerClient } from '~/services/db.server'
+import { ROUTES } from './_auth/@types/index'
 
 const StyledForm = styled(Form)`
-  background-color: ${({theme}) => theme.color.grey};
+  background-color: ${({theme}) => theme.color.charcoal};
   color: ${({theme}) => theme.color.white};
-  border: solid 0.0125rem currentColor;
   border-radius: 0.5rem;
   box-shadow: 0 .25rem .5rem 0 rgba(0,0,0,0.5);
   padding: 1rem;
@@ -41,21 +38,44 @@ const Input = styled.input`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: solid 0.0125rem currentColor;
-  border-radius: 0.25rem;
+  border-radius: 0.5rem;
   padding: 0.5rem;
-  font-size: ${({theme}) => theme.fontSize['1']};
+  font-size: ${({theme}) => theme.fontSize.sm};
   margin-top: 0.25rem;
   line-height: 1;
 `
 
 const StyledButton = styled(Button)`
-  background-color: ${({ theme }) => theme.color.purple};
+  color: ${({ theme }) => theme.color.black};
+  font-weight: ${({ theme }) => theme.fontWeight['800']};
+  background-color: ${({ theme }) => theme.color.yellow};
   width: 100%;
 `
 
-export const action = () => {
+export const action: ActionFunction = async ({ request }) => {
+  const response = new Response()
+  const db = createServerClient({ request, response })
 
+  const form = await request.formData()
+  const email = form.get('email') || ''
+  const password = form.get('password') || ''
+
+  const { data: { user, session }, error } = await db.auth.signInWithPassword({ email, password })
+
+  if (user) {
+    redirect(ROUTES.DASHBOARD)
+  }
+
+  if (error) {
+    return error
+  }
+
+  return json(
+    { session },
+    {
+      headers: response.headers
+    }
+  )
 }
 
 export default function SignIn() {

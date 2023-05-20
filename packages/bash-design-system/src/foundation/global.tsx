@@ -12,18 +12,18 @@ export const GlobalStyle = createGlobalStyle`
     font-smooth: antialiased;
     background-color: ${color.black};
     color: ${color.white};
-    font-size: ${fluidType(size.sm, size.xl, fontSize.min, fontSize.max)};
+    font-size: ${fluidType(size.sm, size.xl, fontSize._min, fontSize._max)};
     height: 100vh;
     display: flex;
-    line-height: 1.15;
   }
 
   body {
     display: flex;
     font-family: ${font.sans};
     font-style: normal;
-    font-weight: ${({ theme }) => theme.fontSize[`400`]};
-    line-height: 1.5;
+    font-size: ${({ theme }) => theme.fontSize.md};
+    font-weight: ${({ theme }) => theme.fontWeight[`400`]};
+    line-height: 1.15;
     margin: 0;
     flex: 1 1 auto;
     overflow: auto;
@@ -41,31 +41,31 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   h1 {
-    font-size: ${({ theme }) => theme.fontSize[`6`]}
+    font-size: ${({ theme }) => theme.fontSize.xxxxl}
   }
 
   h2 {
-    font-size: ${({ theme }) => theme.fontSize[`5`]}
+    font-size: ${({ theme }) => theme.fontSize.xxxl}
   }
 
   h3 {
-    font-size: ${({ theme }) => theme.fontSize[`4`]}
+    font-size: ${({ theme }) => theme.fontSize.xxl}
   }
 
   h4 {
-    font-size: ${({ theme }) => theme.fontSize[`3`]}
+    font-size: ${({ theme }) => theme.fontSize.xl}
   }
 
   h5 {
-    font-size: ${({ theme }) => theme.fontSize[`2`]}
+    font-size: ${({ theme }) => theme.fontSize.lg}
   }
 
-  h6 {
-    font-size: ${({ theme }) => theme.fontSize[`1`]}
+  small {
+    font-size: ${({ theme }) => theme.fontSize.sm};
   }
 
   a {
-    color: ${color.blue};
+    color: ${color.yellow};
     text-decoration: underline;
   }
 `

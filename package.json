@@ -4,7 +4,7 @@
   "scripts": {
     "turbo": "dotenv -- turbo",
     "build": "turbo run build",
-    "dev": "turbo run dev --no-cache  --continue",
+    "dev": "turbo run dev --parallel --no-cache --continue",
     "lint": "turbo run lint",
     "lint:report": "turbo run lint:report",
     "lint:fix": "turbo run lint:fix",
@@ -28,7 +28,7 @@
     "polished": "^4.2.2",
     "prettier": "latest",
     "prettier-config-bash": "workspace:*",
-    "turbo": "^1.9.6"
+    "turbo": "^1.9.8"
   },
   "dependencies": {
     "@types/react": "^18.2.5",
