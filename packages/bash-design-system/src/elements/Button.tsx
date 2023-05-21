@@ -1,4 +1,8 @@
-import { forwardRef, HTMLProps, MutableRefObject } from 'react'
+import {
+  forwardRef,
+  HTMLProps,
+  MutableRefObject,
+} from 'react'
 import { rgba } from 'polished'
 import styled, { css } from 'styled-components'
 
@@ -46,7 +50,7 @@ export const ButtonStyles = css`
   align-items: center;
   justify-content: center;
   border-radius: 0.5rem;
-  border-width: 0.0125rem;
+  border-width: 0.125rem;
   border-style: solid;
   border-color: transparent;
   padding: 0.5rem;
@@ -89,4 +93,35 @@ export const OutlineButtonStyles = css`
 
 export const OutlineButton = styled(Button)`
   ${OutlineButtonStyles};
+`
+
+export const FillButtonStyles = css`
+  ${ButtonStyles};
+  display: flex;
+  perspective: 64rem;
+  border-color: ${({ theme }) => theme.color.black};
+  color: ${({ theme }) => theme.color.black};
+  background-color: ${({ theme }) => theme.color.yellow};
+  font-weight: ${({ theme }) => theme.fontWeight['800']};
+  transition-property: box-shadow, transform;
+  transition-duration: 0.25s;
+  will-change: box-shadow, transform;
+
+  ${Selectors.HOVER} {
+    background-color: ${({ theme }) => theme.color.yellow};
+    box-shadow: 0px 0px 0 ${({ theme }) => theme.color.black},
+      -1px 1px 0 ${({ theme }) => theme.color.black},
+      -2px 2px 0 ${({ theme }) => theme.color.black},
+      -3px 3px 0 ${({ theme }) => theme.color.black},
+      -4px 4px 0 ${({ theme }) => theme.color.black},
+      -5px 5px 0 ${({ theme }) => theme.color.black},
+      -6px 6px 0 ${({ theme }) => theme.color.black},
+      -7px 7px 0 ${({ theme }) => theme.color.black},
+      -8px 8px 0 ${({ theme }) => theme.color.black};
+    transform: translate(8px, -8px);
+  }
+`
+
+export const FillButton = styled(Button)`
+  ${FillButtonStyles};
 `

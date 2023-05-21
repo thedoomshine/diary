@@ -3,7 +3,7 @@ import type { ActionFunction } from '@remix-run/node'
 import { Form, useActionData, useNavigation } from '@remix-run/react'
 
 import styled from 'styled-components'
-import { Button } from '@bash/design-system'
+import { FillButton } from '@bash/design-system'
 
 import { createServerClient } from '~/services/db.server'
 import { ROUTES } from './_auth/@types/index'
@@ -44,10 +44,7 @@ const Input = styled.input`
   line-height: 1;
 `
 
-const StyledButton = styled(Button)`
-  color: ${({ theme }) => theme.color.black};
-  font-weight: ${({ theme }) => theme.fontWeight['800']};
-  background-color: ${({ theme }) => theme.color.yellow};
+const StyledButton = styled(FillButton)`
   width: 100%;
 `
 
