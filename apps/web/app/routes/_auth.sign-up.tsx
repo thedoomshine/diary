@@ -1,7 +1,11 @@
-import { Form } from '@remix-run/react'
+import { Form, useActionData, useNavigation } from '@remix-run/react'
 
 import styled from 'styled-components'
-import { Button } from '@bash/design-system'
+import { FillButton, Input } from '@bash/design-system'
+import type { ActionFunction } from '@remix-run/node'
+import { json, redirect } from '@remix-run/node'
+import { ROUTES } from './_auth/@types'
+import { createServerClient } from '~/services'
 
 const StyledForm = styled(Form)`
   background-color: ${({ theme }) => theme.color.charcoal};
@@ -20,51 +24,80 @@ const Fieldset = styled.fieldset`
   margin-bottom: 1rem;
 `
 
-const Label = styled.label`
-  font-size: 1rem;
-`
-
-const Input = styled.input`
-  background-color: ${({ theme }) => theme.color.black};
-  color: ${({ theme }) => theme.color.white};
-  width: 100%;
-  flex: 1;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 0.5rem;
-  padding: 0.5rem;
-  font-size: ${({ theme }) => theme.fontSize.sm};
-  margin-top: 0.25rem;
-  line-height: 1;
-`
-
-const StyledButton = styled(Button)`
-  color: ${({ theme }) => theme.color.black};
-  font-weight: ${({ theme }) => theme.fontWeight['800']};
-  background-color: ${({ theme }) => theme.color.yellow};
+const StyledButton = styled(FillButton)`
   width: 100%;
 `
+
+export const action: ActionFunction = async ({ request }) => {
+  const response = new Response()
+  const db = createServerClient({ request, response })
+
+  const form = await request.formData()
+  const email = form.get('email') || ''
+  const password = form.get('password') || ''
+
+  const {
+    data: { user, session },
+    error,
+  } = await db.auth.signInWithPassword({ email, password })
+
+  if (user) {
+    redirect(ROUTES.DASHBOARD)
+  }
+
+  if (error) {
+    return error
+  }
+
+  return json(
+    { session },
+    {
+      headers: response.headers,
+    }
+  )
+}
 
 export default function SignUp() {
+  const formData = useActionData<typeof action>()
+  const navigation = useNavigation()
+
+  const isSubmitting = navigation.state === 'submitting'
+
   return (
     <StyledForm>
       <Fieldset>
-        <Label>username or email address</Label>
-        <Input type='text' name='email' />
+        <Input
+          label='email address'
+          name='email'
+          type='email'
+          defaultValue={formData?.values?.email}
+          error={formData?.errors?.email}
+        />
       </Fieldset>
 
       <Fieldset>
-        <Label>password</Label>
-        <Input type='password' name='password' />
+        <Input
+          label='password'
+          name='password'
+          type='password'
+          defaultValue={formData?.values?.password}
+          error={formData?.errors?.password}
+        />
       </Fieldset>
 
       <Fieldset>
-        <Label>confirm password</Label>
-        <Input type='password' name='confirm-password' />
+        <Input
+          label='password'
+          name='confirm-password'
+          type='password'
+          defaultValue={formData?.values?.confirmPassword}
+          error={formData?.errors?.confirmPassword}
+        />
       </Fieldset>
 
-      <StyledButton>create account</StyledButton>
+      <StyledButton disabled={isSubmitting} type='submit'>
+        create account
+      </StyledButton>
     </StyledForm>
   )
 }

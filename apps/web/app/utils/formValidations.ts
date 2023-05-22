@@ -1,11 +1,12 @@
-const EMAIL_REGEX_PATTERN = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
+const EMAIL_REGEX_PATTERN =
+  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
 const PASSWORD_PATTERN =
   /^(?=.*\d)(?=.*[!@#$%^&*/\\])(?=.*[a-z])(?=.*[A-Z]).{8,128}$/
 const PHONE_NUMBER_PATTERN =
   /^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/
 
 export const Validations = {
-  emailAddress: {
+  email: {
     required: { value: true, message: 'Enter email address' },
     pattern: {
       value: EMAIL_REGEX_PATTERN,

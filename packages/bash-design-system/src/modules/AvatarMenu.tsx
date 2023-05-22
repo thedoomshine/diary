@@ -2,6 +2,7 @@ import { FC, ReactNode } from 'react'
 import {
   Avatar,
   ButtonStyles,
+  Icon,
   Popover,
   PopoverContent,
   PopoverTrigger,
@@ -13,6 +14,7 @@ const StyledPopoverTrigger = styled(PopoverTrigger)`
   ${ButtonStyles};
   display: flex;
   align-items: center;
+  justify-content: space-between;
   width: 100%;
   border-radius: 0.5rem;
 `
@@ -48,6 +50,12 @@ const StyledUsername = styled.span`
   font-size: ${({ theme }) => theme.fontSize.sm};
 `
 
+const StyledIcon = styled(Icon)`
+  align-self: center;
+  justify-self: flex-end;
+  font-size: ${({ theme }) => theme.fontSize.sm};
+`
+
 interface AvatarMenuProps {
   url?: string
   username?: string
@@ -72,6 +80,7 @@ export const AvatarMenu: FC<AvatarMenuProps> = ({
           <StyledUserDisplayName>{displayName}</StyledUserDisplayName>
           <StyledUsername>@{username}</StyledUsername>
         </StyledUserNames>
+        <StyledIcon name='ellipses' />
       </StyledPopoverTrigger>
       {children}
     </Popover>

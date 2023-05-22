@@ -29,9 +29,6 @@
     "format": {
       "outputs": []
     },
-    "format:write": {
-      "outputs": []
-    },
     "generate": {
       "dependsOn": ["^generate"],
       "outputs": []
@@ -41,14 +38,6 @@
       "inputs": ["!supabase"],
       "outputs": []
     },
-    "lint:fix": {
-      "dependsOn": ["format:write"],
-      "outputs": []
-    },
-    "lint:report": {
-      "dependsOn": ["format"],
-      "outputs": ["lint-results/**"]
-    },
     "preview": {
       "outputs": []
     },
@@ -56,10 +45,6 @@
       "outputs": []
     },
     "supabase#lint": {
-      "dependsOn": ["supabase#start", "format"],
-      "outputs": []
-    },
-    "supabase#lint:report": {
       "dependsOn": ["supabase#start", "format"],
       "outputs": []
     },

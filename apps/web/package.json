@@ -5,10 +5,8 @@
   "scripts": {
     "build": "remix build",
     "dev": "dotenv -e ../../.env.local remix dev",
-    "format": "prettier '*/**.{ts,tsx,js,jsx,json}'",
-    "format:check": "yarn format --check",
-    "format:fix": "yarn format --write",
-    "lint": "TIMING=1 eslint \"**/*.{ts,tsx,js,jsx}\" --fix",
+    "format": "prettier \"**/*.{ts,tsx,js,jsx,json}\" --write",
+    "lint": "eslint --ext \"**/*.{ts,tsx,js,jsx}\" --fix",
     "typecheck": "tsc"
   },
   "dependencies": {

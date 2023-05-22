@@ -16,10 +16,8 @@
     "build": "tsup src/index.tsx --format esm,cjs --dts --external react",
     "clean": "rm -rf dist",
     "dev": "tsup src/index.tsx --format esm,cjs --watch --dts --external react",
-    "format": "prettier '*/**.{ts,tsx,js,jsx,json}'",
-    "format:check": "yarn format --check",
-    "format:fix": "yarn format --write",
-    "lint": "TIMING=1 eslint \"**/*.{ts,tsx,js,jsx}\" --fix",
+    "format": "prettier \"**/*.{ts,tsx,js,jsx,json}\" --write",
+    "lint": "eslint --ext \"**/*.{ts,tsx,js,jsx}\" --fix",
     "types": "tsc"
   },
   "dependencies": {

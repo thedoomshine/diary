@@ -1,10 +1,8 @@
-import {
-  forwardRef,
-  HTMLProps,
-  MutableRefObject,
-} from 'react'
+import { forwardRef, HTMLProps, MutableRefObject } from 'react'
 import { rgba } from 'polished'
 import styled, { css } from 'styled-components'
+
+import { ButtonSelectors } from '../utils'
 
 export type ButtonBaseElements = HTMLAnchorElement | HTMLButtonElement
 export type ButtonBaseRef =
@@ -17,31 +15,6 @@ export type ButtonBaseElementProps = HTMLProps<
 > & {
   as?: never
   ref?: ButtonBaseRef
-}
-
-export enum ButtonSelectors {
-  HOVER = '&:hover',
-  ACTIVE = '&:active',
-  FOCUS = '&:focus',
-  DISABLED = "[disabled], &:disabled, &[aria-disabled='true']",
-  FOCUS_VISIBLE = ' &:focus-visible',
-  OUTLINE = '&::before',
-  OUTLINE_FOCUS_VISIBLE = '&:focus-visible::before',
-  SHADOW = '&::after',
-  SHADOW_HOVER = '&:hover::after',
-  SHADOW_ACTIVE = '&:active::after',
-  SHADOW_DISABLED = "[disabled]::after, &:disabled::after, &[aria-disabled='true']::after",
-}
-
-export enum Selectors {
-  AFTER = '&::after',
-  BEFORE = '&::before',
-  HOVER = '&:hover',
-  FOCUS = '&:focus',
-  ACTIVE = '&[active], &:active, &.active',
-  DISABLED = '&[disabled], &:disabled, &.disabled',
-  FOCUS_VISIBLE = '&:focus-visible',
-  VISITED = '&:visited',
 }
 
 export const ButtonStyles = css`
@@ -107,7 +80,7 @@ export const FillButtonStyles = css`
   transition-duration: 0.25s;
   will-change: box-shadow, transform;
 
-  ${Selectors.HOVER} {
+  ${ButtonSelectors.HOVER} {
     background-color: ${({ theme }) => theme.color.yellow};
     box-shadow: 0px 0px 0 ${({ theme }) => theme.color.black},
       -1px 1px 0 ${({ theme }) => theme.color.black},

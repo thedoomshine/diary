@@ -3,7 +3,7 @@ import type { ActionFunction } from '@remix-run/node'
 import { Form, useActionData, useNavigation } from '@remix-run/react'
 
 import styled from 'styled-components'
-import { FillButton } from '@bash/design-system'
+import { FillButton, Input } from '@bash/design-system'
 
 import { createServerClient } from '~/services/db.server'
 import { ROUTES } from './_auth/@types/index'
@@ -23,25 +23,6 @@ const Fieldset = styled.fieldset`
   flex-direction: column;
   gap: 20;
   margin-bottom: 1rem;
-`
-
-const Label = styled.label`
-  font-size: 1rem;
-`
-
-const Input = styled.input`
-  background-color: ${({ theme }) => theme.color.black};
-  color: ${({ theme }) => theme.color.white};
-  width: 100%;
-  flex: 1;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 0.5rem;
-  padding: 0.5rem;
-  font-size: ${({ theme }) => theme.fontSize.sm};
-  margin-top: 0.25rem;
-  line-height: 1;
 `
 
 const StyledButton = styled(FillButton)`
@@ -86,24 +67,22 @@ export default function SignIn() {
   return (
     <StyledForm method='post'>
       <Fieldset disabled={isSubmitting}>
-        <Label htmlFor='email'>email address</Label>
         <Input
-          type='text'
-          id='email'
+          label='email address'
           name='email'
+          type='email'
           defaultValue={formData?.values?.email}
-          aria-invalid={Boolean(formData?.errors?.email)}
+          error={formData?.errors?.email}
         />
       </Fieldset>
 
       <Fieldset disabled={isSubmitting}>
-        <Label htmlFor='password'>password</Label>
         <Input
-          type='password'
-          id='password'
+          label='password'
           name='password'
+          type='password'
           defaultValue={formData?.values?.password}
-          aria-invalid={Boolean(formData?.errors?.password)}
+          error={formData?.errors?.password}
         />
       </Fieldset>
 
