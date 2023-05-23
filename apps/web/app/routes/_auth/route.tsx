@@ -24,7 +24,7 @@ const StyledMain = styled.main`
   flex: 1 1 auto;
   width: 100%;
   padding: ${({ theme }) => theme.space.sm};
-  max-width: ${({ theme }) => theme.size.md};
+  max-width: 24rem;
 `
 
 const StyledNavLink = styled(NavLink)`
@@ -33,6 +33,16 @@ const StyledNavLink = styled(NavLink)`
   &:hover {
     text-decoration: underline;
   }
+`
+
+const OutletWrapper = styled.div`
+  background-color: ${({ theme }) => theme.color.charcoal};
+  color: ${({ theme }) => theme.color.white};
+  border-radius: 0.5rem;
+  box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 0.5);
+  padding: 1.5rem 1rem;
+  margin-top: 1rem;
+  width: 100%;
 `
 
 const StyledContainer = styled.div`
@@ -51,9 +61,7 @@ const StyledLogo = styled(Icon)`
   display: block;
   background-color: ${({ theme }) => theme.color.white};
   color: ${({ theme }) => theme.color.black};
-  font-size: ${({ theme }) => theme.fontSize.xxl};
-  height: 2em;
-  width: 2em;
+  font-size: ${({ theme }) => theme.fontSize.xxxl};
   padding: 0.5rem;
   border-radius: 0.5rem;
   margin-bottom: 2rem;
@@ -97,7 +105,7 @@ const RedirectLink: React.FC<AuthLinkProps> = ({ pathname }) => {
   return (
     <StyledContainer>
       {message}
-      <StyledNavLink to={route}>{cta}.</StyledNavLink>
+      <StyledNavLink to={route}>{cta}</StyledNavLink>
     </StyledContainer>
   )
 }
@@ -135,7 +143,9 @@ export default function Auth() {
           <StyledLogo name='logo-mobile' />
         </NavLink>
         <StyledH1>{title} bash.</StyledH1>
-        <Outlet />
+        <OutletWrapper>
+          <Outlet />
+        </OutletWrapper>
         <RedirectLink pathname={pathname as AUTH_LINK_ROUTE} />
       </StyledMain>
     </StyledLayout>

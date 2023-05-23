@@ -82,7 +82,7 @@ export default function AppLayout() {
   useEffect(() => {
     const {
       data: { subscription },
-    } = db.auth.onAuthStateChange((event, session) => {
+    } = db.auth.onAuthStateChange((_, session) => {
       if (
         session?.access_token !== serverAccessToken &&
         refreshFetcher.state === 'idle'

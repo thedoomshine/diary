@@ -16,7 +16,7 @@ const prefix = ['sm', 'md', 'lg', 'xl', 'xxl', 'xxxl', 'xxxxl']
 // fᵢ = f₀rᶦ
 const TYPE_SCALE = Array.from(
   { length: 7 },
-  (_, i) => `${Number(Math.pow(Math.sqrt(2), i - 1).toFixed(4))}em`
+  (_, i) => `${Number(Math.pow(Math.sqrt(2), i - 1).toFixed(4))}rem`
 ).reduce((a, v, i) => ({ ...a, [prefix[i]]: v }), {})
 
 export const fontSize = {

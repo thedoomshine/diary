@@ -7,7 +7,6 @@ interface IconProperties {
   viewBox?: string
   title?: string
   role?: string
-  size?: '16' | '24' | '32' | '40' | '64'
   name: string
 }
 
@@ -23,24 +22,19 @@ const StyledSVG = styled.svg`
 `
 
 export const Icon: React.FC<IconProperties> = ({
-  viewBox,
+  viewBox = '0 0 32 32',
   title,
   name,
+  role = 'img',
   ...props
 }) => {
   const iconName = name as IconNames
   const icon = Icons[iconName]
 
   return (
-    <StyledSVG viewBox={viewBox} {...props}>
+    <StyledSVG viewBox={viewBox} role={role} {...props}>
       {title && <title>{title}</title>}
       {icon}
     </StyledSVG>
   )
-}
-
-Icon.defaultProps = {
-  viewBox: '0 0 32 32',
-  size: '32',
-  role: 'img',
 }

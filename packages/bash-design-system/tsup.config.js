@@ -1,6 +1,6 @@
 import { defineConfig } from 'tsup'
 
-export default defineConfig(() => ({
+export default defineConfig(options => ({
   clean: true,
   dts: true,
   entry: ['src/index.tsx'],
@@ -11,5 +11,5 @@ export default defineConfig(() => ({
   sourcemap: true,
   splitting: true,
   treeshake: true,
-  minify: true,
+  minify: !options.watch,
 }))

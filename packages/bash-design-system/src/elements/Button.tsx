@@ -72,7 +72,6 @@ export const FillButtonStyles = css`
   ${ButtonStyles};
   display: flex;
   perspective: 64rem;
-  border-color: ${({ theme }) => theme.color.black};
   color: ${({ theme }) => theme.color.black};
   background-color: ${({ theme }) => theme.color.yellow};
   font-weight: ${({ theme }) => theme.fontWeight['800']};
