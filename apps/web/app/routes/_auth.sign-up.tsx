@@ -10,12 +10,6 @@ import { createServerClient } from '~/services/db.server'
 import { ROUTES } from './_auth/@types/index'
 import { ErrorMessages, Validations, validateField } from '~/utils'
 
-const Fieldset = styled.fieldset`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 0.75rem;
-`
-
 const StyledButton = styled(FillButton)`
   padding: 0.5rem 1rem;
   margin: auto;
@@ -29,6 +23,14 @@ const ErrorMessage = styled.span`
   margin-top: 0.5em;
   margin-left: 0.5em;
   margin-bottom: 1em;
+
+  span {
+    display: none;
+
+    &:has(> :not(:focus):not(:placeholder-shown):invalid) {
+      display: flex;
+    }
+  }
 `
 
 const ErrorIcon = styled(Icon)`
@@ -95,42 +97,38 @@ export default function SignIn() {
 
   return (
     <Form method='post' noValidate onFocus={handleFocus}>
-      <Fieldset disabled={isSubmitting}>
-        <Input
-          label='email address'
-          name='email'
-          type='email'
-          placeholder='hello@bashapp.co'
-          defaultValue={formData?.values?.email}
-          serverError={formData?.errors.email}
-          errorMessages={ErrorMessages.email}
-          pattern={Validations.email.pattern.value.source}
-          required={Validations.password.required.value}
-        />
-      </Fieldset>
+      <Input
+        label='email address'
+        name='email'
+        type='email'
+        placeholder='hello@bashapp.co'
+        defaultValue={formData?.values?.email}
+        serverError={formData?.errors.email}
+        errorMessages={ErrorMessages.email}
+        pattern={Validations.email.pattern.value.source}
+        required={Validations.password.required.value}
+        disabled={isSubmitting}
+      />
 
-      <Fieldset disabled={isSubmitting}>
-        <Input
-          label='password'
-          name='password'
-          type='password'
-          placeholder='••••••••••••'
-          defaultValue={formData?.values?.password}
-          serverError={formData?.errors.password}
-          errorMessages={ErrorMessages.password}
-          pattern={Validations.password.pattern.value.source}
-          required={Validations.password.required.value}
-          minLength={Validations.password.minLength.value}
-          maxLength={Validations.password.maxLength.value}
-        />
-      </Fieldset>
+      <Input
+        label='password'
+        name='password'
+        type='password'
+        placeholder='••••••••••••'
+        defaultValue={formData?.values?.password}
+        serverError={formData?.errors.password}
+        errorMessages={ErrorMessages.password}
+        pattern={Validations.password.pattern.value.source}
+        required={Validations.password.required.value}
+        minLength={Validations.password.minLength.value}
+        maxLength={Validations.password.maxLength.value}
+        disabled={isSubmitting}
+      />
 
       <ErrorMessage aria-live='polite'>
-        {showError && (
-          <>
-            <ErrorIcon name='error' /> {formData?.errors?.global}
-          </>
-        )}
+        <span>
+          <ErrorIcon name='error' /> {formData?.errors?.global}
+        </span>
       </ErrorMessage>
 
       <StyledButton disabled={isSubmitting} type='submit'>

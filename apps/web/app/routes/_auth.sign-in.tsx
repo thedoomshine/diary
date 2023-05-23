@@ -29,6 +29,14 @@ const ErrorMessage = styled.span`
   margin-top: 0.5em;
   margin-left: 0.5em;
   margin-bottom: 1em;
+
+  span {
+    display: none;
+
+    &:has(> :not(:focus):not(:placeholder-shown):invalid) {
+      display: flex;
+    }
+  }
 `
 
 const ErrorIcon = styled(Icon)`
@@ -97,7 +105,7 @@ export default function SignIn() {
 
   return (
     <Form method='post' noValidate onFocus={handleFocus}>
-      <Fieldset disabled={isSubmitting}>
+      <Fieldset>
         <Input
           label='email address'
           name='email'
@@ -108,10 +116,11 @@ export default function SignIn() {
           errorMessages={ErrorMessages.email}
           pattern={Validations.email.pattern.value.source}
           required={Validations.password.required.value}
+          disabled={isSubmitting}
         />
       </Fieldset>
 
-      <Fieldset disabled={isSubmitting}>
+      <Fieldset>
         <Input
           label='password'
           name='password'
@@ -124,15 +133,14 @@ export default function SignIn() {
           required={Validations.password.required.value}
           minLength={Validations.password.minLength.value}
           maxLength={Validations.password.maxLength.value}
+          disabled={isSubmitting}
         />
       </Fieldset>
 
       <ErrorMessage aria-live='polite'>
-        {showError && (
-          <>
-            <ErrorIcon name='error' /> {formData?.errors?.global}
-          </>
-        )}
+        <span>
+          <ErrorIcon name='error' /> {formData?.errors?.global}
+        </span>
       </ErrorMessage>
 
       <StyledButton disabled={isSubmitting} type='submit'>

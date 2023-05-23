@@ -51,9 +51,13 @@ const StyledUsername = styled.span`
 `
 
 const StyledIcon = styled(Icon)`
+  display: none;
   align-self: center;
   justify-self: flex-end;
   font-size: ${({ theme }) => theme.fontSize.sm};
+  @media ${({ theme }) => theme.media.lg} {
+    display: block;
+  }
 `
 
 interface AvatarMenuProps {

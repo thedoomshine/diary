@@ -1,6 +1,6 @@
 /* eslint-disable no-empty-character-class */
 const EMAIL_REGEX_PATTERN =
-  /([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|"([]!#-[^-~ \t]|(\\[\t -~]))+")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])/
+  /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
 
 const PASSWORD_PATTERN =
   /^(?=.*\d)(?=.*[!@#$%^&*/\\])(?=.*[a-z])(?=.*[A-Z]).{8,128}$/
@@ -10,11 +10,11 @@ const PHONE_NUMBER_PATTERN =
 
 export const ErrorMessages = {
   email: {
-    required: 'please enter an email address',
+    required: 'please enter a valid email address',
     pattern: 'please enter a valid email address',
   },
   phone: {
-    required: 'please enter a phone number',
+    required: 'please enter a valid phone number',
     pattern: 'please enter a valid phone number',
   },
   password: {

@@ -21,7 +21,7 @@ const TYPE_SCALE = Array.from(
 
 export const fontSize = {
   _min: `16px`,
-  _max: `22.63px`,
+  _max: `24px`,
   ...TYPE_SCALE,
 } as const
 

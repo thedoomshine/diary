@@ -16,7 +16,7 @@ const StyledLabel = styled.label`
   margin-left: 0.25em;
   margin-bottom: 0.25em;
 
-  &:has(+ * > :not(:focus):not(:placeholder-shown):invalid) {
+  &:has(~ * > [data-input-error-message]:not(:placeholder-shown)) {
     color: ${({ theme }) => theme.color.red};
   }
 `
@@ -33,7 +33,7 @@ const InputWrapper = styled.div`
   position: relative;
   font-size: ${({ theme }) => theme.fontSize.md};
 
-  &:has(:not(:focus):not(:placeholder-shown):invalid) {
+  &:has(~ * > [data-input-error-message]:not(:placeholder-shown)) {
     border-color: ${({ theme }) => theme.color.red};
   }
 `
@@ -70,12 +70,18 @@ const ErrorMessage = styled.div`
   color: ${({ theme }) => theme.color.red};
   margin-top: 0.5em;
   margin-left: 0.5em;
+  height: 1.25em;
 `
 
 const ErrorIcon = styled(Icon)`
+  display: none;
   font-size: inherit;
   margin-right: 0.5em;
   height: 1.25em;
+
+  &:has(~ :not(:placeholder-shown)) {
+    display: block;
+  }
 `
 
 interface InputProps {
@@ -131,13 +137,13 @@ export const Input: FC<InputProps> = ({
   label,
   name,
   pattern,
-  placeholder = '',
+  placeholder,
   required,
   title,
   type = 'text',
   prefixIcon,
   suffixIcon,
-  serverError = '',
+  serverError,
   ...props
 }) => {
   const ref = useRef<HTMLInputElement>(null)
@@ -210,7 +216,7 @@ export const Input: FC<InputProps> = ({
           title={title}
           type={getInputType()}
           onBlur={handleValidate}
-          onInput={handleInput}
+          onChange={handleInput}
           ref={ref}
           {...props}
         />
@@ -221,11 +227,16 @@ export const Input: FC<InputProps> = ({
         )}
       </InputWrapper>
       <ErrorMessage aria-live='polite'>
-        {showError && (
-          <>
-            <ErrorIcon name='error' /> {error}
-          </>
-        )}
+        <ErrorIcon name='error' />{' '}
+        <StyledInput
+          aria-readonly
+          data-input-error-message
+          disabled
+          placeholder=' '
+          readOnly
+          tabIndex={-1}
+          value={error}
+        />
       </ErrorMessage>
     </InputContainer>
   )
