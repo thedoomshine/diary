@@ -55,6 +55,7 @@ const StyledIcon = styled(Icon)`
   align-self: center;
   justify-self: flex-end;
   font-size: ${({ theme }) => theme.fontSize.sm};
+  margin-right: 0.25rem;
   @media ${({ theme }) => theme.media.lg} {
     display: block;
   }

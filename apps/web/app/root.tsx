@@ -17,9 +17,36 @@ import {
   ScrollRestoration,
 } from '@remix-run/react'
 
+const ICONS = [
+  {
+    rel: 'apple-touch-icon',
+    sizes: '180x180',
+    href: '/favicon/apple-touch-icon.png',
+  },
+  {
+    rel: 'icon',
+    type: 'image/png',
+    sizes: '32x32',
+    href: '/favicon/favicon-32x32.png',
+  },
+  {
+    rel: 'icon',
+    type: 'image/png',
+    sizes: '16x16',
+    href: '/favicon/favicon-16x16.png',
+  },
+  {
+    rel: 'icon',
+    type: 'image/x-icon',
+    href: 'favicon.ico',
+  },
+  { rel: 'manifest', href: '/favicon/site.webmanifest' },
+]
+
 export const meta: V2_MetaFunction = () => [{ title: 'bash.' }]
 
 export const links: LinksFunction = () => [
+  ...ICONS,
   ...(cssBundleHref ? [{ rel: 'stylesheet', href: cssBundleHref }] : []),
   {
     rel: 'preconnect',

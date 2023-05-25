@@ -22,7 +22,7 @@ export const NAV_LINKS = [
   {
     name: 'dashboard',
     route: APP_ROUTES.DASHBOARD,
-    icon: 'home',
+    icon: 'calendar',
   },
   {
     name: 'explore',

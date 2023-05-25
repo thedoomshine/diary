@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
 import { json, redirect } from '@remix-run/node'
+import { parse } from 'cache-control-parser'
 import { Outlet, useFetcher, useLoaderData } from '@remix-run/react'
 import type { SupabaseClient } from '@supabase/auth-helpers-remix'
 import { createBrowserClient } from '@supabase/auth-helpers-remix'
 
-import type { LoaderFunction, Session } from '@remix-run/node'
+import type { LoaderFunction, Session, HeadersFunction } from '@remix-run/node'
 
 import styled from 'styled-components'
 
@@ -36,6 +37,17 @@ export type MaybeSession = Session | null
 export type DBContext = {
   db: TypedSupabaseClient
   session: MaybeSession
+}
+
+export const headers: HeadersFunction = ({ loaderHeaders, parentHeaders }) => {
+  const loaderCache = parse(loaderHeaders.get('Cache-Control') || '') || 0
+  const parentCache = parse(parentHeaders.get('Cache-Control') || '') || 0
+
+  const maxAge = Math.min(loaderCache['max-age']!, parentCache['max-age']!)
+
+  return {
+    'Cache-Control': `max-age=${maxAge}`,
+  }
 }
 
 export const loader: LoaderFunction = async ({ request }) => {

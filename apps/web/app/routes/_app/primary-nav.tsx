@@ -23,6 +23,9 @@ const StyledIcon = styled(Icon)`
 const StyledLogo = styled.h1`
   font-size: ${({ theme }) => theme.fontSize.xxl};
   display: none;
+  .accent {
+    color: ${({ theme }) => theme.color.yellow};
+  }
   @media ${({ theme }) => theme.media.lg} {
     display: inline-block;
   }
@@ -127,15 +130,17 @@ interface PrimaryNavProps {
 }
 
 export const PrimaryNav: FC<PrimaryNavProps> = ({ user, handleSignOut }) => {
-  const userNameFirstLetter = user?.display_name.charAt(0).toUpperCase()
+  const userNameFirstLetter = user?.display_name.charAt(0).toLocaleLowerCase()
 
   return (
     <StyledHeader>
-      <StyledLogo id='logo'>bash.</StyledLogo>
+      <StyledLogo id='logo'>
+        bash<span className='accent'>.</span>
+      </StyledLogo>
       <StyledMobileLogo name='logo-mobile' aria-hidden />
       <StyledNav aria-labelledby='logo'>
         {NAV_LINKS.map(({ icon, name, route }) => (
-          <StyledNavLink key={name} to={`${route}`}>
+          <StyledNavLink key={name} to={`${route}`} prefetch='intent'>
             {({ isActive }) => (
               <>
                 <StyledNavIcon
