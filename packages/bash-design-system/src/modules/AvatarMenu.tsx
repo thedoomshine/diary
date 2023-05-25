@@ -16,7 +16,7 @@ const StyledPopoverTrigger = styled(PopoverTrigger)`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  border-radius: 0.5rem;
+  border-radius: 2rem;
 `
 
 const StyledAvatar = styled(Avatar)`

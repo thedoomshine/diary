@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import type { FC } from 'react'
-import { differenceInDays } from 'date-fns'
 import styled, { css } from 'styled-components'
+import { rgba } from 'polished'
 
 const Container = styled.div`
   width: 100%;
@@ -10,9 +10,9 @@ const Container = styled.div`
 const CalendarLayoutStyles = css`
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  grid-gap: 1em;
+  grid-gap: 0.5em;
   margin: 0 auto;
-  max-width: 64em;
+  max-width: 100%;
   padding: 0;
 `
 
@@ -28,7 +28,33 @@ const WeekdayHeader = styled.ul`
 const CalendarDays = styled.ol`
   ${CalendarLayoutStyles}
   li {
-    background-color: ${({ theme }) => theme.color.charcoal};
+    aspect-ratio: 1;
+    backdrop-filter: blur(0.125rem);
+    box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 0.5);
+    position: relative;
+
+    &:before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      content: '';
+      height: 100%;
+      width: 100%;
+      opacity: 0.125;
+      backdrop-filter: blur(0.125rem);
+      background: linear-gradient(
+          0,
+          ${({ theme }) => theme.color.black},
+          ${({ theme }) => rgba(theme.color.grey, 0)}
+        ),
+        url("data:image/svg+xml,%3C!-- svg: first layer --%3E%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='4' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
+    &.current-month {
+      background-color: ${({ theme }) => rgba(theme.color.grey, 0.5)};
+    }
   }
 `
 
@@ -38,36 +64,37 @@ const CalendarCell = styled.li`
   justify-content: center;
   list-style: none;
   margin-left: 0;
-  height: 4vw;
+  border-radius: 0.5rem;
+  overflow: hidden;
 `
 
 const WEEK_DAYS = [
   {
-    abbrv: 's',
+    abbrv: 'sun',
     name: 'sunday',
   },
   {
-    abbrv: 'm',
+    abbrv: 'mon',
     name: 'monday',
   },
   {
-    abbrv: 't',
+    abbrv: 'tues',
     name: 'tuesday',
   },
   {
-    abbrv: 'w',
+    abbrv: 'wed',
     name: 'wednesday',
   },
   {
-    abbrv: 'th',
+    abbrv: 'thurs',
     name: 'thursday',
   },
   {
-    abbrv: 'f',
+    abbrv: 'fri',
     name: 'friday',
   },
   {
-    abbrv: 's',
+    abbrv: 'sat',
     name: 'saturday',
   },
 ] as const
@@ -105,26 +132,20 @@ export const Calendar: FC<CalendarProps> = ({
   year = new Date().getFullYear(),
   view = CalendarView.MONTH,
 }) => {
-  const monthName = new Date(year, month, 1).toLocaleString('default', {
-    month: 'long',
-  })
+  const monthName = new Date(year, month, 1)
+    .toLocaleString('default', {
+      month: 'long',
+    })
+    .toLocaleLowerCase()
 
-  const getLastSunday = () => {
-    const date = new Date(year, month, 1, 12)
-    const weekday = date.getDay()
-    const dayDiff = weekday === 0 ? 7 : weekday
-    date.setDate(date.getDate() - dayDiff)
-    return date.toDateString()
-  }
+  const daysOfWeek = useMemo(() => {
+    const firstOfMonth = new Date(year, month, 1).getDay()
 
-  const daysOfWeek = useMemo(
-    () =>
-      Array.from(
-        Array(new Date(year, month, 0).getDate()),
-        (e, i) => new Date(year, month, i + 1)
-      ),
-    [year, month]
-  )
+    return Array.from(
+      Array(35), // exactly 5 weeks, getting us up to the last sunday of the last month and the first saturday of the next month
+      (e, i) => new Date(year, month, -firstOfMonth + 1 + i)
+    )
+  }, [year, month])
 
   return (
     <Container>
@@ -143,7 +164,12 @@ export const Calendar: FC<CalendarProps> = ({
       </WeekdayHeader>
       <CalendarDays>
         {daysOfWeek.map(date => (
-          <CalendarCell key={date.getDate()}>{date.getDate()}</CalendarCell>
+          <CalendarCell
+            key={`${date.getMonth()} ${date.getDate()}`}
+            className={date.getMonth() === month ? `current-month` : ''}
+          >
+            {date.getDate()}
+          </CalendarCell>
         ))}
       </CalendarDays>
     </Container>
