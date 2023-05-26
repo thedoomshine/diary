@@ -3,11 +3,6 @@ import { cssBundleHref } from '@remix-run/css-bundle'
 import type { LinksFunction } from '@remix-run/node'
 import type { V2_MetaFunction } from '@remix-run/react'
 
-import { createHead } from 'remix-island'
-
-import { ThemeProvider } from 'styled-components'
-import { GlobalStyle, theme } from '@bash/design-system'
-
 import {
   Links,
   LiveReload,
@@ -15,7 +10,23 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  isRouteErrorResponse,
+  useNavigate,
+  useRouteError,
 } from '@remix-run/react'
+
+import { createHead } from 'remix-island'
+
+import styled, { ThemeProvider } from 'styled-components'
+import { Button, GlobalStyle, Icon, theme } from '@bash/design-system'
+
+const StyledMain = styled.main`
+  padding: 1rem;
+`
+
+const StyledIcon = styled(Icon)`
+  margin-right: 0.5rem;
+`
 
 const ICONS = [
   {
@@ -84,3 +95,49 @@ function App() {
 }
 
 export default App
+
+const getErrorMessage = (error: Error | unknown) => {
+  if (isRouteErrorResponse(error)) {
+    return (
+      <>
+        <h1>
+          {error.status} {error.statusText.toLocaleLowerCase()}
+        </h1>
+        <p>{error.data.toLocaleLowerCase()}</p>
+      </>
+    )
+  } else if (error instanceof Error) {
+    return (
+      <>
+        <h1>error</h1>
+        <p>{error.message.toLocaleLowerCase()}</p>
+        <p>the stack trace is:</p>
+        <pre>{error.stack?.toLocaleLowerCase()}</pre>
+      </>
+    )
+  } else {
+    return <h1>Unknown Error</h1>
+  }
+}
+
+export function ErrorBoundary() {
+  const error = useRouteError()
+  const navigate = useNavigate()
+  const goBack = () => navigate(-1)
+
+  return (
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      <Head />
+      <StyledMain>
+        <Button onClick={goBack}>
+          <StyledIcon name='arrow-left' /> go back to safety
+        </Button>
+        {getErrorMessage(error)}
+      </StyledMain>
+      <ScrollRestoration />
+      <Scripts />
+      <LiveReload />
+    </ThemeProvider>
+  )
+}

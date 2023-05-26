@@ -5,8 +5,17 @@ import styled, { css } from 'styled-components'
 import { rgba } from 'polished'
 import cn from 'classnames'
 
+import { grainyGradient } from '@bash/design-system'
+import { CalendarView } from './@types'
+
 const Container = styled.div`
   width: 100%;
+`
+
+const StyledH1 = styled.h1`
+  text-align: right;
+  align-self: flex-end;
+  margin-top: 0.125em;
 `
 
 const CalendarLayoutStyles = css`
@@ -47,12 +56,7 @@ const CalendarDays = styled.ol`
       width: 100%;
       opacity: 0.125;
       border-radius: 0.5rem;
-      background: linear-gradient(
-          0,
-          ${({ theme }) => rgba(theme.color.black, 0.5)},
-          ${({ theme }) => rgba(theme.color.white, 0)}
-        ),
-        url("data:image/svg+xml,%3C!-- svg: first layer --%3E%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      ${grainyGradient()};
     }
 
     &.current-month {
@@ -76,24 +80,18 @@ const CalendarCell = styled.li`
   border-radius: 0.5rem;
 `
 
-enum CalendarView {
-  DAY = 'day',
-  WEEK = 'week',
-  MONTH = 'month',
-  YEAR = 'year',
-}
-
 interface CalendarProps {
-  month?: number
-  year?: number
+  activeDate: Date
   view?: CalendarView
 }
 
 export const Calendar: FC<CalendarProps> = ({
-  month = new Date().getMonth(),
-  year = new Date().getFullYear(),
+  activeDate,
   view = CalendarView.MONTH,
 }) => {
+  const year = activeDate.getFullYear()
+  const month = activeDate.getMonth()
+
   const FIRST_OF_MONTH = useMemo(
     () => new Date(year, month, 1).getDay(),
     [year, month]
@@ -125,9 +123,10 @@ export const Calendar: FC<CalendarProps> = ({
     [year, month, FIRST_OF_MONTH]
   )
 
-  const monthName = new Date(year, month, 1)
+  const title = new Date(year, month, 1)
     .toLocaleString('default', {
       month: 'short',
+      year: 'numeric',
     })
     .toLocaleLowerCase()
 
@@ -142,11 +141,7 @@ export const Calendar: FC<CalendarProps> = ({
 
   return (
     <Container>
-      <header>
-        <h1>
-          {monthName} {year}
-        </h1>
-      </header>
+      <StyledH1>{title}</StyledH1>
 
       <WeekdayHeader>
         {DAYS_OF_THE_WEEK.map(({ abbrv, name }) => (

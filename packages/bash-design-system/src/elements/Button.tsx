@@ -41,7 +41,16 @@ export const StyledButton = styled.button`
 
 export const Button = forwardRef<ButtonBaseElements, any>(
   (
-    { href, disabled, children, role, type = 'button', classNames, ...rest },
+    {
+      href,
+      disabled,
+      children,
+      onClick,
+      role,
+      type = 'button',
+      classNames,
+      ...rest
+    },
     ref
   ) => (
     <StyledButton
@@ -52,6 +61,7 @@ export const Button = forwardRef<ButtonBaseElements, any>(
       type={type}
       disabled={disabled}
       classNames={classNames}
+      onClick={onClick}
       {...rest}
     >
       {children}
@@ -66,6 +76,7 @@ export const OutlineButtonStyles = css`
 
 export const OutlineButton = styled(Button)`
   ${OutlineButtonStyles};
+  padding: 0.5rem 0.75rem;
 `
 
 export const FillButtonStyles = css`

@@ -1,5 +1,5 @@
 export enum APP_ROUTES {
-  DASHBOARD = '/dashboard',
+  DASHBOARD = '/dashboard/month',
   EXPLORE = '/explore',
   NOTIFICATIONS = '/notifications',
   BOOKMARKS = '/bookmarks',

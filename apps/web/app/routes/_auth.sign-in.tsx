@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import { json, redirect } from '@remix-run/node'
 import type { ActionFunction } from '@remix-run/node'
 import { Form, useActionData, useNavigation } from '@remix-run/react'
@@ -91,20 +90,10 @@ export default function SignIn() {
   const formData = useActionData<typeof action>()
   const navigation = useNavigation()
 
-  const [showError, setShowError] = useState(Boolean(formData?.errors.global))
-
-  useEffect(() => {
-    setShowError(Boolean(formData?.errors.global))
-  }, [formData])
-
-  const handleFocus = () => {
-    setShowError(false)
-  }
-
   const isSubmitting = navigation.state === 'submitting'
 
   return (
-    <Form method='post' noValidate onFocus={handleFocus}>
+    <Form method='post' noValidate>
       <Fieldset>
         <Input
           label='email address'
