@@ -35,7 +35,7 @@ const StyledUserNames = styled.div`
   margin-left: 0.5rem;
   line-height: 1;
 
-  @media ${({ theme }) => theme.media.lg} {
+  @media ${({ theme }) => theme.media.xl} {
     display: flex;
   }
 `
@@ -56,7 +56,7 @@ const StyledIcon = styled(Icon)`
   justify-self: flex-end;
   font-size: ${({ theme }) => theme.fontSize.sm};
   margin-right: 0.25rem;
-  @media ${({ theme }) => theme.media.lg} {
+  @media ${({ theme }) => theme.media.xl} {
     display: block;
   }
 `

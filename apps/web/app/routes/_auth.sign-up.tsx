@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import { FillButton, Icon, Input } from '@bash/design-system'
 
 import { createServerClient } from '~/services/db.server'
-import { ROUTES } from './_auth/@types/index'
+import { ROUTES } from './types'
 import { ErrorMessages, Validations, validateField } from '~/utils'
 
 const StyledButton = styled(FillButton)`
@@ -70,7 +70,7 @@ export const action: ActionFunction = async ({ request }) => {
   }
 
   if (user) {
-    return redirect(ROUTES.DASHBOARD, { headers: response.headers })
+    return redirect(ROUTES.CALENDAR, { headers: response.headers })
   }
 
   return json({
@@ -85,7 +85,7 @@ export default function SignIn() {
   const isSubmitting = navigation.state === 'submitting'
 
   return (
-    <Form method='post' noValidate onFocus={handleFocus}>
+    <Form method='post' noValidate>
       <Input
         label='email address'
         name='email'

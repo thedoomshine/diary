@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import { FillButton, Icon, Input } from '@bash/design-system'
 
 import { createServerClient } from '~/services/db.server'
-import { ROUTES } from './_auth/@types/index'
+import { ROUTES } from './types'
 import { ErrorMessages, Validations, validateField } from '~/utils'
 
 const Fieldset = styled.fieldset`
@@ -75,7 +75,7 @@ export const action: ActionFunction = async ({ request }) => {
   }
 
   if (user) {
-    return redirect(ROUTES.DASHBOARD, { headers: response.headers })
+    return redirect(ROUTES.CALENDAR, { headers: response.headers })
   }
 
   return json(

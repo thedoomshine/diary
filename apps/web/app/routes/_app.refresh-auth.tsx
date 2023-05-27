@@ -1,7 +1,7 @@
 import type { ActionFunction } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
 import { createServerClient } from '~/services/db.server'
-import { ROUTES } from './_auth/@types'
+import { ROUTES } from './types'
 
 export const action: ActionFunction = async ({ request }) => {
   const response = new Response()
@@ -12,7 +12,7 @@ export const action: ActionFunction = async ({ request }) => {
   } = await db.auth.getSession()
 
   if (session) {
-    return redirect(ROUTES.DASHBOARD, {
+    return redirect(ROUTES.CALENDAR, {
       headers: response.headers,
     })
   } else {

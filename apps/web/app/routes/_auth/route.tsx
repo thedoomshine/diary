@@ -3,10 +3,10 @@ import type { LoaderFunction } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
 
 import styled from 'styled-components'
-import { Icon } from '@bash/design-system'
+import { Icon, grainyGradientPseudo } from '@bash/design-system'
 
 import { createServerClient } from '~/services/db.server'
-import { AUTH_ROUTES, ROUTES } from './@types'
+import { AUTH_ROUTES, ROUTES } from '../types'
 
 const StyledLayout = styled.div`
   display: flex;
@@ -43,6 +43,8 @@ const OutletWrapper = styled.div`
   padding: 1.5rem 1rem;
   margin-top: 1rem;
   width: 100%;
+
+  ${grainyGradientPseudo()}
 `
 
 const StyledContainer = styled.div`
@@ -59,13 +61,10 @@ const StyledContainer = styled.div`
 
 const StyledLogo = styled(Icon)`
   display: block;
-  background-color: ${({ theme }) => theme.color.white};
-  color: ${({ theme }) => theme.color.black};
-  font-size: ${({ theme }) => theme.fontSize.xxxl};
+  font-size: ${({ theme }) => theme.fontSize.xxxxl};
   padding: 0.5rem;
   border-radius: 0.5rem;
   margin-bottom: 2rem;
-  overflow: visible;
 `
 
 const StyledH1 = styled.h1`
@@ -119,7 +118,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   } = await db.auth.getSession()
 
   if (session) {
-    return redirect(ROUTES.DASHBOARD, {
+    return redirect(ROUTES.CALENDAR, {
       headers: response.headers,
     })
   }

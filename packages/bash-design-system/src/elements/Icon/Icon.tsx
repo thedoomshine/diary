@@ -32,7 +32,7 @@ export const Icon: React.FC<IconProperties> = ({
   const icon = Icons[iconName]
 
   return (
-    <StyledSVG viewBox={viewBox} role={role} {...props}>
+    <StyledSVG viewBox={viewBox} role={role} fill='none' {...props}>
       {title && <title>{title}</title>}
       {icon}
     </StyledSVG>

@@ -1,5 +1,5 @@
 export enum APP_ROUTES {
-  DASHBOARD = '/dashboard/month',
+  CALENDAR = '/calendar',
   EXPLORE = '/explore',
   NOTIFICATIONS = '/notifications',
   BOOKMARKS = '/bookmarks',
@@ -13,6 +13,27 @@ export enum AUTH_ROUTES {
   SIGN_OUT = '/sign-out',
 }
 
+export enum CALENDAR_ROUTES {
+  MONTH = '/month',
+  WEEK = '/week',
+  DAY = '/day',
+}
+
+export const CALENDAR_LINKS = [
+  {
+    name: 'month',
+    route: CALENDAR_ROUTES.MONTH,
+  },
+  {
+    name: 'week',
+    route: CALENDAR_ROUTES.WEEK,
+  },
+  {
+    name: 'day',
+    route: CALENDAR_ROUTES.DAY,
+  },
+]
+
 export const ROUTES = {
   ...APP_ROUTES,
   ...AUTH_ROUTES,
@@ -20,9 +41,10 @@ export const ROUTES = {
 
 export const NAV_LINKS = [
   {
-    name: 'dashboard',
-    route: APP_ROUTES.DASHBOARD,
+    name: 'calendar',
+    route: `${APP_ROUTES.CALENDAR}`,
     icon: 'calendar',
+    links: CALENDAR_LINKS,
   },
   {
     name: 'explore',

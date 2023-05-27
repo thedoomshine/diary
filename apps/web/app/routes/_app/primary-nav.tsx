@@ -11,11 +11,12 @@ import {
   Selectors,
 } from '@bash/design-system'
 
-import { NAV_LINKS } from '../_auth/@types'
+import { NAV_LINKS } from '../types'
+import cn from 'classnames'
 
 const StyledIcon = styled(Icon)`
   font-size: ${({ theme }) => theme.fontSize.xl};
-  @media ${({ theme }) => theme.media.lg} {
+  @media ${({ theme }) => theme.media.xl} {
     font-size: ${({ theme }) => theme.fontSize.lg};
   }
 `
@@ -26,7 +27,7 @@ const StyledLogo = styled.h1`
   .accent {
     color: ${({ theme }) => theme.color.yellow};
   }
-  @media ${({ theme }) => theme.media.lg} {
+  @media ${({ theme }) => theme.media.xl} {
     display: inline-block;
   }
 `
@@ -34,7 +35,7 @@ const StyledLogo = styled.h1`
 const StyledMobileLogo = styled(StyledIcon)`
   font-size: ${({ theme }) => theme.fontSize.xxl};
   margin: 0 auto 1rem;
-  @media ${({ theme }) => theme.media.lg} {
+  @media ${({ theme }) => theme.media.xl} {
     display: none;
   }
 `
@@ -42,12 +43,12 @@ const StyledMobileLogo = styled(StyledIcon)`
 const StyledHeader = styled.header`
   display: flex;
   flex-direction: column;
-  flex: 1 1 auto;
+  flex: 0 0 auto;
   padding: ${({ theme }) => `${theme.space.sm} ${theme.space.xs}`};
   position: relative;
   height: 100%;
-  @media ${({ theme }) => theme.media.lg} {
-    width: 100%;
+  @media ${({ theme }) => theme.media.xl} {
+    flex: 1 0 auto;
     max-width: 14rem;
   }
 `
@@ -58,6 +59,49 @@ const StyledNav = styled.nav`
   align-items: flex-start;
 
   font-size: ${({ theme }) => theme.fontSize.md};
+`
+
+const NavLinkWrapper = styled.div`
+  &:not(:has(> .active)) ul {
+    height: 0;
+  }
+
+  &:has(> .active) ul.visible {
+    height: 6.5rem;
+    transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
+  }
+
+  ul {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    height: 0;
+    justify-content: flex-start;
+    overflow: hidden;
+    padding-left: 0;
+    transition: height 250ms cubic-bezier(0, 0, 0.2, 1);
+    will-change: height;
+    text-align: center;
+
+    li a {
+      display: block;
+      text-decoration: none;
+      padding: 0.5rem 0;
+
+      &.active {
+        font-weight: ${({ theme }) => theme.fontWeight['800']};
+        text-decoration: underline;
+      }
+    }
+  }
+
+  @media ${({ theme }) => theme.media.xl} {
+    ul {
+      padding-left: 2.75rem;
+      list-style: disc;
+      text-align: left;
+    }
+  }
 `
 
 const StyledNavLink = styled(NavLink)`
@@ -78,20 +122,20 @@ const StyledNavLink = styled(NavLink)`
 
   margin-top: 0.5em;
 
-  @media ${({ theme }) => theme.media.lg} {
+  @media ${({ theme }) => theme.media.xl} {
     padding: 0.25rem 0.75rem 0.25rem 0.5rem;
   }
 `
 
 const StyledNavIcon = styled(StyledIcon)`
-  @media ${({ theme }) => theme.media.lg} {
+  @media ${({ theme }) => theme.media.xl} {
     margin-right: 0.5em;
   }
 `
 
 const StyledLinkName = styled.span`
   display: none;
-  @media ${({ theme }) => theme.media.lg} {
+  @media ${({ theme }) => theme.media.xl} {
     display: inline-block;
   }
 `
@@ -139,18 +183,32 @@ export const PrimaryNav: FC<PrimaryNavProps> = ({ user, handleSignOut }) => {
       </StyledLogo>
       <StyledMobileLogo name='logo-mobile' aria-hidden />
       <StyledNav aria-labelledby='logo'>
-        {NAV_LINKS.map(({ icon, name, route }) => (
-          <StyledNavLink key={name} to={`${route}`} prefetch='intent'>
-            {({ isActive }) => (
-              <>
-                <StyledNavIcon
-                  name={isActive ? `${icon}-filled` : icon}
-                  aria-hidden
-                />
-                <StyledLinkName>{name}</StyledLinkName>
-              </>
-            )}
-          </StyledNavLink>
+        {NAV_LINKS.map(({ icon, name, route, links }) => (
+          <NavLinkWrapper key={name}>
+            <StyledNavLink to={`${route}`} prefetch='intent'>
+              {({ isActive }) => (
+                <>
+                  <StyledNavIcon
+                    name={isActive ? `${icon}-filled` : icon}
+                    aria-hidden
+                  />
+                  <StyledLinkName>{name}</StyledLinkName>
+                </>
+              )}
+            </StyledNavLink>
+            <ul
+              className={cn({
+                visible: Boolean(links),
+              })}
+            >
+              {links &&
+                links.map(({ name: linkName, route: linkRoute }) => (
+                  <li key={linkName}>
+                    <NavLink to={`${route}${linkRoute}`}>{linkName}</NavLink>
+                  </li>
+                ))}
+            </ul>
+          </NavLinkWrapper>
         ))}
       </StyledNav>
       {user && (

@@ -11,7 +11,6 @@ import {
   slideRightAndFade,
 } from '../utils'
 
-
 const StyledPopoverContent = styled(PopoverPrimitive.Content)`
   border-radius: 0.5rem;
   padding: 2rem;

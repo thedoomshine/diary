@@ -9,5 +9,4 @@ module.exports = {
   arrowParens: 'avoid',
   jsxSingleQuote: true,
   trailingComma: 'es5',
-  noUselessEscape: false,
 }

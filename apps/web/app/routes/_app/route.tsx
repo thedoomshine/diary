@@ -12,23 +12,24 @@ import styled from 'styled-components'
 import { PrimaryNav } from './primary-nav'
 import type { Database } from '~/services/db.server'
 import { createServerClient } from '~/services/db.server'
-import { ROUTES } from '../_auth/@types'
+import { ROUTES } from '../types'
 
 const StyledLayout = styled.div`
   display: flex;
+  flex: 1 1 auto;
   margin: 0 auto;
-  min-height: 100%;
   width: 100%;
-  max-width: ${({ theme }) => theme.size.xl};
+  min-height: 100%;
+  max-width: ${({ theme }) => theme.size.xxl};
 `
 
 const StyledMain = styled.main`
+  display: flex;
+  flex-direction: column;
   border: solid 0.0125rem ${({ theme }) => theme.color.grey};
   border-top: 0;
   border-bottom: 0;
   flex: 1 1 auto;
-  width: 100%;
-  padding: ${({ theme }) => theme.space.sm};
 `
 
 export type TypedSupabaseClient = SupabaseClient<Database>

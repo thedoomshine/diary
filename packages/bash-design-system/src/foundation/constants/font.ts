@@ -10,19 +10,34 @@ export const font = {
   serif: `'Playfair Display', ${FONT_FALLBACK.SERIF}`,
 } as const
 
-const prefix = ['sm', 'md', 'lg', 'xl', 'xxl', 'xxxl', 'xxxxl']
+enum FontPrefix {
+  sm = 'sm',
+  md = 'md',
+  lg = 'lg',
+  xl = 'xl',
+  xxl = 'xxl',
+  xxxl = 'xxxl',
+  xxxxl = 'xxxxl',
+}
+
+type TypescaleType = {
+  readonly [key in FontPrefix]: string
+}
 
 // typographic scale formula
 // fᵢ = f₀rᶦ
-const TYPE_SCALE = Array.from(
+const TYPESCALE = Array.from(
   { length: 7 },
   (_, i) => `${Number(Math.pow(Math.sqrt(2), i - 1).toFixed(4))}rem`
-).reduce((a, v, i) => ({ ...a, [prefix[i]]: v }), {})
+).reduce(
+  (a, v, i) => ({ ...a, [Object.values(FontPrefix)[i]]: v }),
+  {} as TypescaleType
+)
 
 export const fontSize = {
-  _min: `16px`,
-  _max: `24px`,
-  ...TYPE_SCALE,
+  _min: '16px',
+  _max: '20px',
+  ...TYPESCALE,
 } as const
 
 const FONT_WEIGHT = Array.from({ length: 8 }, (_, i) =>

@@ -3,6 +3,7 @@ export const size = {
   md: `480px`,
   lg: `768px`,
   xl: `1280px`,
+  xxl: `1440px`,
 } as const
 
 export const media = {
@@ -10,6 +11,7 @@ export const media = {
   md: `(min-width: ${size.md})`,
   lg: `(min-width: ${size.lg})`,
   xl: `(min-width: ${size.xl})`,
+  xxl: `(min-width: ${size.xxl})`,
 } as const
 
 export const space = {

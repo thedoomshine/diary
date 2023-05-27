@@ -5,14 +5,14 @@ import { json, redirect } from '@remix-run/node'
 import styled from 'styled-components'
 import { ButtonStyles, OutlineButtonStyles } from '@bash/design-system'
 import { createServerClient } from '~/services/db.server'
-import { ROUTES } from './_auth/@types'
+import { ROUTES } from './types'
 
 const StyledLayout = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 auto;
   min-height: 100%;
-  width: 100%;
+  flex: 1 1 auto;
   max-width: ${({ theme }) => theme.size.xl};
 `
 
@@ -31,7 +31,6 @@ const StyledMain = styled.main`
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
-  width: 100%;
   padding: ${({ theme }) => theme.space.sm};
 `
 
@@ -60,7 +59,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   } = await db.auth.getSession()
 
   if (session) {
-    return redirect(ROUTES.DASHBOARD, {
+    return redirect(ROUTES.CALENDAR, {
       headers: response.headers,
     })
   }
