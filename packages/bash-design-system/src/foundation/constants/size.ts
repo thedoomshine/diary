@@ -15,6 +15,7 @@ export const media = {
 } as const
 
 export const space = {
+  xxxs: '.25rem',
   xxs: '.5rem',
   xs: '.75rem',
   sm: '1rem',

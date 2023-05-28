@@ -4,6 +4,7 @@ import * as AvatarPrimitive from '@radix-ui/react-avatar'
 import styled from 'styled-components'
 
 const AvatarRoot = styled(AvatarPrimitive.Root)`
+  aspect-ratio: 1;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -30,7 +31,7 @@ const AvatarFallback = styled(AvatarPrimitive.Fallback)`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${({ theme }) => theme.color.white};
+  background-color: ${({ theme }) => theme.color.charcoal};
   color: ${({ theme }) => theme.color.purple};
   font-size: ${({ theme }) => theme.fontSize.md};
   line-height: 1;

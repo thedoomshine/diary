@@ -5,6 +5,7 @@ export enum APP_ROUTES {
   BOOKMARKS = '/bookmarks',
   SETTINGS = '/settings',
   HOME = '/',
+  PROFILE = '/',
 }
 
 export enum AUTH_ROUTES {
@@ -65,5 +66,10 @@ export const NAV_LINKS = [
     name: 'settings',
     route: APP_ROUTES.SETTINGS,
     icon: 'gear',
+  },
+  {
+    name: 'profile',
+    route: APP_ROUTES.PROFILE,
+    icon: 'user',
   },
 ]

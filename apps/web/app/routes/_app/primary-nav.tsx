@@ -11,7 +11,7 @@ import {
   Selectors,
 } from '@bash/design-system'
 
-import { NAV_LINKS } from '../types'
+import { APP_ROUTES, NAV_LINKS } from '../types'
 import cn from 'classnames'
 
 const StyledIcon = styled(Icon)`
@@ -176,6 +176,9 @@ interface PrimaryNavProps {
 export const PrimaryNav: FC<PrimaryNavProps> = ({ user, handleSignOut }) => {
   const userNameFirstLetter = user?.display_name.charAt(0).toLocaleLowerCase()
 
+  const getRouteUrl = (name, route) =>
+    name === 'profile' ? `${user.username}` : route
+
   return (
     <StyledHeader>
       <StyledLogo id='logo'>
@@ -185,7 +188,7 @@ export const PrimaryNav: FC<PrimaryNavProps> = ({ user, handleSignOut }) => {
       <StyledNav aria-labelledby='logo'>
         {NAV_LINKS.map(({ icon, name, route, links }) => (
           <NavLinkWrapper key={name}>
-            <StyledNavLink to={`${route}`} prefetch='intent'>
+            <StyledNavLink to={getRouteUrl(name, route)} prefetch='intent'>
               {({ isActive }) => (
                 <>
                   <StyledNavIcon

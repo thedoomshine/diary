@@ -92,6 +92,9 @@ importers:
       react-dom:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
+      react-page-visibility:
+        specifier: ^7.0.0
+        version: 7.0.0(react@18.2.0)
       remix-auth:
         specifier: ^3.4.0
         version: 3.4.0(@remix-run/react@1.16.1)(@remix-run/server-runtime@1.7.5)
@@ -7667,6 +7670,16 @@ packages:
 
   /react-is@17.0.2:
     resolution: {integrity: sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==}
+
+  /react-page-visibility@7.0.0(react@18.2.0):
+    resolution: {integrity: sha512-d4Kq/8TtJSr8dQc8EJeAZcSKTrGzC5OPTm6UrMur9BnwP0fgTawI9+Nd+ZGB7vwCfn2yZS0qDF9DR3/QYTGazw==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      react: ^16.13.1 || ^17.0.0 || ^18.0.0
+    dependencies:
+      prop-types: 15.8.1
+      react: 18.2.0
+    dev: false
 
   /react-refresh@0.14.0:
     resolution: {integrity: sha512-wViHqhAd8OHeLS/IRMJjTSDHF3U9eWi62F/MledQGPdJGDhodXJ9PBLNGr6WWL7qlH12Mt3TyTpbS+hGXMjCzQ==}
