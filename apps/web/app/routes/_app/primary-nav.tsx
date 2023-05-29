@@ -11,7 +11,7 @@ import {
   Selectors,
 } from '@bash/design-system'
 
-import { APP_ROUTES, NAV_LINKS } from '../types'
+import { NAV_LINKS } from '../types'
 import cn from 'classnames'
 
 const StyledIcon = styled(Icon)`
@@ -41,16 +41,23 @@ const StyledMobileLogo = styled(StyledIcon)`
 `
 
 const StyledHeader = styled.header`
+  grid-column: 2;
   display: flex;
   flex-direction: column;
   flex: 0 0 auto;
   padding: ${({ theme }) => `${theme.space.sm} ${theme.space.xs}`};
   position: relative;
-  height: 100%;
+  top: 0;
+  height: 100vh;
   @media ${({ theme }) => theme.media.xl} {
     flex: 1 0 auto;
-    max-width: 14rem;
+    /* max-width: 14rem; */
   }
+`
+
+const MainHeaderContent = styled.div`
+  margin-right: auto;
+  margin-left: auto;
 `
 
 const StyledNav = styled.nav`
@@ -176,44 +183,46 @@ interface PrimaryNavProps {
 export const PrimaryNav: FC<PrimaryNavProps> = ({ user, handleSignOut }) => {
   const userNameFirstLetter = user?.display_name.charAt(0).toLocaleLowerCase()
 
-  const getRouteUrl = (name, route) =>
+  const getRouteUrl = (name: string, route: string) =>
     name === 'profile' ? `${user.username}` : route
 
   return (
     <StyledHeader>
-      <StyledLogo id='logo'>
-        bash<span className='accent'>.</span>
-      </StyledLogo>
-      <StyledMobileLogo name='logo-mobile' aria-hidden />
-      <StyledNav aria-labelledby='logo'>
-        {NAV_LINKS.map(({ icon, name, route, links }) => (
-          <NavLinkWrapper key={name}>
-            <StyledNavLink to={getRouteUrl(name, route)} prefetch='intent'>
-              {({ isActive }) => (
-                <>
-                  <StyledNavIcon
-                    name={isActive ? `${icon}-filled` : icon}
-                    aria-hidden
-                  />
-                  <StyledLinkName>{name}</StyledLinkName>
-                </>
-              )}
-            </StyledNavLink>
-            <ul
-              className={cn({
-                visible: Boolean(links),
-              })}
-            >
-              {links &&
-                links.map(({ name: linkName, route: linkRoute }) => (
-                  <li key={linkName}>
-                    <NavLink to={`${route}${linkRoute}`}>{linkName}</NavLink>
-                  </li>
-                ))}
-            </ul>
-          </NavLinkWrapper>
-        ))}
-      </StyledNav>
+      <MainHeaderContent>
+        <StyledLogo id='logo'>
+          bash<span className='accent'>.</span>
+        </StyledLogo>
+        <StyledMobileLogo name='logo-mobile' aria-hidden />
+        <StyledNav aria-labelledby='logo'>
+          {NAV_LINKS.map(({ icon, name, route, links }) => (
+            <NavLinkWrapper key={name}>
+              <StyledNavLink to={getRouteUrl(name, route)} prefetch='intent'>
+                {({ isActive }) => (
+                  <>
+                    <StyledNavIcon
+                      name={isActive ? `${icon}-filled` : icon}
+                      aria-hidden
+                    />
+                    <StyledLinkName>{name}</StyledLinkName>
+                  </>
+                )}
+              </StyledNavLink>
+              <ul
+                className={cn({
+                  visible: Boolean(links),
+                })}
+              >
+                {links &&
+                  links.map(({ name: linkName, route: linkRoute }) => (
+                    <li key={linkName}>
+                      <NavLink to={`${route}${linkRoute}`}>{linkName}</NavLink>
+                    </li>
+                  ))}
+              </ul>
+            </NavLinkWrapper>
+          ))}
+        </StyledNav>
+      </MainHeaderContent>
       {user && (
         <StyledAvatarMenu
           url={user?.profile_image_url}

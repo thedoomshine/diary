@@ -15,21 +15,27 @@ import { createServerClient } from '~/services/db.server'
 import { ROUTES } from '../types'
 
 const StyledLayout = styled.div`
-  display: flex;
-  flex: 1 1 auto;
-  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 0 max-content auto 0;
   width: 100%;
-  min-height: 100%;
-  max-width: ${({ theme }) => theme.size.xxl};
+  /* max-width: ${({ theme }) => theme.size.xxl}; */
+
+  @media ${({ theme }) => theme.media.xl} {
+    grid-template-columns: 0 14rem auto 0;
+  }
 `
 
 const StyledMain = styled.main`
+  grid-column: 3;
   display: flex;
   flex-direction: column;
   border: solid 0.0125rem ${({ theme }) => theme.color.grey};
   border-top: 0;
   border-bottom: 0;
   flex: 1 1 auto;
+  max-height: 100vh;
+  overflow: hidden;
+  /* max-width: ${({ theme }) => theme.size.xl}; */
 `
 
 export type TypedSupabaseClient = SupabaseClient<Database>

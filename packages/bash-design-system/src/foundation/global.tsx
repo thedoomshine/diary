@@ -14,9 +14,7 @@ export const GlobalStyle = createGlobalStyle`
     font-size: ${fluidType(size.sm, size.xl, fontSize._min, fontSize._max)};
     height: 100vh;
     display: flex;
-    position: relative;
     width: 100%;
-    overflow: hidden;
 
     &:before {
       position: absolute;
@@ -42,14 +40,12 @@ export const GlobalStyle = createGlobalStyle`
     line-height: 1.15;
     margin: 0;
     flex: 1 1 auto;
-    overflow: hidden;
   }
 
   #root {
     display: flex;
     flex-direction: column;
     flex: 1 1 auto;
-    overflow: hidden;
   }
 
   h1, h2, h3, h4, h5, h6 {

@@ -62,10 +62,8 @@ const UserLinks = styled.div`
   align-items: center;
   margin-top: ${({ theme }) => theme.space.xs};
   max-width: ${({ theme }) => theme.size.lg};
-
-  p:not(:first-child) {
-    margin-left: ${({ theme }) => theme.space.sm};
-  }
+  flex-flow: row wrap;
+  gap: ${({ theme }) => theme.space.xxs} ${({ theme }) => theme.space.sm};
 
   p {
     display: flex;
