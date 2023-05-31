@@ -1,3 +1,3 @@
 module.exports = {
-  ...require('./packages/prettier-config-bash'),
-};
+  ...require('./packages/prettier-config-diary'),
+}

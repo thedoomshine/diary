@@ -4,7 +4,7 @@ import { hydrateRoot } from 'react-dom/client'
 import { RemixBrowser } from '@remix-run/react'
 import { ThemeProvider } from 'styled-components'
 
-import { GlobalStyle, theme } from '@bash/design-system'
+import { GlobalStyle, theme } from '@diary/design-system'
 
 function hydrate() {
   startTransition(() => {

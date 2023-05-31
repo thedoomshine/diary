@@ -12,7 +12,7 @@ import type { CSSProperties } from 'styled-components'
 import { rgba } from 'polished'
 import cn from 'classnames'
 
-import { grainyGradientPseudo } from '@bash/design-system'
+import { grainyGradientPseudo } from '@diary/design-system'
 import { CalendarViewEnum } from './types'
 
 const GridStyles = css`
@@ -25,11 +25,11 @@ const GridStyles = css`
   }
 
   &.week-view {
-    grid-template-columns: 3.5rem repeat(7, 1fr);
+    grid-template-columns: 3rem repeat(7, 1fr);
   }
 
   &.day-view {
-    grid-template-columns: 3.5rem 1fr;
+    grid-template-columns: 3rem 1fr;
   }
 
   &.week-view,
@@ -91,7 +91,7 @@ const CalendarMainContent = styled.div`
 
   &.day-view {
     .calendar-day.today {
-      background-color: ${({ theme }) => rgba(theme.color.grey, 0.75)};
+      background-color: ${({ theme }) => rgba(theme.color.yellow, 0.15)};
       box-shadow: 0 0 16rem 0.125rem
         ${({ theme }) => rgba(theme.color.yellow, 0.125)};
     }
@@ -170,22 +170,32 @@ const StyledTimeMarker = styled.span`
   height: 1px;
   position: absolute;
   right: 0;
-  width: calc(100% - 3.75rem);
+  width: calc(100% - 3.25rem);
   z-index: 2;
   pointer-events: none;
   will-change: top;
 
+  &.current-week,
+  &.today {
+    &:after {
+      content: '';
+      height: 0.66em;
+      width: 0.66em;
+      border-radius: 100%;
+      background-color: ${({ theme }) => theme.color.red};
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      transform: translate(-50%, -50%);
+    }
+  }
+
   &.current-week:after {
-    content: '';
-    height: 0.66em;
-    width: 0.66em;
-    border-radius: 100%;
-    background-color: ${({ theme }) => theme.color.red};
-    position: absolute;
-    left: var(--marker-position, 0);
-    top: 0;
-    bottom: 0;
-    transform: translate(-50%, -50%);
+    left: calc(var(--marker-position, 0) + 0.125rem);
+  }
+
+  &.today:after {
+    left: 0;
   }
 `
 
@@ -295,16 +305,20 @@ const TimeMarker: FC<TimeMarkerProps> = ({ date, view }) => {
   }, [timeMarkerPos])
 
   const markerPosition = {
-    '--marker-position': view === CalendarViewEnum.WEEK && `${(new Date().getDay() / 7) * 100}%`,
+    '--marker-position':
+      view === CalendarViewEnum.WEEK && `${(new Date().getDay() / 7) * 100}%`,
   } as CSSProperties
 
   if (!timeMarkerPos) return null
   return (
     <StyledTimeMarker
-      className={cn({ 'current-week': isThisWeek(date) })}
+      className={cn({
+        'current-week': view === CalendarViewEnum.WEEK && isThisWeek(date),
+        today: view === CalendarViewEnum.DAY && isToday(date),
+      })}
       style={{
         top: timeMarkerPos,
-        ...markerPosition
+        ...markerPosition,
       }}
     />
   )
@@ -349,13 +363,6 @@ const CalendarCell: FC<CalendarCellProps> = memo(
       {...props}
     >
       {view === CalendarViewEnum.MONTH && date.getDate()}
-      {generateTime(date).map(time => (
-        <TimeGridItem
-          aria-hidden
-          className='time-grid-item'
-          key={time.toUTCString()}
-        />
-      ))}
     </StyledCalendarCell>
   )
 )

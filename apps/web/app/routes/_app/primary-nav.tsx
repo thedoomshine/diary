@@ -9,7 +9,7 @@ import {
   Button,
   ButtonStyles,
   Selectors,
-} from '@bash/design-system'
+} from '@diary/design-system'
 
 import { NAV_LINKS } from '../types'
 import cn from 'classnames'
@@ -190,7 +190,7 @@ export const PrimaryNav: FC<PrimaryNavProps> = ({ user, handleSignOut }) => {
     <StyledHeader>
       <MainHeaderContent>
         <StyledLogo id='logo'>
-          bash<span className='accent'>.</span>
+          diary<span className='accent'>.</span>
         </StyledLogo>
         <StyledMobileLogo name='logo-mobile' aria-hidden />
         <StyledNav aria-labelledby='logo'>

@@ -3,7 +3,7 @@ import type { LoaderFunction } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
 
 import styled from 'styled-components'
-import { Icon, grainyGradientPseudo } from '@bash/design-system'
+import { Icon, grainyGradientPseudo } from '@diary/design-system'
 
 import { createServerClient } from '~/services/db.server'
 import { AUTH_ROUTES, ROUTES } from '../types'
@@ -84,7 +84,7 @@ const LINK_COPY = {
   },
   [AUTH_ROUTES.SIGN_IN]: {
     cta: 'create an account',
-    message: 'new to bash?',
+    message: 'new to diary?',
     route: AUTH_ROUTES.SIGN_UP,
   },
 } as const
@@ -138,10 +138,10 @@ export default function Auth() {
   return (
     <StyledLayout>
       <StyledMain>
-        <NavLink title='bash.' to='/'>
+        <NavLink title='diary.' to='/'>
           <StyledLogo name='logo-mobile' />
         </NavLink>
-        <StyledH1>{title} bash.</StyledH1>
+        <StyledH1>{title} diary.</StyledH1>
         <OutletWrapper>
           <Outlet />
         </OutletWrapper>

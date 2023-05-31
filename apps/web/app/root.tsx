@@ -18,7 +18,7 @@ import {
 import { createHead } from 'remix-island'
 
 import styled, { ThemeProvider } from 'styled-components'
-import { Button, GlobalStyle, Icon, theme } from '@bash/design-system'
+import { Button, GlobalStyle, Icon, theme } from '@diary/design-system'
 
 const StyledMain = styled.main`
   padding: 1rem;
@@ -54,7 +54,7 @@ const ICONS = [
   { rel: 'manifest', href: '/favicon/site.webmanifest' },
 ]
 
-export const meta: V2_MetaFunction = () => [{ title: 'bash.' }]
+export const meta: V2_MetaFunction = () => [{ title: 'diary.' }]
 
 export const links: LinksFunction = () => [
   ...ICONS,

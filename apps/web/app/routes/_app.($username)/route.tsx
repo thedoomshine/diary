@@ -1,7 +1,7 @@
 import type { LoaderFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { NavLink, useLoaderData } from '@remix-run/react'
-import { Avatar, Icon, OutlineButton } from '@bash/design-system'
+import { Avatar, Icon, OutlineButton } from '@diary/design-system'
 
 import styled from 'styled-components'
 
@@ -100,7 +100,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   } = await db.auth.getSession()
 
   const { data } = await db
-    .from('profiles')
+    .from('users')
     .select(
       'id, display_name, username, profile_image_url, bio, location, website'
     )

@@ -76,7 +76,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   }
 
   const { data } = await db
-    .from('profiles')
+    .from('users')
     .select('display_name, username, profile_image_url')
     .match({ id: session.user.id })
 

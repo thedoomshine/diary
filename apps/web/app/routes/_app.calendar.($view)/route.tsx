@@ -5,7 +5,7 @@ import { CalendarViewEnum } from './types'
 
 import styled from 'styled-components'
 
-import { OutlineButton, Icon } from '@bash/design-system'
+import { OutlineButton, Icon } from '@diary/design-system'
 import type { LoaderFunction } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
 import { CALENDAR_ROUTES, ROUTES } from '../types'
