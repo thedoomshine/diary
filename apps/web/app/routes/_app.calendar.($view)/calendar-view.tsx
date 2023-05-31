@@ -1,4 +1,5 @@
 import { memo, useCallback, useEffect, useMemo, useState } from 'react'
+import type { CSSProperties } from 'react'
 import type { FC } from 'react'
 import {
   endOfMonth,
@@ -8,7 +9,7 @@ import {
   startOfMonth,
 } from 'date-fns'
 import styled, { css } from 'styled-components'
-import type { CSSProperties } from 'styled-components'
+
 import { rgba } from 'polished'
 import cn from 'classnames'
 
@@ -261,8 +262,8 @@ const WeekdayHeader: FC<WeekdayHeaderProps> = ({ activeDate, view }) => {
 
   return (
     <WeekdayHeaderUl className={cn(`${view}-view`)}>
-      {weekDays.map(({ abbrv, name, date }, index) => (
-        <WeekdayCell key={getCellTitle(name, abbrv, date)}>
+      {weekDays.map(({ abbrv, name, date }) => (
+        <WeekdayCell key={`weekday-header-${abbrv}-${date.getDate()}`}>
           <abbr title={name}>{getCellTitle(name, abbrv, date)}</abbr>
         </WeekdayCell>
       ))}
@@ -277,6 +278,7 @@ interface TimeGridProps {
 
 interface TimeMarkerProps {
   date: Date
+  view: CalendarViewEnum
 }
 
 const TimeMarker: FC<TimeMarkerProps> = ({ date, view }) => {
@@ -334,7 +336,7 @@ const TimeGrid: FC<TimeGridProps> = ({ date, view }) => {
       {generateTime(date).map(time => (
         <TimeGridItem
           className='time-grid-item'
-          key={time.toUTCString()}
+          key={`time-grid-${time.getHours()}`}
           aria-hidden
         >
           {getTimeContent(time)}
@@ -422,7 +424,7 @@ export const CalendarView: FC<CalendarViewProps> = ({
         {calendarCells.map(date => (
           <CalendarCell
             className='calendar-day'
-            key={date.toLocaleDateString()}
+            key={`calendar-cell-${date.toLocaleDateString()}`}
             month={activeDate.getMonth()}
             date={date}
             view={view}

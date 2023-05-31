@@ -94,7 +94,6 @@ const NavLinkWrapper = styled.div`
       display: block;
       text-decoration: none;
       padding: 0.5rem 0;
-
       &.active {
         font-weight: ${({ theme }) => theme.fontWeight['800']};
         text-decoration: underline;
@@ -144,6 +143,17 @@ const StyledLinkName = styled.span`
   display: none;
   @media ${({ theme }) => theme.media.xl} {
     display: inline-block;
+    position: relative;
+
+    &:after {
+      content: attr(title);
+      font-weight: ${({ theme }) => theme.fontWeight['800']};
+      visibility: hidden;
+      overflow: hidden;
+      display: block;
+      height: 1px;
+      color: transparent;
+    }
   }
 `
 
@@ -203,7 +213,7 @@ export const PrimaryNav: FC<PrimaryNavProps> = ({ user, handleSignOut }) => {
                       name={isActive ? `${icon}-filled` : icon}
                       aria-hidden
                     />
-                    <StyledLinkName>{name}</StyledLinkName>
+                    <StyledLinkName title={name}>{name}</StyledLinkName>
                   </>
                 )}
               </StyledNavLink>
