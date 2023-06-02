@@ -43,6 +43,7 @@ const StyledInput = styled.input`
   font-size: inherit;
   border-radius: 0.5em;
   padding: 0.5rem;
+  color-scheme: dark;
 
   &::placeholder {
     color: ${({ theme }) => theme.color.grey};
@@ -97,6 +98,7 @@ interface InputProps {
   suffixIcon?: string
   title?: string
   type?: string
+  disabled?: boolean
 }
 
 interface PasswordToggleProps {
@@ -144,6 +146,7 @@ export const Input: FC<InputProps> = ({
   prefixIcon,
   suffixIcon,
   serverError,
+  disabled = false,
   ...props
 }) => {
   const ref = useRef<HTMLInputElement>(null)
@@ -218,6 +221,7 @@ export const Input: FC<InputProps> = ({
           onBlur={handleValidate}
           onChange={handleInput}
           ref={ref}
+          disabled={disabled}
           {...props}
         />
         {isPassword ? (

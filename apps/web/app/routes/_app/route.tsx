@@ -1,24 +1,29 @@
 import { useEffect, useState } from 'react'
 import { json, redirect } from '@remix-run/node'
-import { parse } from 'cache-control-parser'
-import { Outlet, useFetcher, useLoaderData } from '@remix-run/react'
-import type { SupabaseClient } from '@supabase/auth-helpers-remix'
-import { createBrowserClient } from '@supabase/auth-helpers-remix'
-
 import type { LoaderFunction, Session, HeadersFunction } from '@remix-run/node'
+import { parse } from 'cache-control-parser'
+import {
+  Outlet,
+  useFetcher,
+  useLoaderData,
+  useSearchParams,
+} from '@remix-run/react'
+import { createBrowserClient } from '@supabase/auth-helpers-remix'
+import type { SupabaseClient } from '@supabase/auth-helpers-remix'
 
 import styled from 'styled-components'
 
+import { NewEventModal } from '../_app.event.create/modal'
 import { PrimaryNav } from './primary-nav'
 import type { Database } from '~/services/db.server'
 import { createServerClient } from '~/services/db.server'
 import { ROUTES } from '../types'
+import { cache } from '~/utils'
 
 const StyledLayout = styled.div`
   display: grid;
   grid-template-columns: 0 max-content auto 0;
   width: 100%;
-  /* max-width: ${({ theme }) => theme.size.xxl}; */
 
   @media ${({ theme }) => theme.media.xl} {
     grid-template-columns: 0 14rem auto 0;
@@ -35,7 +40,6 @@ const StyledMain = styled.main`
   flex: 1 1 auto;
   max-height: 100vh;
   overflow: hidden;
-  /* max-width: ${({ theme }) => theme.size.xl}; */
 `
 
 export type TypedSupabaseClient = SupabaseClient<Database>
@@ -75,22 +79,35 @@ export const loader: LoaderFunction = async ({ request }) => {
     })
   }
 
+  const responseObj = {
+    session,
+    env,
+  }
+
+  const headerObj = {
+    headers: response.headers,
+  }
+
+  if (cache.has('current_user')) {
+    return json({ user: cache.get('current_user'), ...responseObj }, headerObj)
+  }
+
   const { data } = await db
     .from('users')
     .select('display_name, username, profile_image_url')
     .match({ id: session.user.id })
 
-  return json(
-    { user: data![0], session, env },
-    {
-      headers: response.headers,
-    }
-  )
+  if (data && data[0]) {
+    cache.set('current_user', data![0], 60 * 60 * 24)
+    return json({ user: data![0], ...responseObj }, headerObj)
+  }
+  return null
 }
 
 export default function AppLayout() {
   const { env, session, user } = useLoaderData<typeof loader>()
   const refreshFetcher = useFetcher()
+  const [searchParams] = useSearchParams()
 
   const [db] = useState(() =>
     createBrowserClient(env.SUPABASE_API_URL, env.SUPABASE_ANON_KEY)
@@ -126,11 +143,14 @@ export default function AppLayout() {
     }
   }
 
+  const showModal = Boolean(searchParams.get('new_event'))
+
   return (
     <StyledLayout>
       <PrimaryNav user={user} handleSignOut={handleSignOut} />
       <StyledMain>
         <Outlet context={{ db, session }} />
+        {showModal && <NewEventModal isOpen={showModal} />}
       </StyledMain>
     </StyledLayout>
   )

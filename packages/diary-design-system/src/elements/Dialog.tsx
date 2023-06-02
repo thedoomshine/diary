@@ -1,9 +1,10 @@
 import { useEffect, useRef } from 'react'
+import type { MouseEvent } from 'react'
 
 import styled, { keyframes } from 'styled-components'
 import { rgba } from 'polished'
 
-import { Button, Icon } from '.'
+import { Button, Icon, OutlineButton } from '.'
 
 const overlayShow = keyframes({
   '0%': { opacity: 0 },
@@ -16,16 +17,15 @@ const contentShow = keyframes({
 })
 
 const StyledDialog = styled.dialog`
-  background-color: ${({ theme }) => theme.color.white};
+  display: grid;
+  grid-template-rows: repeat(3, min-content);
+  gap: 0.5rem;
+  background-color: ${({ theme }) => theme.color.charcoal};
   border: 0;
   border-radius: 0.5rem;
-  color: ${({ theme }) => theme.color.black};
-  box-shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px,
-    hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
+  color: ${({ theme }) => theme.color.white};
+  box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 0.5);
   position: relative;
-  width: 90vw;
-  max-width: 450px;
-  max-height: 85vh;
   padding: 0.5rem;
   animation: ${contentShow} 150ms cubic-bezier(0.16, 1, 0.3, 1) normal;
 
@@ -47,19 +47,56 @@ const StyledDialog = styled.dialog`
   }
 `
 
-const StyledCloseButton = styled(Button)`
-  position: absolute;
-  top: 0;
-  right: 0;
+const DialogHeader = styled.div`
+  display: grid;
+  justify-content: space-between;
+  align-items: center;
+
+  h1 {
+    font-size: ${({ theme }) => theme.fontSize.md};
+  }
 `
 
-type DialogProps = {
-  isOpen: boolean
-  handleClose: () => void
-  children: React.ReactNode | React.ReactNode[]
+const DialogFooter = styled.div`
+  display: flex;
+  justify-content: space-between;
+`
+
+const StyledCloseButton = styled(Button)`
+  grid-column: 2;
+`
+
+const StyledButton = styled(Button)`
+  background-color: ${({ theme }) => theme.color.yellow};
+  color: ${({ theme }) => theme.color.black};
+`
+
+const isClickInside = (event: MouseEvent, element: HTMLElement) => {
+  const box = element.getBoundingClientRect()
+
+  return (
+    event.clientX > box.left &&
+    event.clientX < box.right &&
+    event.clientY > box.top &&
+    event.clientY < box.bottom
+  )
 }
 
-export const Dialog = ({ isOpen, handleClose, children }: DialogProps) => {
+type DialogProps = {
+  title?: string
+  isOpen: boolean
+  handleClose?: () => void
+  handleProceed?: () => void
+  children?: React.ReactNode | React.ReactNode[]
+}
+
+export const Dialog = ({
+  title,
+  isOpen = false,
+  handleClose = () => {},
+  handleProceed = () => {},
+  children,
+}: DialogProps) => {
   const ref = useRef<HTMLDialogElement>(null)
 
   useEffect(() => {
@@ -73,15 +110,29 @@ export const Dialog = ({ isOpen, handleClose, children }: DialogProps) => {
     return () => dialog?.close()
   }, [isOpen])
 
-  const preventAutoClose = (e: React.MouseEvent) => e.stopPropagation()
+  const proceedAndClose = () => {
+    handleProceed()
+    handleClose()
+  }
+
+  const handleClick = (event: MouseEvent) =>
+    ref.current && !isClickInside(event, ref.current) && handleClose()
 
   return (
-    <StyledDialog ref={ref} onCancel={handleClose} onClick={preventAutoClose}>
-      <StyledCloseButton onClick={handleClose}>
-        <Icon name='close' />
-      </StyledCloseButton>
+    <StyledDialog ref={ref} onCancel={handleClose} onClick={handleClick}>
+      <DialogHeader>
+        {title && <h1>{title}</h1>}
+        <StyledCloseButton onClick={handleClose}>
+          <Icon name='close' />
+        </StyledCloseButton>
+      </DialogHeader>
 
       {children}
+
+      <DialogFooter>
+        <OutlineButton onClick={handleClose}>close</OutlineButton>
+        <StyledButton onClick={proceedAndClose}>okay</StyledButton>
+      </DialogFooter>
     </StyledDialog>
   )
 }
