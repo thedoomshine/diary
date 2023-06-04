@@ -20,6 +20,7 @@ const StyledDialog = styled.dialog`
   display: grid;
   grid-template-rows: repeat(3, min-content);
   gap: 0.5rem;
+  overflow: visible;
   background-color: ${({ theme }) => theme.color.charcoal};
   border: 0;
   border-radius: 0.5rem;
@@ -108,7 +109,7 @@ export const Dialog = ({
       dialog?.close()
     }
     return () => dialog?.close()
-  }, [isOpen])
+  }, [isOpen, ref])
 
   const proceedAndClose = () => {
     handleProceed()

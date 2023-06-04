@@ -1,4 +1,4 @@
-import { FC, useState, useRef, useEffect } from 'react'
+import { FC, useState, useRef, useEffect, ChangeEvent } from 'react'
 import styled from 'styled-components'
 
 import { Icon } from '../Icon/Icon'
@@ -87,18 +87,22 @@ const ErrorIcon = styled(Icon)`
 
 interface InputProps {
   defaultValue?: string
+  disabled?: boolean
   errorMessages?: { [key: string]: string }
   label?: string
+  min?: string
   name: string
+  onChange?: (event: ChangeEvent) => void
   pattern?: string
   placeholder?: string
   prefixIcon?: string
   required?: boolean
   serverError?: string
+  step?: string
   suffixIcon?: string
   title?: string
   type?: string
-  disabled?: boolean
+  value?: string
 }
 
 interface PasswordToggleProps {
@@ -135,18 +139,22 @@ const PasswordToggle: FC<PasswordToggleProps> = ({
 
 export const Input: FC<InputProps> = ({
   defaultValue,
+  disabled = false,
   errorMessages,
   label,
+  min,
   name,
+  onChange,
   pattern,
   placeholder,
+  prefixIcon,
   required,
+  serverError,
+  step,
+  suffixIcon,
   title,
   type = 'text',
-  prefixIcon,
-  suffixIcon,
-  serverError,
-  disabled = false,
+  value,
   ...props
 }) => {
   const ref = useRef<HTMLInputElement>(null)
@@ -182,7 +190,10 @@ export const Input: FC<InputProps> = ({
     }
   }
 
-  const handleInput = () => {
+  const handleInput = (event: ChangeEvent) => {
+    if (onChange) {
+      onChange(event)
+    }
     if (showError) {
       handleValidate()
     }
@@ -211,17 +222,20 @@ export const Input: FC<InputProps> = ({
         {prefixIcon && <Icon name={prefixIcon} />}
         <StyledInput
           defaultValue={defaultValue}
+          disabled={disabled}
           id={name}
+          min={min}
           name={name}
-          pattern={pattern}
-          placeholder={placeholder}
-          required={required}
-          title={title}
-          type={getInputType()}
           onBlur={handleValidate}
           onChange={handleInput}
+          pattern={pattern}
+          placeholder={placeholder}
           ref={ref}
-          disabled={disabled}
+          required={required}
+          step={step}
+          title={title}
+          type={getInputType()}
+          value={value}
           {...props}
         />
         {isPassword ? (

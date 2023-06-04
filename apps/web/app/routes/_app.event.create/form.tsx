@@ -1,15 +1,19 @@
-import { ChangeEvent, FC, useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import type { FC } from 'react'
 import { Form } from '@remix-run/react'
 import {
   addHours,
+  addMinutes,
+  differenceInMinutes,
   format,
   isAfter,
   isSameDay,
   roundToNearestMinutes,
+  startOfDay,
 } from 'date-fns'
 
 import styled from 'styled-components'
-import { Input } from '@diary/design-system'
+import { DatePicker, Input, Select, SelectItem } from '@diary/design-system'
 
 const Fieldset = styled.fieldset`
   display: flex;
@@ -41,72 +45,92 @@ export const CreateEventForm: FC<CreateEventFormProps> = ({
   const [endTime, setEndTime] = useState(defaultEndDate)
 
   useEffect(() => {
-    if (isAfter(startTime, endTime)) {
-      setEndTime(
-        roundToNearestMinutes(addHours(startTime, 1), { nearestTo: 15 })
-      )
-    }
+    // if (isAfter(startTime, endTime)) {
+    //   setEndTime(
+    //     roundToNearestMinutes(addHours(startTime, 1), { nearestTo: 15 })
+    //   )
+    // }
   }, [startTime, endTime])
 
-  const handleStartDateChange = (event: ChangeEvent) => {
-    const element = event.target as HTMLInputElement
-    const next = element.valueAsDate as Date
+  const handleStartDateChange = (value: Date) => {
     setStartTime(
-      prev =>
+      (prev: Date) =>
         new Date(
-          next.getUTCFullYear(),
-          next.getUTCMonth(),
-          next.getUTCDate(),
-          prev.getUTCHours(),
-          prev.getUTCMinutes()
+          value.getFullYear(),
+          value.getMonth(),
+          value.getDate(),
+          prev.getHours(),
+          prev.getMinutes()
         )
     )
   }
 
-  const handleStartTimeChange = (event: ChangeEvent) => {
-    const element = event.target as HTMLInputElement
-    const next = element.valueAsDate as Date
-
+  const handleStartTimeChange = (value: string) => {
+    const next = new Date(Number(value))
     setStartTime(
-      prev =>
+      (prev: Date) =>
         new Date(
-          prev.getUTCFullYear(),
-          prev.getUTCMonth(),
-          prev.getUTCDate(),
-          next.getUTCHours(),
-          next.getUTCMinutes()
+          prev.getFullYear(),
+          prev.getMonth(),
+          prev.getDate(),
+          next.getHours(),
+          next.getMinutes()
         )
     )
   }
 
-  const handleEndDateChange = (event: ChangeEvent) => {
-    const element = event.target as HTMLInputElement
-    const next = element.valueAsDate as Date
+  const handleEndDateChange = (value: Date) => {
     setEndTime(
-      prev =>
+      (prev: Date) =>
         new Date(
-          next.getUTCFullYear(),
-          next.getUTCMonth(),
-          next.getUTCDate(),
-          prev.getUTCHours(),
-          prev.getUTCMinutes()
+          value.getFullYear(),
+          value.getMonth(),
+          value.getDate(),
+          prev.getHours(),
+          prev.getMinutes()
         )
     )
   }
 
-  const handleEndTimeChange = (event: ChangeEvent) => {
-    const element = event.target as HTMLInputElement
-    const next = element.valueAsDate as Date
+  const handleEndTimeChange = (value: string) => {
+    const next = new Date(Number(value))
+    console.log(next)
     setEndTime(
-      prev =>
+      (prev: Date) =>
         new Date(
-          prev.getUTCFullYear(),
-          prev.getUTCMonth(),
-          prev.getUTCDate(),
-          next.getUTCHours(),
-          next.getUTCMinutes()
+          prev.getFullYear(),
+          prev.getMonth(),
+          prev.getDate(),
+          next.getHours(),
+          next.getMinutes()
         )
     )
+  }
+
+  const isSingleDay = isSameDay(startTime, endTime)
+
+  const startTimeOptions = useMemo(
+    () =>
+      Array.from({ length: 96 }, (_, i) =>
+        addMinutes(startOfDay(startTime), i * 15)
+      ),
+    [startTime]
+  )
+
+  const endTimeOptions = useMemo(
+    () => Array.from({ length: 48 }, (_, i) => addMinutes(startTime, i * 30)),
+    [startTime]
+  )
+
+  const getDistance = (start: Date, finish: Date) => {
+    const diff = differenceInMinutes(finish, start)
+    if (diff < 60) {
+      return `${diff} mins`
+    }
+    if (diff === 60) {
+      return `1 hr`
+    }
+    return `${Number((diff / 60).toFixed(1))} hrs`
   }
 
   return (
@@ -121,38 +145,42 @@ export const CreateEventForm: FC<CreateEventFormProps> = ({
       />
 
       <Fieldset>
-        <Input
-          name='date'
-          type='date'
-          value={format(startTime, 'yyyy-MM-dd')}
+        <DatePicker
+          value={startTime}
           onChange={handleStartDateChange}
           disabled={isSubmitting}
         />
-        <Input
-          name='start-time'
-          type='time'
-          value={format(startTime, 'HH:mm:ss')}
-          onChange={handleStartTimeChange}
-          step='900'
-          disabled={isSubmitting}
-        />
-      </Fieldset>
-      <Fieldset>
-        <Input
-          name='date'
-          type='date'
-          value={format(endTime, 'yyyy-MM-dd')}
-          min={format(startTime, 'yyyy-MM-dd')}
+        <Select
+          onValueChange={handleStartTimeChange}
+          value={startTime.valueOf().toString()}
+        >
+          {startTimeOptions.map((option: Date) => (
+            <SelectItem
+              key={`start-${option.valueOf().toString()}`}
+              value={option.valueOf().toString()}
+            >
+              {format(option, 'p').toLocaleLowerCase()}
+            </SelectItem>
+          ))}
+        </Select>
+        –
+        <Select
+          onValueChange={handleEndTimeChange}
+          value={endTime.valueOf().toString()}
+        >
+          {endTimeOptions.map((option: Date) => (
+            <SelectItem
+              key={`end-${option.valueOf().toString()}`}
+              value={option.valueOf().toString()}
+            >
+              {format(option, 'p').toLocaleLowerCase()}
+              {` `}({getDistance(startTime, option)})
+            </SelectItem>
+          ))}
+        </Select>
+        <DatePicker
+          value={endTime}
           onChange={handleEndDateChange}
-          disabled={isSubmitting}
-        />
-        <Input
-          name='end-time'
-          type='time'
-          value={format(endTime, 'HH:mm:ss')}
-          min={format(startTime, 'HH:mm:ss')}
-          onChange={handleEndTimeChange}
-          step='900'
           disabled={isSubmitting}
         />
       </Fieldset>

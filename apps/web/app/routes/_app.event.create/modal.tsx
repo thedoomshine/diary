@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 import { CreateEventForm } from './form'
 
 import { Dialog } from '@diary/design-system'
