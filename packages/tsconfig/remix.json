@@ -5,17 +5,13 @@
   "extends": "./base.json",
   "compilerOptions": {
     "allowJs": true,
-    "baseUrl": ".",
     "isolatedModules": true,
     "jsx": "react-jsx",
-    "lib": ["DOM", "DOM.Iterable", "ES2019"],
+    "lib": ["DOM", "DOM.Iterable", "ES2020", "ES2020.Intl", "ESNext"],
     "moduleResolution": "node",
     "noEmit": true,
-    "paths": {
-      "~/*": ["./app/*"]
-    },
     "resolveJsonModule": true,
     "strict": true,
-    "target": "ES2019"
+    "target": "ESNext"
   }
 }

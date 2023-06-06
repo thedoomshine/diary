@@ -1,9 +1,14 @@
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import type { FC } from 'react'
 
 import { addMinutes, format, startOfDay } from 'date-fns'
 
 import { Select, SelectItem } from '../elements'
+import { styled } from 'styled-components'
+
+const StyledSelect = styled(Select)`
+  padding: 0.25rem 0.5rem;
+`
 
 export const defaultTimePickerFormat = (date: Date) =>
   format(date, 'p').toLocaleLowerCase()
@@ -54,7 +59,7 @@ export const TimePicker: FC<TimePickerProps> = ({
   const getString = (option: Date) => format(option, 'Pp')
 
   return (
-    <Select
+    <StyledSelect
       disabled={disabled}
       hideIcon
       onValueChange={onChange}
@@ -65,6 +70,6 @@ export const TimePicker: FC<TimePickerProps> = ({
           {name}
         </SelectItem>
       ))}
-    </Select>
+    </StyledSelect>
   )
 }

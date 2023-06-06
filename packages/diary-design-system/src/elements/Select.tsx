@@ -22,7 +22,7 @@ const SelectTrigger = styled(SelectPrimitive.Trigger)`
 // `
 
 const SelectContent = styled(SelectPrimitive.Content)`
-  background-color: ${({ theme }) => theme.color.charcoal};
+  background-color: ${({ theme }) => theme.color.black};
   border-radius: 0.5rem;
   box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 0.5);
   z-index: 3;
@@ -65,6 +65,7 @@ const SelectItemIndicator = styled(SelectPrimitive.ItemIndicator)`
 
 interface SelectProps extends SelectPrimitive.SelectProps {
   children: ReactNode | ReactNode[]
+  className?: string
   defaultOpen?: boolean
   defaultValue?: string
   dir?: 'ltr' | 'rtl'
@@ -79,10 +80,13 @@ interface SelectProps extends SelectPrimitive.SelectProps {
 }
 
 export const Select = forwardRef<HTMLButtonElement, SelectProps>(
-  ({ children, disabled, hideIcon = false, ...props }, forwardedRef) => {
+  (
+    { children, disabled, hideIcon = false, className, ...props },
+    forwardedRef
+  ) => {
     return (
       <SelectPrimitive.Root disabled={disabled} {...props}>
-        <SelectTrigger ref={forwardedRef}>
+        <SelectTrigger ref={forwardedRef} className={className}>
           <SelectPrimitive.Value />
           {!hideIcon && (
             <SelectPrimitive.Icon>

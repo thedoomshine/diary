@@ -13,7 +13,6 @@ const triangleArrow = css`
   margin-left: calc(-0.5rem * 0.5);
   position: absolute;
   width: 0;
-  box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 0.5);
 
   &::before,
   &::after {
@@ -26,7 +25,6 @@ const triangleArrow = css`
     z-index: -1;
     border-width: 0.5rem;
     left: -0.5rem;
-    box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 0.5);
   }
 
   &::before {
@@ -79,6 +77,7 @@ const triangleArrowDown = css`
 const Wrapper = styled.div`
   align-self: flex-start;
   text-transform: lowercase;
+  position: relative;
 
   .react-datepicker__triangle {
     position: absolute;
@@ -139,6 +138,9 @@ const Wrapper = styled.div`
 
   .react-datepicker__navigation {
     ${ButtonStyles}
+    &:focus, &:active {
+      outline: solid 1px ${({ theme }) => theme.color.yellow};
+    }
   }
 
   .react-datepicker__day-name {
@@ -167,6 +169,10 @@ const Wrapper = styled.div`
 
   .react-datepicker__day--outside-month {
     color: ${({ theme }) => theme.color.silver};
+  }
+
+  .react-datepicker__day--keyboard-selected {
+    background-color: ${({ theme }) => rgba(theme.color.yellow, 0.45)};
   }
 
   .react-datepicker__day--selected {
@@ -223,15 +229,10 @@ const DatePickerHeader: FC<ReactDatePickerCustomHeaderProps> = ({
 
 const InputWrapper = styled.div`
   ${ButtonStyles}
-  border-radius: 0;
+  padding: 0.25rem 0.5rem;
   position: relative;
-
-  &:has(:focus-within) {
-    border-bottom: solid 2px ${({ theme }) => theme.color.yellow};
-  }
-
   input {
-    padding: 0;
+    padding: 0.25rem;
     margin: 0;
     border: none;
     position: absolute;
@@ -329,7 +330,7 @@ export const DatePicker: FC<DatePickerProps> = ({
           {
             name: 'offset',
             options: {
-              offset: [0, 20],
+              offset: [0, 12],
             },
           },
           {

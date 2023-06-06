@@ -14,8 +14,11 @@ import {
 
 import styled from 'styled-components'
 import {
-  Input,
+  Checkbox,
   DatePicker,
+  Input,
+  Select,
+  SelectItem,
   TimePicker,
   defaultTimePickerOptions,
   formatTimePickerOptions,
@@ -23,10 +26,12 @@ import {
 } from '@diary/design-system'
 import type { TimePickerOption } from '@diary/design-system'
 
-const Wrapper = styled.div`
+const Fieldset = styled.fieldset`
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: 0.25rem;
+  margin-bottom: 1rem;
+  align-items: flex-start;
 `
 
 const DateTimeWrapper = styled.div`
@@ -34,14 +39,10 @@ const DateTimeWrapper = styled.div`
   align-items: center;
 `
 
-interface CreateEventFormProps {
-  formData?: {
-    title?: string
-    startDate?: Date
-    endDate?: Date
-  }
-  isSubmitting?: boolean
-}
+const DatesWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`
 
 const getDistance = (start: Date, finish: Date) => {
   const diff = differenceInMinutes(finish, start)
@@ -52,6 +53,15 @@ const getDistance = (start: Date, finish: Date) => {
     return `1 hr`
   }
   return `${Number((diff / 60).toFixed(1))} hrs`
+}
+
+interface CreateEventFormProps {
+  formData?: {
+    title?: string
+    startDate?: Date
+    endDate?: Date
+  }
+  isSubmitting?: boolean
 }
 
 export const CreateEventForm: FC<CreateEventFormProps> = ({
@@ -81,15 +91,33 @@ export const CreateEventForm: FC<CreateEventFormProps> = ({
   }, [startTime, endTime])
 
   const handleStartDateBlur = (event: FocusEvent<HTMLInputElement>) => {
-    const date = new Date(event?.target?.value)
-    if (isValidDate(date)) {
-      setStartTime(date)
+    const next = new Date(event?.target?.value)
+    if (isValidDate(next)) {
+      setStartTime(
+        prev =>
+          new Date(
+            next.getFullYear(),
+            next.getMonth(),
+            next.getDate(),
+            prev.getHours(),
+            prev.getMinutes()
+          )
+      )
     }
   }
 
   const handleStartDateChange = (value: Date) => {
     if (isValidDate(value)) {
-      setStartTime(value)
+      setStartTime(
+        prev =>
+          new Date(
+            value.getFullYear(),
+            value.getMonth(),
+            value.getDate(),
+            prev.getHours(),
+            prev.getMinutes()
+          )
+      )
     }
   }
 
@@ -101,15 +129,33 @@ export const CreateEventForm: FC<CreateEventFormProps> = ({
   }
 
   const handleEndDateBlur = (event: FocusEvent<HTMLInputElement>) => {
-    const date = new Date(event?.target?.value)
-    if (isValidDate(date)) {
-      setEndTime(date)
+    const next = new Date(event?.target?.value)
+    if (isValidDate(next)) {
+      setEndTime(
+        prev =>
+          new Date(
+            next.getFullYear(),
+            next.getMonth(),
+            next.getDate(),
+            prev.getHours(),
+            prev.getMinutes()
+          )
+      )
     }
   }
 
   const handleEndDateChange = (value: Date) => {
     if (isValidDate(value)) {
-      setEndTime(value)
+      setEndTime(
+        prev =>
+          new Date(
+            value.getFullYear(),
+            value.getMonth(),
+            value.getDate(),
+            prev.getHours(),
+            prev.getMinutes()
+          )
+      )
     }
   }
 
@@ -142,6 +188,8 @@ export const CreateEventForm: FC<CreateEventFormProps> = ({
   const getDateFormat = (date: Date) =>
     `eeee, MMMM do${!isThisYear(date) ? ' yyyy' : ''}`
 
+  const TIMEZONES = Intl.supportedValuesOf('timeZone')
+
   return (
     <Form method='post'>
       <Input
@@ -153,40 +201,52 @@ export const CreateEventForm: FC<CreateEventFormProps> = ({
         disabled={isSubmitting}
       />
 
-      <Wrapper>
-        <DateTimeWrapper>
-          <DatePicker
-            disabled={isSubmitting}
-            onChange={handleStartDateChange}
-            onBlur={handleStartDateBlur}
-            selected={startTime}
-            dateFormat={getDateFormat(startTime)}
-          />
-          <TimePicker
-            disabled={isSubmitting}
-            onChange={handleStartTimeChange}
-            value={startTime}
-          />
-        </DateTimeWrapper>
-        –
-        <DateTimeWrapper>
-          <TimePicker
-            disabled={isSubmitting}
-            onChange={handleEndTimeChange}
-            options={endTimeOptions}
-            value={endTime}
-          />
-          {!isSingleDay && (
+      <Fieldset>
+        <DatesWrapper>
+          <DateTimeWrapper>
             <DatePicker
               disabled={isSubmitting}
-              onChange={handleEndDateChange}
-              onBlur={handleEndDateBlur}
-              selected={endTime}
-              dateFormat={getDateFormat(endTime)}
+              onChange={handleStartDateChange}
+              onBlur={handleStartDateBlur}
+              selected={startTime}
+              dateFormat={getDateFormat(startTime)}
             />
-          )}
-        </DateTimeWrapper>
-      </Wrapper>
+            <TimePicker
+              disabled={isSubmitting}
+              onChange={handleStartTimeChange}
+              value={startTime}
+            />
+          </DateTimeWrapper>
+          –
+          <DateTimeWrapper>
+            <TimePicker
+              disabled={isSubmitting}
+              onChange={handleEndTimeChange}
+              options={endTimeOptions}
+              value={endTime}
+            />
+            {!isSingleDay && (
+              <DatePicker
+                disabled={isSubmitting}
+                onChange={handleEndDateChange}
+                onBlur={handleEndDateBlur}
+                selected={endTime}
+                dateFormat={getDateFormat(endTime)}
+              />
+            )}
+          </DateTimeWrapper>
+        </DatesWrapper>
+      </Fieldset>
+      <Fieldset>
+        <Checkbox label='all day' name='all-day' />
+        {/* <StyledSelect>
+          {selectOptions.map(({ date, name }) => (
+            <SelectItem key={`${getString(date)}`} value={getString(date)}>
+              {name}
+            </SelectItem>
+          ))}
+        </StyledSelect> */}
+      </Fieldset>
     </Form>
   )
 }
