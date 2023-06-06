@@ -105,5 +105,9 @@ export const reset = css`
   /* Revert Modal native behavior */
   :where(dialog:modal) {
     all: revert;
+    background-color: transparent;
+    border: none;
+    overflow: visible;
+    padding: 0;
   }
 `

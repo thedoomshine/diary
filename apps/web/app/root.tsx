@@ -28,6 +28,11 @@ const StyledIcon = styled(Icon)`
   margin-right: 0.5rem;
 `
 
+const ErrorWrapper = styled.div`
+  width: 100%;
+  word-wrap: break-word;
+`
+
 const ICONS = [
   {
     rel: 'apple-touch-icon',
@@ -99,21 +104,21 @@ export default App
 const getErrorMessage = (error: Error | unknown) => {
   if (isRouteErrorResponse(error)) {
     return (
-      <>
+      <ErrorWrapper>
         <h1>
           {error.status} {error.statusText.toLocaleLowerCase()}
         </h1>
         <p>{error.data.toLocaleLowerCase()}</p>
-      </>
+      </ErrorWrapper>
     )
   } else if (error instanceof Error) {
     return (
-      <>
+      <ErrorWrapper>
         <h1>error</h1>
-        <p>{error.message.toLocaleLowerCase()}</p>
+        <p>{error.message}</p>
         <p>the stack trace is:</p>
-        <pre>{error.stack?.toLocaleLowerCase()}</pre>
-      </>
+        <pre>{error.stack}</pre>
+      </ErrorWrapper>
     )
   } else {
     return <h1>Unknown Error</h1>

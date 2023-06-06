@@ -1,6 +1,7 @@
 module.exports = {
   plugins: {
-    'css-has-pseudo': {},
     autoprefixer: {},
+    'css-has-pseudo': {},
+    'css-declaration-sorter': { order: 'concentric-css' },
   },
 }

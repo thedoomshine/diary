@@ -1,21 +1,35 @@
-import { useEffect, useMemo, useState } from 'react'
-import type { FC } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import type { FC, FocusEvent } from 'react'
 import { Form } from '@remix-run/react'
 import {
   addHours,
   addMinutes,
   differenceInMinutes,
-  format,
   isAfter,
+  isThisYear,
   isSameDay,
+  isSameMinute,
   roundToNearestMinutes,
-  startOfDay,
 } from 'date-fns'
 
 import styled from 'styled-components'
-import { DatePicker, Input, Select, SelectItem } from '@diary/design-system'
+import {
+  Input,
+  DatePicker,
+  TimePicker,
+  defaultTimePickerOptions,
+  formatTimePickerOptions,
+  defaultTimePickerFormat,
+} from '@diary/design-system'
+import type { TimePickerOption } from '@diary/design-system'
 
-const Fieldset = styled.fieldset`
+const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+`
+
+const DateTimeWrapper = styled.div`
   display: flex;
   align-items: center;
 `
@@ -27,6 +41,17 @@ interface CreateEventFormProps {
     endDate?: Date
   }
   isSubmitting?: boolean
+}
+
+const getDistance = (start: Date, finish: Date) => {
+  const diff = differenceInMinutes(finish, start)
+  if (diff < 60) {
+    return `${diff} mins`
+  }
+  if (diff === 60) {
+    return `1 hr`
+  }
+  return `${Number((diff / 60).toFixed(1))} hrs`
 }
 
 export const CreateEventForm: FC<CreateEventFormProps> = ({
@@ -44,94 +69,78 @@ export const CreateEventForm: FC<CreateEventFormProps> = ({
   const [startTime, setStartTime] = useState(defaultStartDate)
   const [endTime, setEndTime] = useState(defaultEndDate)
 
+  const isValidDate = (date: Date) =>
+    date instanceof Date && !isNaN(Number(date.valueOf()))
+
   useEffect(() => {
-    // if (isAfter(startTime, endTime)) {
-    //   setEndTime(
-    //     roundToNearestMinutes(addHours(startTime, 1), { nearestTo: 15 })
-    //   )
-    // }
+    if (isAfter(startTime, endTime) && !isSameMinute(startTime, endTime)) {
+      setEndTime(
+        roundToNearestMinutes(addHours(startTime, 1), { nearestTo: 15 })
+      )
+    }
   }, [startTime, endTime])
 
+  const handleStartDateBlur = (event: FocusEvent<HTMLInputElement>) => {
+    const date = new Date(event?.target?.value)
+    if (isValidDate(date)) {
+      setStartTime(date)
+    }
+  }
+
   const handleStartDateChange = (value: Date) => {
-    setStartTime(
-      (prev: Date) =>
-        new Date(
-          value.getFullYear(),
-          value.getMonth(),
-          value.getDate(),
-          prev.getHours(),
-          prev.getMinutes()
-        )
-    )
+    if (isValidDate(value)) {
+      setStartTime(value)
+    }
   }
 
   const handleStartTimeChange = (value: string) => {
-    const next = new Date(Number(value))
-    setStartTime(
-      (prev: Date) =>
-        new Date(
-          prev.getFullYear(),
-          prev.getMonth(),
-          prev.getDate(),
-          next.getHours(),
-          next.getMinutes()
-        )
-    )
+    const date = new Date(value)
+    if (isValidDate(date)) {
+      setStartTime(date)
+    }
+  }
+
+  const handleEndDateBlur = (event: FocusEvent<HTMLInputElement>) => {
+    const date = new Date(event?.target?.value)
+    if (isValidDate(date)) {
+      setEndTime(date)
+    }
   }
 
   const handleEndDateChange = (value: Date) => {
-    setEndTime(
-      (prev: Date) =>
-        new Date(
-          value.getFullYear(),
-          value.getMonth(),
-          value.getDate(),
-          prev.getHours(),
-          prev.getMinutes()
-        )
-    )
+    if (isValidDate(value)) {
+      setEndTime(value)
+    }
   }
 
   const handleEndTimeChange = (value: string) => {
-    const next = new Date(Number(value))
-    console.log(next)
-    setEndTime(
-      (prev: Date) =>
-        new Date(
-          prev.getFullYear(),
-          prev.getMonth(),
-          prev.getDate(),
-          next.getHours(),
-          next.getMinutes()
-        )
-    )
+    const date = new Date(value)
+    if (isValidDate(date)) {
+      setEndTime(date)
+    }
   }
 
   const isSingleDay = isSameDay(startTime, endTime)
 
-  const startTimeOptions = useMemo(
-    () =>
-      Array.from({ length: 96 }, (_, i) =>
-        addMinutes(startOfDay(startTime), i * 15)
-      ),
-    [startTime]
-  )
-
-  const endTimeOptions = useMemo(
+  const generateSameDayOptions = useCallback(
     () => Array.from({ length: 48 }, (_, i) => addMinutes(startTime, i * 30)),
     [startTime]
   )
 
-  const getDistance = (start: Date, finish: Date) => {
-    const diff = differenceInMinutes(finish, start)
-    if (diff < 60) {
-      return `${diff} mins`
-    }
-    if (diff === 60) {
-      return `1 hr`
-    }
-    return `${Number((diff / 60).toFixed(1))} hrs`
-  }
+  const formatEndTimeOptions = useCallback(
+    (date: Date) =>
+      `${defaultTimePickerFormat(date)} (${getDistance(startTime, date)})`,
+    [startTime]
+  )
+
+  const endTimeOptions = useMemo<TimePickerOption[]>(() => {
+    return isSingleDay
+      ? formatTimePickerOptions(generateSameDayOptions(), formatEndTimeOptions)
+      : defaultTimePickerOptions(endTime)
+  }, [isSingleDay, generateSameDayOptions, formatEndTimeOptions, endTime])
+
+  const getDateFormat = (date: Date) =>
+    `eeee, MMMM do${!isThisYear(date) ? ' yyyy' : ''}`
 
   return (
     <Form method='post'>
@@ -144,46 +153,40 @@ export const CreateEventForm: FC<CreateEventFormProps> = ({
         disabled={isSubmitting}
       />
 
-      <Fieldset>
-        <DatePicker
-          value={startTime}
-          onChange={handleStartDateChange}
-          disabled={isSubmitting}
-        />
-        <Select
-          onValueChange={handleStartTimeChange}
-          value={startTime.valueOf().toString()}
-        >
-          {startTimeOptions.map((option: Date) => (
-            <SelectItem
-              key={`start-${option.valueOf().toString()}`}
-              value={option.valueOf().toString()}
-            >
-              {format(option, 'p').toLocaleLowerCase()}
-            </SelectItem>
-          ))}
-        </Select>
+      <Wrapper>
+        <DateTimeWrapper>
+          <DatePicker
+            disabled={isSubmitting}
+            onChange={handleStartDateChange}
+            onBlur={handleStartDateBlur}
+            selected={startTime}
+            dateFormat={getDateFormat(startTime)}
+          />
+          <TimePicker
+            disabled={isSubmitting}
+            onChange={handleStartTimeChange}
+            value={startTime}
+          />
+        </DateTimeWrapper>
         –
-        <Select
-          onValueChange={handleEndTimeChange}
-          value={endTime.valueOf().toString()}
-        >
-          {endTimeOptions.map((option: Date) => (
-            <SelectItem
-              key={`end-${option.valueOf().toString()}`}
-              value={option.valueOf().toString()}
-            >
-              {format(option, 'p').toLocaleLowerCase()}
-              {` `}({getDistance(startTime, option)})
-            </SelectItem>
-          ))}
-        </Select>
-        <DatePicker
-          value={endTime}
-          onChange={handleEndDateChange}
-          disabled={isSubmitting}
-        />
-      </Fieldset>
+        <DateTimeWrapper>
+          <TimePicker
+            disabled={isSubmitting}
+            onChange={handleEndTimeChange}
+            options={endTimeOptions}
+            value={endTime}
+          />
+          {!isSingleDay && (
+            <DatePicker
+              disabled={isSubmitting}
+              onChange={handleEndDateChange}
+              onBlur={handleEndDateBlur}
+              selected={endTime}
+              dateFormat={getDateFormat(endTime)}
+            />
+          )}
+        </DateTimeWrapper>
+      </Wrapper>
     </Form>
   )
 }

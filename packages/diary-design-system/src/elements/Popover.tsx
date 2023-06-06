@@ -19,7 +19,7 @@ const StyledPopoverContent = styled(PopoverPrimitive.Content)`
   animation-duration: 400ms;
   animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform, opacity;
-  z-index: 99;
+  z-index: 3;
 
   width: 100%;
 

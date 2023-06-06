@@ -16,7 +16,7 @@ const contentShow = keyframes({
   '100%': { opacity: 1, transform: 'translate(-50%; -50%) scale(1)' },
 })
 
-const StyledDialog = styled.dialog`
+const StyledDialogContent = styled.div`
   display: grid;
   grid-template-rows: repeat(3, min-content);
   gap: 0.5rem;
@@ -98,18 +98,37 @@ export const Dialog = ({
   handleProceed = () => {},
   children,
 }: DialogProps) => {
-  const ref = useRef<HTMLDialogElement>(null)
+  const dialogRef = useRef<HTMLDialogElement>(null)
+  const firstRender = useRef(true)
 
   useEffect(() => {
-    const dialog = ref.current
+    const dialog = dialogRef.current
 
-    if (isOpen) {
-      dialog?.showModal()
+    if (firstRender.current) {
+      firstRender.current = false
     } else {
+      if (isOpen) {
+        dialog?.showModal()
+      } else {
+        dialog?.close()
+      }
+    }
+    return () => {
       dialog?.close()
     }
-    return () => dialog?.close()
-  }, [isOpen, ref])
+  }, [isOpen])
+
+  useEffect(() => {
+    const dialog = dialogRef.current
+    const handleCancel = (event: Event) => {
+      event.preventDefault()
+      handleClose()
+    }
+    dialog?.addEventListener('cancel', handleCancel)
+    return () => {
+      dialog?.removeEventListener('cancel', handleCancel)
+    }
+  }, [handleClose])
 
   const proceedAndClose = () => {
     handleProceed()
@@ -117,23 +136,27 @@ export const Dialog = ({
   }
 
   const handleClick = (event: MouseEvent) =>
-    ref.current && !isClickInside(event, ref.current) && handleClose()
+    dialogRef.current &&
+    !isClickInside(event, dialogRef.current) &&
+    handleClose()
 
   return (
-    <StyledDialog ref={ref} onCancel={handleClose} onClick={handleClick}>
-      <DialogHeader>
-        {title && <h1>{title}</h1>}
-        <StyledCloseButton onClick={handleClose}>
-          <Icon name='close' />
-        </StyledCloseButton>
-      </DialogHeader>
+    <dialog ref={dialogRef} onCancel={handleClose} onClick={handleClick}>
+      <StyledDialogContent>
+        <DialogHeader>
+          {title && <h1>{title}</h1>}
+          <StyledCloseButton onClick={handleClose}>
+            <Icon name='close' />
+          </StyledCloseButton>
+        </DialogHeader>
 
-      {children}
+        {children}
 
-      <DialogFooter>
-        <OutlineButton onClick={handleClose}>close</OutlineButton>
-        <StyledButton onClick={proceedAndClose}>okay</StyledButton>
-      </DialogFooter>
-    </StyledDialog>
+        <DialogFooter>
+          <OutlineButton onClick={handleClose}>close</OutlineButton>
+          <StyledButton onClick={proceedAndClose}>okay</StyledButton>
+        </DialogFooter>
+      </StyledDialogContent>
+    </dialog>
   )
 }

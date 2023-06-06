@@ -1,28 +1,140 @@
+import { forwardRef, useEffect, useState } from 'react'
+import type { FocusEvent, FC } from 'react'
 import ReactDatePicker, {
   ReactDatePickerCustomHeaderProps,
 } from 'react-datepicker'
-import type { FC } from 'react'
-import { format, isThisYear } from 'date-fns'
+import { format } from 'date-fns'
 
-import styled from 'styled-components'
-import 'react-datepicker/dist/react-datepicker-cssmodules.css'
-import { Button, ButtonStyles, Icon } from '../'
+import styled, { css } from 'styled-components'
 import { rgba } from 'polished'
+import { Button, ButtonStyles, Icon } from '../'
+
+const triangleArrow = css`
+  margin-left: calc(-0.5rem * 0.5);
+  position: absolute;
+  width: 0;
+  box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 0.5);
+
+  &::before,
+  &::after {
+    box-sizing: content-box;
+    position: absolute;
+    border: 0.5rem solid transparent;
+    height: 0;
+    width: 1px;
+    content: '';
+    z-index: -1;
+    border-width: 0.5rem;
+    left: -0.5rem;
+    box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 0.5);
+  }
+
+  &::before {
+    border-bottom-color: ${({ theme }) => theme.color.black};
+  }
+`
+
+const triangleArrowUp = css`
+  ${triangleArrow}
+  top: 0;
+  margin-top: -0.5rem;
+
+  &::before,
+  &::after {
+    border-top: none;
+    border-bottom-color: ${({ theme }) => theme.color.black};
+  }
+
+  &::after {
+    top: 0;
+  }
+
+  &::before {
+    top: -1px;
+    border-bottom-color: ${({ theme }) => theme.color.black};
+  }
+`
+
+const triangleArrowDown = css`
+  ${triangleArrow}
+  bottom: 0;
+  margin-bottom: -0.5rem;
+
+  &::before,
+  &::after {
+    border-bottom: none;
+    border-top-color: ${({ theme }) => theme.color.black};
+  }
+
+  &::after {
+    bottom: 0;
+  }
+
+  &::before {
+    bottom: -1px;
+    border-top-color: ${({ theme }) => theme.color.black};
+  }
+`
 
 const Wrapper = styled.div`
   align-self: flex-start;
   text-transform: lowercase;
 
-  .react-datepicker__input-container {
-    ${ButtonStyles}
+  .react-datepicker__triangle {
+    position: absolute;
+    left: 50px;
   }
 
-  .react-datepicker {
-    background-color: ${({ theme }) => theme.color.charcoal};
+  .react-datepicker-popper {
+    background-color: ${({ theme }) => theme.color.black};
     border-radius: 0.5rem;
     box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 0.5);
-    padding: ${({ theme }) => theme.space.sm};
+    padding: ${({ theme }) => theme.space.xs};
     padding-bottom: ${({ theme }) => theme.space.xxs};
+    top: 0.5rem;
+    z-index: 3;
+
+    &[data-placement^='bottom'] {
+      padding-top: 0.5rem + 2px;
+
+      .react-datepicker__triangle {
+        ${triangleArrowUp}
+      }
+    }
+
+    &[data-placement='bottom-end'],
+    &[data-placement='top-end'] {
+      .react-datepicker__triangle {
+        left: auto;
+        right: 50px;
+      }
+    }
+
+    &[data-placement^='top'] {
+      padding-bottom: 0.5rem + 2px;
+
+      .react-datepicker__triangle {
+        ${triangleArrowDown}
+      }
+    }
+
+    &[data-placement^='right'] {
+      padding-left: 0.5rem;
+
+      .react-datepicker__triangle {
+        left: auto;
+        right: 42px;
+      }
+    }
+
+    &[data-placement^='left'] {
+      padding-right: 0.5rem;
+
+      .react-datepicker__triangle {
+        left: 42px;
+        right: auto;
+      }
+    }
   }
 
   .react-datepicker__navigation {
@@ -69,10 +181,6 @@ const Wrapper = styled.div`
     font-weight: ${({ theme }) => theme.fontWeight[800]};
   }
 
-  .react-datepicker-popper {
-    z-index: 1;
-  }
-
   .react-datepicker__aria-live {
     position: absolute;
     clip-path: circle(0);
@@ -113,28 +221,129 @@ const DatePickerHeader: FC<ReactDatePickerCustomHeaderProps> = ({
   )
 }
 
+const InputWrapper = styled.div`
+  ${ButtonStyles}
+  border-radius: 0;
+  position: relative;
+
+  &:has(:focus-within) {
+    border-bottom: solid 2px ${({ theme }) => theme.color.yellow};
+  }
+
+  input {
+    padding: 0;
+    margin: 0;
+    border: none;
+    position: absolute;
+    vertical-align: top;
+    width: 100%;
+  }
+`
+
+const Template = styled.span`
+  color: transparent;
+  position: relative;
+  z-index: -1;
+`
+
+interface DatePickerInputProps {
+  dateFormat: string
+  className?: string
+  selected: Date
+  temp: string
+  setTemp: React.Dispatch<React.SetStateAction<string>>
+}
+
+const DatePickerInput = forwardRef<HTMLInputElement, DatePickerInputProps>(
+  ({ className, dateFormat, selected, temp, setTemp, ...props }, ref) => {
+    const [isFocused, setIsFocused] = useState(false)
+
+    useEffect(() => {
+      if (!isFocused) {
+        const formatted = format(selected, dateFormat)
+        setTemp(formatted)
+      }
+    }, [selected, isFocused])
+
+    return (
+      <InputWrapper className={className}>
+        <Template aria-hidden>{temp}</Template>
+        <input
+          ref={ref}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          {...props}
+        />
+      </InputWrapper>
+    )
+  }
+)
+
 interface DatePickerProps {
+  dateFormat?: string
   disabled?: boolean
+  minDate?: Date
   onChange: (value: Date) => void
-  value: Date
+  onBlur: (event: FocusEvent<HTMLInputElement>) => void
+  selected: Date
 }
 
 export const DatePicker: FC<DatePickerProps> = ({
+  dateFormat = `eeee, MMMM do`,
   disabled = false,
   onChange,
-  value,
+  onBlur,
+  selected,
   ...props
 }) => {
+  const [temp, setTemp] = useState(format(selected, dateFormat))
+
+  const handleSelect = (date: Date) => {
+    setTemp(format(date, dateFormat))
+    onChange(date)
+  }
+
+  const handleBlur = (event: FocusEvent<HTMLInputElement>) => {
+    onBlur(event)
+  }
+
   return (
     <Wrapper>
       <ReactDatePicker
-        renderCustomHeader={DatePickerHeader}
-        dateFormat={`eeee, MMMM do${!isThisYear(value) ? ', yyyy' : ''}`}
+        customInput={
+          <DatePickerInput
+            dateFormat={dateFormat}
+            selected={selected}
+            temp={temp}
+            setTemp={setTemp}
+          />
+        }
+        dateFormat={dateFormat}
         disabled={disabled}
-        dropdownMode='select'
-        onChange={onChange}
+        onChange={() => {
+          undefined
+        }}
+        onSelect={handleSelect}
+        onBlur={handleBlur}
+        popperModifiers={[
+          {
+            name: 'offset',
+            options: {
+              offset: [0, 20],
+            },
+          },
+          {
+            name: 'preventOverflow',
+            options: {
+              rootBoundary: 'viewport',
+              tether: true,
+              altAxis: true,
+            },
+          },
+        ]}
+        renderCustomHeader={DatePickerHeader}
+        selected={selected}
         todayButton='today'
-        selected={value}
         {...props}
       />
     </Wrapper>

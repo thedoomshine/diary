@@ -150,7 +150,7 @@ export default function AppLayout() {
       <PrimaryNav user={user} handleSignOut={handleSignOut} />
       <StyledMain>
         <Outlet context={{ db, session }} />
-        {showModal && <NewEventModal isOpen={showModal} />}
+        <NewEventModal isOpen={showModal} />
       </StyledMain>
     </StyledLayout>
   )

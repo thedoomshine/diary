@@ -40,12 +40,14 @@ export const GlobalStyle = createGlobalStyle`
     line-height: 1.15;
     margin: 0;
     flex: 1 1 auto;
+    width: 100%;
   }
 
   #root {
     display: flex;
     flex-direction: column;
     flex: 1 1 auto;
+    width: 100%;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -80,5 +82,12 @@ export const GlobalStyle = createGlobalStyle`
   a {
     color: ${color.yellow};
     text-decoration: underline;
+  }
+
+  pre {
+    width: 100%;
+    word-break: break-word;
+    white-space: pre-wrap;
+    tab-size: 4;
   }
 `

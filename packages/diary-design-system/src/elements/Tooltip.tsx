@@ -19,7 +19,7 @@ const TooltipContent = styled(TooltipPrimitive.Content)`
   border-radius: 0.5rem;
   box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 0.5);
   will-change: transform, opacity;
-  z-index: 999;
+  z-index: 3;
 
   &[data-side='top'] {
     animation-name: ${slideDownAndFade};

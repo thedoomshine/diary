@@ -257,6 +257,9 @@ importers:
       browserslist:
         specifier: ^4.21.7
         version: 4.21.7
+      css-declaration-sorter:
+        specifier: ^7.0.0
+        version: 7.0.0(postcss@8.4.23)
       css-has-pseudo:
         specifier: ^5.0.2
         version: 5.0.2(postcss@8.4.23)
@@ -4971,6 +4974,15 @@ packages:
   /css-declaration-sorter@6.4.0(postcss@8.4.23):
     resolution: {integrity: sha512-jDfsatwWMWN0MODAFuHszfjphEXfNw9JUAhmY4pLu3TyTU+ohUpsbVtbU+1MZn4a47D9kqh03i4eyOm+74+zew==}
     engines: {node: ^10 || ^12 || >=14}
+    peerDependencies:
+      postcss: ^8.0.9
+    dependencies:
+      postcss: 8.4.23
+    dev: true
+
+  /css-declaration-sorter@7.0.0(postcss@8.4.23):
+    resolution: {integrity: sha512-jV48Uxg3jWGLthtZhYAH3JFWMjdurJrSQAgWCc/t2ZE0UUFAIWlgcXcLJNutZT8GXrLAr36Kp+O1w3yBdxCr/A==}
+    engines: {node: ^14 || ^16 || >=18}
     peerDependencies:
       postcss: ^8.0.9
     dependencies:
