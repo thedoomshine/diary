@@ -12,7 +12,7 @@ const CheckboxRoot = styled(CheckboxPrimitive.Root)`
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: inset 0 0.125rem 0.5rem rgba(0, 0, 0, 0.5);
+  box-shadow: inset 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 0.5);
 
   &:focus {
     box-shadow: 0 0 0 0.125rem ${({ theme }) => theme.color.yellow};
@@ -25,6 +25,7 @@ const Label = styled.label`
   justify-content: center;
   gap: 0.5rem;
   line-height: 1;
+  padding: 0.5rem;
   cursor: pointer;
 `
 

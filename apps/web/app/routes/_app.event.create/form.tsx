@@ -26,8 +26,8 @@ import {
   defaultTimePickerOptions,
   formatTimePickerOptions,
   defaultTimePickerFormat,
-} from '@diary/design-system'
-import type { TimePickerOption } from '@diary/design-system'
+} from '@diaryco/design-system'
+import type { TimePickerOption } from '@diaryco/design-system'
 
 const Fieldset = styled.fieldset`
   display: flex;

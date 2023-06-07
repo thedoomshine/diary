@@ -3,7 +3,7 @@ import type { LoaderFunction } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
 
 import styled from 'styled-components'
-import { ButtonStyles, OutlineButtonStyles } from '@diary/design-system'
+import { ButtonStyles, OutlineButtonStyles } from '@diaryco/design-system'
 import { createServerClient } from '~/services/db.server'
 import { ROUTES } from './types'
 

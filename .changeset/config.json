@@ -6,5 +6,11 @@
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": ["web"]
+  "ignore": [
+    "web",
+    "utils",
+    "tsconfig",
+    "prettier-config-diary",
+    "eslint-config-diary"
+  ]
 }

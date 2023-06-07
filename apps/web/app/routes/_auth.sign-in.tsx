@@ -3,7 +3,7 @@ import type { ActionFunction } from '@remix-run/node'
 import { Form, useActionData, useNavigation } from '@remix-run/react'
 
 import styled from 'styled-components'
-import { FillButton, Icon, Input } from '@diary/design-system'
+import { FillButton, Icon, Input } from '@diaryco/design-system'
 
 import { createServerClient } from '~/services/db.server'
 import { ROUTES } from './types'

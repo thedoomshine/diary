@@ -3,7 +3,7 @@ import type { LoaderFunction } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
 
 import styled from 'styled-components'
-import { Icon, grainyGradientPseudo } from '@diary/design-system'
+import { Icon, grainyGradientPseudo } from '@diaryco/design-system'
 
 import { createServerClient } from '~/services/db.server'
 import { AUTH_ROUTES, ROUTES } from '../types'

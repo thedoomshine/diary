@@ -13,7 +13,7 @@ import styled, { css } from 'styled-components'
 import { rgba } from 'polished'
 import cn from 'classnames'
 
-import { grainyGradientPseudo } from '@diary/design-system'
+import { grainyGradientPseudo } from '@diaryco/design-system'
 import { CalendarViewEnum } from './types'
 
 const GridStyles = css`

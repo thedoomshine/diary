@@ -1,7 +1,7 @@
 import type { LoaderFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { NavLink, useLoaderData } from '@remix-run/react'
-import { Avatar, Icon, OutlineButton } from '@diary/design-system'
+import { Avatar, Icon, OutlineButton } from '@diaryco/design-system'
 
 import styled from 'styled-components'
 

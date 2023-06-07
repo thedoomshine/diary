@@ -9,7 +9,7 @@ import {
   Button,
   ButtonStyles,
   Selectors,
-} from '@diary/design-system'
+} from '@diaryco/design-system'
 
 import { NAV_LINKS } from '../types'
 import cn from 'classnames'

@@ -1,6 +1,6 @@
 import { CreateEventForm } from './form'
 
-import { Dialog } from '@diary/design-system'
+import { Dialog } from '@diaryco/design-system'
 
 export const NewEventModal = ({ isOpen = false }) => {
   const handleProceed = () => {}

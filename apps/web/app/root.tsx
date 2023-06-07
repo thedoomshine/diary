@@ -18,7 +18,7 @@ import {
 import { createHead } from 'remix-island'
 
 import styled, { ThemeProvider } from 'styled-components'
-import { Button, GlobalStyle, Icon, theme } from '@diary/design-system'
+import { Button, GlobalStyle, Icon, theme } from '@diaryco/design-system'
 
 const StyledMain = styled.main`
   padding: 1rem;
