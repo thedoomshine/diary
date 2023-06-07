@@ -11,8 +11,5 @@
     "import-sort-style-module-alias": "^1.1.0",
     "prettier": "^2.8.8",
     "prettier-plugin-import-sort": "^0.0.7"
-  },
-  "publishConfig": {
-    "access": "public"
   }
 }
