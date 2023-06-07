@@ -1,6 +1,6 @@
-import type { ActionFunction } from '@remix-run/node'
-import { json } from '@remix-run/node'
-import { redirect } from '@remix-run/node'
+import type { ActionFunction } from '@vercel/remix'
+import { json } from '@vercel/remix'
+import { redirect } from '@vercel/remix'
 import { createServerClient } from '~/services/db.server'
 import { ROUTES } from './types'
 

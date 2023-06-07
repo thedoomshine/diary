@@ -1,5 +1,5 @@
-import { json, redirect } from '@remix-run/node'
-import type { ActionFunction } from '@remix-run/node'
+import { json, redirect } from '@vercel/remix'
+import type { ActionFunction } from '@vercel/remix'
 import { Form, useActionData, useNavigation } from '@remix-run/react'
 
 import styled from 'styled-components'

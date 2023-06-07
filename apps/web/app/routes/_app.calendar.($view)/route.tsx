@@ -6,8 +6,8 @@ import { CalendarViewEnum } from './types'
 import styled from 'styled-components'
 
 import { OutlineButton, Icon } from '@diaryco/design-system'
-import type { LoaderFunction } from '@remix-run/node'
-import { redirect } from '@remix-run/node'
+import type { LoaderFunction } from '@vercel/remix'
+import { redirect } from '@vercel/remix'
 import { CALENDAR_ROUTES, ROUTES } from '../types'
 
 const NavBar = styled.nav`

@@ -6,7 +6,7 @@
 
 import { PassThrough } from 'node:stream'
 
-import type { EntryContext } from '@remix-run/node'
+import type { EntryContext } from '@vercel/remix'
 import { Response } from '@remix-run/node'
 import { RemixServer } from '@remix-run/react'
 import { renderHeadToString } from 'remix-island'

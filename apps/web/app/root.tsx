@@ -1,6 +1,6 @@
 import { cssBundleHref } from '@remix-run/css-bundle'
 
-import type { LinksFunction } from '@remix-run/node'
+import type { LinksFunction } from '@vercel/remix'
 import type { V2_MetaFunction } from '@remix-run/react'
 
 import {

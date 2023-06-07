@@ -1,6 +1,6 @@
 import { NavLink } from '@remix-run/react'
-import type { LoaderFunction } from '@remix-run/node'
-import { json, redirect } from '@remix-run/node'
+import type { LoaderFunction } from '@vercel/remix'
+import { json, redirect } from '@vercel/remix'
 
 import styled from 'styled-components'
 import { ButtonStyles, OutlineButtonStyles } from '@diaryco/design-system'

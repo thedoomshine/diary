@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import { json, redirect } from '@remix-run/node'
-import type { LoaderFunction, Session, HeadersFunction } from '@remix-run/node'
+import { json, redirect } from '@vercel/remix'
+import type { LoaderFunction, Session, HeadersFunction } from '@vercel/remix'
 import { parse } from 'cache-control-parser'
 import {
   Outlet,

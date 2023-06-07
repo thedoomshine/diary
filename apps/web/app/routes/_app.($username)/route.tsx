@@ -1,5 +1,5 @@
-import type { LoaderFunction } from '@remix-run/node'
-import { json } from '@remix-run/node'
+import type { LoaderFunction } from '@vercel/remix'
+import { json } from '@vercel/remix'
 import { NavLink, useLoaderData } from '@remix-run/react'
 import { Avatar, Icon, OutlineButton } from '@diaryco/design-system'
 
