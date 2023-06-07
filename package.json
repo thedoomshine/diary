@@ -12,6 +12,9 @@
     "test": "turbo run test",
     "test:watch": "turbo run test:watch",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "turbo run build --filter=web^... && changeset publish",
     "preinstall": "npx only-allow pnpm"
   },
   "devDependencies": {
@@ -20,6 +23,7 @@
     "@types/styled-components": "^5.1.26",
     "@typescript-eslint/eslint-plugin": "^5.59.9",
     "@typescript-eslint/parser": "^5.59.9",
+    "@changesets/cli": "^2.26.1",
     "dotenv-cli": "latest",
     "eslint": "^7.32.0",
     "eslint-config-diary": "workspace:*",
