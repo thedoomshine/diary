@@ -1,18 +1,17 @@
-import type { FC } from 'react'
-import { NavLink } from '@remix-run/react'
-import styled from 'styled-components'
-
 import {
   AvatarMenu,
   AvatarMenuContent,
-  Icon,
   Button,
   ButtonStyles,
+  Icon,
   Selectors,
 } from '@diaryco/design-system'
+import { NavLink } from '@remix-run/react'
+import cn from 'classnames'
+import type { FC } from 'react'
+import styled from 'styled-components'
 
 import { NAV_LINKS } from '../types'
-import cn from 'classnames'
 
 const StyledIcon = styled(Icon)`
   font-size: ${({ theme }) => theme.fontSize.xl};
@@ -79,21 +78,21 @@ const NavLinkWrapper = styled.div`
   }
 
   ul {
-    flex: 1 1 auto;
     display: flex;
+    flex: 1 1 auto;
     flex-direction: column;
-    height: 0;
     justify-content: flex-start;
-    overflow: hidden;
+    height: 0;
     padding-left: 0;
+    overflow: hidden;
+    text-align: center;
     transition: height 250ms cubic-bezier(0, 0, 0.2, 1);
     will-change: height;
-    text-align: center;
 
     li a {
       display: block;
-      text-decoration: none;
       padding: 0.5rem 0;
+      text-decoration: none;
       &.active {
         font-weight: ${({ theme }) => theme.fontWeight['800']};
         text-decoration: underline;
@@ -146,13 +145,13 @@ const StyledLinkName = styled.span`
     position: relative;
 
     &:after {
-      content: attr(title);
-      font-weight: ${({ theme }) => theme.fontWeight['800']};
-      visibility: hidden;
-      overflow: hidden;
       display: block;
+      visibility: hidden;
       height: 1px;
+      overflow: hidden;
+      content: attr(title);
       color: transparent;
+      font-weight: ${({ theme }) => theme.fontWeight['800']};
     }
   }
 `
@@ -202,11 +201,17 @@ export const PrimaryNav: FC<PrimaryNavProps> = ({ user, handleSignOut }) => {
         <StyledLogo id='logo'>
           diary<span className='accent'>.</span>
         </StyledLogo>
-        <StyledMobileLogo name='logo-mobile' aria-hidden />
+        <StyledMobileLogo
+          name='logo-mobile'
+          aria-hidden
+        />
         <StyledNav aria-labelledby='logo'>
           {NAV_LINKS.map(({ icon, name, route, links }) => (
             <NavLinkWrapper key={name}>
-              <StyledNavLink to={getRouteUrl(name, route)} prefetch='intent'>
+              <StyledNavLink
+                to={getRouteUrl(name, route)}
+                prefetch='intent'
+              >
                 {({ isActive }) => (
                   <>
                     <StyledNavIcon
@@ -242,7 +247,10 @@ export const PrimaryNav: FC<PrimaryNavProps> = ({ user, handleSignOut }) => {
         >
           <StyledAvatarMenuContent>
             <SignOutButton onClick={handleSignOut}>
-              <SignOutIcon name='sign-out' aria-hidden />
+              <SignOutIcon
+                name='sign-out'
+                aria-hidden
+              />
               Sign out of @{user?.username}?
             </SignOutButton>
           </StyledAvatarMenuContent>

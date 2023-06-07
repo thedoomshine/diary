@@ -1,5 +1,5 @@
-import { css } from 'styled-components'
 import { rgba } from 'polished'
+import { css } from 'styled-components'
 
 import { color } from '../foundation/index'
 
@@ -26,14 +26,14 @@ export const grainyGradientPseudo = (
   &:before {
     position: absolute;
     top: 0;
-    left: 0;
     right: 0;
     bottom: 0;
-    content: '';
-    height: 100%;
+    left: 0;
     width: 100%;
-    opacity: 0.125;
+    height: 100%;
     border-radius: 0.5rem;
+    content: '';
+    opacity: 0.125;
     ${grainyGradient(angle, color1, color2, type)};
   }
 `

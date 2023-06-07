@@ -1,9 +1,9 @@
-import { FC, useState, useRef, useEffect, ChangeEvent } from 'react'
-import styled from 'styled-components'
 import cn from 'classnames'
+import { ChangeEvent, FC, useEffect, useRef, useState } from 'react'
+import styled from 'styled-components'
 
-import { Icon } from '../Icon/Icon'
 import { Button } from '../Button'
+import { Icon } from '../Icon/Icon'
 import { Tooltip, TooltipProvider } from '../Tooltip'
 
 const InputContainer = styled.div`
@@ -26,11 +26,12 @@ const InputWrapper = styled.div`
   background-color: ${({ theme }) => theme.color.black};
   border: solid 0.125rem transparent;
   box-shadow: inset 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 0.5);
+  border-radius: 0.5em;
   color: ${({ theme }) => theme.color.white};
   width: 100%;
   flex: 1 1 auto;
   display: flex;
-  border-radius: 0.5em;
+  overflow: hidden;
   position: relative;
   font-size: ${({ theme }) => theme.fontSize.md};
 
@@ -42,14 +43,13 @@ const InputWrapper = styled.div`
 const StyledInput = styled.input`
   flex: 1 1 auto;
   font-size: inherit;
-  border-radius: 0.5em;
   padding: 0.5rem;
   color-scheme: dark;
 
   &::placeholder {
     color: ${({ theme }) => theme.color.grey};
-    opacity: 0.75;
     font-style: italic;
+    opacity: 0.75;
   }
 `
 
@@ -125,7 +125,10 @@ const PasswordToggle: FC<PasswordToggleProps> = ({
         side='bottom'
         content={`${isMasked ? 'show' : 'hide'} password`}
       >
-        <PasswordToggleButton onClick={onClick} {...props}>
+        <PasswordToggleButton
+          onClick={onClick}
+          {...props}
+        >
           <PasswordToggleIcon
             className={cn({ masked: isMasked })}
             name={isMasked ? 'eye-slash' : 'eye'}
@@ -174,7 +177,7 @@ export const Input: FC<InputProps> = ({
     isPassword ? (isMasked ? 'password' : 'text') : type
 
   const togglePasswordMask = () => {
-    setIsMasked(prev => !prev)
+    setIsMasked((prev) => !prev)
   }
 
   const handleValidate = () => {
@@ -238,7 +241,10 @@ export const Input: FC<InputProps> = ({
           {...props}
         />
         {isPassword ? (
-          <PasswordToggle isMasked={isMasked} onClick={togglePasswordMask} />
+          <PasswordToggle
+            isMasked={isMasked}
+            onClick={togglePasswordMask}
+          />
         ) : (
           suffixIcon && <Icon name={suffixIcon} />
         )}

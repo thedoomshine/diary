@@ -1,12 +1,12 @@
+import { format } from 'date-fns'
+import { rgba } from 'polished'
 import { forwardRef, useEffect, useState } from 'react'
-import type { FocusEvent, FC } from 'react'
+import type { FC, FocusEvent } from 'react'
 import ReactDatePicker, {
   ReactDatePickerCustomHeaderProps,
 } from 'react-datepicker'
-import { format } from 'date-fns'
-
 import styled, { css } from 'styled-components'
-import { rgba } from 'polished'
+
 import { Button, ButtonStyles, Icon } from '~/elements'
 
 const triangleArrow = css`
@@ -17,14 +17,14 @@ const triangleArrow = css`
   &::before,
   &::after {
     box-sizing: content-box;
-    position: absolute;
-    border: 0.5rem solid transparent;
-    height: 0;
-    width: 1px;
-    content: '';
     z-index: -1;
-    border-width: 0.5rem;
+    position: absolute;
     left: -0.5rem;
+    width: 1px;
+    height: 0;
+    border: 0.5rem solid transparent;
+    border-width: 0.5rem;
+    content: '';
   }
 
   &::before {
@@ -85,13 +85,13 @@ const Wrapper = styled.div`
   }
 
   .react-datepicker-popper {
-    background-color: ${({ theme }) => theme.color.black};
-    border-radius: 0.5rem;
-    box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 0.5);
+    z-index: 3;
+    top: 0.5rem;
     padding: ${({ theme }) => theme.space.xs};
     padding-bottom: ${({ theme }) => theme.space.xxs};
-    top: 0.5rem;
-    z-index: 3;
+    border-radius: 0.5rem;
+    background-color: ${({ theme }) => theme.color.black};
+    box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 0.5);
 
     &[data-placement^='bottom'] {
       padding-top: 0.5rem + 2px;
@@ -104,8 +104,8 @@ const Wrapper = styled.div`
     &[data-placement='bottom-end'],
     &[data-placement='top-end'] {
       .react-datepicker__triangle {
-        left: auto;
         right: 50px;
+        left: auto;
       }
     }
 
@@ -121,8 +121,8 @@ const Wrapper = styled.div`
       padding-left: 0.5rem;
 
       .react-datepicker__triangle {
-        left: auto;
         right: 42px;
+        left: auto;
       }
     }
 
@@ -130,8 +130,8 @@ const Wrapper = styled.div`
       padding-right: 0.5rem;
 
       .react-datepicker__triangle {
-        left: 42px;
         right: auto;
+        left: 42px;
       }
     }
   }
@@ -189,14 +189,14 @@ const Wrapper = styled.div`
 
   .react-datepicker__aria-live {
     position: absolute;
-    clip-path: circle(0);
-    border: 0;
+    width: 1px;
     height: 1px;
     margin: -1px;
-    overflow: hidden;
     padding: 0;
-    width: 1px;
+    overflow: hidden;
+    border: 0;
     white-space: nowrap;
+    clip-path: circle(0);
   }
 `
 
@@ -216,11 +216,17 @@ const DatePickerHeader: FC<ReactDatePickerCustomHeaderProps> = ({
 }) => {
   return (
     <StyledHeader>
-      <Button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
+      <Button
+        onClick={decreaseMonth}
+        disabled={prevMonthButtonDisabled}
+      >
         <Icon name='chevron-left' />
       </Button>
       {format(date, 'MMMM yyyy').toLocaleLowerCase()}
-      <Button onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
+      <Button
+        onClick={increaseMonth}
+        disabled={nextMonthButtonDisabled}
+      >
         <Icon name='chevron-right' />
       </Button>
     </StyledHeader>
@@ -232,12 +238,12 @@ const InputWrapper = styled.div`
   padding: 0.25rem 0.5rem;
   position: relative;
   input {
-    padding: 0.25rem;
-    margin: 0;
-    border: none;
     position: absolute;
-    vertical-align: top;
     width: 100%;
+    margin: 0;
+    padding: 0.25rem;
+    border: none;
+    vertical-align: top;
   }
 `
 

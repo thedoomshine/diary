@@ -1,10 +1,6 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": [
-    "**/.env.*local",
-    ".env",
-    ".env/local"
-  ],
+  "globalDependencies": ["**/.env.*local", ".env", ".env/local"],
   "globalEnv": ["NODE_ENV"],
   "pipeline": {
     "build": {
@@ -23,11 +19,16 @@
       "dependsOn": ["^build"],
       "persistent": true
     },
-    "format": {
+    "prettier": {
       "outputs": []
     },
-    "lint": {
-      "dependsOn": ["format"],
+    "eslint": {
+      "dependsOn": [],
+      "inputs": ["!supabase"],
+      "outputs": []
+    },
+    "stylelint": {
+      "dependsOn": [],
       "inputs": ["!supabase"],
       "outputs": []
     },

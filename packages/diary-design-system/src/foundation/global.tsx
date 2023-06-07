@@ -1,9 +1,14 @@
 import { createGlobalStyle } from 'styled-components'
+
 import { color, font, fontSize, reset, size } from '~/foundation'
 import { fluidType, grainyGradient } from '~/utils'
 
 export const GlobalStyle = createGlobalStyle`
   ${reset}
+
+  all {
+    color-scheme: dark;
+  }
 
   html {
     text-size-adjust: 100%;

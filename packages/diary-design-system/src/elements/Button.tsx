@@ -1,5 +1,5 @@
-import { forwardRef, HTMLProps, MutableRefObject } from 'react'
 import { rgba } from 'polished'
+import { HTMLProps, MutableRefObject, forwardRef } from 'react'
 import styled, { css } from 'styled-components'
 
 import { ButtonSelectors } from '../utils'
@@ -91,6 +91,7 @@ export const FillButtonStyles = css`
   will-change: box-shadow, transform;
 
   ${ButtonSelectors.HOVER} {
+    transform: translate(8px, -8px);
     background-color: ${({ theme }) => theme.color.yellow};
     box-shadow: 0px 0px 0 ${({ theme }) => theme.color.black},
       -1px 1px 0 ${({ theme }) => theme.color.black},
@@ -101,7 +102,6 @@ export const FillButtonStyles = css`
       -6px 6px 0 ${({ theme }) => theme.color.black},
       -7px 7px 0 ${({ theme }) => theme.color.black},
       -8px 8px 0 ${({ theme }) => theme.color.black};
-    transform: translate(8px, -8px);
   }
 `
 

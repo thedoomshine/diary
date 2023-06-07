@@ -6,7 +6,7 @@ export default {
   name: 'styled-components',
   setup({ onLoad }) {
     const root = process.cwd()
-    onLoad({ filter: /\.[tj]sx$/ }, async args => {
+    onLoad({ filter: /\.[tj]sx$/ }, async (args) => {
       let code = await fs.promises.readFile(args.path, 'utf8')
       let plugins = [
         'importMeta',

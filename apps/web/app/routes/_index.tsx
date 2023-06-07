@@ -1,10 +1,11 @@
+import { ButtonStyles, OutlineButtonStyles } from '@diaryco/design-system'
 import { NavLink } from '@remix-run/react'
 import type { LoaderFunction } from '@vercel/remix'
 import { json, redirect } from '@vercel/remix'
-
 import styled from 'styled-components'
-import { ButtonStyles, OutlineButtonStyles } from '@diaryco/design-system'
+
 import { createServerClient } from '~/services/db.server'
+
 import { ROUTES } from './types'
 
 const StyledLayout = styled.div`

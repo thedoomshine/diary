@@ -1,5 +1,5 @@
-import type { FC } from 'react'
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
+import type { FC } from 'react'
 import styled from 'styled-components'
 
 import { ButtonStyles, Icon } from '~/elements'

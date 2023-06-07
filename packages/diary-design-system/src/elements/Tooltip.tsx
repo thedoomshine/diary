@@ -1,13 +1,12 @@
-import { FC, ReactNode } from 'react'
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
-
+import { FC, ReactNode } from 'react'
 import styled from 'styled-components'
 
 import {
   slideDownAndFade,
-  slideUpAndFade,
   slideLeftAndFade,
   slideRightAndFade,
+  slideUpAndFade,
 } from '~/utils'
 
 const TooltipContent = styled(TooltipPrimitive.Content)`
@@ -81,7 +80,10 @@ export const Tooltip: FC<TooltipProps> = ({
         {...props}
       >
         {content}
-        <TooltipArrow height={8} width={16} />
+        <TooltipArrow
+          height={8}
+          width={16}
+        />
       </TooltipContent>
     </TooltipPrimitive.Root>
   )

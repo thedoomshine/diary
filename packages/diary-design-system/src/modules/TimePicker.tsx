@@ -1,10 +1,9 @@
+import { addMinutes, format, startOfDay } from 'date-fns'
 import { useMemo } from 'react'
 import type { FC } from 'react'
-
-import { addMinutes, format, startOfDay } from 'date-fns'
+import { styled } from 'styled-components'
 
 import { Select, SelectItem } from '~/elements'
-import { styled } from 'styled-components'
 
 const StyledSelect = styled(Select)`
   padding: 0.25rem 0.5rem;
@@ -66,7 +65,10 @@ export const TimePicker: FC<TimePickerProps> = ({
       value={getString(value)}
     >
       {selectOptions.map(({ date, name }) => (
-        <SelectItem key={`${getString(date)}`} value={getString(date)}>
+        <SelectItem
+          key={`${getString(date)}`}
+          value={getString(date)}
+        >
           {name}
         </SelectItem>
       ))}

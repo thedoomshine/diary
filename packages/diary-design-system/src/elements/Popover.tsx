@@ -1,14 +1,13 @@
-import { forwardRef, ReactNode } from 'react'
 import * as PopoverPrimitive from '@radix-ui/react-popover'
-
+import { ReactNode, forwardRef } from 'react'
 import styled from 'styled-components'
 
 import { ButtonStyles, Icon } from '~/elements'
 import {
   slideDownAndFade,
-  slideUpAndFade,
   slideLeftAndFade,
   slideRightAndFade,
+  slideUpAndFade,
 } from '~/utils'
 
 const StyledPopoverContent = styled(PopoverPrimitive.Content)`
@@ -64,7 +63,10 @@ export const PopoverContent = forwardRef<HTMLDivElement, PopoverProps>(
         ref={forwardedRef}
       >
         {children}
-        <PopoverArrow height={8} width={16} />
+        <PopoverArrow
+          height={8}
+          width={16}
+        />
       </StyledPopoverContent>
     </PopoverPrimitive.Portal>
   )

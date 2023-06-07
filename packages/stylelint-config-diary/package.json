@@ -1,0 +1,13 @@
+{
+  "name": "stylelint-config-diary",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "main": "stylelint.config.js",
+  "dependencies": {
+    "stylelint": "^15.7.0",
+    "stylelint-config-standard": "^33.0.0",
+    "postcss-styled-syntax": "^0.4.0",
+    "stylelint-config-clean-order": "^5.0.1"
+  }
+}

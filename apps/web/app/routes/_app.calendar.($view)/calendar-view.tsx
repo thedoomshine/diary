@@ -1,6 +1,5 @@
-import { memo, useCallback, useEffect, useMemo, useState } from 'react'
-import type { CSSProperties } from 'react'
-import type { FC } from 'react'
+import { grainyGradientPseudo } from '@diaryco/design-system'
+import cn from 'classnames'
 import {
   endOfMonth,
   getDaysInMonth,
@@ -8,12 +7,12 @@ import {
   isToday,
   startOfMonth,
 } from 'date-fns'
+import { rgba } from 'polished'
+import { memo, useCallback, useEffect, useMemo, useState } from 'react'
+import type { CSSProperties } from 'react'
+import type { FC } from 'react'
 import styled, { css } from 'styled-components'
 
-import { rgba } from 'polished'
-import cn from 'classnames'
-
-import { grainyGradientPseudo } from '@diaryco/design-system'
 import { CalendarViewEnum } from './types'
 
 const GridStyles = css`
@@ -179,15 +178,15 @@ const StyledTimeMarker = styled.span`
   &.current-week,
   &.today {
     &:after {
-      content: '';
-      height: 0.66em;
-      width: 0.66em;
-      border-radius: 100%;
-      background-color: ${({ theme }) => theme.color.red};
       position: absolute;
       top: 0;
       bottom: 0;
+      width: 0.66em;
+      height: 0.66em;
       transform: translate(-50%, -50%);
+      border-radius: 100%;
+      background-color: ${({ theme }) => theme.color.red};
+      content: '';
     }
   }
 
@@ -333,7 +332,7 @@ const TimeGrid: FC<TimeGridProps> = ({ date, view }) => {
   if (view === CalendarViewEnum.MONTH) return null
   return (
     <TimeGridContainer>
-      {generateTime(date).map(time => (
+      {generateTime(date).map((time) => (
         <TimeGridItem
           className='time-grid-item'
           key={`time-grid-${time.getHours()}`}
@@ -342,7 +341,11 @@ const TimeGrid: FC<TimeGridProps> = ({ date, view }) => {
           {getTimeContent(time)}
         </TimeGridItem>
       ))}
-      <TimeMarker date={date} view={view} aria-hidden />
+      <TimeMarker
+        date={date}
+        view={view}
+        aria-hidden
+      />
     </TimeGridContainer>
   )
 }
@@ -418,10 +421,16 @@ export const CalendarView: FC<CalendarViewProps> = ({
 
   return (
     <Calendar className={cn(`${view}-view`)}>
-      <WeekdayHeader activeDate={activeDate} view={view} />
+      <WeekdayHeader
+        activeDate={activeDate}
+        view={view}
+      />
       <CalendarMainContent className={cn(`${view}-view`)}>
-        <TimeGrid date={activeDate} view={view} />
-        {calendarCells.map(date => (
+        <TimeGrid
+          date={activeDate}
+          view={view}
+        />
+        {calendarCells.map((date) => (
           <CalendarCell
             className='calendar-day'
             key={`calendar-cell-${date.toLocaleDateString()}`}

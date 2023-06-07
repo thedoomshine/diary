@@ -1,4 +1,5 @@
 import NodeCache from 'node-cache'
+
 let cache: NodeCache
 
 declare global {

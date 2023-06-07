@@ -1,14 +1,13 @@
-import { useState } from 'react'
+import { Icon, OutlineButton } from '@diaryco/design-system'
 import { useLoaderData } from '@remix-run/react'
-import { CalendarView } from './calendar-view'
-import { CalendarViewEnum } from './types'
-
-import styled from 'styled-components'
-
-import { OutlineButton, Icon } from '@diaryco/design-system'
 import type { LoaderFunction } from '@vercel/remix'
 import { redirect } from '@vercel/remix'
+import { useState } from 'react'
+import styled from 'styled-components'
+
 import { CALENDAR_ROUTES, ROUTES } from '../types'
+import { CalendarView } from './calendar-view'
+import { CalendarViewEnum } from './types'
 
 const NavBar = styled.nav`
   display: flex;
@@ -78,13 +77,13 @@ export default () => {
 
   const handleNavigateMonth = (direction: number) => {
     setActiveDate(
-      prev => new Date(prev.getFullYear(), prev.getMonth() + direction, 1)
+      (prev) => new Date(prev.getFullYear(), prev.getMonth() + direction, 1)
     )
   }
 
   const handleNavigateWeek = (direction: number) => {
     setActiveDate(
-      prev =>
+      (prev) =>
         new Date(
           prev.getFullYear(),
           prev.getMonth(),
@@ -95,7 +94,7 @@ export default () => {
 
   const handleNavigateDay = (direction: number) => {
     setActiveDate(
-      prev =>
+      (prev) =>
         new Date(
           prev.getFullYear(),
           prev.getMonth(),
@@ -137,17 +136,28 @@ export default () => {
       <NavBar>
         <ButtonsWrapper>
           <OutlineButton onClick={onPrevClick}>
-            <StyledIcon className='left' name='chevron-left' /> prev
+            <StyledIcon
+              className='left'
+              name='chevron-left'
+            />{' '}
+            prev
           </OutlineButton>
           <OutlineButton onClick={onTodayClick}>today</OutlineButton>
           <OutlineButton onClick={onNextClick}>
-            next <StyledIcon className='right' name='chevron-right' />
+            next{' '}
+            <StyledIcon
+              className='right'
+              name='chevron-right'
+            />
           </OutlineButton>
         </ButtonsWrapper>
         <StyledH1>{title}</StyledH1>
       </NavBar>
 
-      <CalendarView activeDate={activeDate} view={view as CalendarViewEnum} />
+      <CalendarView
+        activeDate={activeDate}
+        view={view as CalendarViewEnum}
+      />
     </>
   )
 }

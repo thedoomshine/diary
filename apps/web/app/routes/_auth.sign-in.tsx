@@ -1,13 +1,13 @@
+import { FillButton, Icon, Input } from '@diaryco/design-system'
+import { Form, useActionData, useNavigation } from '@remix-run/react'
 import { json, redirect } from '@vercel/remix'
 import type { ActionFunction } from '@vercel/remix'
-import { Form, useActionData, useNavigation } from '@remix-run/react'
-
 import styled from 'styled-components'
-import { FillButton, Icon, Input } from '@diaryco/design-system'
 
 import { createServerClient } from '~/services/db.server'
-import { ROUTES } from './types'
 import { ErrorMessages, Validations, validateField } from '~/utils'
+
+import { ROUTES } from './types'
 
 const Fieldset = styled.fieldset`
   display: flex;
@@ -93,7 +93,10 @@ export default function SignIn() {
   const isSubmitting = navigation.state === 'submitting'
 
   return (
-    <Form method='post' noValidate>
+    <Form
+      method='post'
+      noValidate
+    >
       <Fieldset>
         <Input
           label='email address'
@@ -132,7 +135,10 @@ export default function SignIn() {
         </span>
       </ErrorMessage>
 
-      <StyledButton disabled={isSubmitting} type='submit'>
+      <StyledButton
+        disabled={isSubmitting}
+        type='submit'
+      >
         sign in
       </StyledButton>
     </Form>

@@ -1,4 +1,6 @@
 import { FC, ReactNode } from 'react'
+import styled from 'styled-components'
+
 import {
   Avatar,
   ButtonStyles,
@@ -7,8 +9,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '~/elements'
-
-import styled from 'styled-components'
 
 const StyledPopoverTrigger = styled(PopoverTrigger)`
   ${ButtonStyles};
@@ -80,7 +80,11 @@ export const AvatarMenu: FC<AvatarMenuProps> = ({
   return (
     <Popover>
       <StyledPopoverTrigger {...props}>
-        <StyledAvatar url={url} name={displayName} initials={initials} />
+        <StyledAvatar
+          url={url}
+          name={displayName}
+          initials={initials}
+        />
         <StyledUserNames>
           <StyledUserDisplayName>{displayName}</StyledUserDisplayName>
           <StyledUsername>@{username}</StyledUsername>

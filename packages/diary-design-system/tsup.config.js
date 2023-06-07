@@ -1,6 +1,6 @@
 import { defineConfig } from 'tsup'
 
-export default defineConfig(options => ({
+export default defineConfig((options) => ({
   clean: false,
   dts: true,
   entry: ['src/index.tsx'],

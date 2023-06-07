@@ -1,8 +1,7 @@
+import { rgba } from 'polished'
 import { useEffect, useRef } from 'react'
 import type { MouseEvent } from 'react'
-
 import styled, { keyframes } from 'styled-components'
-import { rgba } from 'polished'
 
 import { Button, Icon, OutlineButton } from '~/elements'
 
@@ -31,12 +30,12 @@ const StyledDialogContent = styled.div`
   animation: ${contentShow} 150ms cubic-bezier(0.16, 1, 0.3, 1) normal;
 
   &::backdrop {
-    background-color: ${({ theme }) => rgba(theme.color.black, 0.75)};
     position: fixed;
     top: 0;
-    left: 0;
     right: 0;
     bottom: 0;
+    left: 0;
+    background-color: ${({ theme }) => rgba(theme.color.black, 0.75)};
     animation: none;
   }
 
@@ -141,7 +140,11 @@ export const Dialog = ({
     handleClose()
 
   return (
-    <dialog ref={dialogRef} onCancel={handleClose} onClick={handleClick}>
+    <dialog
+      ref={dialogRef}
+      onCancel={handleClose}
+      onClick={handleClick}
+    >
       <StyledDialogContent>
         <DialogHeader>
           {title && <h1>{title}</h1>}

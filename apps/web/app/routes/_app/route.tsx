@@ -1,7 +1,3 @@
-import { useEffect, useState } from 'react'
-import { json, redirect } from '@vercel/remix'
-import type { LoaderFunction, Session, HeadersFunction } from '@vercel/remix'
-import { parse } from 'cache-control-parser'
 import {
   Outlet,
   useFetcher,
@@ -10,15 +6,19 @@ import {
 } from '@remix-run/react'
 import { createBrowserClient } from '@supabase/auth-helpers-remix'
 import type { SupabaseClient } from '@supabase/auth-helpers-remix'
-
+import { json, redirect } from '@vercel/remix'
+import type { HeadersFunction, LoaderFunction, Session } from '@vercel/remix'
+import { parse } from 'cache-control-parser'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-import { NewEventModal } from '../_app.event.create/modal'
-import { PrimaryNav } from './primary-nav'
 import type { Database } from '~/services/db.server'
 import { createServerClient } from '~/services/db.server'
-import { ROUTES } from '../types'
 import { cache } from '~/utils'
+
+import { NewEventModal } from '../_app.event.create/modal'
+import { ROUTES } from '../types'
+import { PrimaryNav } from './primary-nav'
 
 const StyledLayout = styled.div`
   display: grid;
@@ -147,7 +147,10 @@ export default function AppLayout() {
 
   return (
     <StyledLayout>
-      <PrimaryNav user={user} handleSignOut={handleSignOut} />
+      <PrimaryNav
+        user={user}
+        handleSignOut={handleSignOut}
+      />
       <StyledMain>
         <Outlet context={{ db, session }} />
         <NewEventModal isOpen={showModal} />

@@ -1,6 +1,5 @@
-import type { FC } from 'react'
 import * as AvatarPrimitive from '@radix-ui/react-avatar'
-
+import type { FC } from 'react'
 import styled from 'styled-components'
 
 const AvatarRoot = styled(AvatarPrimitive.Root)`
@@ -46,7 +45,10 @@ interface AvatarProps {
 
 export const Avatar: FC<AvatarProps> = ({ url, name, initials, ...props }) => (
   <AvatarRoot {...props}>
-    <AvatarImage src={url} alt={name} />
+    <AvatarImage
+      src={url}
+      alt={name}
+    />
     <AvatarFallback delayMs={600}>{initials}</AvatarFallback>
   </AvatarRoot>
 )

@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Icons, IconNames } from './Library'
+
+import { IconNames, Icons } from './Library'
 
 interface IconProperties {
   className?: string
@@ -32,7 +33,12 @@ export const Icon: React.FC<IconProperties> = ({
   const icon = Icons[iconName]
 
   return (
-    <StyledSVG viewBox={viewBox} role={role} fill='none' {...props}>
+    <StyledSVG
+      viewBox={viewBox}
+      role={role}
+      fill='none'
+      {...props}
+    >
       {title && <title>{title}</title>}
       {icon}
     </StyledSVG>

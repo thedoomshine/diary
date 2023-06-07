@@ -1,9 +1,8 @@
+import * as SelectPrimitive from '@radix-ui/react-select'
+import { rgba } from 'polished'
 import { forwardRef } from 'react'
 import type { ReactNode } from 'react'
-import * as SelectPrimitive from '@radix-ui/react-select'
-
 import styled from 'styled-components'
-import { rgba } from 'polished'
 
 import { ButtonStyles, Icon } from '~/elements'
 
@@ -84,8 +83,14 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
     forwardedRef
   ) => {
     return (
-      <SelectPrimitive.Root disabled={disabled} {...props}>
-        <SelectTrigger ref={forwardedRef} className={className}>
+      <SelectPrimitive.Root
+        disabled={disabled}
+        {...props}
+      >
+        <SelectTrigger
+          ref={forwardedRef}
+          className={className}
+        >
           <SelectPrimitive.Value />
           {!hideIcon && (
             <SelectPrimitive.Icon>
@@ -93,7 +98,10 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
             </SelectPrimitive.Icon>
           )}
         </SelectTrigger>
-        <SelectContent sticky='always' position='popper'>
+        <SelectContent
+          sticky='always'
+          position='popper'
+        >
           {/* <SelectScrollUp>
             <Icon name='chevron-up' />
           </SelectScrollUp> */}
@@ -116,7 +124,10 @@ interface SelectItemProps extends SelectPrimitive.SelectItemProps {
 export const SelectItem = forwardRef<HTMLDivElement, SelectItemProps>(
   ({ children, hideIndicator = false, ...props }, forwardedRef) => {
     return (
-      <StyledSelectItem ref={forwardedRef} {...props}>
+      <StyledSelectItem
+        ref={forwardedRef}
+        {...props}
+      >
         <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
         {!hideIndicator && (
           <SelectItemIndicator>

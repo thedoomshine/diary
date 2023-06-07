@@ -1,6 +1,6 @@
 import * as build from '@remix-run/dev/server-build'
-import { installGlobals } from '@vercel/remix'
 import { createRequestHandler } from '@remix-run/vercel'
+import { installGlobals } from '@vercel/remix'
 
 installGlobals()
 

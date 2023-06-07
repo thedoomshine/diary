@@ -1,8 +1,6 @@
+import { Button, GlobalStyle, Icon, theme } from '@diaryco/design-system'
 import { cssBundleHref } from '@remix-run/css-bundle'
-
-import type { LinksFunction } from '@vercel/remix'
 import type { V2_MetaFunction } from '@remix-run/react'
-
 import {
   Links,
   LiveReload,
@@ -14,11 +12,9 @@ import {
   useNavigate,
   useRouteError,
 } from '@remix-run/react'
-
+import type { LinksFunction } from '@vercel/remix'
 import { createHead } from 'remix-island'
-
 import styled, { ThemeProvider } from 'styled-components'
-import { Button, GlobalStyle, Icon, theme } from '@diaryco/design-system'
 
 const StyledMain = styled.main`
   padding: 1rem;

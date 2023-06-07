@@ -92,9 +92,9 @@ export const reset = css`
   :where([contenteditable]:not([contenteditable='false'])) {
     -moz-user-modify: read-write;
     -webkit-user-modify: read-write;
-    overflow-wrap: break-word;
     -webkit-line-break: after-white-space;
     -webkit-user-select: auto;
+    overflow-wrap: break-word;
   }
 
   /* apply back the draggable feature - exist only in Chromium and Safari */
@@ -105,9 +105,9 @@ export const reset = css`
   /* Revert Modal native behavior */
   :where(dialog:modal) {
     all: revert;
-    background-color: transparent;
-    border: none;
-    overflow: visible;
     padding: 0;
+    overflow: visible;
+    border: none;
+    background-color: transparent;
   }
 `

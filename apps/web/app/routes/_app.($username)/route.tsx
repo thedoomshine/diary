@@ -1,11 +1,11 @@
+import { Avatar, Icon, OutlineButton } from '@diaryco/design-system'
+import { NavLink, useLoaderData } from '@remix-run/react'
 import type { LoaderFunction } from '@vercel/remix'
 import { json } from '@vercel/remix'
-import { NavLink, useLoaderData } from '@remix-run/react'
-import { Avatar, Icon, OutlineButton } from '@diaryco/design-system'
-
 import styled from 'styled-components'
 
 import { createServerClient } from '~/services'
+
 import { APP_ROUTES } from '../types'
 
 const StyledContainer = styled.div`

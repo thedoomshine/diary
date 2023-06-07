@@ -1,4 +1,5 @@
 import 'styled-components'
+
 import type { BashTheme } from '~/foundation'
 
 declare module '@diaryco/design-system' {

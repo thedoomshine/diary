@@ -1,21 +1,3 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
-import type { FC, FocusEvent } from 'react'
-import { Form } from '@remix-run/react'
-import {
-  addHours,
-  addMinutes,
-  differenceInMinutes,
-  format,
-  isAfter,
-  isThisYear,
-  isSameDay,
-  isSameMinute,
-  roundToNearestMinutes,
-} from 'date-fns'
-
-import { formatInTimeZone } from 'date-fns-tz'
-
-import styled from 'styled-components'
 import {
   Checkbox,
   DatePicker,
@@ -23,11 +5,27 @@ import {
   Select,
   SelectItem,
   TimePicker,
+  defaultTimePickerFormat,
   defaultTimePickerOptions,
   formatTimePickerOptions,
-  defaultTimePickerFormat,
 } from '@diaryco/design-system'
 import type { TimePickerOption } from '@diaryco/design-system'
+import { Form } from '@remix-run/react'
+import {
+  addHours,
+  addMinutes,
+  differenceInMinutes,
+  format,
+  isAfter,
+  isSameDay,
+  isSameMinute,
+  isThisYear,
+  roundToNearestMinutes,
+} from 'date-fns'
+import { formatInTimeZone } from 'date-fns-tz'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import type { FC, FocusEvent } from 'react'
+import styled from 'styled-components'
 
 const Fieldset = styled.fieldset`
   display: flex;
@@ -43,8 +41,8 @@ const DateTimeWrapper = styled.div`
 `
 
 const DatesWrapper = styled.div`
-  display: flex;
   align-items: center;
+  display: flex;
 `
 
 const StyledSelect = styled(Select)``
@@ -288,13 +286,16 @@ export const CreateEventForm: FC<CreateEventFormProps> = ({
         </DatesWrapper>
       </Fieldset>
       <Fieldset>
-        <Checkbox label='all day' name='all-day' />
+        <Checkbox
+          label='all day'
+          name='all-day'
+        />
         <StyledSelect defaultValue={timeZones[0]}>
           {TIMEZONES.map((zone: string) => (
             <SelectItem
               key={zone}
               value={zone}
-              onSelect={event =>
+              onSelect={(event) =>
                 setTimeZones([
                   event.currentTarget.value,
                   event.currentTarget.value,

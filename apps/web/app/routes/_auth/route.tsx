@@ -1,11 +1,11 @@
+import { Icon, grainyGradientPseudo } from '@diaryco/design-system'
 import { NavLink, Outlet, useLocation } from '@remix-run/react'
 import type { LoaderFunction } from '@vercel/remix'
 import { json, redirect } from '@vercel/remix'
-
 import styled from 'styled-components'
-import { Icon, grainyGradientPseudo } from '@diaryco/design-system'
 
 import { createServerClient } from '~/services/db.server'
+
 import { AUTH_ROUTES, ROUTES } from '../types'
 
 const StyledLayout = styled.div`
@@ -138,7 +138,10 @@ export default function Auth() {
   return (
     <StyledLayout>
       <StyledMain>
-        <NavLink title='diary.' to='/'>
+        <NavLink
+          title='diary.'
+          to='/'
+        >
           <StyledLogo name='logo-mobile' />
         </NavLink>
         <StyledH1>{title} diary.</StyledH1>

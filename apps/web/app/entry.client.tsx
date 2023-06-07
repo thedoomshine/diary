@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { startTransition, StrictMode } from 'react'
-import { hydrateRoot } from 'react-dom/client'
-import { RemixBrowser } from '@remix-run/react'
-import { ThemeProvider } from 'styled-components'
-
 import { GlobalStyle, theme } from '@diaryco/design-system'
+import { RemixBrowser } from '@remix-run/react'
+import { StrictMode, startTransition } from 'react'
+import { hydrateRoot } from 'react-dom/client'
+import { ThemeProvider } from 'styled-components'
 
 function hydrate() {
   startTransition(() => {
