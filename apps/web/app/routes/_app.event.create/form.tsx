@@ -5,12 +5,15 @@ import {
   addHours,
   addMinutes,
   differenceInMinutes,
+  format,
   isAfter,
   isThisYear,
   isSameDay,
   isSameMinute,
   roundToNearestMinutes,
 } from 'date-fns'
+
+import { formatInTimeZone } from 'date-fns-tz'
 
 import styled from 'styled-components'
 import {
@@ -43,6 +46,8 @@ const DatesWrapper = styled.div`
   display: flex;
   align-items: center;
 `
+
+const StyledSelect = styled(Select)``
 
 const getDistance = (start: Date, finish: Date) => {
   const diff = differenceInMinutes(finish, start)
@@ -78,6 +83,10 @@ export const CreateEventForm: FC<CreateEventFormProps> = ({
 
   const [startTime, setStartTime] = useState(defaultStartDate)
   const [endTime, setEndTime] = useState(defaultEndDate)
+
+  const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
+
+  const [timeZones, setTimeZones] = useState([userTimeZone, userTimeZone])
 
   const isValidDate = (date: Date) =>
     date instanceof Date && !isNaN(Number(date.valueOf()))
@@ -188,7 +197,48 @@ export const CreateEventForm: FC<CreateEventFormProps> = ({
   const getDateFormat = (date: Date) =>
     `eeee, MMMM do${!isThisYear(date) ? ' yyyy' : ''}`
 
-  const TIMEZONES = Intl.supportedValuesOf('timeZone')
+  const formatTimeZoneName = (zone: string) => {
+    const now = startTime
+    const formatter = new Intl.DateTimeFormat('default', {
+      timeZone: zone,
+      timeStyle: 'full',
+    })
+
+    const GMTOffset = formatInTimeZone(now, zone, 'OOOO', {
+      timeZone: zone,
+    })
+    const timeZoneName = formatter.formatToParts(now.valueOf()).pop()?.value
+    const timeZoneLocation = zone.split('/')[1].replaceAll('_', ' ')
+
+    return `(${GMTOffset}) ${
+      GMTOffset !== timeZoneName ? `${timeZoneName} - ` : ''
+    }${timeZoneLocation}`
+  }
+
+  const TIMEZONES = useMemo(
+    () =>
+      Intl.supportedValuesOf('timeZone')
+        .sort((a: string, b: string) =>
+          formatTimeZoneName(a).localeCompare(formatTimeZoneName(b))
+        )
+        .sort((a: string, b: string) => {
+          const now = startTime
+          const REGEX = /([-]*[0-9]+)/
+          const first = formatInTimeZone(now, a, 'O', {
+            timeZone: a,
+          })
+            .replaceAll(':', '.')
+            .match(REGEX)!
+          const second = formatInTimeZone(now, b, 'O', {
+            timeZone: b,
+          })
+            .replaceAll(':', '.')
+            .match(REGEX)!
+
+          return Number(first[0]) - Number(second[0])
+        }),
+    [startTime]
+  )
 
   return (
     <Form method='post'>
@@ -239,13 +289,22 @@ export const CreateEventForm: FC<CreateEventFormProps> = ({
       </Fieldset>
       <Fieldset>
         <Checkbox label='all day' name='all-day' />
-        {/* <StyledSelect>
-          {selectOptions.map(({ date, name }) => (
-            <SelectItem key={`${getString(date)}`} value={getString(date)}>
-              {name}
+        <StyledSelect defaultValue={timeZones[0]}>
+          {TIMEZONES.map((zone: string) => (
+            <SelectItem
+              key={zone}
+              value={zone}
+              onSelect={event =>
+                setTimeZones([
+                  event.currentTarget.value,
+                  event.currentTarget.value,
+                ])
+              }
+            >
+              {formatTimeZoneName(zone)}
             </SelectItem>
           ))}
-        </StyledSelect> */}
+        </StyledSelect>
       </Fieldset>
     </Form>
   )

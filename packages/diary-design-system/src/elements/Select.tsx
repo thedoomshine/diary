@@ -37,7 +37,7 @@ const StyledSelectItem = styled(SelectPrimitive.Item)`
   border-radius: 0.25;
   display: flex;
   align-items: center;
-  padding: 0.5rem 1.25rem 0.5rem 0.5rem;
+  padding: 1rem 2rem 1rem 0.5rem;
   position: relative;
   user-select: none;
   cursor: pointer;
@@ -59,7 +59,7 @@ const SelectItemIndicator = styled(SelectPrimitive.ItemIndicator)`
   right: 0.5rem;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  color: ${({ theme }) => theme.color.yellow};
 `
 
 interface SelectProps extends SelectPrimitive.SelectProps {
