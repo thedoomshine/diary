@@ -8,9 +8,6 @@
   "updateInternalDependencies": "patch",
   "ignore": [
     "web",
-    "utils",
-    "tsconfig",
-    "prettier-config-diary",
-    "eslint-config-diary"
+    "diary-utils"
   ]
 }
