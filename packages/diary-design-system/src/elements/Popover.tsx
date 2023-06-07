@@ -3,13 +3,13 @@ import * as PopoverPrimitive from '@radix-ui/react-popover'
 
 import styled from 'styled-components'
 
-import { ButtonStyles, Icon } from './index'
+import { ButtonStyles, Icon } from '~/elements'
 import {
   slideDownAndFade,
   slideUpAndFade,
   slideLeftAndFade,
   slideRightAndFade,
-} from '../utils'
+} from '~/utils'
 
 const StyledPopoverContent = styled(PopoverPrimitive.Content)`
   border-radius: 0.5rem;

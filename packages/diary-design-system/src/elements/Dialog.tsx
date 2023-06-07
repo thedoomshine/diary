@@ -4,7 +4,7 @@ import type { MouseEvent } from 'react'
 import styled, { keyframes } from 'styled-components'
 import { rgba } from 'polished'
 
-import { Button, Icon, OutlineButton } from '.'
+import { Button, Icon, OutlineButton } from '~/elements'
 
 const overlayShow = keyframes({
   '0%': { opacity: 0 },

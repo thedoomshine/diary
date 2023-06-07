@@ -8,7 +8,7 @@ import {
   slideUpAndFade,
   slideLeftAndFade,
   slideRightAndFade,
-} from '../utils'
+} from '~/utils'
 
 const TooltipContent = styled(TooltipPrimitive.Content)`
   animation-duration: 0.6s;

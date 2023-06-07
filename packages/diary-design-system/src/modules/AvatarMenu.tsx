@@ -6,7 +6,7 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '../elements'
+} from '~/elements'
 
 import styled from 'styled-components'
 

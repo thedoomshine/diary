@@ -1,4 +1,9 @@
-export * from './fluid-type'
-export * from './selectors'
-export * from './animations'
-export * from './grainy-gradient'
+export { fluidType } from './fluid-type'
+export { ButtonSelectors, Selectors } from './selectors'
+export {
+  slideUpAndFade,
+  slideRightAndFade,
+  slideDownAndFade,
+  slideLeftAndFade,
+} from './animations'
+export { grainyGradient, grainyGradientPseudo } from './grainy-gradient'

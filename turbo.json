@@ -15,9 +15,6 @@
       "cache": false,
       "outputs": []
     },
-    "cleanup-preview": {
-      "outputs": []
-    },
     "deploy": {
       "outputs": []
     },
@@ -29,44 +26,14 @@
     "format": {
       "outputs": []
     },
-    "generate": {
-      "dependsOn": ["^generate"],
-      "outputs": []
-    },
     "lint": {
       "dependsOn": ["format"],
       "inputs": ["!supabase"],
       "outputs": []
     },
-    "preview": {
-      "outputs": []
-    },
-    "start": {
-      "outputs": []
-    },
-    "supabase#lint": {
-      "dependsOn": ["supabase#start", "format"],
-      "outputs": []
-    },
-    "supabase#start": {
-      "cache": false,
-      "outputs": []
-    },
-    "supabase#test": {
-      "dependsOn": ["supabase#start", "^build"],
-      "outputs": []
-    },
     "test": {
       "dependsOn": ["^build"],
       "outputs": ["coverage/**"]
-    },
-    "typecheck": {
-      "dependsOn": ["^build"],
-      "outputs": []
-    },
-    "types#generate": {
-      "dependsOn": ["supabase#start", "^generate"],
-      "outputs": []
     }
   }
 }

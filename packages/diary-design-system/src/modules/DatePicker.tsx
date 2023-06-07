@@ -7,7 +7,7 @@ import { format } from 'date-fns'
 
 import styled, { css } from 'styled-components'
 import { rgba } from 'polished'
-import { Button, ButtonStyles, Icon } from '../'
+import { Button, ButtonStyles, Icon } from '~/elements'
 
 const triangleArrow = css`
   margin-left: calc(-0.5rem * 0.5);

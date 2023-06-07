@@ -1,0 +1,11 @@
+{
+  "name": "@diary/utils",
+  "private": true,
+  "license": "MIT",
+  "main": "index.js",
+  "type": "module",
+  "dependencies": {
+    "@babel/core": "^7.22.1",
+    "babel-plugin-styled-components": "^2.1.3"
+  }
+}

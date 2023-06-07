@@ -1,5 +1,6 @@
 import { FC, useState, useRef, useEffect, ChangeEvent } from 'react'
 import styled from 'styled-components'
+import cn from 'classnames'
 
 import { Icon } from '../Icon/Icon'
 import { Button } from '../Button'
@@ -59,9 +60,11 @@ const PasswordToggleButton = styled(Button)`
   border-bottom-left-radius: 0;
 `
 
-const PasswordToggleIcon = styled(Icon)<PasswordToggleIconProps>`
-  color: ${({ isMasked, theme }) =>
-    isMasked ? theme.color.grey : theme.color.white};
+const PasswordToggleIcon = styled(Icon)`
+  color: ${({ theme }) => theme.color.white};
+  &.masked {
+    color: ${({ theme }) => theme.color.grey};
+  }
 `
 
 const ErrorMessage = styled.div`
@@ -110,10 +113,6 @@ interface PasswordToggleProps {
   onClick: () => void
 }
 
-interface PasswordToggleIconProps {
-  isMasked: boolean
-}
-
 const PasswordToggle: FC<PasswordToggleProps> = ({
   isMasked,
   onClick,
@@ -128,7 +127,7 @@ const PasswordToggle: FC<PasswordToggleProps> = ({
       >
         <PasswordToggleButton onClick={onClick} {...props}>
           <PasswordToggleIcon
-            isMasked={isMasked}
+            className={cn({ masked: isMasked })}
             name={isMasked ? 'eye-slash' : 'eye'}
           />
         </PasswordToggleButton>

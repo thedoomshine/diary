@@ -1,12 +1,6 @@
-import {
-  color,
-  fontSize,
-  fontWeight,
-  font,
-  media,
-  size,
-  space,
-} from './constants'
+import { color } from './color'
+import { font, fontSize, fontWeight } from './font'
+import { media, size, space } from './size'
 
 export const theme = {
   color,

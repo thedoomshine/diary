@@ -2,8 +2,7 @@ import type { FC } from 'react'
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
 import styled from 'styled-components'
 
-import { Icon } from './Icon'
-import { ButtonStyles } from './Button'
+import { ButtonStyles, Icon } from '~/elements'
 
 const CheckboxRoot = styled(CheckboxPrimitive.Root)`
   ${ButtonStyles}

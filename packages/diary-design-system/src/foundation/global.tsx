@@ -1,7 +1,6 @@
 import { createGlobalStyle } from 'styled-components'
-import { color, font, fontSize, size } from './constants'
-import { fluidType, grainyGradient } from '../utils'
-import { reset } from './reset'
+import { color, font, fontSize, reset, size } from '~/foundation'
+import { fluidType, grainyGradient } from '~/utils'
 
 export const GlobalStyle = createGlobalStyle`
   ${reset}

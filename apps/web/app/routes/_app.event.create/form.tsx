@@ -94,7 +94,7 @@ export const CreateEventForm: FC<CreateEventFormProps> = ({
     const next = new Date(event?.target?.value)
     if (isValidDate(next)) {
       setStartTime(
-        prev =>
+        (prev: Date) =>
           new Date(
             next.getFullYear(),
             next.getMonth(),
@@ -109,7 +109,7 @@ export const CreateEventForm: FC<CreateEventFormProps> = ({
   const handleStartDateChange = (value: Date) => {
     if (isValidDate(value)) {
       setStartTime(
-        prev =>
+        (prev: Date) =>
           new Date(
             value.getFullYear(),
             value.getMonth(),
@@ -132,7 +132,7 @@ export const CreateEventForm: FC<CreateEventFormProps> = ({
     const next = new Date(event?.target?.value)
     if (isValidDate(next)) {
       setEndTime(
-        prev =>
+        (prev: Date) =>
           new Date(
             next.getFullYear(),
             next.getMonth(),
@@ -147,7 +147,7 @@ export const CreateEventForm: FC<CreateEventFormProps> = ({
   const handleEndDateChange = (value: Date) => {
     if (isValidDate(value)) {
       setEndTime(
-        prev =>
+        (prev: Date) =>
           new Date(
             value.getFullYear(),
             value.getMonth(),

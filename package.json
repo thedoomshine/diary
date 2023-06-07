@@ -6,36 +6,33 @@
     "build": "turbo run build",
     "dev": "turbo run dev --parallel --no-cache --continue",
     "lint": "turbo run lint",
-    "lint:report": "turbo run lint:report",
     "lint:fix": "turbo run lint:fix",
-    "typecheck": "turbo run typecheck",
-    "preview": "turbo run preview",
-    "cleanup-preview": "turbo run cleanup-preview",
     "deploy": "turbo run deploy",
     "clean": "turbo run clean && rm -rf node_modules",
     "test": "turbo run test",
     "test:watch": "turbo run test:watch",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "generate": "turbo run generate",
     "preinstall": "npx only-allow pnpm"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.59.5",
-    "@typescript-eslint/parser": "^5.59.5",
+    "@types/react": "^18.2.8",
+    "@types/react-dom": "^18.2.4",
+    "@types/styled-components": "^5.1.26",
+    "@typescript-eslint/eslint-plugin": "^5.59.9",
+    "@typescript-eslint/parser": "^5.59.9",
     "dotenv-cli": "latest",
     "eslint": "^7.32.0",
     "eslint-config-diary": "workspace:*",
     "polished": "^4.2.2",
     "prettier": "latest",
     "prettier-config-diary": "workspace:*",
-    "turbo": "^1.10.2"
+    "styled-components": "6.0.0-rc.3",
+    "turbo": "^1.10.2",
+    "typescript": "^5.1.3"
   },
   "dependencies": {
-    "@types/react": "^18.2.5",
-    "@types/react-dom": "^18.2.4",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "typescript": "^5.0.4"
+    "react-dom": "^18.2.0"
   },
   "packageManager": "pnpm@8.5.1"
 }

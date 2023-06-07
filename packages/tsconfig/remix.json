@@ -7,11 +7,19 @@
     "allowJs": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
-    "lib": ["DOM", "DOM.Iterable", "ES2020", "ES2020.Intl", "ESNext"],
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ES2019",
+      "ES2020",
+      "ES2020.Intl",
+      "ES2021",
+      "ESNext"
+    ],
     "moduleResolution": "node",
     "noEmit": true,
     "resolveJsonModule": true,
     "strict": true,
-    "target": "ESNext"
+    "target": "ES2021"
   }
 }

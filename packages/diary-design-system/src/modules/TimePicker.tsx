@@ -3,7 +3,7 @@ import type { FC } from 'react'
 
 import { addMinutes, format, startOfDay } from 'date-fns'
 
-import { Select, SelectItem } from '../elements'
+import { Select, SelectItem } from '~/elements'
 import { styled } from 'styled-components'
 
 const StyledSelect = styled(Select)`

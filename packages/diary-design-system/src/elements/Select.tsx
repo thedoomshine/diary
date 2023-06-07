@@ -5,8 +5,7 @@ import * as SelectPrimitive from '@radix-ui/react-select'
 import styled from 'styled-components'
 import { rgba } from 'polished'
 
-import { Icon } from './Icon'
-import { ButtonStyles } from './Button'
+import { ButtonStyles, Icon } from '~/elements'
 
 const SelectTrigger = styled(SelectPrimitive.Trigger)`
   ${ButtonStyles}

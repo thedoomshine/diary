@@ -1,5 +1,5 @@
 import 'styled-components'
-import { BashTheme } from '../foundation/theme'
+import type { BashTheme } from '~/foundation'
 
 declare module '@diary/design-system' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
