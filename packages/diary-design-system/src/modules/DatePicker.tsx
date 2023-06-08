@@ -10,21 +10,24 @@ import styled, { css } from 'styled-components'
 import { Button, ButtonStyles, Icon } from '~/elements'
 
 const triangleArrow = css`
-  margin-left: calc(-0.5rem * 0.5);
   position: absolute;
   width: 0;
+  margin-left: calc(-0.5rem * 0.5);
 
   &::before,
   &::after {
-    box-sizing: content-box;
-    z-index: -1;
+    content: '';
+
     position: absolute;
+    z-index: -1;
     left: -0.5rem;
+
+    box-sizing: content-box;
     width: 1px;
     height: 0;
+
     border: 0.5rem solid transparent;
     border-width: 0.5rem;
-    content: '';
   }
 
   &::before {
@@ -60,8 +63,8 @@ const triangleArrowDown = css`
 
   &::before,
   &::after {
-    border-bottom: none;
     border-top-color: ${({ theme }) => theme.color.black};
+    border-bottom: none;
   }
 
   &::after {
@@ -75,9 +78,9 @@ const triangleArrowDown = css`
 `
 
 const Wrapper = styled.div`
+  position: relative;
   align-self: flex-start;
   text-transform: lowercase;
-  position: relative;
 
   .react-datepicker__triangle {
     position: absolute;
@@ -87,11 +90,13 @@ const Wrapper = styled.div`
   .react-datepicker-popper {
     z-index: 3;
     top: 0.5rem;
+
     padding: ${({ theme }) => theme.space.xs};
     padding-bottom: ${({ theme }) => theme.space.xxs};
-    border-radius: 0.5rem;
+
     background-color: ${({ theme }) => theme.color.black};
-    box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 0.5);
+    border-radius: 0.5rem;
+    box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 50%);
 
     &[data-placement^='bottom'] {
       padding-top: 0.5rem + 2px;
@@ -176,8 +181,9 @@ const Wrapper = styled.div`
   }
 
   .react-datepicker__day--selected {
-    background-color: ${({ theme }) => theme.color.yellow};
     color: ${({ theme }) => theme.color.black};
+    background-color: ${({ theme }) => theme.color.yellow};
+
     &:hover {
       background-color: ${({ theme }) => rgba(theme.color.yellow, 0.75)};
     }
@@ -189,14 +195,18 @@ const Wrapper = styled.div`
 
   .react-datepicker__aria-live {
     position: absolute;
+
+    overflow: hidden;
+
     width: 1px;
     height: 1px;
     margin: -1px;
     padding: 0;
-    overflow: hidden;
-    border: 0;
+
     white-space: nowrap;
+
     clip-path: circle(0);
+    border: 0;
   }
 `
 
@@ -235,22 +245,26 @@ const DatePickerHeader: FC<ReactDatePickerCustomHeaderProps> = ({
 
 const InputWrapper = styled.div`
   ${ButtonStyles}
-  padding: 0.25rem 0.5rem;
   position: relative;
+  padding: 0.25rem 0.5rem;
+
   input {
     position: absolute;
+
     width: 100%;
     margin: 0;
     padding: 0.25rem;
-    border: none;
+
     vertical-align: top;
+
+    border: none;
   }
 `
 
 const Template = styled.span`
-  color: transparent;
   position: relative;
   z-index: -1;
+  color: transparent;
 `
 
 interface DatePickerInputProps {

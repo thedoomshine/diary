@@ -31,15 +31,17 @@ const StyledLayout = styled.div`
 `
 
 const StyledMain = styled.main`
-  grid-column: 3;
+  overflow: hidden;
   display: flex;
+  grid-column: 3;
+  flex: 1 1 auto;
   flex-direction: column;
+
+  max-height: 100vh;
+
   border: solid 0.0125rem ${({ theme }) => theme.color.grey};
   border-top: 0;
   border-bottom: 0;
-  flex: 1 1 auto;
-  max-height: 100vh;
-  overflow: hidden;
 `
 
 export type TypedSupabaseClient = SupabaseClient<Database>

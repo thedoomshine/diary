@@ -12,10 +12,10 @@ const InputContainer = styled.div`
 `
 
 const StyledLabel = styled.label`
-  color: ${({ theme }) => theme.color.white};
-  font-size: ${({ theme }) => theme.fontSize.md};
-  margin-left: 0.25em;
   margin-bottom: 0.25em;
+  margin-left: 0.25em;
+  font-size: ${({ theme }) => theme.fontSize.md};
+  color: ${({ theme }) => theme.color.white};
 
   &:has(~ * > [data-input-error-message]:not(:placeholder-shown)) {
     color: ${({ theme }) => theme.color.red};
@@ -23,17 +23,21 @@ const StyledLabel = styled.label`
 `
 
 const InputWrapper = styled.div`
+  position: relative;
+
+  overflow: hidden;
+  display: flex;
+  flex: 1 1 auto;
+
+  width: 100%;
+
+  font-size: ${({ theme }) => theme.fontSize.md};
+  color: ${({ theme }) => theme.color.white};
+
   background-color: ${({ theme }) => theme.color.black};
   border: solid 0.125rem transparent;
-  box-shadow: inset 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 0.5);
   border-radius: 0.5em;
-  color: ${({ theme }) => theme.color.white};
-  width: 100%;
-  flex: 1 1 auto;
-  display: flex;
-  overflow: hidden;
-  position: relative;
-  font-size: ${({ theme }) => theme.fontSize.md};
+  box-shadow: inset 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 50%);
 
   &:has(~ * > [data-input-error-message]:not(:placeholder-shown)) {
     border-color: ${({ theme }) => theme.color.red};
@@ -42,26 +46,27 @@ const InputWrapper = styled.div`
 
 const StyledInput = styled.input`
   flex: 1 1 auto;
-  font-size: inherit;
   padding: 0.5rem;
+  font-size: inherit;
   color-scheme: dark;
 
   &::placeholder {
-    color: ${({ theme }) => theme.color.grey};
     font-style: italic;
+    color: ${({ theme }) => theme.color.grey};
     opacity: 0.75;
   }
 `
 
 const PasswordToggleButton = styled(Button)`
-  padding-left: 0.75em;
   padding-right: 0.75em;
+  padding-left: 0.75em;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 `
 
 const PasswordToggleIcon = styled(Icon)`
   color: ${({ theme }) => theme.color.white};
+
   &.masked {
     color: ${({ theme }) => theme.color.grey};
   }
@@ -70,18 +75,20 @@ const PasswordToggleIcon = styled(Icon)`
 const ErrorMessage = styled.div`
   display: flex;
   align-items: center;
-  font-size: ${({ theme }) => theme.fontSize.sm};
-  color: ${({ theme }) => theme.color.red};
+
+  height: 1.25em;
   margin-top: 0.5em;
   margin-left: 0.5em;
-  height: 1.25em;
+
+  font-size: ${({ theme }) => theme.fontSize.sm};
+  color: ${({ theme }) => theme.color.red};
 `
 
 const ErrorIcon = styled(Icon)`
   display: none;
-  font-size: inherit;
-  margin-right: 0.5em;
   height: 1.25em;
+  margin-right: 0.5em;
+  font-size: inherit;
 
   &:has(~ :not(:placeholder-shown)) {
     display: block;

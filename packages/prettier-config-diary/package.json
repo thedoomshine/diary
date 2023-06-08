@@ -4,6 +4,9 @@
   "private": true,
   "license": "MIT",
   "main": "prettier.config.js",
+  "scripts": {
+    "clean": "rm -rf .turbo && rm -rf tsconfig.tsbuildinfo && rm -rf node_modules"
+  },
   "dependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.1.1",
     "prettier": "^2.8.8"

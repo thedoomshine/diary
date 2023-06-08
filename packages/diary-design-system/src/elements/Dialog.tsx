@@ -16,31 +16,34 @@ const contentShow = keyframes({
 })
 
 const StyledDialogContent = styled.div`
+  position: relative;
+
+  overflow: visible;
   display: grid;
   grid-template-rows: repeat(3, min-content);
   gap: 0.5rem;
-  overflow: visible;
+
+  padding: 0.5rem;
+
+  color: ${({ theme }) => theme.color.white};
+
   background-color: ${({ theme }) => theme.color.charcoal};
   border: 0;
   border-radius: 0.5rem;
-  color: ${({ theme }) => theme.color.white};
-  box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 0.5);
-  position: relative;
-  padding: 0.5rem;
+  box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 50%);
+
   animation: ${contentShow} 150ms cubic-bezier(0.16, 1, 0.3, 1) normal;
 
   &::backdrop {
     position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    inset: 0;
     background-color: ${({ theme }) => rgba(theme.color.black, 0.75)};
     animation: none;
   }
 
   &[open] {
     animation: ${contentShow} 150ms cubic-bezier(0.16, 1, 0.3, 1) normal;
+
     &::backdrop {
       animation: ${overlayShow} 150ms cubic-bezier(0.16, 1, 0.3, 1) normal;
     }
@@ -49,8 +52,8 @@ const StyledDialogContent = styled.div`
 
 const DialogHeader = styled.div`
   display: grid;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 
   h1 {
     font-size: ${({ theme }) => theme.fontSize.md};
@@ -67,8 +70,8 @@ const StyledCloseButton = styled(Button)`
 `
 
 const StyledButton = styled(Button)`
-  background-color: ${({ theme }) => theme.color.yellow};
   color: ${({ theme }) => theme.color.black};
+  background-color: ${({ theme }) => theme.color.yellow};
 `
 
 const isClickInside = (event: MouseEvent, element: HTMLElement) => {

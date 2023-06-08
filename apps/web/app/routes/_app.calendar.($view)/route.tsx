@@ -11,10 +11,11 @@ import { CalendarViewEnum } from './types'
 
 const NavBar = styled.nav`
   display: flex;
+  flex-flow: column-reverse;
   justify-content: space-between;
+
   padding: ${({ theme }) => theme.space.sm};
   padding-bottom: 0;
-  flex-flow: column-reverse;
 
   @media ${({ theme }) => theme.media.lg} {
     flex-flow: row;
@@ -23,12 +24,15 @@ const NavBar = styled.nav`
 
 const StyledH1 = styled.h1`
   display: block;
-  font-size: ${({ theme }) => theme.fontSize.xl};
-  text-align: right;
+  flex: 0 0 auto;
   align-self: flex-end;
+
   margin-top: 0.125em;
   margin-bottom: 0.5em;
-  flex: 0 0 auto;
+
+  font-size: ${({ theme }) => theme.fontSize.xl};
+  text-align: right;
+
   @media ${({ theme }) => theme.media.lg} {
     margin-bottom: 0;
   }
@@ -36,6 +40,7 @@ const StyledH1 = styled.h1`
 
 const StyledIcon = styled(Icon)`
   display: inline-block;
+
   &.left {
     margin-right: 0.5em;
   }

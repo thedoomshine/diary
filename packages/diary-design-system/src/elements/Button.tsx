@@ -2,8 +2,6 @@ import { rgba } from 'polished'
 import { HTMLProps, MutableRefObject, forwardRef } from 'react'
 import styled, { css } from 'styled-components'
 
-import { ButtonSelectors } from '../utils'
-
 export type ButtonBaseElements = HTMLAnchorElement | HTMLButtonElement
 export type ButtonBaseRef =
   | ((instance: ButtonBaseElements | null) => void)
@@ -18,20 +16,25 @@ export type ButtonBaseElementProps = HTMLProps<
 }
 
 export const ButtonStyles = css`
+  cursor: pointer;
+
   display: flex;
   flex: 0 0 auto;
   align-items: center;
   justify-content: center;
-  border-radius: 0.5rem;
-  border-width: 0.125rem;
-  border-style: solid;
-  border-color: transparent;
+
   padding: 0.5rem;
-  text-align: center;
+
   color: inherit;
-  cursor: pointer;
+  text-align: center;
   text-decoration: none;
-  ${ButtonSelectors.HOVER} {
+
+  border-color: transparent;
+  border-style: solid;
+  border-width: 0.125rem;
+  border-radius: 0.5rem;
+
+  &:hover {
     background-color: ${({ theme }) => rgba(theme.color.white, 0.05)};
   }
 `
@@ -71,7 +74,7 @@ export const Button = forwardRef<ButtonBaseElements, any>(
 
 export const OutlineButtonStyles = css`
   ${ButtonStyles};
-  border-color: currentColor;
+  border-color: currentcolor;
 `
 
 export const OutlineButton = styled(Button)`
@@ -81,19 +84,23 @@ export const OutlineButton = styled(Button)`
 
 export const FillButtonStyles = css`
   ${ButtonStyles};
-  display: flex;
-  perspective: 64rem;
-  color: ${({ theme }) => theme.color.black};
-  background-color: ${({ theme }) => theme.color.yellow};
-  font-weight: ${({ theme }) => theme.fontWeight['800']};
-  transition-property: box-shadow, transform;
-  transition-duration: 0.25s;
   will-change: box-shadow, transform;
 
-  ${ButtonSelectors.HOVER} {
+  display: flex;
+
+  font-weight: ${({ theme }) => theme.fontWeight['800']};
+  color: ${({ theme }) => theme.color.black};
+
+  perspective: 64rem;
+  background-color: ${({ theme }) => theme.color.yellow};
+
+  transition-duration: 0.25s;
+  transition-property: box-shadow, transform;
+
+  &:hover {
     transform: translate(8px, -8px);
     background-color: ${({ theme }) => theme.color.yellow};
-    box-shadow: 0px 0px 0 ${({ theme }) => theme.color.black},
+    box-shadow: 0 0 0 ${({ theme }) => theme.color.black},
       -1px 1px 0 ${({ theme }) => theme.color.black},
       -2px 2px 0 ${({ theme }) => theme.color.black},
       -3px 3px 0 ${({ theme }) => theme.color.black},

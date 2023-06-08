@@ -20,15 +20,17 @@
       "persistent": true
     },
     "prettier": {
+      "cache": false,
       "outputs": []
     },
     "eslint": {
+      "cache": false,
       "dependsOn": [],
       "inputs": ["!supabase"],
       "outputs": []
     },
     "stylelint": {
-      "dependsOn": [],
+      "cache": false,
       "inputs": ["!supabase"],
       "outputs": []
     },

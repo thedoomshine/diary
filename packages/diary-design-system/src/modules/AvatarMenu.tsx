@@ -15,24 +15,28 @@ const StyledPopoverTrigger = styled(PopoverTrigger)`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   width: 100%;
+
   border-radius: 2rem;
 `
 
 const StyledAvatar = styled(Avatar)`
-  font-size: ${({ theme }) => theme.fontSize.xl};
-  height: 1em;
-  width: 1em;
   flex: 0 0 auto;
+  width: 1em;
+  height: 1em;
+  font-size: ${({ theme }) => theme.fontSize.xl};
 `
 
 const StyledUserNames = styled.div`
   display: none;
+  flex: 1 1 auto;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  flex: 1 1 auto;
+
   margin-left: 0.5rem;
+
   line-height: 1;
 
   @media ${({ theme }) => theme.media.xl} {
@@ -41,21 +45,24 @@ const StyledUserNames = styled.div`
 `
 
 const StyledUserDisplayName = styled.span`
-  font-weight: ${({ theme }) => theme.fontWeight[800]};
   font-size: ${({ theme }) => theme.fontSize.md};
+  font-weight: ${({ theme }) => theme.fontWeight[800]};
 `
 
 const StyledUsername = styled.span`
-  color: ${({ theme }) => theme.color.silver};
   font-size: ${({ theme }) => theme.fontSize.sm};
+  color: ${({ theme }) => theme.color.silver};
 `
 
 const StyledIcon = styled(Icon)`
   display: none;
   align-self: center;
   justify-self: flex-end;
-  font-size: ${({ theme }) => theme.fontSize.sm};
+
   margin-right: 0.25rem;
+
+  font-size: ${({ theme }) => theme.fontSize.sm};
+
   @media ${({ theme }) => theme.media.xl} {
     display: block;
   }

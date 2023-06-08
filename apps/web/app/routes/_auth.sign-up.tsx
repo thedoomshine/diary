@@ -10,32 +10,34 @@ import { ErrorMessages, Validations, validateField } from '~/utils'
 import { ROUTES } from './types'
 
 const StyledButton = styled(FillButton)`
-  padding: 0.5rem 1rem;
   margin: auto;
+  padding: 0.5rem 1rem;
 `
 
 const ErrorMessage = styled.span`
   display: flex;
   align-items: center;
+
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+  margin-left: 0.5em;
+
   font-size: ${({ theme }) => theme.fontSize.sm};
   color: ${({ theme }) => theme.color.red};
-  margin-top: 0.5em;
-  margin-left: 0.5em;
-  margin-bottom: 1em;
 
   span {
     display: none;
 
-    &:has(> :not(:focus):not(:placeholder-shown):invalid) {
+    &:has(> :not(:focus, :placeholder-shown):invalid) {
       display: flex;
     }
   }
 `
 
 const ErrorIcon = styled(Icon)`
-  font-size: inherit;
-  margin-right: 0.5em;
   height: 1.25em;
+  margin-right: 0.5em;
+  font-size: inherit;
 `
 
 export const action: ActionFunction = async ({ request }) => {

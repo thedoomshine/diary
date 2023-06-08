@@ -10,25 +10,33 @@ import {
 } from '~/utils'
 
 const TooltipContent = styled(TooltipPrimitive.Content)`
-  animation-duration: 0.6s;
-  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
-  font-size: ${({ theme }) => theme.fontSize.sm};
+  will-change: transform, opacity;
+
+  z-index: 3;
+
   padding: 0.5em 1em;
+
+  font-size: ${({ theme }) => theme.fontSize.sm};
+
   background-color: ${({ theme }) => theme.color.black};
   border-radius: 0.5rem;
-  box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 0.5);
-  will-change: transform, opacity;
-  z-index: 3;
+  box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 50%);
+
+  animation-duration: 0.6s;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
 
   &[data-side='top'] {
     animation-name: ${slideDownAndFade};
   }
+
   &[data-side='right'] {
     animation-name: ${slideLeftAndFade};
   }
+
   &[data-side='bottom'] {
     animation-name: ${slideUpAndFade};
   }
+
   &[data-side='left'] {
     animation-name: ${slideRightAndFade};
   }

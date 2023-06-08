@@ -6,51 +6,55 @@ import { fluidType, grainyGradient } from '~/utils'
 export const GlobalStyle = createGlobalStyle`
   ${reset}
 
-  all {
-    color-scheme: dark;
-  }
-
   html {
-    text-size-adjust: 100%;
-    font-smooth: antialiased;
-    background-color: ${color.black};
-    color: ${color.white};
-    font-size: ${fluidType(size.sm, size.xl, fontSize._min, fontSize._max)};
-    height: 100vh;
     display: flex;
-    width: 100%;
 
-    &:before {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+    width: 100%;
+    height: 100vh;
+
+    font-size: ${fluidType(size.sm, size.xl, fontSize._min, fontSize._max)};
+    color: ${color.white};
+    text-size-adjust: 100%;
+
+    color-scheme: dark;
+    background-color: ${color.black};
+
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    &::before {
       content: '';
-      height: 100%;
-      width: 100%;
-      opacity: 0.125;
-      ${grainyGradient()};
+
+      position: absolute;
       z-index: -1;
+      inset: 0;
+
+      width: 100%;
+      height: 100%;
+
+      opacity: 0.125
+      ${grainyGradient()};
     }
   }
 
   body {
     display: flex;
+    flex: 1 1 auto;
+
+    width: 100%;
+    margin: 0;
+
     font-family: ${font.sans};
-    font-style: normal;
     font-size: ${({ theme }) => theme.fontSize.md};
     font-weight: ${({ theme }) => theme.fontWeight[`400`]};
+    font-style: normal;
     line-height: 1.15;
-    margin: 0;
-    flex: 1 1 auto;
-    width: 100%;
   }
 
   #root {
     display: flex;
-    flex-direction: column;
     flex: 1 1 auto;
+    flex-direction: column;
     width: 100%;
   }
 
@@ -60,23 +64,23 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   h1 {
-    font-size: ${({ theme }) => theme.fontSize.xxxxl}
+    font-size: ${({ theme }) => theme.fontSize.xxxxl};
   }
 
   h2 {
-    font-size: ${({ theme }) => theme.fontSize.xxxl}
+    font-size: ${({ theme }) => theme.fontSize.xxxl};
   }
 
   h3 {
-    font-size: ${({ theme }) => theme.fontSize.xxl}
+    font-size: ${({ theme }) => theme.fontSize.xxl};
   }
 
   h4 {
-    font-size: ${({ theme }) => theme.fontSize.xl}
+    font-size: ${({ theme }) => theme.fontSize.xl};
   }
 
   h5 {
-    font-size: ${({ theme }) => theme.fontSize.lg}
+    font-size: ${({ theme }) => theme.fontSize.lg};
   }
 
   small {
@@ -91,7 +95,7 @@ export const GlobalStyle = createGlobalStyle`
   pre {
     width: 100%;
     word-break: break-word;
-    white-space: pre-wrap;
     tab-size: 4;
+    white-space: pre-wrap;
   }
 `

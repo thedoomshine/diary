@@ -10,11 +10,12 @@ import { ROUTES } from './types'
 
 const StyledLayout = styled.div`
   display: flex;
-  flex-direction: column;
-  margin: 0 auto;
-  min-height: 100%;
   flex: 1 1 auto;
+  flex-direction: column;
+
   max-width: ${({ theme }) => theme.size.xl};
+  min-height: 100%;
+  margin: 0 auto;
 `
 
 const StyledHeader = styled.header`
@@ -30,8 +31,8 @@ const StyledButtonsContainer = styled.div`
 
 const StyledMain = styled.main`
   display: flex;
-  flex-direction: column;
   flex: 1 1 auto;
+  flex-direction: column;
   padding: ${({ theme }) => theme.space.sm};
 `
 
@@ -39,6 +40,7 @@ const StyledNavLink = styled(NavLink)`
   ${ButtonStyles};
   flex: 0 1 auto;
   padding: 0.25rem 0.5rem;
+
   &:last-of-type {
     margin-left: 0.5rem;
   }

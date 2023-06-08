@@ -16,11 +16,11 @@
   ],
   "scripts": {
     "build": "tsup src/index.tsx --format esm,cjs --dts --external react",
-    "clean": "rm -rf dist",
+    "clean": "rm -rf .turbo && rm -rf tsconfig.tsbuildinfo && rm -rf node_modules && rm -rf dist",
     "dev": "tsup src/index.tsx --format esm,cjs --watch --dts --external react",
     "prettier": "prettier \"**/*.{ts,tsx,cjs,js,jsx,json}\" --write",
     "eslint": "eslint --ext \"**/*.{ts,tsx,cjs,js,jsx}\" --fix",
-    "stylelint": "stylelint \"**/*.{tsx,jsx,css,scss,sass}\" --fix",
+    "stylelint": "stylelint \"**/*.{tsx,jsx}\" --fix",
     "types": "tsc"
   },
   "dependencies": {

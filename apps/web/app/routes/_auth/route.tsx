@@ -12,59 +12,67 @@ const StyledLayout = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 0 auto;
-  min-height: 100%;
+
   width: 100%;
+  min-height: 100%;
+  margin: 0 auto;
 `
 
 const StyledMain = styled.main`
   display: flex;
+  flex: 1 1 auto;
   flex-direction: column;
   align-items: center;
-  flex: 1 1 auto;
+
   width: 100%;
-  padding: ${({ theme }) => theme.space.sm};
   max-width: 24rem;
+  padding: ${({ theme }) => theme.space.sm};
 `
 
 const StyledNavLink = styled(NavLink)`
   margin-left: ${({ theme }) => theme.space.xxs};
   text-decoration: none;
+
   &:hover {
     text-decoration: underline;
   }
 `
 
 const OutletWrapper = styled.div`
-  background-color: ${({ theme }) => theme.color.charcoal};
-  color: ${({ theme }) => theme.color.white};
-  border-radius: 0.5rem;
-  box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 0.5);
-  padding: 1.5rem 1rem;
-  margin-top: 1rem;
   width: 100%;
+  margin-top: 1rem;
+  padding: 1.5rem 1rem;
 
-  ${grainyGradientPseudo()}
+  color: ${({ theme }) => theme.color.white};
+
+  background-color: ${({ theme }) => theme.color.charcoal};
+  border-radius: 0.5rem;
+  box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 50%) ${grainyGradientPseudo()};
 `
 
 const StyledContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${({ theme }) => theme.color.charcoal};
-  border-radius: ${({ theme }) => theme.space.xxs};
-  box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 0.5);
+
+  width: 100%;
   margin-top: ${({ theme }) => theme.space.md};
   padding: ${({ theme }) => theme.space.xs};
-  width: 100%;
+
+  background-color: ${({ theme }) => theme.color.charcoal};
+  border-radius: ${({ theme }) => theme.space.xxs};
+  box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 50%);
 `
 
 const StyledLogo = styled(Icon)`
   display: block;
-  font-size: ${({ theme }) => theme.fontSize.xxxxl};
-  padding: 0.5rem;
-  border-radius: 0.5rem;
+
   margin-bottom: 2rem;
+  padding: 0.5rem;
+
+  font-size: ${({ theme }) => theme.fontSize.xxxxl};
+
+  border-radius: 0.5rem;
 `
 
 const StyledH1 = styled.h1`

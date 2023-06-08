@@ -16,9 +16,9 @@ import styled, { css } from 'styled-components'
 import { CalendarViewEnum } from './types'
 
 const GridStyles = css`
+  position: relative;
   display: grid;
   grid-gap: 0.25em;
-  position: relative;
 
   &.month-view {
     grid-template-columns: repeat(7, 1fr);
@@ -42,9 +42,9 @@ const GridStyles = css`
 
 const Calendar = styled.div`
   ${GridStyles}
-  height: 100%;
-  grid-template-rows: min-content auto;
   position: relative;
+  grid-template-rows: min-content auto;
+  height: 100%;
   padding: ${({ theme }) =>
     `${theme.space.xxs} ${theme.space.sm} ${theme.space.sm}`};
 `
@@ -52,16 +52,13 @@ const Calendar = styled.div`
 const WeekdayHeaderUl = styled.ul`
   ${GridStyles}
   grid-column: 1/-1;
+  margin-bottom: ${({ theme }) => theme.space.xxs};
   font-size: ${({ theme }) => theme.fontSize.md};
   font-weight: ${({ theme }) => theme.fontWeight['800']};
-  margin-bottom: ${({ theme }) => theme.space.xxs};
-
-  &.week-view {
-    grid-template-columns: repeat(7, 1fr);
-  }
 
   &.week-view {
     grid-column: 2/-1;
+    grid-template-columns: repeat(7, 1fr);
   }
 
   &.day-view li {
@@ -71,9 +68,8 @@ const WeekdayHeaderUl = styled.ul`
 
 const CalendarMainContent = styled.div`
   ${GridStyles}
-
-  height: 100%;
   grid-column: 1/-1;
+  height: 100%;
 
   &.month-view {
     .calendar-day.current-month:not(.today) {
@@ -102,6 +98,7 @@ const CalendarMainContent = styled.div`
     .calendar-day {
       grid-column-start: 2;
     }
+
     .calendar-day ~ .calendar-day {
       grid-column-start: unset;
     }
@@ -112,8 +109,11 @@ const CalendarCellStyles = css`
   display: flex;
   align-items: center;
   justify-content: center;
-  list-style: none;
+
   margin-left: 0;
+
+  list-style: none;
+
   border-radius: 0.5rem;
 `
 
@@ -125,10 +125,12 @@ const StyledCalendarCell = styled.div`
   ${CalendarCellStyles}
   align-items: flex-start;
   justify-content: flex-start;
+
   padding: ${({ theme }) => theme.space.xxs};
-  backdrop-filter: blur(0.125rem);
+
   background-color: ${({ theme }) => rgba(theme.color.charcoal, 0.25)};
-  box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(0.125rem);
+  box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 50%);
 
   ${grainyGradientPseudo()}
 
@@ -140,61 +142,76 @@ const StyledCalendarCell = styled.div`
 `
 
 const TimeGridContainer = styled.div`
-  display: grid;
-  grid-template-rows: repeat(24, 1fr);
+  pointer-events: none;
+
   position: absolute;
   z-index: 2;
-  pointer-events: none;
-  height: 100%;
+
+  display: grid;
+  grid-template-rows: repeat(24, 1fr);
+
   width: 100%;
-  color: ${({ theme }) => theme.color.silver};
+  height: 100%;
+
   font-size: ${({ theme }) => theme.fontSize.sm};
+  color: ${({ theme }) => theme.color.silver};
 `
 
 const TimeGridItem = styled.div`
-  border-bottom: solid 1px ${({ theme }) => rgba(theme.color.silver, 0.25)};
   align-self: flex-end;
-  color: ${({ theme }) => theme.color.silver};
-  font-size: ${({ theme }) => theme.fontSize.sm};
+
   padding-bottom: ${({ theme }) => `0 ${theme.space.xxs}`};
+
+  font-size: ${({ theme }) => theme.fontSize.sm};
+  color: ${({ theme }) => theme.color.silver};
+
+  border-bottom: solid 1px ${({ theme }) => rgba(theme.color.silver, 0.25)};
+
   &:last-of-type {
     border-bottom: 0;
   }
 `
 
 const StyledTimeMarker = styled.span`
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  align-items: center;
-  background-color: ${({ theme }) => theme.color.red};
-  height: 1px;
-  position: absolute;
-  right: 0;
-  width: calc(100% - 3.25rem);
-  z-index: 2;
   pointer-events: none;
   will-change: top;
 
+  position: absolute;
+  z-index: 2;
+  right: 0;
+
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  align-items: center;
+
+  width: calc(100% - 3.25rem);
+  height: 1px;
+
+  background-color: ${({ theme }) => theme.color.red};
+
   &.current-week,
   &.today {
-    &:after {
+    &::after {
+      content: '';
+
       position: absolute;
       top: 0;
       bottom: 0;
+      transform: translate(-50%, -50%);
+
       width: 0.66em;
       height: 0.66em;
-      transform: translate(-50%, -50%);
-      border-radius: 100%;
+
       background-color: ${({ theme }) => theme.color.red};
-      content: '';
+      border-radius: 100%;
     }
   }
 
-  &.current-week:after {
+  &.current-week::after {
     left: calc(var(--marker-position, 0) + 0.125rem);
   }
 
-  &.today:after {
+  &.today::after {
     left: 0;
   }
 `

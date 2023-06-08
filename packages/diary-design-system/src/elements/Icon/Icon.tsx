@@ -15,11 +15,13 @@ const StyledSVG = styled.svg`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 1em;
+
   width: 1em;
+  height: 1em;
+
+  fill: currentcolor;
+  stroke: currentcolor;
   stroke-width: 0;
-  stroke: currentColor;
-  fill: currentColor;
 `
 
 export const Icon: React.FC<IconProperties> = ({

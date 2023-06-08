@@ -11,26 +11,32 @@ import {
 } from '~/utils'
 
 const StyledPopoverContent = styled(PopoverPrimitive.Content)`
-  border-radius: 0.5rem;
-  padding: 2rem;
-  background-color: ${({ theme }) => theme.color.charcoal};
-  box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 0.5);
-  animation-duration: 400ms;
-  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform, opacity;
+
   z-index: 3;
 
   width: 100%;
+  padding: 2rem;
+
+  background-color: ${({ theme }) => theme.color.charcoal};
+  border-radius: 0.5rem;
+  box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 50%);
+
+  animation-duration: 400ms;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
 
   &[data-state='open'][data-side='top'] {
     animation-name: ${slideDownAndFade};
   }
+
   &[data-state='open'][data-side='right'] {
     animation-name: ${slideLeftAndFade};
   }
+
   &[data-state='open'][data-side='bottom'] {
     animation-name: ${slideUpAndFade};
   }
+
   &[data-state='open'][data-side='left'] {
     animation-name: ${slideRightAndFade};
   }
@@ -41,12 +47,14 @@ const PopoverArrow = styled(PopoverPrimitive.Arrow)`
 `
 const StyledPopoverClose = styled(PopoverPrimitive.Close)`
   ${ButtonStyles};
-  align-items: center;
-  justify-content: center;
-  color: ${({ theme }) => theme.color.white};
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
+
+  align-items: center;
+  justify-content: center;
+
+  color: ${({ theme }) => theme.color.white};
 `
 
 type PopoverProps = {

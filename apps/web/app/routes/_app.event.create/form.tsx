@@ -31,8 +31,9 @@ const Fieldset = styled.fieldset`
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-  margin-bottom: 1rem;
   align-items: flex-start;
+
+  margin-bottom: 1rem;
 `
 
 const DateTimeWrapper = styled.div`
@@ -41,8 +42,8 @@ const DateTimeWrapper = styled.div`
 `
 
 const DatesWrapper = styled.div`
-  align-items: center;
   display: flex;
+  align-items: center;
 `
 
 const StyledSelect = styled(Select)``

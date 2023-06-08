@@ -10,8 +10,8 @@ import { APP_ROUTES } from '../types'
 
 const StyledContainer = styled.div`
   display: flex;
-  flex-direction: column;
   flex: 1 1 auto;
+  flex-direction: column;
 `
 
 const UserProfileContainer = styled.div``
@@ -28,8 +28,8 @@ const ProfileHeaderImage = styled.div`
 const UserProfileHead = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: ${({ theme }) => `${theme.space.sm} ${theme.space.sm}`};
   height: 4.35rem;
+  padding: ${({ theme }) => `${theme.space.sm} ${theme.space.sm}`};
 `
 
 const UserAvatarWrapper = styled.div`
@@ -37,10 +37,10 @@ const UserAvatarWrapper = styled.div`
 `
 
 const UserAvatar = styled(Avatar)`
-  border: solid 0.25rem ${({ theme }) => theme.color.black};
-  font-size: 12rem;
   position: absolute;
   bottom: 0;
+  font-size: 12rem;
+  border: solid 0.25rem ${({ theme }) => theme.color.black};
 `
 
 const UserNames = styled.div`
@@ -48,9 +48,9 @@ const UserNames = styled.div`
 `
 
 const UserProfileDetails = styled.div`
-  border-bottom: solid 0.0125rem ${({ theme }) => theme.color.grey};
   padding: ${({ theme }) => `${theme.space.xs} ${theme.space.sm}`};
   color: ${({ theme }) => theme.color.silver};
+  border-bottom: solid 0.0125rem ${({ theme }) => theme.color.grey};
 `
 
 const UserBio = styled.div`
@@ -59,11 +59,12 @@ const UserBio = styled.div`
 
 const UserLinks = styled.div`
   display: flex;
-  align-items: center;
-  margin-top: ${({ theme }) => theme.space.xs};
-  max-width: ${({ theme }) => theme.size.lg};
   flex-flow: row wrap;
   gap: ${({ theme }) => theme.space.xxs} ${({ theme }) => theme.space.sm};
+  align-items: center;
+
+  max-width: ${({ theme }) => theme.size.lg};
+  margin-top: ${({ theme }) => theme.space.xs};
 
   p {
     display: flex;
@@ -77,9 +78,9 @@ const UserLinks = styled.div`
 
 const UserNotFound = styled.div`
   flex: 1 1 auto;
+  align-self: center;
   max-width: ${({ theme }) => theme.size.lg};
   margin-top: 4rem;
-  align-self: center;
 
   h2 {
     font-size: ${({ theme }) => theme.fontSize.xxxl};

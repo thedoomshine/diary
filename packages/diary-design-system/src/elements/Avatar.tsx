@@ -3,18 +3,22 @@ import type { FC } from 'react'
 import styled from 'styled-components'
 
 const AvatarRoot = styled(AvatarPrimitive.Root)`
-  aspect-ratio: 1;
+  user-select: none;
+
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  vertical-align: middle;
-  overflow: hidden;
-  user-select: none;
-  font-size: ${({ theme }) => theme.fontSize.xl};
+
+  aspect-ratio: 1;
   width: 1em;
   height: 1em;
-  border-radius: 100%;
+
+  font-size: ${({ theme }) => theme.fontSize.xl};
+  vertical-align: middle;
+
   background-color: ${({ theme }) => theme.color.black};
+  border-radius: 100%;
 `
 
 const AvatarImage = styled(AvatarPrimitive.Image)`
@@ -25,16 +29,19 @@ const AvatarImage = styled(AvatarPrimitive.Image)`
 `
 
 const AvatarFallback = styled(AvatarPrimitive.Fallback)`
-  width: 100%;
-  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${({ theme }) => theme.color.charcoal};
-  color: ${({ theme }) => theme.color.purple};
+
+  width: 100%;
+  height: 100%;
+
   font-size: ${({ theme }) => theme.fontSize.md};
-  line-height: 1;
   font-weight: 500;
+  line-height: 1;
+  color: ${({ theme }) => theme.color.purple};
+
+  background-color: ${({ theme }) => theme.color.charcoal};
 `
 
 interface AvatarProps {

@@ -29,11 +29,11 @@ export const grainyGradientPseudo = (
     right: 0;
     bottom: 0;
     left: 0;
+    opacity: 0.125;
+    border-radius: 0.5rem;
     width: 100%;
     height: 100%;
-    border-radius: 0.5rem;
     content: '';
-    opacity: 0.125;
     ${grainyGradient(angle, color1, color2, type)};
   }
 `

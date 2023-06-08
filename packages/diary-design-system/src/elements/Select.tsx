@@ -20,12 +20,15 @@ const SelectTrigger = styled(SelectPrimitive.Trigger)`
 // `
 
 const SelectContent = styled(SelectPrimitive.Content)`
+  z-index: 3;
+
+  overflow: hidden;
+
+  max-height: 16rem;
+
   background-color: ${({ theme }) => theme.color.black};
   border-radius: 0.5rem;
-  box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 0.5);
-  z-index: 3;
-  overflow: hidden;
-  max-height: 16rem;
+  box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 50%);
 `
 
 const SelectViewport = styled(SelectPrimitive.Viewport)`
@@ -33,31 +36,37 @@ const SelectViewport = styled(SelectPrimitive.Viewport)`
 `
 
 const StyledSelectItem = styled(SelectPrimitive.Item)`
-  border-radius: 0.25;
+  cursor: pointer;
+  user-select: none;
+
+  position: relative;
+
   display: flex;
   align-items: center;
+
   padding: 1rem 2rem 1rem 0.5rem;
-  position: relative;
-  user-select: none;
-  cursor: pointer;
+
+  border-radius: 0.25;
 
   &[data-disabled] {
-    color: ${({ theme }) => rgba(theme.color.silver, 0.05)};
     pointer-events: none;
+    color: ${({ theme }) => rgba(theme.color.silver, 0.05)};
   }
 
   &[data-highlighted],
   &:hover {
-    outline: none;
     background-color: ${({ theme }) => rgba(theme.color.white, 0.05)};
+    outline: none;
   }
 `
 
 const SelectItemIndicator = styled(SelectPrimitive.ItemIndicator)`
   position: absolute;
   right: 0.5rem;
+
   display: inline-flex;
   align-items: center;
+
   color: ${({ theme }) => theme.color.yellow};
 `
 

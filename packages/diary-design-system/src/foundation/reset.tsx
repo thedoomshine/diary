@@ -10,9 +10,7 @@ export const reset = css`
     Remove all the styles of the "User-Agent-Stylesheet", except for the 'display' property
     - The "symbol *" part is to solve Firefox SVG sprite bug
  */
-  *:where(
-      :not(html, iframe, canvas, img, svg, video, audio):not(svg *, symbol *)
-    ) {
+  *:where(:not(html, iframe, canvas, img, svg, video, audio, svg *, symbol *)) {
     all: unset;
     display: revert;
   }
@@ -51,7 +49,7 @@ export const reset = css`
   /* Safari - solving issue when using user-select:none on the <body> text input doesn't working */
   input,
   textarea {
-    -webkit-user-select: auto;
+    user-select: auto;
   }
 
   /* revert the 'white-space' property for textarea elements on Safari */
@@ -61,7 +59,6 @@ export const reset = css`
 
   /* minimum style to allow to style meter element */
   meter {
-    -webkit-appearance: revert;
     appearance: revert;
   }
 
@@ -88,13 +85,15 @@ export const reset = css`
 
   /* revert for bug in Chromium browsers
     - fix for the content editable attribute will work properly.
-    - webkit-user-select: auto; added for Safari in case of using user-select:none on wrapper element*/
+    - webkit-user-select: auto; added for Safari in case of using user-select:none on wrapper element */
   :where([contenteditable]:not([contenteditable='false'])) {
+    user-select: auto;
+
+    -webkit-line-break: after-white-space;
+    overflow-wrap: break-word;
+
     -moz-user-modify: read-write;
     -webkit-user-modify: read-write;
-    -webkit-line-break: after-white-space;
-    -webkit-user-select: auto;
-    overflow-wrap: break-word;
   }
 
   /* apply back the draggable feature - exist only in Chromium and Safari */
@@ -105,9 +104,12 @@ export const reset = css`
   /* Revert Modal native behavior */
   :where(dialog:modal) {
     all: revert;
-    padding: 0;
+
     overflow: visible;
-    border: none;
+
+    padding: 0;
+
     background-color: transparent;
+    border: none;
   }
 `
