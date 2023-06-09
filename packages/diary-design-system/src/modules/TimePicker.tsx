@@ -5,9 +5,7 @@ import { styled } from 'styled-components'
 
 import { Select, SelectItem } from '~/elements'
 
-const StyledSelect = styled(Select)`
-  padding: 0.25rem 0.5rem;
-`
+const StyledSelect = styled(Select)``
 
 export const defaultTimePickerFormat = (date: Date) =>
   format(date, 'p').toLocaleLowerCase()

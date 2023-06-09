@@ -1,10 +1,14 @@
 import cn from 'classnames'
-import { ChangeEvent, FC, useEffect, useRef, useState } from 'react'
-import styled from 'styled-components'
+import { lighten } from 'polished';
+import { ChangeEvent, FC, useEffect, useRef, useState } from 'react';
+import styled from 'styled-components';
 
-import { Button } from '../Button'
-import { Icon } from '../Icon/Icon'
-import { Tooltip, TooltipProvider } from '../Tooltip'
+
+
+import { Button } from '../Button';
+import { Icon } from '../Icon/Icon';
+import { Tooltip, TooltipProvider } from '../Tooltip';
+
 
 const InputContainer = styled.div`
   display: flex;
@@ -35,9 +39,11 @@ const InputWrapper = styled.div`
   color: ${({ theme }) => theme.color.white};
 
   background-color: ${({ theme }) => theme.color.black};
-  border: solid 0.125rem transparent;
   border-radius: 0.5em;
-  box-shadow: inset 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 50%);
+
+  &:hover {
+    background-color: ${({ theme }) => lighten(0.025, theme.color.black)};
+  }
 
   &:has(~ * > [data-input-error-message]:not(:placeholder-shown)) {
     border-color: ${({ theme }) => theme.color.red};

@@ -1,13 +1,24 @@
 import { rgba } from 'polished'
 import { css } from 'styled-components'
 
-import { color } from '../foundation/index'
+import { color } from '../foundation/index';
+
+
+type GrainyGradientProps = {
+  angle?: number
+  background?: string
+  color1?: string
+  color2?: string
+  type?: 'conic' | 'linear' | 'radial' | 'repeating-linear'
+}
 
 export const grainyGradient = (
-  angle = 0,
-  color1 = color.black,
-  color2 = rgba(color.white, 0),
-  type = 'linear'
+  {
+    angle = 0,
+    color1 = color.black,
+    color2 = rgba(color.white, 0),
+    type = 'linear',
+  } = {} as GrainyGradientProps
 ) => {
   return css`
     background: ${type}-gradient(${angle}, ${color1}, ${color2}),
@@ -16,14 +27,18 @@ export const grainyGradient = (
 }
 
 export const grainyGradientPseudo = (
-  angle = 0,
-  color1 = color.black,
-  color2 = rgba(color.white, 0),
-  type = 'linear'
+  {
+    angle = 0,
+    background = color.charcoal,
+    color1 = color.black,
+    color2 = rgba(color.white, 0),
+    type = 'linear',
+  } = {} as GrainyGradientProps
 ) => css`
   position: relative;
 
   &:before {
+    background: ${background};
     position: absolute;
     top: 0;
     right: 0;
@@ -34,6 +49,7 @@ export const grainyGradientPseudo = (
     width: 100%;
     height: 100%;
     content: '';
-    ${grainyGradient(angle, color1, color2, type)};
+    ${grainyGradient({ angle, color1, color2, type })};
+    z-index: -1;
   }
 `

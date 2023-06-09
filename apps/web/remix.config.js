@@ -8,7 +8,7 @@ module.exports = {
   // assetsBuildDirectory: 'public/build',
   // publicPath: '/build/',
   serverModuleFormat: 'cjs',
-  watchPaths: async () => ['./node_modules/@diaryco/design-system/index.js'],
+  watchPaths: async () => ['../../packages/diary-design-system/dist/index.js'],
   future: {
     v2_errorBoundary: true,
     v2_meta: true,

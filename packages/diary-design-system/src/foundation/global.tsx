@@ -1,3 +1,4 @@
+import { rgba } from 'polished'
 import { createGlobalStyle } from 'styled-components'
 
 import { color, font, fontSize, reset, size } from '~/foundation'
@@ -5,6 +6,13 @@ import { fluidType, grainyGradient } from '~/utils'
 
 export const GlobalStyle = createGlobalStyle`
   ${reset}
+
+  dialog::backdrop {
+    position: fixed;
+    inset: 0;
+    background-color: ${rgba(color.black, 0.75)};
+    animation: none;
+  }
 
   html {
     display: flex;

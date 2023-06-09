@@ -1,7 +1,7 @@
 import {
-  ButtonStyles,
   Checkbox,
   DatePicker,
+  FillButtonStyles,
   Input,
   Popover,
   PopoverContent,
@@ -31,9 +31,9 @@ import styled from 'styled-components'
 
 const Fieldset = styled.fieldset`
   display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  align-items: flex-start;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: flex-start;
 
   margin-bottom: 1rem;
 `
@@ -41,11 +41,13 @@ const Fieldset = styled.fieldset`
 const DateTimeWrapper = styled.div`
   display: flex;
   align-items: center;
+  gap: 0.25rem;
 `
 
 const DatesWrapper = styled.div`
   display: flex;
   align-items: center;
+  gap: 0.25rem;
 `
 
 const getDistance = (start: Date, finish: Date) => {
@@ -268,7 +270,7 @@ const StyledPopoverContent = styled(PopoverContent)`
 `
 
 const StyledPopoverTrigger = styled(PopoverTrigger)`
-  ${ButtonStyles};
+  ${FillButtonStyles};
 `
 
 const StyledCheckbox = styled(Checkbox)`

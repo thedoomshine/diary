@@ -1,5 +1,5 @@
-import { format } from 'date-fns'
-import { rgba } from 'polished'
+import { format } from 'date-fns';
+import { darken, lighten } from 'polished'
 import { forwardRef, useEffect, useState } from 'react'
 import type { FC, FocusEvent } from 'react'
 import ReactDatePicker, {
@@ -7,7 +7,7 @@ import ReactDatePicker, {
 } from 'react-datepicker'
 import styled, { css } from 'styled-components'
 
-import { Button, ButtonStyles, Icon } from '~/elements'
+import { Button, ButtonStyles, FillButtonStyles, Icon } from '~/elements'
 
 const triangleArrow = css`
   position: absolute;
@@ -143,8 +143,8 @@ const Wrapper = styled.div`
 
   .react-datepicker__navigation {
     ${ButtonStyles}
-    &:focus, &:active {
-      outline: solid 1px ${({ theme }) => theme.color.yellow};
+    &:focus-visible, &:active {
+      outline: solid 0.0125rem ${({ theme }) => theme.color.yellow};
     }
   }
 
@@ -177,7 +177,8 @@ const Wrapper = styled.div`
   }
 
   .react-datepicker__day--keyboard-selected {
-    background-color: ${({ theme }) => rgba(theme.color.yellow, 0.45)};
+    background-color: ${({ theme }) => darken(0.25, theme.color.yellow)};
+    border: 0;
   }
 
   .react-datepicker__day--selected {
@@ -185,7 +186,7 @@ const Wrapper = styled.div`
     background-color: ${({ theme }) => theme.color.yellow};
 
     &:hover {
-      background-color: ${({ theme }) => rgba(theme.color.yellow, 0.75)};
+      background-color: ${({ theme }) => lighten(0.025, theme.color.yellow)};
     }
   }
 
@@ -244,9 +245,8 @@ const DatePickerHeader: FC<ReactDatePickerCustomHeaderProps> = ({
 }
 
 const InputWrapper = styled.div`
-  ${ButtonStyles}
+  ${FillButtonStyles}
   position: relative;
-  padding: 0.25rem 0.5rem;
 
   input {
     position: absolute;

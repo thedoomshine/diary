@@ -1,9 +1,9 @@
-import { rgba } from 'polished'
 import { useEffect, useRef } from 'react'
 import type { MouseEvent } from 'react'
 import styled, { keyframes } from 'styled-components'
 
-import { Button, Icon, OutlineButton } from '~/elements'
+import { Button, Icon } from '~/elements'
+import { grainyGradientPseudo } from '~/utils/grainy-gradient'
 
 const overlayShow = keyframes({
   '0%': { opacity: 0 },
@@ -16,7 +16,12 @@ const contentShow = keyframes({
 })
 
 const StyledDialogContent = styled.div`
-  position: relative;
+  ${({ theme }) =>
+    grainyGradientPseudo({
+      background: theme.color.charcoal,
+      color1: 'transparent',
+      color2: 'transparent',
+    })}
 
   overflow: visible;
   display: grid;
@@ -27,19 +32,11 @@ const StyledDialogContent = styled.div`
 
   color: ${({ theme }) => theme.color.white};
 
-  background-color: ${({ theme }) => theme.color.charcoal};
   border: 0;
   border-radius: 0.5rem;
   box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 50%);
 
   animation: ${contentShow} 150ms cubic-bezier(0.16, 1, 0.3, 1) normal;
-
-  &::backdrop {
-    position: fixed;
-    inset: 0;
-    background-color: ${({ theme }) => rgba(theme.color.black, 0.75)};
-    animation: none;
-  }
 
   &[open] {
     animation: ${contentShow} 150ms cubic-bezier(0.16, 1, 0.3, 1) normal;
@@ -60,19 +57,19 @@ const DialogHeader = styled.div`
   }
 `
 
-const DialogFooter = styled.div`
-  display: flex;
-  justify-content: space-between;
-`
+// const DialogFooter = styled.div`
+//   display: flex;
+//   justify-content: space-between;
+// `
 
 const StyledCloseButton = styled(Button)`
   grid-column: 2;
 `
 
-const StyledButton = styled(Button)`
-  color: ${({ theme }) => theme.color.black};
-  background-color: ${({ theme }) => theme.color.yellow};
-`
+// const StyledButton = styled(Button)`
+//   color: ${({ theme }) => theme.color.black};
+//   background-color: ${({ theme }) => theme.color.yellow};
+// `
 
 const isClickInside = (event: MouseEvent, element: HTMLElement) => {
   const box = element.getBoundingClientRect()
@@ -158,10 +155,10 @@ export const Dialog = ({
 
         {children}
 
-        <DialogFooter>
+        {/* <DialogFooter>
           <OutlineButton onClick={handleClose}>close</OutlineButton>
           <StyledButton onClick={proceedAndClose}>okay</StyledButton>
-        </DialogFooter>
+        </DialogFooter> */}
       </StyledDialogContent>
     </dialog>
   )

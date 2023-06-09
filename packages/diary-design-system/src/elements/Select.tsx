@@ -1,23 +1,27 @@
 import * as SelectPrimitive from '@radix-ui/react-select'
-import { rgba } from 'polished'
-import { forwardRef } from 'react'
-import type { ReactNode } from 'react'
+import { lighten, rgba } from 'polished';
+import { forwardRef } from 'react';
+import type { ReactNode } from 'react';
 import styled from 'styled-components'
 
-import { ButtonStyles, Icon } from '~/elements'
+import { ButtonStyles, FillButtonStyles, Icon } from '~/elements'
 
 const SelectTrigger = styled(SelectPrimitive.Trigger)`
-  ${ButtonStyles}
+  ${FillButtonStyles}
   gap: 0.5rem;
+  &[data-disabled] {
+    pointer-events: none;
+    color: ${({ theme }) => rgba(theme.color.silver, 0.5)};
+  }
 `
 
-// const SelectScrollUp = styled(SelectPrimitive.ScrollUpButton)`
-//   ${ButtonStyles}
-// `
+const SelectScrollUp = styled(SelectPrimitive.ScrollUpButton)`
+  ${ButtonStyles}
+`
 
-// const SelectScrollDown = styled(SelectPrimitive.ScrollDownButton)`
-//   ${ButtonStyles}
-// `
+const SelectScrollDown = styled(SelectPrimitive.ScrollDownButton)`
+  ${ButtonStyles}
+`
 
 const SelectContent = styled(SelectPrimitive.Content)`
   z-index: 3;
@@ -51,7 +55,7 @@ const StyledSelectItem = styled(SelectPrimitive.Item)`
 
   &[data-highlighted],
   &:hover {
-    background-color: ${({ theme }) => rgba(theme.color.white, 0.05)};
+    background-color: ${({ theme }) => lighten(0.025, theme.color.black)};
     outline: none;
   }
 `
@@ -79,12 +83,20 @@ interface SelectProps extends SelectPrimitive.SelectProps {
   onValueChange?: (value: string) => void
   open?: boolean
   required?: boolean
+  showScrollButtons?: boolean
   value?: string
 }
 
 export const Select = forwardRef<HTMLButtonElement, SelectProps>(
   (
-    { children, disabled, hideIcon = false, className, ...props },
+    {
+      children,
+      disabled,
+      hideIcon = false,
+      className,
+      showScrollButtons = false,
+      ...props
+    },
     forwardedRef
   ) => {
     return (
@@ -107,13 +119,17 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
           sticky='always'
           position='popper'
         >
-          {/* <SelectScrollUp>
-            <Icon name='chevron-up' />
-          </SelectScrollUp> */}
+          {showScrollButtons && (
+            <SelectScrollUp>
+              <Icon name='chevron-up' />
+            </SelectScrollUp>
+          )}
           <SelectPrimitive.Viewport>{children}</SelectPrimitive.Viewport>
-          {/* <SelectScrollDown>
-            <Icon name='chevron-down' />
-          </SelectScrollDown> */}
+          {showScrollButtons && (
+            <SelectScrollDown>
+              <Icon name='chevron-down' />
+            </SelectScrollDown>
+          )}
         </SelectContent>
       </SelectPrimitive.Root>
     )
