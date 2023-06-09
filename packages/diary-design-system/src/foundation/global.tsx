@@ -18,7 +18,11 @@ export const GlobalStyle = createGlobalStyle`
     display: flex;
 
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    min-height: 100dvh;
+    
+
 
     font-size: ${fluidType(size.sm, size.xl, fontSize._min, fontSize._max)};
     color: ${color.white};
