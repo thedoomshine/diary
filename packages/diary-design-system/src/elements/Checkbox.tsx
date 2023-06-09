@@ -1,4 +1,4 @@
-import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
+import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
 import type { FC, ReactNode } from 'react'
 import styled from 'styled-components'
 

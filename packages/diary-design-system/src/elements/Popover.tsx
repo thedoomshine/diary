@@ -1,12 +1,14 @@
-import * as PopoverPrimitive from '@radix-ui/react-popover';
-import { ReactNode, forwardRef } from 'react';
-import styled from 'styled-components';
+import * as PopoverPrimitive from '@radix-ui/react-popover'
+import { ReactNode, forwardRef } from 'react'
+import styled from 'styled-components'
 
-
-
-import { ButtonStyles, Icon } from '~/elements';
-import { slideDownAndFade, slideLeftAndFade, slideRightAndFade, slideUpAndFade } from '~/utils';
-
+import { ButtonStyles, Icon } from '~/elements'
+import {
+  slideDownAndFade,
+  slideLeftAndFade,
+  slideRightAndFade,
+  slideUpAndFade,
+} from '~/utils'
 
 const StyledPopoverContent = styled(PopoverPrimitive.Content)`
   will-change: transform, opacity;

@@ -1,13 +1,10 @@
-import cn from 'classnames';
-import { ChangeEvent, FC, useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
+import cn from 'classnames'
+import { ChangeEvent, FC, useEffect, useRef, useState } from 'react'
+import styled from 'styled-components'
 
-
-
-import { Button } from '../Button';
-import { Icon } from '../Icon/Icon';
-import { Tooltip, TooltipProvider } from '../Tooltip';
-
+import { Button } from '../Button'
+import { Icon } from '../Icon/Icon'
+import { Tooltip, TooltipProvider } from '../Tooltip'
 
 const InputContainer = styled.div`
   display: flex;

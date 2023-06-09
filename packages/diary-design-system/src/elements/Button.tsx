@@ -1,7 +1,6 @@
-import { rgba } from 'polished';
-import { HTMLProps, MutableRefObject, forwardRef } from 'react';
-import styled, { css } from 'styled-components';
-
+import { rgba } from 'polished'
+import { HTMLProps, MutableRefObject, forwardRef } from 'react'
+import styled, { css } from 'styled-components'
 
 export type ButtonBaseElements = HTMLAnchorElement | HTMLButtonElement
 export type ButtonBaseRef =
@@ -40,8 +39,8 @@ export const ButtonStyles = css`
   }
 
   &:disabled {
-    opacity: 0.5;
     cursor: not-allowed;
+    opacity: 0.5;
     &:hover {
       background-color: unset;
     }

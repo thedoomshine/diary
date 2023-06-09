@@ -1,12 +1,33 @@
-import { ButtonStyles, Checkbox, DatePicker, Input, Popover, PopoverContent, PopoverTrigger, TimePicker, TimeZonePicker, defaultTimePickerFormat, defaultTimePickerOptions, formatTimePickerOptions } from '@diaryco/design-system';
-import type { TimePickerOption } from '@diaryco/design-system';
-import { Form } from '@remix-run/react';
-import cn from 'classnames';
-import { addHours, addMinutes, differenceInMinutes, isAfter, isSameDay, isSameMinute, isThisYear, roundToNearestMinutes } from 'date-fns';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import type { Dispatch, FC, FocusEvent, SetStateAction } from 'react';
-import styled from 'styled-components';
-
+import {
+  ButtonStyles,
+  Checkbox,
+  DatePicker,
+  Input,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+  TimePicker,
+  TimeZonePicker,
+  defaultTimePickerFormat,
+  defaultTimePickerOptions,
+  formatTimePickerOptions,
+} from '@diaryco/design-system'
+import type { TimePickerOption } from '@diaryco/design-system'
+import { Form } from '@remix-run/react'
+import cn from 'classnames'
+import {
+  addHours,
+  addMinutes,
+  differenceInMinutes,
+  isAfter,
+  isSameDay,
+  isSameMinute,
+  isThisYear,
+  roundToNearestMinutes,
+} from 'date-fns'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import type { Dispatch, FC, FocusEvent, SetStateAction } from 'react'
+import styled from 'styled-components'
 
 const Fieldset = styled.fieldset`
   display: flex;
@@ -237,11 +258,13 @@ export const CreateEventForm: FC<CreateEventFormProps> = ({
 
 const StyledPopoverContent = styled(PopoverContent)`
   --popover-background-color: ${({ theme }) => theme.color.black};
+
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  padding: 1rem;
   align-items: flex-start;
+
+  padding: 1rem;
 `
 
 const StyledPopoverTrigger = styled(PopoverTrigger)`
@@ -253,9 +276,9 @@ const StyledCheckbox = styled(Checkbox)`
 `
 
 const StyledLabel = styled.label`
-  color: ${({ theme }) => theme.color.silver};
-  font-size: ${({ theme }) => theme.fontSize.sm};
   padding: 0 0.25rem;
+  font-size: ${({ theme }) => theme.fontSize.sm};
+  color: ${({ theme }) => theme.color.silver};
 
   &.disabled {
     pointer-events: none;
