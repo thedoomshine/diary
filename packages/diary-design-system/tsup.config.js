@@ -1,4 +1,5 @@
-import { defineConfig } from 'tsup'
+import { defineConfig } from 'tsup';
+
 
 export default defineConfig((options) => ({
   clean: false,
@@ -13,6 +14,6 @@ export default defineConfig((options) => ({
   treeshake: true,
   minify: !options.watch,
   compilerOptions: {
-    target: 'esNext',
+    target: 'es2021',
   },
 }))
