@@ -1,24 +1,23 @@
-import * as PopoverPrimitive from '@radix-ui/react-popover'
-import { ReactNode, forwardRef } from 'react'
-import styled from 'styled-components'
+import * as PopoverPrimitive from '@radix-ui/react-popover';
+import { ReactNode, forwardRef } from 'react';
+import styled from 'styled-components';
 
-import { ButtonStyles, Icon } from '~/elements'
-import {
-  slideDownAndFade,
-  slideLeftAndFade,
-  slideRightAndFade,
-  slideUpAndFade,
-} from '~/utils'
+
+
+import { ButtonStyles, Icon } from '~/elements';
+import { slideDownAndFade, slideLeftAndFade, slideRightAndFade, slideUpAndFade } from '~/utils';
+
 
 const StyledPopoverContent = styled(PopoverPrimitive.Content)`
   will-change: transform, opacity;
 
-  z-index: 3;
+  z-index: 4;
 
   width: 100%;
   padding: 2rem;
 
-  background-color: ${({ theme }) => theme.color.charcoal};
+  background-color: ${({ theme }) => `var(
+    --popover-background-color, ${theme.color.charcoal})`};
   border-radius: 0.5rem;
   box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 50%);
 
@@ -43,7 +42,8 @@ const StyledPopoverContent = styled(PopoverPrimitive.Content)`
 `
 
 const PopoverArrow = styled(PopoverPrimitive.Arrow)`
-  fill: ${({ theme }) => theme.color.charcoal};
+  fill: ${({ theme }) => `var(
+    --popover-background-color, ${theme.color.charcoal})`};
 `
 const StyledPopoverClose = styled(PopoverPrimitive.Close)`
   ${ButtonStyles};
@@ -64,19 +64,17 @@ type PopoverProps = {
 
 export const PopoverContent = forwardRef<HTMLDivElement, PopoverProps>(
   ({ children, sideOffset = 8, ...props }, forwardedRef) => (
-    <PopoverPrimitive.Portal>
-      <StyledPopoverContent
-        sideOffset={sideOffset}
-        {...props}
-        ref={forwardedRef}
-      >
-        {children}
-        <PopoverArrow
-          height={8}
-          width={16}
-        />
-      </StyledPopoverContent>
-    </PopoverPrimitive.Portal>
+    <StyledPopoverContent
+      sideOffset={sideOffset}
+      {...props}
+      ref={forwardedRef}
+    >
+      {children}
+      <PopoverArrow
+        height={12}
+        width={24}
+      />
+    </StyledPopoverContent>
   )
 )
 

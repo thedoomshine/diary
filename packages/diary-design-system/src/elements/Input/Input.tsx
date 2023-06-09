@@ -1,10 +1,13 @@
-import cn from 'classnames'
-import { ChangeEvent, FC, useEffect, useRef, useState } from 'react'
-import styled from 'styled-components'
+import cn from 'classnames';
+import { ChangeEvent, FC, useEffect, useRef, useState } from 'react';
+import styled from 'styled-components';
 
-import { Button } from '../Button'
-import { Icon } from '../Icon/Icon'
-import { Tooltip, TooltipProvider } from '../Tooltip'
+
+
+import { Button } from '../Button';
+import { Icon } from '../Icon/Icon';
+import { Tooltip, TooltipProvider } from '../Tooltip';
+
 
 const InputContainer = styled.div`
   display: flex;
@@ -96,11 +99,12 @@ const ErrorIcon = styled(Icon)`
 `
 
 interface InputProps {
-  defaultValue?: string
+  defaultValue?: string | number | readonly string[]
   disabled?: boolean
   errorMessages?: { [key: string]: string }
   label?: string
-  min?: string
+  minLength?: string | number
+  maxLength?: string | number
   name: string
   onChange?: (event: ChangeEvent) => void
   pattern?: string
@@ -108,11 +112,11 @@ interface InputProps {
   prefixIcon?: string
   required?: boolean
   serverError?: string
-  step?: string
+  step?: string | number
   suffixIcon?: string
   title?: string
-  type?: string
-  value?: string
+  type?: React.HTMLInputTypeAttribute
+  value?: string | number | readonly string[]
 }
 
 interface PasswordToggleProps {
@@ -151,7 +155,8 @@ export const Input: FC<InputProps> = ({
   disabled = false,
   errorMessages,
   label,
-  min,
+  maxLength,
+  minLength,
   name,
   onChange,
   pattern,
@@ -233,7 +238,8 @@ export const Input: FC<InputProps> = ({
           defaultValue={defaultValue}
           disabled={disabled}
           id={name}
-          min={min}
+          min={minLength}
+          max={maxLength}
           name={name}
           onBlur={handleValidate}
           onChange={handleInput}

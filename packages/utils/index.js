@@ -1,1 +1,1 @@
-export { default as styledComponentsPlugin } from './esbuild-plugin-styled-components'
+export { default as timezones } from './timezone-list/timezone-list'

@@ -31,10 +31,6 @@ const SelectContent = styled(SelectPrimitive.Content)`
   box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 50%);
 `
 
-const SelectViewport = styled(SelectPrimitive.Viewport)`
-  /* max-height: 16rem; */
-`
-
 const StyledSelectItem = styled(SelectPrimitive.Item)`
   cursor: pointer;
   user-select: none;
@@ -114,7 +110,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
           {/* <SelectScrollUp>
             <Icon name='chevron-up' />
           </SelectScrollUp> */}
-          <SelectViewport>{children}</SelectViewport>
+          <SelectPrimitive.Viewport>{children}</SelectPrimitive.Viewport>
           {/* <SelectScrollDown>
             <Icon name='chevron-down' />
           </SelectScrollDown> */}

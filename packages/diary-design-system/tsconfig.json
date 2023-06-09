@@ -2,12 +2,14 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Default",
   "extends": "tsconfig/react-library.json",
-  "include": ["src"],
-  "exclude": ["dist", "node_modules"],
+  "include": ["src/**/*.ts", "src/**/*.tx", "node_modules/@types/**/*.d.ts"],
+  "exclude": ["dist", "node_modules", "!node_modules/@types/**/*.d.ts"],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
       "~/*": ["src/*"]
-    }
+    },
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "target": "ES2021"
   }
 }

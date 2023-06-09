@@ -1,3 +1,3 @@
 module.exports = {
-  extends: ['diary'],
+  extends: ['diary']
 }

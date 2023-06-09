@@ -2,10 +2,10 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "React Library",
   "extends": "./base.json",
+  "include": ["src"],
+  "exclude": ["dist"],
   "compilerOptions": {
-    "jsx": "react-jsx",
-    "lib": ["DOM", "ES2021", "ESNext"],
-    "module": "ESNext",
-    "target": "ES2021"
+    "noEmit": true,
+    "jsx": "react-jsx"
   }
 }

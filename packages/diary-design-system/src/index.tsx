@@ -38,6 +38,7 @@ export {
   formatTimePickerOptions,
   TimePicker,
 } from '~/modules/TimePicker'
+export { TimeZonePicker } from '~/modules/TimeZonePicker'
 
 export type { BashThemeShape, BashTheme } from '~/foundation/theme'
 export type { TimePickerOption } from '~/modules/TimePicker'

@@ -4,6 +4,7 @@
   "globalEnv": ["NODE_ENV"],
   "pipeline": {
     "build": {
+      "cache": true,
       "dependsOn": ["^build"],
       "outputs": ["dist/**", "umd/**", "build/**", "api/**", "public/build/**"]
     },
@@ -37,6 +38,10 @@
     "test": {
       "dependsOn": ["^build"],
       "outputs": ["coverage/**"]
+    },
+    "typecheck": {
+      "cache": false,
+      "outputs": []
     }
   }
 }
