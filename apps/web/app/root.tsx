@@ -1,4 +1,4 @@
-import { Button, GlobalStyle, Icon, theme } from '@diaryco/design-system'
+import { Button, GlobalStyle, Icon, color, theme } from '@diaryco/design-system'
 import { cssBundleHref } from '@remix-run/css-bundle'
 import type { V2_MetaFunction } from '@remix-run/react'
 import {
@@ -55,7 +55,7 @@ const ICONS = [
   { rel: 'manifest', href: '/favicon/site.webmanifest' },
 ]
 
-export const meta: V2_MetaFunction = () => [{ title: 'diary.' }]
+export const meta: V2_MetaFunction = () => [{ title: 'diary.' }, { ['theme-color': color.black}]
 
 export const links: LinksFunction = () => [
   ...ICONS,
