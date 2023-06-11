@@ -1,17 +1,20 @@
 import * as SelectPrimitive from '@radix-ui/react-select'
+import type { SelectItemProps as SelectItemPrimitiveProps, SelectProps as SelectPrimitiveProps } from '@radix-ui/react-select';
 import { lighten, rgba } from 'polished';
 import { forwardRef } from 'react';
 import type { ReactNode } from 'react';
-import styled from 'styled-components'
+import styled from 'styled-components';
 
-import { ButtonStyles, FillButtonStyles, Icon } from '~/elements'
+
+
+import { ButtonStyles, FillButtonStyles, Icon } from '~/elements';
+
 
 const SelectTrigger = styled(SelectPrimitive.Trigger)`
   ${FillButtonStyles}
   gap: 0.5rem;
   &[data-disabled] {
     pointer-events: none;
-    color: ${({ theme }) => rgba(theme.color.silver, 0.5)};
   }
 `
 
@@ -70,7 +73,7 @@ const SelectItemIndicator = styled(SelectPrimitive.ItemIndicator)`
   color: ${({ theme }) => theme.color.yellow};
 `
 
-interface SelectProps extends SelectPrimitive.SelectProps {
+interface SelectProps extends SelectPrimitiveProps {
   children: ReactNode | ReactNode[]
   className?: string
   defaultOpen?: boolean
@@ -136,10 +139,9 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
   }
 )
 
-interface SelectItemProps extends SelectPrimitive.SelectItemProps {
+interface SelectItemProps extends SelectItemPrimitiveProps {
   hideIndicator?: boolean
   children: ReactNode | ReactNode[]
-  value: string
 }
 
 export const SelectItem = forwardRef<HTMLDivElement, SelectItemProps>(

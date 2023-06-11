@@ -2,7 +2,7 @@ import { rgba } from 'polished'
 import { createGlobalStyle } from 'styled-components'
 
 import { color, font, fontSize, reset, size } from '~/foundation'
-import { fluidType, grainyGradient } from '~/utils'
+import { fluidType, grainyGradientBackground } from '~/utils'
 
 export const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -21,32 +21,16 @@ export const GlobalStyle = createGlobalStyle`
     min-height: 100vh;
     min-height: -webkit-fill-available;
     min-height: 100dvh;
-    
-
 
     font-size: ${fluidType(size.sm, size.xl, fontSize._min, fontSize._max)};
     color: ${color.white};
     text-size-adjust: 100%;
 
     color-scheme: dark;
-    background-color: ${color.black};
+    ${grainyGradientBackground({ background: color.black })};
 
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: grayscale;
-
-    &::before {
-      content: '';
-
-      position: absolute;
-      z-index: -1;
-      inset: 0;
-
-      width: 100%;
-      height: 100%;
-
-      opacity: 0.125
-      ${grainyGradient()};
-    }
   }
 
   body {

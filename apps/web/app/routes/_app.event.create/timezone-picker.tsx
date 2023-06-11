@@ -1,11 +1,6 @@
-import { timezones } from 'diary-utils'
+import { Select, SelectItem } from '@diaryco/design-system'
 import { memo } from 'react'
 import type { FC } from 'react'
-import styled from 'styled-components'
-
-import { Select, SelectItem } from '~/elements/Select'
-
-const StyledSelect = styled(Select)``
 
 interface TimeZoneOptionProps {
   tzCode: string
@@ -25,6 +20,7 @@ interface TimeZonePickerProps {
   defaultValue: string
   disabled?: boolean
   onValueChange: (value: string) => void
+  timezoneOptions: TimeZoneOptionProps[]
   value: string
 }
 
@@ -32,24 +28,25 @@ export const TimeZonePicker: FC<TimeZonePickerProps> = ({
   defaultValue,
   disabled = false,
   onValueChange,
+  timezoneOptions,
   value,
   ...props
 }) => {
   return (
-    <StyledSelect
+    <Select
       defaultValue={defaultValue}
       onValueChange={onValueChange}
       value={value}
       disabled={disabled}
       {...props}
     >
-      {timezones.map(({ tzCode, label }) => (
+      {timezoneOptions.map(({ tzCode, label }) => (
         <TimeZoneOption
           key={tzCode}
           tzCode={tzCode}
           label={label}
         />
       ))}
-    </StyledSelect>
+    </Select>
   )
 }

@@ -1,33 +1,16 @@
-import {
-  Checkbox,
-  DatePicker,
-  FillButtonStyles,
-  Input,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-  TimePicker,
-  TimeZonePicker,
-  defaultTimePickerFormat,
-  defaultTimePickerOptions,
-  formatTimePickerOptions,
-} from '@diaryco/design-system'
-import type { TimePickerOption } from '@diaryco/design-system'
-import { Form } from '@remix-run/react'
-import cn from 'classnames'
-import {
-  addHours,
-  addMinutes,
-  differenceInMinutes,
-  isAfter,
-  isSameDay,
-  isSameMinute,
-  isThisYear,
-  roundToNearestMinutes,
-} from 'date-fns'
-import { useCallback, useEffect, useMemo, useState } from 'react'
-import type { Dispatch, FC, FocusEvent, SetStateAction } from 'react'
-import styled from 'styled-components'
+import { Checkbox, DatePicker, Input, TimePicker, defaultTimePickerFormat, defaultTimePickerOptions, formatTimePickerOptions } from '@diaryco/design-system';
+import type { TimePickerOption } from '@diaryco/design-system';
+import { Form } from '@remix-run/react';
+import { addHours, addMinutes, differenceInMinutes, isAfter, isSameDay, isSameMinute, isThisYear, roundToNearestMinutes } from 'date-fns';
+import { timezones as DEFAULT_TIMEZONES } from 'diary-utils';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import type { FC, FocusEvent } from 'react';
+import styled from 'styled-components';
+
+
+
+import { TimeZonePopover } from './timezone-popover';
+
 
 const Fieldset = styled.fieldset`
   display: flex;
@@ -85,9 +68,22 @@ export const CreateEventForm: FC<CreateEventFormProps> = ({
   const [startTime, setStartTime] = useState(defaultStartDate)
   const [endTime, setEndTime] = useState(defaultEndDate)
 
-  const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
+  const localTimeZone = useMemo(
+    () =>
+      DEFAULT_TIMEZONES.find(
+        (item) =>
+          item.tzCode === Intl.DateTimeFormat().resolvedOptions().timeZone
+      )!,
+    []
+  )
 
-  const [timeZones, setTimeZones] = useState([userTimeZone, userTimeZone])
+  // convert DEFAULT_TIMEZONES to an object, store the key and access the tzCode, label, and offset with it
+  const [selectedTimezones, setSelectedTimezones] = useState([
+    localTimeZone,
+    localTimeZone,
+  ])
+
+  const [popoverOpen, setPopoverOpen] = useState(false)
 
   const isValidDate = (date: Date) =>
     date instanceof Date && !isNaN(Number(date.valueOf()))
@@ -100,79 +96,60 @@ export const CreateEventForm: FC<CreateEventFormProps> = ({
     }
   }, [startTime, endTime])
 
+  const getNextDate = (next: Date, prev: Date) =>
+    new Date(
+      next.getFullYear(),
+      next.getMonth(),
+      next.getDate(),
+      prev.getHours(),
+      prev.getMinutes()
+    )
+
+  const handleSetStartDate = (next: Date) => {
+    setStartTime((prev: Date) => getNextDate(next, prev))
+  }
+
   const handleStartDateBlur = (event: FocusEvent<HTMLInputElement>) => {
     const next = new Date(event?.target?.value)
     if (isValidDate(next)) {
-      setStartTime(
-        (prev: Date) =>
-          new Date(
-            next.getFullYear(),
-            next.getMonth(),
-            next.getDate(),
-            prev.getHours(),
-            prev.getMinutes()
-          )
-      )
+      handleSetStartDate(next)
     }
   }
 
-  const handleStartDateChange = (value: Date) => {
-    if (isValidDate(value)) {
-      setStartTime(
-        (prev: Date) =>
-          new Date(
-            value.getFullYear(),
-            value.getMonth(),
-            value.getDate(),
-            prev.getHours(),
-            prev.getMinutes()
-          )
-      )
+  const handleStartDateChange = (next: Date) => {
+    if (isValidDate(next)) {
+      handleSetStartDate(next)
     }
   }
 
   const handleStartTimeChange = (value: string) => {
-    const date = new Date(value)
-    if (isValidDate(date)) {
-      setStartTime(date)
+    const next = new Date(value)
+    if (isValidDate(next)) {
+      setStartTime(next)
     }
+  }
+
+  const handleSetEndDate = (next: Date) => {
+    setEndTime((prev: Date) => getNextDate(next, prev))
   }
 
   const handleEndDateBlur = (event: FocusEvent<HTMLInputElement>) => {
     const next = new Date(event?.target?.value)
     if (isValidDate(next)) {
-      setEndTime(
-        (prev: Date) =>
-          new Date(
-            next.getFullYear(),
-            next.getMonth(),
-            next.getDate(),
-            prev.getHours(),
-            prev.getMinutes()
-          )
-      )
+      handleSetEndDate(next)
     }
   }
 
-  const handleEndDateChange = (value: Date) => {
-    if (isValidDate(value)) {
-      setEndTime(
-        (prev: Date) =>
-          new Date(
-            value.getFullYear(),
-            value.getMonth(),
-            value.getDate(),
-            prev.getHours(),
-            prev.getMinutes()
-          )
-      )
+  const handleEndDateChange = (next: Date) => {
+    if (isValidDate(next)) {
+      handleSetEndDate(next)
     }
   }
 
   const handleEndTimeChange = (value: string) => {
-    const date = new Date(value)
-    if (isValidDate(date)) {
-      setEndTime(date)
+    const next = new Date(value)
+    if (isValidDate(next)) {
+      setEndTime(next)
     }
   }
 
@@ -248,109 +225,18 @@ export const CreateEventForm: FC<CreateEventFormProps> = ({
       <Fieldset>
         <Checkbox name='all-day'>all day</Checkbox>
         <TimeZonePopover
-          timeZones={timeZones}
-          setTimeZones={setTimeZones}
-          startTime={startTime}
           endTime={endTime}
+          handleClosePopover={() => setPopoverOpen(false)}
+          localTimeZone={localTimeZone}
+          onClick={() => setPopoverOpen(true)}
+          onOpenChange={setPopoverOpen}
+          open={popoverOpen}
+          setSelectedTimezones={setSelectedTimezones}
+          startTime={startTime}
+          timezoneOptions={DEFAULT_TIMEZONES}
+          selectedTimezones={selectedTimezones}
         />
       </Fieldset>
     </Form>
-  )
-}
-
-const StyledPopoverContent = styled(PopoverContent)`
-  --popover-background-color: ${({ theme }) => theme.color.black};
-
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  align-items: flex-start;
-
-  padding: 1rem;
-`
-
-const StyledPopoverTrigger = styled(PopoverTrigger)`
-  ${FillButtonStyles};
-`
-
-const StyledCheckbox = styled(Checkbox)`
-  background-color: ${({ theme }) => theme.color.charcoal};
-`
-
-const StyledLabel = styled.label`
-  padding: 0 0.25rem;
-  font-size: ${({ theme }) => theme.fontSize.sm};
-  color: ${({ theme }) => theme.color.silver};
-
-  &.disabled {
-    pointer-events: none;
-    cursor: not-allowed;
-    opacity: 0.5;
-  }
-`
-
-interface TimeZonePopoverProps {
-  startTime: Date
-  endTime: Date
-  timeZones: string[]
-  setTimeZones: Dispatch<SetStateAction<string[]>>
-}
-
-const TimeZonePopover: FC<TimeZonePopoverProps> = ({
-  startTime,
-  endTime,
-  timeZones,
-  setTimeZones,
-  ...props
-}) => {
-  const [separateTimeZones, setSeparateTimeZones] = useState(false)
-
-  const handleValueChange = (value: string, index: 0 | 1) => {
-    if (!separateTimeZones) {
-      return setTimeZones([value, value])
-    }
-    setTimeZones((prev) => {
-      prev.splice(index, 1, value)
-      return [...prev]
-    })
-  }
-
-  const handleCheckedChange = () => {
-    setSeparateTimeZones((prev) => !prev)
-  }
-
-  return (
-    <Popover>
-      <StyledPopoverTrigger {...props}>time zone</StyledPopoverTrigger>
-      <StyledPopoverContent>
-        <StyledCheckbox
-          value={`${separateTimeZones}`}
-          onCheckedChange={handleCheckedChange}
-          name='separate-time-zones'
-        >
-          use separate start and end time zones
-        </StyledCheckbox>
-        <div>
-          <StyledLabel>event start time zone</StyledLabel>
-          <TimeZonePicker
-            defaultValue={timeZones[0]}
-            onValueChange={(value: string) => handleValueChange(value, 0)}
-            value={timeZones[0]}
-          />
-        </div>
-
-        <div>
-          <StyledLabel className={cn({ disabled: !separateTimeZones })}>
-            event end time zone
-          </StyledLabel>
-          <TimeZonePicker
-            defaultValue={timeZones[1]}
-            onValueChange={(value: string) => handleValueChange(value, 1)}
-            value={timeZones[1]}
-            disabled={!separateTimeZones}
-          />
-        </div>
-      </StyledPopoverContent>
-    </Popover>
   )
 }

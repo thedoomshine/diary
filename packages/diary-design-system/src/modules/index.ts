@@ -8,4 +8,3 @@ export {
   TimePicker,
 } from './TimePicker'
 export type { TimePickerOption } from './TimePicker'
-export { TimeZonePicker } from './TimeZonePicker'

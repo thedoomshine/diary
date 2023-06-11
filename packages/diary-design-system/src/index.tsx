@@ -26,6 +26,7 @@ export {
   Popover,
   PopoverTrigger,
 } from '~/elements/Popover'
+export type { PopoverProps } from '~/elements/Popover'
 export { Select, SelectItem } from '~/elements/Select'
 export { Tooltip, TooltipProvider } from '~/elements/Tooltip'
 
@@ -38,7 +39,6 @@ export {
   formatTimePickerOptions,
   TimePicker,
 } from '~/modules/TimePicker'
-export { TimeZonePicker } from '~/modules/TimeZonePicker'
 
 export type { BashThemeShape, BashTheme } from '~/foundation/theme'
 export type { TimePickerOption } from '~/modules/TimePicker'
@@ -51,4 +51,4 @@ export {
   slideDownAndFade,
   slideLeftAndFade,
 } from '~/utils/animations'
-export { grainyGradient, grainyGradientPseudo } from '~/utils/grainy-gradient'
+export { grainyGradientBackground } from '~/utils/grainy-gradient'

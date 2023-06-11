@@ -1,4 +1,5 @@
-import * as TooltipPrimitive from '@radix-ui/react-tooltip'
+import * as TooltipPrimitive from '@radix-ui/react-tooltip';
+import type { TooltipProps as TooltipPrimitiveProps } from '@radix-ui/react-tooltip'
 import { FC, ReactNode } from 'react'
 import styled from 'styled-components'
 
@@ -46,7 +47,7 @@ const TooltipArrow = styled(TooltipPrimitive.Arrow)`
   fill: ${({ theme }) => theme.color.black};
 `
 
-interface TooltipProps {
+interface TooltipProps extends TooltipPrimitiveProps {
   align?: 'start' | 'center' | 'end'
   alignOffset?: number
   children: ReactNode | ReactNode[]

@@ -33,6 +33,8 @@ export const ButtonStyles = css`
   --button-background-color-hover: ${({ theme }) =>
     rgba(theme.color.white, 0.05)};
 
+  position: relative;
+
   cursor: pointer;
 
   display: flex;
@@ -60,7 +62,7 @@ export const ButtonStyles = css`
   }
 
   &:disabled {
-    cursor: not-allowed;
+    pointer-events: none;
     opacity: 0.5;
     &:hover {
       background-color: unset;

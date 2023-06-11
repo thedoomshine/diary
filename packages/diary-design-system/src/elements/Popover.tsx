@@ -1,4 +1,5 @@
-import * as PopoverPrimitive from '@radix-ui/react-popover'
+import * as PopoverPrimitive from '@radix-ui/react-popover';
+import type { PopoverContentProps as PopoverContentPrimitiveProps } from '@radix-ui/react-popover'
 import { ReactNode, forwardRef } from 'react'
 import styled from 'styled-components'
 
@@ -59,17 +60,17 @@ const StyledPopoverClose = styled(PopoverPrimitive.Close)`
   color: ${({ theme }) => theme.color.white};
 `
 
-type PopoverProps = {
-  children: ReactNode | ReactNode[]
+export interface PopoverProps extends PopoverContentPrimitiveProps {
+  children?: ReactNode | ReactNode[]
   sideOffset?: number
 }
 
 export const PopoverContent = forwardRef<HTMLDivElement, PopoverProps>(
   ({ children, sideOffset = 8, ...props }, forwardedRef) => (
     <StyledPopoverContent
+      ref={forwardedRef}
       sideOffset={sideOffset}
       {...props}
-      ref={forwardedRef}
     >
       {children}
       <PopoverArrow

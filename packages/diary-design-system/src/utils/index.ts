@@ -6,4 +6,4 @@ export {
   slideDownAndFade,
   slideLeftAndFade,
 } from './animations'
-export { grainyGradient, grainyGradientPseudo } from './grainy-gradient'
+export { grainyGradientBackground } from './grainy-gradient'

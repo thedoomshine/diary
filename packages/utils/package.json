@@ -3,10 +3,28 @@
   "version": "0.0.0",
   "private": true,
   "license": "MIT",
-  "main": "./index.js",
-  "module": "./index.mjs",
-  "types": "./index.d.ts",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**"
+  ],
   "scripts": {
-    "clean": "rm -rf .turbo && rm -rf tsconfig.tsbuildinfo && rm -rf node_modules"
+    "build": "tsup src/index.tsx --format esm,cjs --dts --external react",
+    "clean": "rm -rf .turbo && rm -rf tsconfig.tsbuildinfo && rm -rf node_modules && rm -rf dist",
+    "dev": "tsup src/index.ts --format esm,cjs --watch --dts",
+    "prettier": "prettier \"**/*.{ts,tsx,cjs,js,jsx,json}\" --write",
+    "eslint": "eslint --ext \"**/*.{ts,tsx,cjs,js,jsx}\" --fix",
+    "typecheck": "tsc"
+  },
+  "dependencies": {
+    "tsup": "^6.7.0"
+  },
+  "devDependencies": {
+    "eslint-config-diary": "workspace:*",
+    "prettier-config-diary": "workspace:*",
+    "tsconfig": "workspace:*",
+    "typescript": "^5.1.3"
   }
 }

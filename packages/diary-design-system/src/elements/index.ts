@@ -19,5 +19,6 @@ export {
   Popover,
   PopoverTrigger,
 } from './Popover'
+export type { PopoverProps } from './Popover'
 export { Select, SelectItem } from './Select'
 export { Tooltip, TooltipProvider } from './Tooltip'

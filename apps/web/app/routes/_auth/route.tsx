@@ -1,4 +1,4 @@
-import { Icon, grainyGradientPseudo } from '@diaryco/design-system'
+import { Icon, grainyGradientBackground } from '@diaryco/design-system'
 import { NavLink, Outlet, useLocation } from '@remix-run/react'
 import type { LoaderFunction } from '@vercel/remix'
 import { json, redirect } from '@vercel/remix'
@@ -47,7 +47,8 @@ const OutletWrapper = styled.div`
 
   background-color: ${({ theme }) => theme.color.charcoal};
   border-radius: 0.5rem;
-  box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 50%) ${grainyGradientPseudo()};
+  box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 50%)
+    ${grainyGradientBackground()};
 `
 
 const StyledContainer = styled.div`

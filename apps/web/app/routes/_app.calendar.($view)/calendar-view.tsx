@@ -1,4 +1,4 @@
-import { grainyGradientPseudo } from '@diaryco/design-system'
+import { grainyGradientBackground } from '@diaryco/design-system'
 import cn from 'classnames'
 import {
   endOfMonth,
@@ -132,7 +132,7 @@ const StyledCalendarCell = styled.div`
   backdrop-filter: blur(0.125rem);
   box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 50%);
 
-  ${grainyGradientPseudo()}
+  ${grainyGradientBackground()}
 
   &.today {
     background-color: ${({ theme }) => rgba(theme.color.yellow, 0.5)};

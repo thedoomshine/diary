@@ -1,11 +1,9 @@
-import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
-import type { FC, ReactNode } from 'react';
-import styled from 'styled-components';
+import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
+import type { CheckboxProps as CheckboxPrimitiveProps } from '@radix-ui/react-checkbox'
+import type { FC, ReactNode } from 'react'
+import styled from 'styled-components'
 
-
-
-import { ButtonStyles, Icon } from '~/elements';
-
+import { ButtonStyles, Icon } from '~/elements'
 
 const CheckboxRoot = styled(CheckboxPrimitive.Root)`
   ${ButtonStyles}
@@ -41,32 +39,36 @@ const Label = styled.label`
   line-height: 1;
 `
 
-interface CheckboxProps {
+interface CheckboxProps extends CheckboxPrimitiveProps {
   asChild?: boolean
   checked?: boolean
+  children: ReactNode | ReactNode[]
   defaultChecked?: boolean
   disabled?: boolean
-  children: ReactNode | ReactNode[]
   name?: string
-  onCheckedChange?: (checked: boolean | 'indeterminate') => void
+  onCheckedChange?: (checked: boolean) => void
   required?: boolean
   value?: string
 }
 
 export const Checkbox: FC<CheckboxProps> = ({
+  checked = false,
+  children,
   defaultChecked = false,
   disabled = false,
-  required = false,
   name,
-  children,
+  onCheckedChange,
+  required = false,
   ...props
 }) => (
   <Label>
     <CheckboxRoot
       defaultChecked={defaultChecked}
       disabled={disabled}
+      onCheckedChange={onCheckedChange}
       required={required}
       name={name}
+      checked={checked}
       {...props}
     >
       <CheckboxPrimitive.Indicator>

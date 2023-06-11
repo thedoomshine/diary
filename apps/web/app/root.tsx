@@ -55,7 +55,10 @@ const ICONS = [
   { rel: 'manifest', href: '/favicon/site.webmanifest' },
 ]
 
-export const meta: V2_MetaFunction = () => [{ title: 'diary.' }, { ['theme-color': color.black}]
+export const meta: V2_MetaFunction = () => [
+  { title: 'diary.' },
+  { 'theme-color': color.black },
+]
 
 export const links: LinksFunction = () => [
   ...ICONS,
