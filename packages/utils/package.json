@@ -11,7 +11,7 @@
     "dist/**"
   ],
   "scripts": {
-    "build": "tsup src/index.tsx --format esm,cjs --dts --external react",
+    "build": "tsup src/index.ts --format esm,cjs --dts --external react",
     "clean": "rm -rf .turbo && rm -rf tsconfig.tsbuildinfo && rm -rf node_modules && rm -rf dist",
     "dev": "tsup src/index.ts --format esm,cjs --watch --dts",
     "prettier": "prettier \"**/*.{ts,tsx,cjs,js,jsx,json}\" --write",
