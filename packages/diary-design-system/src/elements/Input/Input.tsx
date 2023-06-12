@@ -1,14 +1,12 @@
 import cn from 'classnames'
-import { lighten } from 'polished';
-import { ChangeEvent, FC, useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
+import { lighten } from 'polished'
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react'
+import type { ChangeEvent, FC, RefCallback } from 'react'
+import styled from 'styled-components'
 
-
-
-import { Button } from '../Button';
-import { Icon } from '../Icon/Icon';
-import { Tooltip, TooltipProvider } from '../Tooltip';
-
+import { Button } from '../Button'
+import { Icon } from '../Icon/Icon'
+import { Tooltip, TooltipProvider } from '../Tooltip'
 
 const InputContainer = styled.div`
   display: flex;
@@ -101,7 +99,7 @@ const ErrorIcon = styled(Icon)`
   }
 `
 
-interface InputProps {
+export type InputProps = {
   defaultValue?: string | number | readonly string[]
   disabled?: boolean
   errorMessages?: { [key: string]: string }
@@ -119,7 +117,6 @@ interface InputProps {
   suffixIcon?: string
   title?: string
   type?: React.HTMLInputTypeAttribute
-  value?: string | number | readonly string[]
 }
 
 interface PasswordToggleProps {
@@ -153,130 +150,142 @@ const PasswordToggle: FC<PasswordToggleProps> = ({
   )
 }
 
-export const Input: FC<InputProps> = ({
-  defaultValue,
-  disabled = false,
-  errorMessages,
-  label,
-  maxLength,
-  minLength,
-  name,
-  onChange,
-  pattern,
-  placeholder,
-  prefixIcon,
-  required,
-  serverError,
-  step,
-  suffixIcon,
-  title,
-  type = 'text',
-  value,
-  ...props
-}) => {
-  const ref = useRef<HTMLInputElement>(null)
-  const [isMasked, setIsMasked] = useState(true)
-  const [showError, setShowError] = useState(Boolean(serverError))
-  const [error, setError] = useState(serverError)
+export const Input = forwardRef<HTMLInputElement, InputProps>(
+  (
+    {
+      defaultValue,
+      disabled = false,
+      errorMessages,
+      label,
+      maxLength,
+      minLength,
+      name,
+      onChange,
+      pattern,
+      placeholder,
+      prefixIcon,
+      required,
+      serverError,
+      step,
+      suffixIcon,
+      title,
+      type = 'text',
+      ...props
+    },
+    ref
+  ) => {
+    const internalRef = useRef<HTMLInputElement | null>(null)
+    const [isMasked, setIsMasked] = useState(true)
+    const [showError, setShowError] = useState(Boolean(serverError))
+    const [error, setError] = useState(serverError)
 
-  const isPassword = type === 'password'
+    const isPassword = type === 'password'
 
-  useEffect(() => {
-    if (serverError) {
-      setError(serverError)
-      setShowError(Boolean(serverError))
+    useImperativeHandle<HTMLInputElement | null, HTMLInputElement | null>(
+      ref,
+      () => internalRef.current
+    )
+
+    useEffect(() => {
+      if (serverError) {
+        setError(serverError)
+        setShowError(Boolean(serverError))
+      }
+    }, [serverError])
+
+    const getInputType = () =>
+      isPassword ? (isMasked ? 'password' : 'text') : type
+
+    const togglePasswordMask = () => {
+      setIsMasked((prev) => !prev)
     }
-  }, [serverError])
 
-  const getInputType = () =>
-    isPassword ? (isMasked ? 'password' : 'text') : type
+    const handleValidate = () => {
+      if (!internalRef?.current) {
+        return
+      }
+      const el = internalRef.current
 
-  const togglePasswordMask = () => {
-    setIsMasked((prev) => !prev)
-  }
-
-  const handleValidate = () => {
-    if (!ref.current) return
-    const el = ref.current
-
-    if (el.validity.valid) {
-      setError('')
-      setShowError(false)
-    } else {
-      handleShowError()
+      if (el.validity.valid) {
+        setError('')
+        setShowError(false)
+      } else {
+        handleShowError()
+      }
     }
-  }
 
-  const handleInput = (event: ChangeEvent) => {
-    if (onChange) {
-      onChange(event)
+    const handleInput = (event: ChangeEvent) => {
+      if (onChange) {
+        onChange(event)
+      }
+      if (showError) {
+        handleValidate()
+      }
     }
-    if (showError) {
-      handleValidate()
+
+    const handleShowError = () => {
+      if (!internalRef?.current) {
+        return
+      }
+      const el = internalRef.current
+
+      if (el.validity.valueMissing && errorMessages?.required) {
+        setError(errorMessages.required)
+      } else if (el.validity.tooShort && errorMessages?.minLength) {
+        setError(errorMessages.minLength)
+      } else if (el.validity.tooLong && errorMessages?.maxLength) {
+        setError(errorMessages.maxLength)
+      } else if (el.validity.patternMismatch && errorMessages?.pattern) {
+        setError(errorMessages.pattern)
+      }
+      setShowError(true)
     }
-  }
 
-  const handleShowError = () => {
-    if (!ref.current) return
-    const el = ref.current
-
-    if (el.validity.valueMissing && errorMessages?.required) {
-      setError(errorMessages.required)
-    } else if (el.validity.tooShort && errorMessages?.minLength) {
-      setError(errorMessages.minLength)
-    } else if (el.validity.tooLong && errorMessages?.maxLength) {
-      setError(errorMessages.maxLength)
-    } else if (el.validity.patternMismatch && errorMessages?.pattern) {
-      setError(errorMessages.pattern)
-    }
-    setShowError(true)
-  }
-
-  return (
-    <InputContainer>
-      {label && <StyledLabel htmlFor={name}>{label}</StyledLabel>}
-      <InputWrapper>
-        {prefixIcon && <Icon name={prefixIcon} />}
-        <StyledInput
-          defaultValue={defaultValue}
-          disabled={disabled}
-          id={name}
-          min={minLength}
-          max={maxLength}
-          name={name}
-          onBlur={handleValidate}
-          onChange={handleInput}
-          pattern={pattern}
-          placeholder={placeholder}
-          ref={ref}
-          required={required}
-          step={step}
-          title={title}
-          type={getInputType()}
-          value={value}
-          {...props}
-        />
-        {isPassword ? (
-          <PasswordToggle
-            isMasked={isMasked}
-            onClick={togglePasswordMask}
+    return (
+      <InputContainer>
+        {label && <StyledLabel htmlFor={name}>{label}</StyledLabel>}
+        <InputWrapper>
+          {prefixIcon && <Icon name={prefixIcon} />}
+          <StyledInput
+            defaultValue={defaultValue}
+            disabled={disabled}
+            id={name}
+            min={minLength}
+            max={maxLength}
+            name={name}
+            onBlur={handleValidate}
+            onChange={handleInput}
+            pattern={pattern}
+            placeholder={placeholder}
+            ref={internalRef}
+            required={required}
+            step={step}
+            title={title}
+            type={getInputType()}
+            {...props}
           />
-        ) : (
-          suffixIcon && <Icon name={suffixIcon} />
-        )}
-      </InputWrapper>
-      <ErrorMessage aria-live='polite'>
-        <ErrorIcon name='error' />{' '}
-        <StyledInput
-          aria-readonly
-          data-input-error-message
-          disabled
-          placeholder=' '
-          readOnly
-          tabIndex={-1}
-          value={error}
-        />
-      </ErrorMessage>
-    </InputContainer>
-  )
-}
+          {isPassword ? (
+            <PasswordToggle
+              isMasked={isMasked}
+              onClick={togglePasswordMask}
+            />
+          ) : (
+            suffixIcon && <Icon name={suffixIcon} />
+          )}
+        </InputWrapper>
+        <ErrorMessage aria-live='polite'>
+          <ErrorIcon name='error' />{' '}
+          <StyledInput
+            aria-readonly
+            data-input-error-message
+            disabled
+            placeholder=' '
+            readOnly
+            tabIndex={-1}
+            value={error}
+          />
+        </ErrorMessage>
+      </InputContainer>
+    )
+  }
+)

@@ -1,6 +1,8 @@
 import { Select, SelectItem } from '@diaryco/design-system'
-import { memo } from 'react'
-import type { FC } from 'react'
+import { TimezoneMap } from 'diary-utils'
+import { memo } from 'react';
+import type { FC } from 'react';
+
 
 interface TimeZoneOptionProps {
   tzCode: string
@@ -20,7 +22,7 @@ interface TimeZonePickerProps {
   defaultValue: string
   disabled?: boolean
   onValueChange: (value: string) => void
-  timezoneOptions: TimeZoneOptionProps[]
+  timezoneOptions: TimezoneMap
   value: string
 }
 
@@ -40,7 +42,7 @@ export const TimeZonePicker: FC<TimeZonePickerProps> = ({
       disabled={disabled}
       {...props}
     >
-      {timezoneOptions.map(({ tzCode, label }) => (
+      {[...timezoneOptions.values()].map(({ tzCode, label }) => (
         <TimeZoneOption
           key={tzCode}
           tzCode={tzCode}

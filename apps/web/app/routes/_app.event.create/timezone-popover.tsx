@@ -3,14 +3,14 @@ import {
   Checkbox,
   FillButton,
   FillButtonStyles,
-  Icon,
+  IconButton,
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '@diaryco/design-system'
 import type { PopoverProps } from '@diaryco/design-system'
 import cn from 'classnames'
-import type { TimezoneEntry } from 'diary-utils'
+import type { TimezoneEntry, TimezoneMap } from 'diary-utils'
 import { lighten } from 'polished'
 import { useState } from 'react'
 import type { Dispatch, FC, SetStateAction } from 'react'
@@ -31,6 +31,7 @@ const StyledPopoverContent = styled(PopoverContent)`
 
 const StyledPopoverTrigger = styled(PopoverTrigger)`
   ${FillButtonStyles};
+  padding: 0.5rem;
 `
 
 const SelectorWrapper = styled.div`
@@ -68,34 +69,35 @@ const StyledLabel = styled.label`
 `
 
 const StyledFillButton = styled(FillButton)`
-  --button-background-color: ${({ theme }) => theme.color.yellow};
-  --button-text-color: ${({ theme }) => theme.color.black};
-  --button-background-color-hover: ${({ theme }) =>
-    lighten(0.25, theme.color.yellow)};
+  background-color: ${({ theme }) => theme.color.yellow};
+  color: ${({ theme }) => theme.color.black};
+  &:hover {
+    background-color: ${({ theme }) => lighten(0.25, theme.color.yellow)};
+    }
 `
 
 export interface TimeZonePopoverProps extends PopoverProps {
-  endTime: Date
+  eventEndTime: Date
   handleClosePopover: () => void
   localTimeZone: TimezoneEntry
   onClick: () => void
   onOpenChange: (open: boolean) => void
   open: boolean
-  setSelectedTimezones: Dispatch<SetStateAction<TimezoneEntry[]>>
-  startTime: Date
+  setSelectedTimezones: Dispatch<SetStateAction<TimezoneEntry>>
+  eventStartTime: Date
   selectedTimezones: TimezoneEntry[]
-  timezoneOptions: TimezoneEntry[]
+  timezoneOptions: TimezoneMap
 }
 
 export const TimeZonePopover: FC<TimeZonePopoverProps> = ({
-  endTime,
+  eventEndTime,
   handleClosePopover,
   localTimeZone,
   open,
   onClick,
   onOpenChange,
   setSelectedTimezones,
-  startTime,
+  eventStartTime,
   selectedTimezones,
   timezoneOptions,
   ...props
@@ -103,12 +105,13 @@ export const TimeZonePopover: FC<TimeZonePopoverProps> = ({
   const [separateTimezones, setSeparateTimezones] = useState(false)
   const [tempTzs, setTempTzs] = useState([...selectedTimezones])
 
-  const handleValueChange = (value: TimezoneEntry, index: number) => {
+  const handleValueChange = (value: string, index: number) => {
+    const nextValue = timezoneOptions.get(value)
     if (!separateTimezones) {
-      return setTempTzs([value, value])
+      return setTempTzs([nextValue, nextValue])
     }
     setTempTzs((prev) => {
-      prev.splice(index, 1, value)
+      prev.splice(index, 1, nextValue)
       return [...prev]
     })
   }
@@ -187,12 +190,11 @@ export const TimeZonePopover: FC<TimeZonePopoverProps> = ({
             })}
           </DropdownWrapper>
 
-          <Button
+          <IconButton
             disabled={!differentTimezones}
             onClick={handleSwapDates}
-          >
-            <Icon name='swap' />
-          </Button>
+            icon="swap"
+          />
         </SelectorWrapper>
         <StyledFooter>
           <Button

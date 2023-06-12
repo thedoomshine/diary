@@ -1,8 +1,8 @@
-import { useEffect, useRef } from 'react';
-import type { MouseEvent } from 'react';
+import { useEffect, useRef } from 'react'
+import type { MouseEvent } from 'react'
 import styled, { keyframes } from 'styled-components'
 
-import { Button, Icon } from '~/elements'
+import { IconButton } from '~/elements'
 import { grainyGradientBackground } from '~/utils/grainy-gradient'
 
 const overlayShow = keyframes({
@@ -61,7 +61,7 @@ const DialogHeader = styled.div`
 //   justify-content: space-between;
 // `
 
-const StyledCloseButton = styled(Button)`
+const StyledCloseButton = styled(IconButton)`
   grid-column: 2;
 `
 
@@ -147,9 +147,7 @@ export const Dialog = ({
       <StyledDialogContent>
         <DialogHeader>
           {title && <h1>{title}</h1>}
-          <StyledCloseButton onClick={handleClose}>
-            <Icon name='close' />
-          </StyledCloseButton>
+          <StyledCloseButton onClick={handleClose} icon='close' />
         </DialogHeader>
 
         {children}

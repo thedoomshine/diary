@@ -6,7 +6,10 @@ import type {
   MutableRefObject,
   ReactNode,
 } from 'react'
+import type { FC } from 'react'
 import styled, { css } from 'styled-components'
+
+import { Icon } from './Icon/Icon'
 
 export type ButtonBaseElements = HTMLAnchorElement | HTMLButtonElement
 export type ButtonBaseRef =
@@ -22,17 +25,13 @@ export type ButtonBaseElementProps = HTMLProps<
   classNames?: string
   href?: string
   disabled?: boolean
-  children: ReactNode | ReactNode[]
+  children?: ReactNode | ReactNode[]
   onClick?: MouseEventHandler<HTMLButtonElement>
   role?: React.AriaRole
   type?: 'button' | 'submit' | 'reset'
 }
 
 export const ButtonStyles = css`
-  --button-background-color: transparent;
-  --button-background-color-hover: ${({ theme }) =>
-    rgba(theme.color.white, 0.05)};
-
   position: relative;
 
   cursor: pointer;
@@ -42,7 +41,7 @@ export const ButtonStyles = css`
   align-items: center;
   justify-content: center;
 
-  padding: 0.5rem;
+  padding: 0.5rem 1rem;
 
   color: inherit;
   text-align: center;
@@ -51,7 +50,7 @@ export const ButtonStyles = css`
   border-radius: 0.5rem;
 
   &:hover {
-    background-color: var(--button-background-color-hover);
+    background-color: ${({ theme }) => rgba(theme.color.white, 0.05)};
     svg {
       fill: ${({ theme }) => theme.color.yellow};
     }
@@ -103,6 +102,34 @@ export const Button = forwardRef<ButtonBaseElements, any>(
   )
 )
 
+export const IconButtonStyles = css`
+  ${ButtonStyles};
+  padding: 0.5rem;
+  gap: 0.25rem;
+`
+
+const StyledIconButton = styled(Button)`
+  ${IconButtonStyles}
+`
+
+export type IconButtonProps = ButtonBaseElementProps & {
+  icon: string
+  iconPosition?: 'start' | 'end'
+}
+
+export const IconButton: FC<IconButtonProps> = ({
+  icon,
+  iconPosition = 'start',
+  children,
+  ...props
+}) => (
+  <StyledIconButton {...props}>
+    {iconPosition === 'start' && <Icon name={icon} />}
+    {children}
+    {iconPosition === 'end' && <Icon name={icon} />}
+  </StyledIconButton>
+)
+
 export const OutlineButtonStyles = css`
   ${ButtonStyles};
   border: solid 0.125rem currentColor;
@@ -110,20 +137,19 @@ export const OutlineButtonStyles = css`
 
 export const OutlineButton = styled(Button)`
   ${OutlineButtonStyles};
-  padding: 0.5rem 0.75rem;
 `
 
 export const FillButtonStyles = css`
   ${ButtonStyles};
-  --button-background-color: ${({ theme }) => theme.color.black};
-  --button-background-color-hover: ${({ theme }) =>
-    lighten(0.025, theme.color.black)};
-  --button-text-color: ${({ theme }) => theme.color.white};
 
   display: flex;
 
-  color: var(--button-text-color);
-  background-color: var(--button-background-color);
+  color: ${({ theme }) => theme.color.white};
+  background-color: ${({ theme }) => theme.color.black};
+
+  &:hover {
+    background-color: ${({ theme }) => lighten(0.025, theme.color.black)};
+  }
 `
 
 export const FillButton = styled(Button)`
@@ -132,6 +158,7 @@ export const FillButton = styled(Button)`
 
 export const CTAButtonStyles = css`
   --button-shadow-color: ${({ theme }) => theme.color.black};
+  ${FillButtonStyles};
   perspective: 64rem;
   font-weight: ${({ theme }) => theme.fontWeight['800']};
 

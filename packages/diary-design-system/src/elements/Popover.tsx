@@ -50,6 +50,7 @@ const PopoverArrow = styled(PopoverPrimitive.Arrow)`
 `
 const StyledPopoverClose = styled(PopoverPrimitive.Close)`
   ${ButtonStyles};
+  padding: 0.5rem;
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;

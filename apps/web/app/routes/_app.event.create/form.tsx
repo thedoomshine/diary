@@ -1,16 +1,35 @@
-import { Checkbox, DatePicker, Input, TimePicker, defaultTimePickerFormat, defaultTimePickerOptions, formatTimePickerOptions } from '@diaryco/design-system';
-import type { TimePickerOption } from '@diaryco/design-system';
-import { Form } from '@remix-run/react';
-import { addHours, addMinutes, differenceInMinutes, isAfter, isSameDay, isSameMinute, isThisYear, roundToNearestMinutes } from 'date-fns';
-import { timezones as DEFAULT_TIMEZONES } from 'diary-utils';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import type { FC, FocusEvent } from 'react';
-import styled from 'styled-components';
+import {
+  Checkbox,
+  DatePicker,
+  MarkdownEditor,
+  Input,
+  TimePicker,
+  defaultTimePickerFormat,
+  defaultTimePickerOptions,
+  formatTimePickerOptions,
+} from '@diaryco/design-system'
+import type { TimePickerOption } from '@diaryco/design-system'
+import { Form } from '@remix-run/react'
+import {
+  addDays,
+  addMinutes,
+  differenceInMinutes,
+  isAfter,
+  isSameDay,
+  isThisYear,
+  isValid,
+  roundToNearestMinutes,
+} from 'date-fns'
+import { timezones as DEFAULT_TIMEZONES } from 'diary-utils'
+import { useCallback, useMemo, useState } from 'react'
+import type { FC, FocusEvent } from 'react'
+import styled from 'styled-components'
 
+import { TimeZonePopover } from './timezone-popover'
 
-
-import { TimeZonePopover } from './timezone-popover';
-
+const StyledForm = styled(Form)`
+  padding: 0.5rem;
+`
 
 const Fieldset = styled.fieldset`
   display: flex;
@@ -46,9 +65,10 @@ const getDistance = (start: Date, finish: Date) => {
 
 interface CreateEventFormProps {
   formData?: {
+    allDay?: boolean
     title?: string
     startDate?: Date
-    endDate?: Date
+    duration?: number
   }
   isSubmitting?: boolean
 }
@@ -57,44 +77,31 @@ export const CreateEventForm: FC<CreateEventFormProps> = ({
   formData,
   isSubmitting = false,
 }) => {
-  const today = new Date()
-
+  const defaultEventTitle = formData?.title || ''
   const defaultStartDate =
-    formData?.startDate || roundToNearestMinutes(today, { nearestTo: 15 })
-  const defaultEndDate =
-    formData?.endDate ||
-    roundToNearestMinutes(addHours(defaultStartDate, 1), { nearestTo: 15 })
+    formData?.startDate || roundToNearestMinutes(new Date(), { nearestTo: 15 })
+  const defaultDuration = formData?.duration || 60
+  const defaultAllDay = formData?.allDay || false
 
-  const [startTime, setStartTime] = useState(defaultStartDate)
-  const [endTime, setEndTime] = useState(defaultEndDate)
+  const [eventStartTime, setEventStartTime] = useState(defaultStartDate)
+  const [allDayEvent, setAllDayEvent] = useState(defaultAllDay)
+  const [duration, setDuration] = useState(defaultDuration)
 
-  const localTimeZone = useMemo(
-    () =>
-      DEFAULT_TIMEZONES.find(
-        (item) =>
-          item.tzCode === Intl.DateTimeFormat().resolvedOptions().timeZone
-      )!,
-    []
+  const eventEndTime = allDayEvent
+    ? addDays(eventStartTime, 1)
+    : addMinutes(eventStartTime, duration)
+
+  const isSingleDay = isSameDay(eventStartTime, eventEndTime)
+  const localTimeZone = DEFAULT_TIMEZONES.get(
+    Intl.DateTimeFormat().resolvedOptions().timeZone
   )
 
-  // convert DEFAULT_TIMEZONES to an object, store the key and access the tzCode, label, and offset with it
   const [selectedTimezones, setSelectedTimezones] = useState([
     localTimeZone,
     localTimeZone,
   ])
 
   const [popoverOpen, setPopoverOpen] = useState(false)
-
-  const isValidDate = (date: Date) =>
-    date instanceof Date && !isNaN(Number(date.valueOf()))
-
-  useEffect(() => {
-    if (isAfter(startTime, endTime) && !isSameMinute(startTime, endTime)) {
-      setEndTime(
-        roundToNearestMinutes(addHours(startTime, 1), { nearestTo: 15 })
-      )
-    }
-  }, [startTime, endTime])
 
   const getNextDate = (next: Date, prev: Date) =>
     new Date(
@@ -106,83 +113,90 @@ export const CreateEventForm: FC<CreateEventFormProps> = ({
     )
 
   const handleSetStartDate = (next: Date) => {
-    setStartTime((prev: Date) => getNextDate(next, prev))
+    setEventStartTime((prev: Date) => getNextDate(next, prev))
   }
 
   const handleStartDateBlur = (event: FocusEvent<HTMLInputElement>) => {
     const next = new Date(event?.target?.value)
-    if (isValidDate(next)) {
+    if (isValid(next)) {
       handleSetStartDate(next)
     }
   }
 
   const handleStartDateChange = (next: Date) => {
-    if (isValidDate(next)) {
+    if (isValid(next)) {
       handleSetStartDate(next)
     }
   }
 
-  const handleStartTimeChange = (value: string) => {
+  const handleEventStartTimeChange = (value: string) => {
     const next = new Date(value)
-    if (isValidDate(next)) {
-      setStartTime(next)
+    if (isValid(next)) {
+      setEventStartTime(next)
     }
   }
 
   const handleSetEndDate = (next: Date) => {
-    setEndTime((prev: Date) => getNextDate(next, prev))
+    if (isAfter(eventStartTime, next)) {
+      setDuration(60)
+    } else {
+      setDuration(differenceInMinutes(next, eventStartTime))
+    }
   }
 
   const handleEndDateBlur = (event: FocusEvent<HTMLInputElement>) => {
     const next = new Date(event?.target?.value)
-    if (isValidDate(next)) {
+    if (isValid(next)) {
       handleSetEndDate(next)
     }
   }
 
   const handleEndDateChange = (next: Date) => {
-    if (isValidDate(next)) {
+    if (isValid(next)) {
       handleSetEndDate(next)
     }
   }
 
-  const handleEndTimeChange = (value: string) => {
+  const handleEventEndTimeChange = (value: string) => {
     const next = new Date(value)
-    if (isValidDate(next)) {
-      setEndTime(next)
+    if (isValid(next)) {
+      handleSetEndDate(next)
     }
   }
 
-  const isSingleDay = isSameDay(startTime, endTime)
+  const handleOnCheckedChange = (value: boolean) => {
+    setAllDayEvent(value)
+  }
 
-  const generateSameDayOptions = useCallback(
-    () => Array.from({ length: 48 }, (_, i) => addMinutes(startTime, i * 30)),
-    [startTime]
+  const sameDayOptions = useMemo(
+    () =>
+      Array.from({ length: 48 }, (_, i) => addMinutes(eventStartTime, i * 30)),
+    [eventStartTime]
   )
 
-  const formatEndTimeOptions = useCallback(
+  const formatEventEndTimeOptions = useCallback(
     (date: Date) =>
-      `${defaultTimePickerFormat(date)} (${getDistance(startTime, date)})`,
-    [startTime]
+      `${defaultTimePickerFormat(date)} (${getDistance(eventStartTime, date)})`,
+    [eventStartTime]
   )
-
-  const endTimeOptions = useMemo<TimePickerOption[]>(() => {
-    return isSingleDay
-      ? formatTimePickerOptions(generateSameDayOptions(), formatEndTimeOptions)
-      : defaultTimePickerOptions(endTime)
-  }, [isSingleDay, generateSameDayOptions, formatEndTimeOptions, endTime])
 
   const getDateFormat = (date: Date) =>
     `eeee, MMMM do${!isThisYear(date) ? ' yyyy' : ''}`
 
+  const eventEndTimeOptions = useMemo<TimePickerOption[]>(() => {
+    return isSingleDay
+      ? formatTimePickerOptions(sameDayOptions, formatEventEndTimeOptions)
+      : defaultTimePickerOptions(eventEndTime)
+  }, [isSingleDay, sameDayOptions, formatEventEndTimeOptions, eventEndTime])
+
   return (
-    <Form method='post'>
+    <StyledForm method='post'>
       <Input
         label='event title'
         name='title'
         type='text'
         placeholder='add title'
-        defaultValue={formData?.title}
+        defaultValue={defaultEventTitle}
         disabled={isSubmitting}
       />
 
@@ -193,50 +207,64 @@ export const CreateEventForm: FC<CreateEventFormProps> = ({
               disabled={isSubmitting}
               onChange={handleStartDateChange}
               onBlur={handleStartDateBlur}
-              selected={startTime}
-              dateFormat={getDateFormat(startTime)}
+              selected={eventStartTime}
+              dateFormat={getDateFormat(eventStartTime)}
             />
-            <TimePicker
-              disabled={isSubmitting}
-              onChange={handleStartTimeChange}
-              value={startTime}
-            />
+            {!allDayEvent && (
+              <TimePicker
+                disabled={isSubmitting}
+                onChange={handleEventStartTimeChange}
+                value={eventStartTime}
+              />
+            )}
           </DateTimeWrapper>
           –
           <DateTimeWrapper>
-            <TimePicker
-              disabled={isSubmitting}
-              onChange={handleEndTimeChange}
-              options={endTimeOptions}
-              value={endTime}
-            />
-            {!isSingleDay && (
+            {!allDayEvent && (
+              <TimePicker
+                disabled={isSubmitting}
+                onChange={handleEventEndTimeChange}
+                options={eventEndTimeOptions}
+                value={eventEndTime}
+              />
+            )}
+            {(!isSingleDay || allDayEvent) && (
               <DatePicker
                 disabled={isSubmitting}
                 onChange={handleEndDateChange}
                 onBlur={handleEndDateBlur}
-                selected={endTime}
-                dateFormat={getDateFormat(endTime)}
+                selected={eventEndTime}
+                dateFormat={getDateFormat(eventEndTime)}
               />
             )}
           </DateTimeWrapper>
         </DatesWrapper>
       </Fieldset>
       <Fieldset>
-        <Checkbox name='all-day'>all day</Checkbox>
+        <Checkbox
+          name='all-day'
+          defaultChecked={allDayEvent}
+          checked={allDayEvent}
+          onCheckedChange={handleOnCheckedChange}
+        >
+          all day
+        </Checkbox>
         <TimeZonePopover
-          endTime={endTime}
+          eventEndTime={eventEndTime}
           handleClosePopover={() => setPopoverOpen(false)}
           localTimeZone={localTimeZone}
           onClick={() => setPopoverOpen(true)}
           onOpenChange={setPopoverOpen}
           open={popoverOpen}
           setSelectedTimezones={setSelectedTimezones}
-          startTime={startTime}
+          eventStartTime={eventStartTime}
           timezoneOptions={DEFAULT_TIMEZONES}
           selectedTimezones={selectedTimezones}
         />
       </Fieldset>
-    </Form>
+      <Fieldset>
+        <MarkdownEditor markdown="# Hello World" />
+      </Fieldset>
+    </StyledForm>
   )
 }

@@ -37,7 +37,8 @@
     "remix-auth-supabase": "^4.0.2",
     "remix-graphql": "^0.2.1",
     "remix-island": "^0.1.2",
-    "styled-components": "6.0.0-rc.3"
+    "styled-components": "6.0.0-rc.3",
+    "stylis": "^4.2.0"
   },
   "devDependencies": {
     "@remix-run/dev": "^1.17.0",

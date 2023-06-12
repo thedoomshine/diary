@@ -11,19 +11,21 @@ import { ButtonStyles, FillButtonStyles, Icon } from '~/elements';
 
 
 const SelectTrigger = styled(SelectPrimitive.Trigger)`
-  ${FillButtonStyles}
+  ${FillButtonStyles};
   gap: 0.5rem;
+  padding: 0.5rem;
+
   &[data-disabled] {
     pointer-events: none;
   }
 `
 
 const SelectScrollUp = styled(SelectPrimitive.ScrollUpButton)`
-  ${ButtonStyles}
+  ${ButtonStyles};
 `
 
 const SelectScrollDown = styled(SelectPrimitive.ScrollDownButton)`
-  ${ButtonStyles}
+  ${ButtonStyles};
 `
 
 const SelectContent = styled(SelectPrimitive.Content)`
@@ -31,11 +33,11 @@ const SelectContent = styled(SelectPrimitive.Content)`
 
   overflow: hidden;
 
-  max-height: 16rem;
-
   background-color: ${({ theme }) => theme.color.black};
   border-radius: 0.5rem;
   box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 50%);
+  --radix-select-content-available-height: 16rem;
+  max-height: 16rem;
 `
 
 const StyledSelectItem = styled(SelectPrimitive.Item)`

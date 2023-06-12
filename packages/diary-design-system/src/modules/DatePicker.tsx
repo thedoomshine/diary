@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import { format } from 'date-fns'
 import { darken, lighten } from 'polished'
 import { forwardRef, useEffect, useState } from 'react'
 import type { FC, FocusEvent } from 'react'
@@ -7,7 +7,7 @@ import ReactDatePicker, {
 } from 'react-datepicker'
 import styled, { css } from 'styled-components'
 
-import { Button, ButtonStyles, FillButtonStyles, Icon } from '~/elements'
+import { ButtonStyles, FillButtonStyles, IconButton, IconButtonStyles } from '~/elements'
 
 const triangleArrow = css`
   position: absolute;
@@ -141,31 +141,41 @@ const Wrapper = styled.div`
     }
   }
 
-  .react-datepicker__navigation {
-    ${ButtonStyles}
-    &:focus-visible, &:active {
-      outline: solid 0.0125rem ${({ theme }) => theme.color.yellow};
-    }
+  .react-datepicker__month {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  .react-datepicker__navigation,
+  .react-datepicker__day {
+    ${IconButtonStyles}
+  }
+
+  .react-datepicker__navigation,
+  .react-datepicker__day-name,
+  .react-datepicker__day {
+    display: flex;
+    gap: 0.25rem;
+    aspect-ratio: 1;
+    align-items: center;
+    justify-content: center;
   }
 
   .react-datepicker__day-name {
+    font-weight: ${({ theme }) => theme.fontWeight[800]};
     text-align: center;
-  }
-
-  .react-datepicker__day-names {
-    padding: ${({ theme }) => `${theme.space.sm} 0`};
   }
 
   .react-datepicker__day-names,
   .react-datepicker__week {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(7, 2.5rem);
     text-transform: lowercase;
   }
 
-  .react-datepicker__today-button,
-  .react-datepicker__day {
+  .react-datepicker__today-button {
     ${ButtonStyles}
+    font-weight: ${({ theme }) => theme.fontWeight[800]};
   }
 
   .react-datepicker__today-button {
@@ -227,25 +237,24 @@ const DatePickerHeader: FC<ReactDatePickerCustomHeaderProps> = ({
 }) => {
   return (
     <StyledHeader>
-      <Button
+      <IconButton
         onClick={decreaseMonth}
         disabled={prevMonthButtonDisabled}
-      >
-        <Icon name='chevron-left' />
-      </Button>
+        icon='chevron-left'
+      />
       {format(date, 'MMMM yyyy').toLocaleLowerCase()}
-      <Button
+      <IconButton
         onClick={increaseMonth}
         disabled={nextMonthButtonDisabled}
-      >
-        <Icon name='chevron-right' />
-      </Button>
+        icon='chevron-right'
+      />
     </StyledHeader>
   )
 }
 
 const InputWrapper = styled.div`
   ${FillButtonStyles}
+  padding: 0.5rem;
   position: relative;
 
   input {

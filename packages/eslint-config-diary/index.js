@@ -3,7 +3,7 @@
  * @type {import("eslint").Linter.Config}
  */
 module.exports = {
-  extends: ['turbo', 'prettier', 'stylelint'],
+  extends: ['turbo', 'stylelint', 'prettier'],
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint'],
   extends: [
