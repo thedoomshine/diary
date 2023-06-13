@@ -37,6 +37,7 @@ const InputWrapper = styled.div`
   color: ${({ theme }) => theme.color.white};
 
   background-color: ${({ theme }) => theme.color.black};
+  border: solid 1px ${({ theme }) => theme.color.grey};
   border-radius: 0.5em;
 
   &:hover {

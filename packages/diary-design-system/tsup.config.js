@@ -4,7 +4,18 @@ export default defineConfig((options) => ({
   clean: false,
   dts: true,
   entry: ['src/index.tsx'],
-  external: ['react'],
+  external: [
+    'react',
+    'react-markdown',
+    'rehype-sanitize',
+    'rehype-stringify',
+    'remark-breaks',
+    'remark-emoji',
+    'remark-gfm',
+    'remark-parse',
+    'remark-rehype',
+    'unified'
+  ],
   format: 'cjs',
   outDir: 'dist',
   declarationDir: './dist',
@@ -12,7 +23,4 @@ export default defineConfig((options) => ({
   splitting: true,
   treeshake: true,
   minify: !options.watch,
-  compilerOptions: {
-    target: 'es2021',
-  },
 }))

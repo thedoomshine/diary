@@ -25,4 +25,5 @@ export {
 } from './Popover'
 export type { PopoverProps } from './Popover'
 export { Select, SelectItem } from './Select'
+export { TabsRoot, TabContent, TabTrigger, TabsList } from './Tabs'
 export { Tooltip, TooltipProvider } from './Tooltip'

@@ -254,6 +254,7 @@ const DatePickerHeader: FC<ReactDatePickerCustomHeaderProps> = ({
 
 const InputWrapper = styled.div`
   ${FillButtonStyles}
+  border: solid 1px ${({ theme }) => theme.color.grey};
   padding: 0.5rem;
   position: relative;
 

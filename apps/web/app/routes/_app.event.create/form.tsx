@@ -1,8 +1,8 @@
 import {
   Checkbox,
   DatePicker,
-  MarkdownEditor,
   Input,
+  MarkdownEditor,
   TimePicker,
   defaultTimePickerFormat,
   defaultTimePickerOptions,
@@ -22,7 +22,7 @@ import {
 } from 'date-fns'
 import { timezones as DEFAULT_TIMEZONES } from 'diary-utils'
 import { useCallback, useMemo, useState } from 'react'
-import type { FC, FocusEvent } from 'react'
+import type { ChangeEvent, FC, FocusEvent } from 'react'
 import styled from 'styled-components'
 
 import { TimeZonePopover } from './timezone-popover'
@@ -69,23 +69,72 @@ interface CreateEventFormProps {
     title?: string
     startDate?: Date
     duration?: number
+    description?: string
   }
   isSubmitting?: boolean
 }
 
+const defaultMarkdown = `# yeag :rabbit: :black_heart:
+
+![i'm satan.](https://pbs.twimg.com/profile_banners/40705032/1629004121/1500x500)
+
+**goth** *bitch* ***on patrol***
+
+## level 2
+
+>> you miss 100% of the shots you never take
+>
+> wayne gretzky
+>
+michael scott
+
+### level 3
+
+> blockquote
+>> blockquote blockquote
+
+#### level 4
+
+1. ordered list item
+    1. ordered sub list item
+2. ordered list item
+3. ordered list item
+
+##### level 5
+
+- unordered list item
+    - unordered sub list item
+- unordered list item
+- unordered list item
+
+***
+
+###### level 6
+
+[link](https://twitter.com/thedoomshine)
+
+
+`
+
+const defaultStartDate = roundToNearestMinutes(new Date(), { nearestTo: 15 })
+
+const defaultFormData = {
+  allDay: false,
+  description: defaultMarkdown,
+  duration: 60,
+  startDate: defaultStartDate,
+  title: ''
+}
+
 export const CreateEventForm: FC<CreateEventFormProps> = ({
-  formData,
+  formData = {...defaultFormData},
   isSubmitting = false,
 }) => {
-  const defaultEventTitle = formData?.title || ''
-  const defaultStartDate =
-    formData?.startDate || roundToNearestMinutes(new Date(), { nearestTo: 15 })
-  const defaultDuration = formData?.duration || 60
-  const defaultAllDay = formData?.allDay || false
-
-  const [eventStartTime, setEventStartTime] = useState(defaultStartDate)
-  const [allDayEvent, setAllDayEvent] = useState(defaultAllDay)
-  const [duration, setDuration] = useState(defaultDuration)
+  const [eventStartTime, setEventStartTime] = useState(formData.startDate!)
+  const [markdown, setMarkdownSource] = useState(formData.description!)
+  const [allDayEvent, setAllDayEvent] = useState(formData.allDay!)
+  const [duration, setDuration] = useState(formData.duration!)
+  const [popoverOpen, setPopoverOpen] = useState(false)
 
   const eventEndTime = allDayEvent
     ? addDays(eventStartTime, 1)
@@ -100,8 +149,6 @@ export const CreateEventForm: FC<CreateEventFormProps> = ({
     localTimeZone,
     localTimeZone,
   ])
-
-  const [popoverOpen, setPopoverOpen] = useState(false)
 
   const getNextDate = (next: Date, prev: Date) =>
     new Date(
@@ -196,7 +243,7 @@ export const CreateEventForm: FC<CreateEventFormProps> = ({
         name='title'
         type='text'
         placeholder='add title'
-        defaultValue={defaultEventTitle}
+        defaultValue={formData.title}
         disabled={isSubmitting}
       />
 
@@ -263,7 +310,14 @@ export const CreateEventForm: FC<CreateEventFormProps> = ({
         />
       </Fieldset>
       <Fieldset>
-        <MarkdownEditor markdown="# Hello World" />
+        <MarkdownEditor
+          markdown={markdown}
+          setMarkdownSource={({
+            currentTarget,
+          }: ChangeEvent<HTMLTextAreaElement>) =>
+            setMarkdownSource(currentTarget.value)
+          }
+        />
       </Fieldset>
     </StyledForm>
   )

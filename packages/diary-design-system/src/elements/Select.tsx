@@ -12,6 +12,7 @@ import { ButtonStyles, FillButtonStyles, Icon } from '~/elements';
 
 const SelectTrigger = styled(SelectPrimitive.Trigger)`
   ${FillButtonStyles};
+  border: solid 1px ${({ theme }) => theme.color.grey};
   gap: 0.5rem;
   padding: 0.5rem;
 

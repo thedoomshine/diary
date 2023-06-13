@@ -31,6 +31,7 @@ const StyledPopoverContent = styled(PopoverContent)`
 
 const StyledPopoverTrigger = styled(PopoverTrigger)`
   ${FillButtonStyles};
+  border: solid 1px ${({ theme }) => theme.color.grey};
   padding: 0.5rem;
 `
 

@@ -7,13 +7,6 @@ import { fluidType, grainyGradientBackground } from '~/utils'
 export const GlobalStyle = createGlobalStyle`
   ${reset}
 
-  dialog::backdrop {
-    position: fixed;
-    inset: 0;
-    background-color: ${rgba(color.black, 0.75)};
-    animation: none;
-  }
-
   html {
     display: flex;
 
@@ -93,5 +86,18 @@ export const GlobalStyle = createGlobalStyle`
     word-break: break-word;
     tab-size: 4;
     white-space: pre-wrap;
+  }
+
+  dialog::backdrop {
+    position: fixed;
+    inset: 0;
+    background-color: ${rgba(color.black, 0.75)};
+    animation: none;
+  }
+
+  :where(dialog:modal) {
+    width: calc(100% - 1rem);
+    max-width: 40rem;
+    padding: 0.5rem;
   }
 `
