@@ -58,7 +58,7 @@ const StyledTabContent = styled(TabContent)`
   border: solid 1px ${({ theme }) => theme.color.grey};
   border-radius: 0.5rem;
   background-color: ${({ theme }) => theme.color.charcoal};
-  max-height: 20rem;
+  max-height: 32rem;
   overflow: auto;
 `
 
