@@ -1,7 +1,0 @@
-export { GlobalStyle } from './global'
-export { color } from './color'
-export { font, fontSize, fontWeight } from './font'
-export { media, size, space } from './size'
-export { theme } from './theme'
-export { reset } from './reset'
-export type { BashThemeShape, BashTheme } from './theme'

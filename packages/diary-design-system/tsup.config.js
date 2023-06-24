@@ -1,4 +1,5 @@
-import { defineConfig } from 'tsup'
+import { defineConfig } from 'tsup';
+
 
 export default defineConfig((options) => ({
   clean: false,
@@ -14,7 +15,8 @@ export default defineConfig((options) => ({
     'remark-gfm',
     'remark-parse',
     'remark-rehype',
-    'unified'
+    'style-engine',
+    'unified',
   ],
   format: 'cjs',
   outDir: 'dist',

@@ -5,6 +5,7 @@
   "include": ["src"],
   "exclude": ["dist"],
   "compilerOptions": {
+    "isolatedModules": false,
     "noEmit": true,
     "jsx": "react-jsx"
   }

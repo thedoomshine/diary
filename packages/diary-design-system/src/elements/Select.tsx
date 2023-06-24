@@ -1,4 +1,4 @@
-import * as SelectPrimitive from '@radix-ui/react-select'
+import * as SelectPrimitive from '@radix-ui/react-select';
 import type { SelectItemProps as SelectItemPrimitiveProps, SelectProps as SelectPrimitiveProps } from '@radix-ui/react-select';
 import { lighten, rgba } from 'polished';
 import { forwardRef } from 'react';
@@ -52,7 +52,7 @@ const StyledSelectItem = styled(SelectPrimitive.Item)`
 
   padding: 1rem 2rem 1rem 0.5rem;
 
-  border-radius: 0.25;
+  border-radius: 0.25rem;
 
   &[data-disabled] {
     pointer-events: none;

@@ -1,6 +1,13 @@
-import cn from 'classnames'
+import clsx from 'clsx'
 import { lighten } from 'polished'
-import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react'
+import {
+  forwardRef,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react'
 import type { ChangeEvent, FC, RefCallback } from 'react'
 import styled from 'styled-components'
 
@@ -142,7 +149,7 @@ const PasswordToggle: FC<PasswordToggleProps> = ({
           {...props}
         >
           <PasswordToggleIcon
-            className={cn({ masked: isMasked })}
+            className={clsx({ masked: isMasked })}
             name={isMasked ? 'eye-slash' : 'eye'}
           />
         </PasswordToggleButton>

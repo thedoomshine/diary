@@ -1,21 +1,25 @@
 {
-  "$schema": "https://json.schemastore.org/tsconfig",
-  "display": "Remix App",
-  "extends": "tsconfig/remix.json",
-  "include": [
-    "remix.env.d.ts",
-    "app/**/*.ts",
-    "app/**/*.tsx",
-    "server.ts",
-    "node_modules/@types/**/*.d.ts"
-  ],
-  "exclude": ["build", "node_modules", "!node_modules/@types/**/*.d.ts"],
+  "display": "Next App",
+  "extends": "tsconfig/next.json",
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
-      "~/*": ["app/*"]
+      "~/*": [
+        "./src/*"
+      ]
     },
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "target": "ES2021"
-  }
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ]
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

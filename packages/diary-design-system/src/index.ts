@@ -1,7 +1,7 @@
 export { GlobalStyle } from '~/foundation/global'
-export { color } from '~/foundation/color'
-export { font, fontSize, fontWeight } from '~/foundation/font'
-export { media, size, space } from '~/foundation/size'
+export { color } from '~/foundation/colors'
+export { font, fontSize, fontWeight } from '~/foundation/fonts'
+export { media, size, space } from '~/foundation/sizes'
 export { theme } from '~/foundation/theme'
 export { reset } from '~/foundation/reset'
 
