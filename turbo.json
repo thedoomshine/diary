@@ -43,6 +43,10 @@
     "typecheck": {
       "cache": false,
       "outputs": []
+    },
+    "prepare": {
+      "cache": false,
+      "outputs": ["dist/**"]
     }
   }
 }

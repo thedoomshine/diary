@@ -17,6 +17,7 @@
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "turbo run build --filter=web^... && changeset publish",
+    "prepare": "turbo run prepare",
     "preinstall": "npx only-allow pnpm"
   },
   "devDependencies": {
