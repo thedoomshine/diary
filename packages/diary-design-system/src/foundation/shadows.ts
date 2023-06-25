@@ -14,6 +14,6 @@ const shadowTokens = {
   -7px 7px 0 {colors.black},
   -8px 8px 0 {colors.black}`,
   glow: '0 0 16rem 0.125rem {colors.yellow}',
-}
+} as const
 
 export const shadows = defineTokens.shadows(generateTokens(shadowTokens))

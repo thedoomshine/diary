@@ -1,5 +1,6 @@
 import { rgba } from 'polished'
-import { colorTokens } from './colors'
+
+import { token } from '~/style-engine/tokens'
 
 type GrainyGradientProps = {
   angle?: number
@@ -17,9 +18,9 @@ export const utilities = {
       values: 'colors',
       transform({
         angle = 0,
-        background = colorTokens.black,
-        color1 = colorTokens.black,
-        color2 = rgba(colorTokens.black, 0),
+        background = token('colors.black'),
+        color1 = token('colors.black'),
+        color2 = rgba(token('colors.black'), 0),
         type = 'linear',
       } = {} as GrainyGradientProps) {
         return {

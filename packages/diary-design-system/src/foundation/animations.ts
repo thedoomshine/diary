@@ -2,7 +2,10 @@ import { defineTokens } from '@pandacss/dev'
 
 import { generateTokens } from '../utils'
 
-const animationTokens = {}
+const animationTokens = {
+  scaleUp: 'scaleUp {durations.150} {easings.easeOutQuart} normal',
+  fadeIn: 'fadeIn {durations.150} {easings.easeOutQuart} normal',
+}
 
 export const animations = defineTokens.animations(
   generateTokens(animationTokens)

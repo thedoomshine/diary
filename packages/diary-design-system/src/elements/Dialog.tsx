@@ -1,74 +1,46 @@
 import { useEffect, useRef } from 'react'
 import type { MouseEvent } from 'react'
-import styled, { keyframes } from 'styled-components'
 
 import { IconButton } from './Button'
 // import { grainyGradientBackground } from '~/utils/grainy-gradient'
 
-const overlayShow = keyframes({
-  '0%': { opacity: 0 },
-  '100%': { opacity: 1 },
-})
+import { css, cx } from '~/style-engine/css'
 
-const contentShow = keyframes({
-  '0%': { opacity: 0, transform: 'translate(-50%; -48%) scale(.96)' },
-  '100%': { opacity: 1, transform: 'translate(-50%; -50%) scale(1)' },
-})
+const dialogContentStyles = css({
+  display: 'grid',
+  gridTemplateRows: 'repeat(3, min-content)',
+  gap: '0.5rem',
+  padding: '0.5rem',
+  color: 'white',
+  border: '0',
+  borderRadius: '0.5rem',
+  boxShadow: 'normal',
+  '&[open]': {
+    animation: 'scaleUp',
 
-const StyledDialogContent = styled.div`
-  /* ${({ theme }) =>
-    grainyGradientBackground({
-      background: theme.color.charcoal,
-      color1: theme.color.charcoal,
-    })} */
-
-  overflow: visible;
-  display: grid;
-  grid-template-rows: repeat(3, min-content);
-  gap: 0.5rem;
-
-  padding: 0.5rem;
-
-  color: ${({ theme }) => theme.color.white};
-
-  border: 0;
-  border-radius: 0.5rem;
-  box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 50%);
-
-  animation: ${contentShow} 150ms cubic-bezier(0.16, 1, 0.3, 1) normal;
-
-  &[open] {
-    animation: ${contentShow} 150ms cubic-bezier(0.16, 1, 0.3, 1) normal;
-
-    &::backdrop {
-      animation: ${overlayShow} 150ms cubic-bezier(0.16, 1, 0.3, 1) normal;
+    '&::backdrop': {
+      animation: 'fadeIn'
     }
   }
-`
+})
 
-const DialogHeader = styled.div`
-  display: grid;
-  align-items: center;
-  justify-content: space-between;
+const dialogHeaderStyles = css({
+  display: 'grid',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  '& > h1': {
+    fontSize: 'md',
+  },
+})
 
-  h1 {
-    font-size: ${({ theme }) => theme.fontSize.md};
-  }
-`
+// const dialogFooterStyles = css({
+//   display: 'flex',
+//   justifyContent: 'space-between',
+// })
 
-// const DialogFooter = styled.div`
-//   display: flex;
-//   justify-content: space-between;
-// `
-
-const StyledCloseButton = styled(IconButton)`
-  grid-column: 2;
-`
-
-// const StyledButton = styled(Button)`
-//   color: ${({ theme }) => theme.color.black};
-//   background-color: ${({ theme }) => theme.color.yellow};
-// `
+const dialogCloseButtonStyles = css({
+  gridColumn: 2,
+})
 
 const isClickInside = (event: MouseEvent, element: HTMLElement) => {
   const box = element.getBoundingClientRect()
@@ -144,19 +116,19 @@ export const Dialog = ({
       onCancel={handleClose}
       onClick={handleClick}
     >
-      <StyledDialogContent>
-        <DialogHeader>
+      <div className={dialogContentStyles}>
+        <div className={dialogHeaderStyles}>
           {title && <h1>{title}</h1>}
-          <StyledCloseButton onClick={handleClose} icon='close' />
-        </DialogHeader>
+          <IconButton className={dialogCloseButtonStyles} onClick={handleClose} icon='close' />
+        </div>
 
         {children}
 
-        {/* <DialogFooter>
+        {/* <div className={dialogFooterStyles}>
           <OutlineButton onClick={handleClose}>close</OutlineButton>
-          <StyledButton onClick={proceedAndClose}>okay</StyledButton>
-        </DialogFooter> */}
-      </StyledDialogContent>
+          <FillButton onClick={proceedAndClose}>okay</FillButton>
+        </div> */}
+      </div>
     </dialog>
   )
 }

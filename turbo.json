@@ -6,7 +6,7 @@
     "build": {
       "cache": true,
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", "umd/**", "build/**", "api/**", "public/build/**"]
+      "outputs": ["dist/**", "umd/**", "build/**", "api/**", "public/build/**", "storybook-static/**"]
     },
     "clean": {
       "cache": false,
@@ -46,7 +46,7 @@
     },
     "prepare": {
       "cache": false,
-      "outputs": ["dist/**"]
+      "outputs": ["style-engine/**"]
     }
   }
 }

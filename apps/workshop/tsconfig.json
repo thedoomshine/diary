@@ -1,0 +1,6 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Design System",
+  "extends": "tsconfig-diary/node.json",
+  "include": ["src", "vite.config.ts"]
+}

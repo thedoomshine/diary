@@ -1,9 +1,8 @@
 import { defineTokens } from '@pandacss/dev'
 
 import { generateTokens } from '../utils'
-import { ScalePrefix } from '../@types/foundation'
 
-export enum HeadingPrefix {
+enum HeadingPrefix {
   H6 = 'h6',
   H5 = 'h5',
   H4 = 'h4',
@@ -12,12 +11,12 @@ export enum HeadingPrefix {
   H1 = 'h1',
 }
 
-export enum BodyPrefix {
-  XS = ScalePrefix.XS,
-  SM = ScalePrefix.SM,
-  MD = ScalePrefix.MD,
-  LG = ScalePrefix.LG,
-  XL = ScalePrefix.XL,
+enum BodyPrefix {
+  XS = 'xs',
+  SM = 'sm',
+  MD = 'md',
+  LG = 'lg',
+  XL = 'xl',
 }
 
 // typographic scale formula
@@ -30,7 +29,7 @@ const generateTypeScale = ({
   prefix: typeof HeadingPrefix | typeof BodyPrefix
 }) =>
   Array.from(
-    { length: Object.keys(prefix).length },
+    { length: Object.values(prefix).length },
     (_, i) => `${Number(Math.pow(ratio, i - 1).toFixed(4))}rem`
   ).reduce((a, v, i) => ({ ...a, [Object.values(prefix)[i]]: v }), {})
 
@@ -47,8 +46,6 @@ const BODY_TYPESCALE = generateTypeScale({
 })
 
 export const fontSizeTokens = {
-  _min: 16,
-  _max: 20,
   ...HEADING_TYPESCALE,
   ...BODY_TYPESCALE,
 } as const

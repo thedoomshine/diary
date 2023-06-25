@@ -8,23 +8,6 @@ export const enum ScalePrefix {
   XXL = 'xxl',
 }
 
-export enum HeadingPrefix {
-  H6 = 'h6',
-  H5 = 'h5',
-  H4 = 'h4',
-  H3 = 'h3',
-  H2 = 'h2',
-  H1 = 'h1',
-}
-
-export enum BodyPrefix {
-  XS = ScalePrefix.XS,
-  SM = ScalePrefix.SM,
-  MD = ScalePrefix.MD,
-  LG = ScalePrefix.LG,
-  XL = ScalePrefix.XL,
-}
-
 export const enum Selectors {
   ACTIVE = '&[active], &:active, &[aria-active=true"]',
   AFTER = '&::after',

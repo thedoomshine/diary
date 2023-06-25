@@ -8,6 +8,6 @@ const opacityTokens = {
   50: 0.5,
   75: 0.75,
   100: 1,
-}
+} as const
 
 export const opacity = defineTokens.opacity(generateTokens(opacityTokens))

@@ -1,46 +1,39 @@
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
 import type { CheckboxProps as CheckboxPrimitiveProps } from '@radix-ui/react-checkbox'
 import type { FC, ReactNode } from 'react'
-import styled from 'styled-components'
 
 import { Icon } from './Icon/Icon'
-import { ButtonStyles } from './Button'
+import { button } from './Button'
 
-const CheckboxRoot = styled(CheckboxPrimitive.Root)`
-  ${ButtonStyles}
-  display: flex;
-  align-items: center;
-  justify-content: center;
+import { css, cx } from '~/style-engine/css'
 
-  padding: 0.5rem;
-  width: 1.5rem;
-  height: 1.5rem;
+const checkboxRootStyles = cx(button(), css({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  padding: '0.5rem',
+  width: '1.5rem',
+  height: '1.5rem',
+  backgroundColor: 'black',
+  border: 'solid 1px {colors.grey}',
+  '&:focus-visible': {
+    boxShadow: '0 0 0 0.0125rem {colors.yellow}',
+  },
+  '&:checked, &[data-state="checked"]': {
+    '& > svg': {
+      fill: 'yellow',
+    },
+  },
+}))
 
-  background-color: ${({ theme }) => theme.color.black};
-  border: solid 1px ${({ theme }) => theme.color.grey};
-
-  &:focus-visible {
-    box-shadow: 0 0 0 0.0125rem ${({ theme }) => theme.color.yellow};
-  }
-
-  &:checked,
-  &[data-state='checked'] {
-    svg {
-      fill: ${({ theme }) => theme.color.yellow};
-    }
-  }
-`
-
-const Label = styled.label`
-  cursor: pointer;
-
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-  justify-content: center;
-
-  line-height: 1;
-`
+const labelStyles = css({
+  cursor: 'pointer',
+  display: 'flex',
+  gap: '0.5rem',
+  alignItems: 'center',
+  justifyContent: 'center',
+  lineHeight: 'title',
+})
 
 interface CheckboxProps extends CheckboxPrimitiveProps {
   asChild?: boolean
@@ -57,6 +50,7 @@ interface CheckboxProps extends CheckboxPrimitiveProps {
 export const Checkbox: FC<CheckboxProps> = ({
   checked = false,
   children,
+  className,
   defaultChecked = false,
   disabled = false,
   name,
@@ -64,8 +58,9 @@ export const Checkbox: FC<CheckboxProps> = ({
   required = false,
   ...props
 }) => (
-  <Label>
-    <CheckboxRoot
+  <label className={cx(labelStyles, className)}>
+    <CheckboxPrimitive.Root
+      className={checkboxRootStyles}
       defaultChecked={defaultChecked}
       disabled={disabled}
       onCheckedChange={onCheckedChange}
@@ -77,7 +72,7 @@ export const Checkbox: FC<CheckboxProps> = ({
       <CheckboxPrimitive.Indicator>
         <Icon name='check' />
       </CheckboxPrimitive.Indicator>
-    </CheckboxRoot>
-    {children}
-  </Label>
+      {children}
+    </CheckboxPrimitive.Root>
+  </label>
 )

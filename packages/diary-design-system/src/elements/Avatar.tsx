@@ -1,61 +1,57 @@
 import * as AvatarPrimitive from '@radix-ui/react-avatar'
 import type { FC } from 'react'
-import styled from 'styled-components'
 
-const AvatarRoot = styled(AvatarPrimitive.Root)`
-  user-select: none;
+import { css, cx } from '~/style-engine/css'
 
-  overflow: hidden;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+const avatarRootStyles = css({
+  userSelect: 'none',
+  overflow: 'hidden',
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  aspectRatio: '1',
+  width: '1em',
+  height: '1em',
+  fontSize: 'xl',
+  verticalAlign: 'middle',
+  backgroundColor: 'black',
+  borderRadius: 'full',
+})
 
-  aspect-ratio: 1;
-  width: 1em;
-  height: 1em;
+const avatarImageStyles = css({
+  width: '100%',
+  height: '100%',
+  objectFit: 'cover',
+  borderRadius: 'inherit',
+})
 
-  font-size: ${({ theme }) => theme.fontSize.xl};
-  vertical-align: middle;
-
-  background-color: ${({ theme }) => theme.color.black};
-  border-radius: 100%;
-`
-
-const AvatarImage = styled(AvatarPrimitive.Image)`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: inherit;
-`
-
-const AvatarFallback = styled(AvatarPrimitive.Fallback)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 100%;
-  height: 100%;
-
-  font-size: ${({ theme }) => theme.fontSize.md};
-  font-weight: 500;
-  line-height: 1;
-  color: ${({ theme }) => theme.color.purple};
-
-  background-color: ${({ theme }) => theme.color.charcoal};
-`
+const avatarFallbackStyles = css({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: '100%',
+  height: '100%',
+  fontSize: 'md',
+  fontWeight: '400',
+  lineHeight: '1',
+  color: 'yellow',
+  backgroundColor: 'charcoal',
+})
 
 interface AvatarProps {
+  className?: string
   url?: string
   name?: string
   initials?: string
 }
 
-export const Avatar: FC<AvatarProps> = ({ url, name, initials, ...props }) => (
-  <AvatarRoot {...props}>
-    <AvatarImage
+export const Avatar: FC<AvatarProps> = ({ className, url, name, initials, ...props }) => (
+  <AvatarPrimitive.Root className={cx(avatarRootStyles, className)} {...props}>
+    <AvatarPrimitive.Image
+      className={avatarImageStyles}
       src={url}
       alt={name}
     />
-    <AvatarFallback delayMs={600}>{initials}</AvatarFallback>
-  </AvatarRoot>
+    <AvatarPrimitive.Fallback className={avatarFallbackStyles} delayMs={600}>{initials}</AvatarPrimitive.Fallback>
+  </AvatarPrimitive.Root>
 )

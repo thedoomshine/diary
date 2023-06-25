@@ -19,7 +19,7 @@ export default defineConfig((options) => ({
   ],
   format: 'module',
   outDir: 'dist',
-  declarationDir: './dist',
+  declarationDir: './dist/@types',
   sourcemap: true,
   splitting: true,
   treeshake: true,

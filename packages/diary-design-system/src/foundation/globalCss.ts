@@ -7,7 +7,7 @@ export const globalCss = defineGlobalStyles({
   html: {
     display: 'flex',
     width: '100%',
-    minHeight: ['100vh', '-webkit-fill-available', '100dvh'],
+    minHeight: '100dvh',
     fontSize: 'clamp(1rem, 0.52vw + 0.83rem, 1.25rem)',
     color: 'white',
     textSizeAdjust: '100%',
@@ -39,7 +39,7 @@ export const globalCss = defineGlobalStyles({
 
   ['h1, h2, h3, h4, h5, h6']: {
     fontWeight: '700',
-    lineHeight: 'heading',
+    lineHeight: 'title',
   },
 
   h1: {
@@ -62,7 +62,7 @@ export const globalCss = defineGlobalStyles({
   },
 
   a: {
-    color: 'colors.yellow',
+    color: 'yellow',
     textDecoration: 'underline',
     textDecorationSkipInk: 'all',
   },

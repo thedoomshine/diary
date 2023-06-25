@@ -9,6 +9,6 @@ const radiiTokens = {
   [ScalePrefix.LG]: `02rem`,
   half: '50%',
   full: '100%',
-}
+} as const
 
 export const radii = defineTokens.radii(generateTokens(radiiTokens))

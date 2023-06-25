@@ -8,19 +8,19 @@ import { keyframes } from './src/foundation/animations'
 export default defineConfig({
   clean: true,
   cwd: './src',
-  emitPackage: true,
+  emitPackage: false,
   exclude: [],
-  include: ['./src/**/*.{js,jsx,ts,tsx,css}', './src/panda.theme.ts'],
-  outdir: 'style-engine',
-  preflight: true,
-  presets: [preset],
   globalCss,
+  include: ['./src/**/*.{js,jsx,ts,tsx,css}'],
+  jsxFramework: 'react',
+  outdir: './src/style-engine',
+  preflight: false,
+  presets: [preset],
   theme: {
     extend: {
       breakpoints,
-      keyframes,
-    },
+      keyframes
+    }
   },
-  jsxFramework: 'react',
-  watch: true,
+  watch: true
 })

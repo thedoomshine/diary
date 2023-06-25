@@ -7,7 +7,9 @@ import type {
   ReactNode,
 } from 'react'
 import type { FC } from 'react'
-import styled, { css } from 'styled-components'
+
+import { cx, cva } from '~/style-engine/css'
+import { token } from '~/style-engine/tokens'
 
 import { Icon } from './Icon/Icon'
 
@@ -29,48 +31,72 @@ export type ButtonBaseElementProps = HTMLProps<
   onClick?: MouseEventHandler<HTMLButtonElement>
   role?: React.AriaRole
   type?: 'button' | 'submit' | 'reset'
+  variant?: 'icon' | 'outline' | 'fill' | 'cta'
 }
 
-export const ButtonStyles = css`
-  position: relative;
-
-  cursor: pointer;
-
-  display: flex;
-  flex: 0 0 auto;
-  align-items: center;
-  justify-content: center;
-
-  padding: 0.5rem 1rem;
-
-  color: inherit;
-  text-align: center;
-  text-decoration: none;
-
-  border-radius: 0.5rem;
-
-  &:hover {
-    background-color: ${({ theme }) => rgba(theme.color.white, 0.05)};
-    svg {
-      fill: ${({ theme }) => theme.color.yellow};
+export const button = cva({
+  base: {
+    position: 'relative',
+    cursor: 'pointer',
+    display: 'flex',
+    flex: '0 0 auto',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '0.5rem 1rem',
+    color: 'inherit',
+    textAlign: 'center',
+    textDecoration: 'none',
+    borderRadius: 'md',
+    '&:hover': {
+      '& > svg': {
+        fill: token('colors.yellow'),
+      },
+      backgroundColor: rgba(token('colors.white'), 0.05),
+    },
+    '&:focus-visible': {
+      outline: `solid 0.0125rem ${token('colors.yellow')}`,
+    },
+    '&:disabled': {
+      pointerEvents: 'none',
+      opacity: 0.5,
+      '&:hover': {
+        backgroundColor: 'unset',
+      },
+    },
+  },
+  variants: {
+    type: {
+      icon: {
+        padding: '0.5rem',
+        gap: '0.25rem',
+      },
+      outline: {
+        border: 'solid 0.125rem currentColor',
+      },
+      fill: {
+        color: 'white',
+        backgroundColor: 'black',
+        '&:hover': {
+          backgroundColor: lighten(0.025, token('colors.black')),
+        },
+      },
+      cta: {
+        color: 'white',
+        backgroundColor: 'black',
+        perspective: '64rem',
+        fontWeight: '700',
+        transitionDuration: '0.25s',
+        transitionProperty: 'box-shadow, transform',
+        '&:hover': {
+          willChange: 'box-shadow, transform',
+          transform: 'translate(8px, -8px)',
+          boxShadow: 'isometric',
+          backgroundColor: lighten(0.025, token('colors.black')),
+        },
+      }
     }
   }
-
-  &:focus-visible {
-    outline: solid 0.0125rem ${({ theme }) => theme.color.yellow};
-  }
-
-  &:disabled {
-    pointer-events: none;
-    opacity: 0.5;
-    &:hover {
-      background-color: unset;
-    }
-  }
-`
-export const StyledButton = styled.button`
-  ${ButtonStyles};
-`
+})
 
 export const Button = forwardRef<ButtonBaseElements, any>(
   (
@@ -81,36 +107,27 @@ export const Button = forwardRef<ButtonBaseElements, any>(
       onClick,
       role,
       type = 'button',
+      variant,
       classNames,
       ...props
     },
     ref
   ) => (
-    <StyledButton
+    <button
       ref={ref as MutableRefObject<ButtonBaseElements>}
       as={href ? 'a' : 'button'}
       href={href}
       role={role ?? href ? 'link' : 'button'}
       type={type}
       disabled={disabled}
-      classNames={classNames}
+      classNames={cx(button({ type: variant }), classNames)}
       onClick={onClick}
       {...props}
     >
       {children}
-    </StyledButton>
+    </button>
   )
 )
-
-export const IconButtonStyles = css`
-  ${ButtonStyles};
-  padding: 0.5rem;
-  gap: 0.25rem;
-`
-
-const StyledIconButton = styled(Button)`
-  ${IconButtonStyles}
-`
 
 export type IconButtonProps = ButtonBaseElementProps & {
   icon: string
@@ -121,66 +138,24 @@ export const IconButton: FC<IconButtonProps> = ({
   icon,
   iconPosition = 'start',
   children,
+  className,
   ...props
 }) => (
-  <StyledIconButton {...props}>
+  <Button variant='icon' className={className} {...props}>
     {iconPosition === 'start' && <Icon name={icon} />}
     {children}
     {iconPosition === 'end' && <Icon name={icon} />}
-  </StyledIconButton>
+  </Button>
 )
 
-export const OutlineButtonStyles = css`
-  ${ButtonStyles};
-  border: solid 0.125rem currentColor;
-`
+export const OutlineButton: FC<ButtonBaseElementProps> = ({ className, ...props }) => (
+  <Button variant='outline' className={className} {...props} />
+)
 
-export const OutlineButton = styled(Button)`
-  ${OutlineButtonStyles};
-`
+export const FillButton: FC<ButtonBaseElementProps> = ({ className, ...props }) => (
+  <Button variant='fill' classNames={className} {...props} />
+)
 
-export const FillButtonStyles = css`
-  ${ButtonStyles};
-
-  display: flex;
-
-  color: ${({ theme }) => theme.color.white};
-  background-color: ${({ theme }) => theme.color.black};
-
-  &:hover {
-    background-color: ${({ theme }) => lighten(0.025, theme.color.black)};
-  }
-`
-
-export const FillButton = styled(Button)`
-  ${FillButtonStyles};
-`
-
-export const CTAButtonStyles = css`
-  --button-shadow-color: ${({ theme }) => theme.color.black};
-  ${FillButtonStyles};
-  perspective: 64rem;
-  font-weight: ${({ theme }) => theme.fontWeight['800']};
-
-  transition-duration: 0.25s;
-  transition-property: box-shadow, transform;
-
-  &:hover {
-    will-change: box-shadow, transform;
-    transform: translate(8px, -8px);
-    background-color: var(--button-background-color);
-    box-shadow: 0 0 0 var(--button-shadow-color),
-      -1px 1px 0 var(--button-shadow-color),
-      -2px 2px 0 var(--button-shadow-color),
-      -3px 3px 0 var(--button-shadow-color),
-      -4px 4px 0 var(--button-shadow-color),
-      -5px 5px 0 var(--button-shadow-color),
-      -6px 6px 0 var(--button-shadow-color),
-      -7px 7px 0 var(--button-shadow-color),
-      -8px 8px 0 var(--button-shadow-color);
-  }
-`
-
-export const CTAButton = styled(FillButton)`
-  ${CTAButtonStyles}
-`
+export const CTAButton: FC<ButtonBaseElementProps> = ({ className, ...props }) => (
+  <Button variant='cta' className={className} {...props} />
+)

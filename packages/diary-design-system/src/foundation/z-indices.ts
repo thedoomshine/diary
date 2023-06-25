@@ -13,6 +13,6 @@ const zIndexTokens = {
   popover: 60,
   toast: 70,
   modal: 80,
-}
+} as const
 
 export const zIndex = defineTokens.zIndex(generateTokens(zIndexTokens))
