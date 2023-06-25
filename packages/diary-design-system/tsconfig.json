@@ -1,9 +1,16 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Design System",
-  "extends": "tsconfig/react-library.json",
-  "include": ["src/**/*.ts", "src/**/*.tx", "node_modules/@types/**/*.d.ts"],
-  "exclude": ["dist", "node_modules", "!node_modules/@types/**/*.d.ts"],
+  "extends": "tsconfig-diary/react-library.json",
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tx",
+    "src/**/*.d.ts",
+    "src/*.d.ts",
+    "node_modules/**/*.d.ts",
+    "panda.config.ts"
+  ],
+  "exclude": ["dist", "node_modules", "!node_modules/**/*.d.ts"],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {

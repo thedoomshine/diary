@@ -2,8 +2,8 @@ import { useEffect, useRef } from 'react'
 import type { MouseEvent } from 'react'
 import styled, { keyframes } from 'styled-components'
 
-import { IconButton } from '~/elements'
-import { grainyGradientBackground } from '~/utils/grainy-gradient'
+import { IconButton } from './Button'
+// import { grainyGradientBackground } from '~/utils/grainy-gradient'
 
 const overlayShow = keyframes({
   '0%': { opacity: 0 },
@@ -16,11 +16,11 @@ const contentShow = keyframes({
 })
 
 const StyledDialogContent = styled.div`
-  ${({ theme }) =>
+  /* ${({ theme }) =>
     grainyGradientBackground({
       background: theme.color.charcoal,
       color1: theme.color.charcoal,
-    })}
+    })} */
 
   overflow: visible;
   display: grid;

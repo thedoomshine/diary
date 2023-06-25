@@ -3,7 +3,8 @@ import type { CheckboxProps as CheckboxPrimitiveProps } from '@radix-ui/react-ch
 import type { FC, ReactNode } from 'react'
 import styled from 'styled-components'
 
-import { ButtonStyles, Icon } from '~/elements'
+import { Icon } from './Icon/Icon'
+import { ButtonStyles } from './Button'
 
 const CheckboxRoot = styled(CheckboxPrimitive.Root)`
   ${ButtonStyles}

@@ -55,7 +55,7 @@
     "css-has-pseudo": "^5.0.2",
     "prettier-config-diary": "workspace:*",
     "stylelint-config-diary": "workspace:*",
-    "tsconfig": "workspace:*",
+    "tsconfig-diary": "workspace:*",
     "typescript": "^5.1.3"
   }
 }

@@ -1,7 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Remix App",
-  "extends": "tsconfig/remix.json",
   "include": [
     "remix.env.d.ts",
     "app/**/*.ts",

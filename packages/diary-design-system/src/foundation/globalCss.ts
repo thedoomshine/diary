@@ -1,18 +1,15 @@
 import { defineGlobalStyles } from '@pandacss/dev'
 import { rgba } from 'polished'
 
+import { colorTokens } from './colors'
+
 export const globalCss = defineGlobalStyles({
   html: {
     display: 'flex',
     width: '100%',
     minHeight: ['100vh', '-webkit-fill-available', '100dvh'],
-    fontSize: `clamp(
-      token(fontSizes._min)px,
-      calc(
-        (token(fontSizes._min)px + (token(fontSizes._max) - token(fontSizes._min))) * ((100vw - token(breakpoints.xs)) / (token(breakpoints.xl) - token(breakpoints.xs)))
-      ),
-      {fontSizes._max}px)`,
-    color: 'color.white',
+    fontSize: 'clamp(1rem, 0.52vw + 0.83rem, 1.25rem)',
+    color: 'white',
     textSizeAdjust: '100%',
     colorScheme: 'dark',
     '-webkit-font-smoothing': 'subpixel-antialiased',
@@ -26,11 +23,11 @@ export const globalCss = defineGlobalStyles({
     width: '100%',
     margin: '0',
 
-    fontFamily: 'fonts.sans',
-    fontSize: 'fontSizes.md',
-    fontWeight: 'fontWeights["400"]',
+    fontFamily: 'sans',
+    fontSize: 'md',
+    fontWeight: '400',
     fontStyle: 'normal',
-    lineHeight: 'lineHeights.body',
+    lineHeight: 'body',
   },
 
   '#root': {
@@ -41,27 +38,27 @@ export const globalCss = defineGlobalStyles({
   },
 
   ['h1, h2, h3, h4, h5, h6']: {
-    fontWeight: 'fontWeights["700"]',
-    lineHeight: 'lineHeights.heading',
+    fontWeight: '700',
+    lineHeight: 'heading',
   },
 
   h1: {
-    fontSize: 'fontSizes.h1',
+    fontSize: 'h1',
   },
   h2: {
-    fontSize: 'fontSizes.h2',
+    fontSize: 'h2',
   },
   h3: {
-    fontSize: 'fontSizes.h3',
+    fontSize: 'h3',
   },
   h4: {
-    fontSize: 'fontSizes.h4',
+    fontSize: 'h4',
   },
   h5: {
-    fontSize: 'fontSizes.h5',
+    fontSize: 'h5',
   },
   h6: {
-    fontSize: 'fontSizes.h6',
+    fontSize: 'h6',
   },
 
   a: {
@@ -80,7 +77,7 @@ export const globalCss = defineGlobalStyles({
   'dialog::backdrop': {
     position: 'fixed',
     inset: 0,
-    backgroundColor: rgba('colors.black', 0.75),
+    backgroundColor: rgba(colorTokens.black, 0.75),
     animation: 'none',
   },
 

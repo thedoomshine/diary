@@ -31,6 +31,7 @@
     "dotenv-cli": "latest",
     "eslint-config-diary": "workspace:*",
     "prettier-config-diary": "workspace:*",
+    "tsconfig-diary": "workspace:*",
     "turbo": "^1.10.6",
     "typescript": "^5.1.3"
   },

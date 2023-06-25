@@ -2,7 +2,7 @@ import { defineTokens } from '@pandacss/dev'
 
 import { generateTokens } from '../utils'
 
-const colorTokens = {
+export const colorTokens = {
   black: `#0d0d0d`,
   blue: `#00a3d1`,
   charcoal: `#1f1f1f`,

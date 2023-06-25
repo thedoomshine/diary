@@ -4,6 +4,7 @@
   "private": true,
   "license": "MIT",
   "sideEffects": false,
+  "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -24,7 +25,7 @@
   "devDependencies": {
     "eslint-config-diary": "workspace:*",
     "prettier-config-diary": "workspace:*",
-    "tsconfig": "workspace:*",
+    "tsconfig-diary": "workspace:*",
     "typescript": "^5.1.3"
   }
 }

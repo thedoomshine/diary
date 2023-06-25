@@ -1,8 +1,24 @@
 import { defineTokens } from '@pandacss/dev'
 
-import { BodyPrefix, HeadingPrefix } from '~/@types/foundation'
-
 import { generateTokens } from '../utils'
+import { ScalePrefix } from '../@types/foundation'
+
+export enum HeadingPrefix {
+  H6 = 'h6',
+  H5 = 'h5',
+  H4 = 'h4',
+  H3 = 'h3',
+  H2 = 'h2',
+  H1 = 'h1',
+}
+
+export enum BodyPrefix {
+  XS = ScalePrefix.XS,
+  SM = ScalePrefix.SM,
+  MD = ScalePrefix.MD,
+  LG = ScalePrefix.LG,
+  XL = ScalePrefix.XL,
+}
 
 // typographic scale formula
 // fᵢ = f₀rᶦ

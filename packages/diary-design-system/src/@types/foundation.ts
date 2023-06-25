@@ -1,5 +1,3 @@
-import { Selectors } from '../utils/selectors'
-
 export const enum ScalePrefix {
   XXS = 'xxs',
   XS = 'xs',

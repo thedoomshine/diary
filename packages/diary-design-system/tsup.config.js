@@ -1,5 +1,4 @@
-import { defineConfig } from 'tsup';
-
+import { defineConfig } from 'tsup'
 
 export default defineConfig((options) => ({
   clean: false,
@@ -18,7 +17,7 @@ export default defineConfig((options) => ({
     'style-engine',
     'unified',
   ],
-  format: 'cjs',
+  format: 'module',
   outDir: 'dist',
   declarationDir: './dist',
   sourcemap: true,
