@@ -4,9 +4,10 @@
   "globalEnv": ["NODE_ENV"],
   "pipeline": {
     "build": {
-      "cache": true,
+      "cache": false,
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", "umd/**", "build/**", "api/**", "public/build/**", "storybook-static/**"]
+      "outputs": ["dist/**", "umd/**", "build/**", "api/**", "public/build/**", "storybook-static/**"],
+      "inputs": ["!_web"]
     },
     "clean": {
       "cache": false,
@@ -19,6 +20,7 @@
     "dev": {
       "cache": false,
       "dependsOn": ["^build"],
+      "inputs": ["!_web"],
       "persistent": true
     },
     "prettier": {
@@ -28,12 +30,12 @@
     "eslint": {
       "cache": false,
       "dependsOn": [],
-      "inputs": ["!supabase"],
+      "inputs": ["!supabase",  "!_web"],
       "outputs": []
     },
     "stylelint": {
       "cache": false,
-      "inputs": ["!supabase"],
+      "inputs": ["!supabase",  "!_web"],
       "outputs": []
     },
     "test": {
@@ -46,7 +48,11 @@
     },
     "prepare": {
       "cache": false,
-      "outputs": ["style-engine/**"]
+      "outputs": ["style-engine/**"],
+      "dependsOn": ["topo"]
+    },
+    "topo": {
+      "dependsOn": ["^build"]
     }
   }
 }

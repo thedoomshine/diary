@@ -1,80 +1,61 @@
-import * as SelectPrimitive from '@radix-ui/react-select';
-import type { SelectItemProps as SelectItemPrimitiveProps, SelectProps as SelectPrimitiveProps } from '@radix-ui/react-select';
-import { lighten, rgba } from 'polished';
-import { forwardRef } from 'react';
-import type { ReactNode } from 'react';
-import styled from 'styled-components';
+import type { SelectItemProps as SelectItemPrimitiveProps, SelectProps as SelectPrimitiveProps } from '@radix-ui/react-select'
+import * as SelectPrimitive from '@radix-ui/react-select'
+import { lighten, rgba } from 'polished'
+import type { ReactNode } from 'react'
+import { forwardRef } from 'react'
 
+import { css, cx } from 'style-engine/css'
+import { token } from 'style-engine/tokens'
 
+import { buttonStyles } from './Button'
+import { Icon } from './Icon/Icon'
 
-import { ButtonStyles, FillButtonStyles, Icon } from '~/elements';
+const selectTriggerStyles = cx(buttonStyles({ type: 'fill' }), css({
+  border: 'solid 1px $grey',
+  gap: '0.5rem',
+  padding: '0.5rem',
+  '&[data-disabled]': {
+    pointerEvents: 'none',
+  },
+}))
 
+const selectButtonStyles = buttonStyles()
 
-const SelectTrigger = styled(SelectPrimitive.Trigger)`
-  ${FillButtonStyles};
-  border: solid 1px ${({ theme }) => theme.color.grey};
-  gap: 0.5rem;
-  padding: 0.5rem;
+const selectContentStyles = css({
+  zIndex: 'dropdown',
+  overflow: 'hidden',
+  backgroundColor: 'black',
+  borderRadius: 'md',
+  boxShadow: 'normal',
+  maxHeight: '16rem',
+  '--radix-select-content-available-height': '16rem',
+})
 
-  &[data-disabled] {
-    pointer-events: none;
-  }
-`
+const selectItemStyles = css({
+  cursor: 'pointer',
+  userSelect: 'none',
+  position: 'relative',
+  display: 'flex',
+  alignItems: 'center',
+  padding: '1rem 2rem 1rem 0.5rem',
+  borderRadius: 'sm',
+  '&[data-disabled]': {
+    pointerEvents: 'none',
+    color: rgba(token('colors.silver'), 0.05),
+  },
+  '&[data-highlighted], &:hover': {
+    backgroundColor: lighten(0.025, token('colors.black')),
+    outline: 'none',
+  },
+})
 
-const SelectScrollUp = styled(SelectPrimitive.ScrollUpButton)`
-  ${ButtonStyles};
-`
-
-const SelectScrollDown = styled(SelectPrimitive.ScrollDownButton)`
-  ${ButtonStyles};
-`
-
-const SelectContent = styled(SelectPrimitive.Content)`
-  z-index: 3;
-
-  overflow: hidden;
-
-  background-color: ${({ theme }) => theme.color.black};
-  border-radius: 0.5rem;
-  box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 50%);
-  --radix-select-content-available-height: 16rem;
-  max-height: 16rem;
-`
-
-const StyledSelectItem = styled(SelectPrimitive.Item)`
-  cursor: pointer;
-  user-select: none;
-
-  position: relative;
-
-  display: flex;
-  align-items: center;
-
-  padding: 1rem 2rem 1rem 0.5rem;
-
-  border-radius: 0.25rem;
-
-  &[data-disabled] {
-    pointer-events: none;
-    color: ${({ theme }) => rgba(theme.color.silver, 0.05)};
-  }
-
-  &[data-highlighted],
-  &:hover {
-    background-color: ${({ theme }) => lighten(0.025, theme.color.black)};
-    outline: none;
-  }
-`
-
-const SelectItemIndicator = styled(SelectPrimitive.ItemIndicator)`
-  position: absolute;
-  right: 0.5rem;
-
-  display: inline-flex;
-  align-items: center;
-
-  color: ${({ theme }) => theme.color.yellow};
-`
+const selectItemIndicatorStyles = css({
+  position: 'absolute',
+  right: '0.5rem',
+  display: 'inline-flex',
+  alignItems: 'center',
+  color: 'yellow',
+})
 
 interface SelectProps extends SelectPrimitiveProps {
   children: ReactNode | ReactNode[]
@@ -110,9 +91,9 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
         disabled={disabled}
         {...props}
       >
-        <SelectTrigger
+        <SelectPrimitive.Trigger
           ref={forwardedRef}
-          className={className}
+          className={cx(selectTriggerStyles, className)}
         >
           <SelectPrimitive.Value />
           {!hideIcon && (
@@ -120,23 +101,24 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
               <Icon name='chevron-down' />
             </SelectPrimitive.Icon>
           )}
-        </SelectTrigger>
-        <SelectContent
+        </SelectPrimitive.Trigger>
+        <SelectPrimitive.Content
+          className={selectContentStyles}
           sticky='always'
           position='popper'
         >
           {showScrollButtons && (
-            <SelectScrollUp>
+            <SelectPrimitive.ScrollUpButton className={selectButtonStyles}>
               <Icon name='chevron-up' />
-            </SelectScrollUp>
+            </SelectPrimitive.ScrollUpButton>
           )}
           <SelectPrimitive.Viewport>{children}</SelectPrimitive.Viewport>
           {showScrollButtons && (
-            <SelectScrollDown>
+            <SelectPrimitive.ScrollDownButton className={selectButtonStyles}>
               <Icon name='chevron-down' />
-            </SelectScrollDown>
+            </SelectPrimitive.ScrollDownButton>
           )}
-        </SelectContent>
+        </SelectPrimitive.Content>
       </SelectPrimitive.Root>
     )
   }
@@ -150,17 +132,18 @@ interface SelectItemProps extends SelectItemPrimitiveProps {
 export const SelectItem = forwardRef<HTMLDivElement, SelectItemProps>(
   ({ children, hideIndicator = false, ...props }, forwardedRef) => {
     return (
-      <StyledSelectItem
+      <SelectPrimitive.Item
+        className={selectItemStyles}
         ref={forwardedRef}
         {...props}
       >
         <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
         {!hideIndicator && (
-          <SelectItemIndicator>
+          <SelectPrimitive.ItemIndicator className={selectItemIndicatorStyles}>
             <Icon name='check' />
-          </SelectItemIndicator>
+          </SelectPrimitive.ItemIndicator>
         )}
-      </StyledSelectItem>
+      </SelectPrimitive.Item>
     )
   }
 )

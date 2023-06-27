@@ -1,6 +1,6 @@
-import React from 'react'
 import clsx from 'clsx'
-import { css } from '~/style-engine/css'
+import React from 'react'
+import { css } from 'style-engine/css'
 
 import { IconNames, Icons } from './Library'
 

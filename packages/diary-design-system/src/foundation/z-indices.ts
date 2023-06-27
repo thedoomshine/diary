@@ -2,7 +2,7 @@ import { defineTokens } from '@pandacss/dev'
 
 import { generateTokens } from '../utils'
 
-const zIndexTokens = {
+export const zIndexTokens = {
   behind: -1,
   base: 0,
   dropdown: 10,

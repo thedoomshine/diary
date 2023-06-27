@@ -1,6 +1,6 @@
 import { rgba } from 'polished'
 
-import { token } from '~/style-engine/tokens'
+import { token } from 'style-engine/tokens'
 
 type GrainyGradientProps = {
   angle?: number

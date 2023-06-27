@@ -1,10 +1,10 @@
-import { useEffect, useRef } from 'react'
 import type { MouseEvent } from 'react'
+import { useEffect, useRef } from 'react'
 
 import { IconButton } from './Button'
 // import { grainyGradientBackground } from '~/utils/grainy-gradient'
 
-import { css, cx } from '~/style-engine/css'
+import { css } from 'style-engine/css'
 
 const dialogContentStyles = css({
   display: 'grid',

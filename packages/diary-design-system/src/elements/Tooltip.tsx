@@ -1,51 +1,36 @@
-import * as TooltipPrimitive from '@radix-ui/react-tooltip';
 import type { TooltipProps as TooltipPrimitiveProps } from '@radix-ui/react-tooltip'
+import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 import { FC, ReactNode } from 'react'
-import styled from 'styled-components'
 
-import {
-  slideDownAndFade,
-  slideLeftAndFade,
-  slideRightAndFade,
-  slideUpAndFade,
-} from '~/utils'
+import { css } from 'style-engine/css'
 
-const TooltipContent = styled(TooltipPrimitive.Content)`
-  will-change: transform, opacity;
+const tooltipContentStyles = css({
+  willChange: 'transform, opacity',
+  zIndex: 'tooltip',
+  padding: '0.5em 1em',
+  fontSize: 'sm',
+  backgroundColor: 'black',
+  borderRadius: 'md',
+  boxShadow: 'normal',
+  animationDuration: '500',
+  animationTimingFunction: 'easeOutQuart',
+  '&[data-side="top"]': {
+    animationName: 'slideDownAndFade',
+  },
+  '&[data-side="right"]': {
+    animationName: 'slideLeftAndFade',
+  },
+  '&[data-side="bottom"]': {
+    animationName: 'slideUpAndFade',
+  },
+  '&[data-side="left"]': {
+    animationName: 'slideRightAndFade',
+  },
+})
 
-  z-index: 3;
-
-  padding: 0.5em 1em;
-
-  font-size: ${({ theme }) => theme.fontSize.sm};
-
-  background-color: ${({ theme }) => theme.color.black};
-  border-radius: 0.5rem;
-  box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 50%);
-
-  animation-duration: 0.6s;
-  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
-
-  &[data-side='top'] {
-    animation-name: ${slideDownAndFade};
-  }
-
-  &[data-side='right'] {
-    animation-name: ${slideLeftAndFade};
-  }
-
-  &[data-side='bottom'] {
-    animation-name: ${slideUpAndFade};
-  }
-
-  &[data-side='left'] {
-    animation-name: ${slideRightAndFade};
-  }
-`
-
-const TooltipArrow = styled(TooltipPrimitive.Arrow)`
-  fill: ${({ theme }) => theme.color.black};
-`
+const toolTipArrowStyles = css({
+  fill: 'black',
+})
 
 interface TooltipProps extends TooltipPrimitiveProps {
   align?: 'start' | 'center' | 'end'
@@ -81,7 +66,8 @@ export const Tooltip: FC<TooltipProps> = ({
       delayDuration={delayDuration}
     >
       <TooltipPrimitive.Trigger asChild>{children}</TooltipPrimitive.Trigger>
-      <TooltipContent
+      <TooltipPrimitive.Content
+        className={tooltipContentStyles}
         align={align}
         alignOffset={alignOffset}
         side={side}
@@ -89,11 +75,12 @@ export const Tooltip: FC<TooltipProps> = ({
         {...props}
       >
         {content}
-        <TooltipArrow
+        <TooltipPrimitive.Arrow
+          className={toolTipArrowStyles}
           height={8}
           width={16}
         />
-      </TooltipContent>
+      </TooltipPrimitive.Content>
     </TooltipPrimitive.Root>
   )
 }

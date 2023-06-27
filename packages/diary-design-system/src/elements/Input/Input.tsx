@@ -1,16 +1,16 @@
 import clsx from 'clsx'
 import { lighten } from 'polished'
-import {
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from 'react'
 import type { ChangeEvent, FC } from 'react'
+import {
+    forwardRef,
+    useEffect,
+    useImperativeHandle,
+    useRef,
+    useState,
+} from 'react'
 
-import { css } from '~/style-engine/css'
-import { token } from '~/style-engine/tokens'
+import { css } from 'style-engine/css'
+import { token } from 'style-engine/tokens'
 
 import { Button } from '../Button'
 import { Icon } from '../Icon/Icon'
@@ -42,7 +42,7 @@ const wrapperStyles = css({
   backgroundColor: 'black',
   border: 'solid 1px grey',
   borderRadius: 'md',
-  '&:hover': {
+  _hover: {
     backgroundColor: lighten(0.025, token('colors.black')),
   },
   '&:has(~ * > [data-input-error-message]:not(:placeholder-shown))': {

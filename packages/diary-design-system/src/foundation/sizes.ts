@@ -1,10 +1,10 @@
 import { defineTokens } from '@pandacss/dev'
 import { remToPx } from 'polished'
 
-import { generateTokens } from '../utils'
 import { ScalePrefix } from '../@types/foundation'
+import { generateTokens } from '../utils'
 
-const sizeTokens = {
+export const sizeTokens = {
   [ScalePrefix.XS]: `32rem`,
   [ScalePrefix.SM]: `48rem`,
   [ScalePrefix.MD]: `64rem`,

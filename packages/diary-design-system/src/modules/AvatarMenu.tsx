@@ -1,72 +1,60 @@
 import { FC, ReactNode } from 'react'
-import styled from 'styled-components'
 
-import {
-  Avatar,
-  ButtonStyles,
-  Icon,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '~/elements'
+import { Avatar } from '~/elements/Avatar'
+import { buttonStyles } from '~/elements/Button'
+import { Icon } from '~/elements/Icon/Icon'
+import { Popover, PopoverContent, PopoverTrigger } from '~/elements/Popover'
 
-const StyledPopoverTrigger = styled(PopoverTrigger)`
-  ${ButtonStyles};
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+import { css, cx } from 'style-engine/css'
 
-  width: 100%;
+const popoverTriggerStyles = cx(buttonStyles(), css({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  width: '100%',
+  borderRadius: 'lg',
+}))
 
-  border-radius: 2rem;
-`
+const avatarStyles = css({
+  flex: '0 0 auto',
+  width: '1em',
+  height: '1em',
+  fontSize: 'xl',
+})
 
-const StyledAvatar = styled(Avatar)`
-  flex: 0 0 auto;
-  width: 1em;
-  height: 1em;
-  font-size: ${({ theme }) => theme.fontSize.xl};
-`
-
-const StyledUserNames = styled.div`
-  display: none;
-  flex: 1 1 auto;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-
-  margin-left: 0.5rem;
-
-  line-height: 1;
-
-  @media ${({ theme }) => theme.media.xl} {
-    display: flex;
+const usernameContainerStyles = css({
+  display: 'none',
+  flex: '1 1 auto',
+  flexDirection: 'column',
+  alignItems: 'flex-start',
+  justifyContent: 'flex-start',
+  marginLeft: '0.5rem',
+  lineHeight: 'element',
+  xl: {
+    display: 'flex',
   }
-`
+})
 
-const StyledUserDisplayName = styled.span`
-  font-size: ${({ theme }) => theme.fontSize.md};
-  font-weight: ${({ theme }) => theme.fontWeight[800]};
-`
+const userDisplayNameStyles = css({
+  fontSize: 'md',
+  fontWeight: '700',
+})
 
-const StyledUsername = styled.span`
-  font-size: ${({ theme }) => theme.fontSize.sm};
-  color: ${({ theme }) => theme.color.silver};
-`
+const usernameStyles = css({
+  fontSize: 'sm',
+  color: 'silver',
+})
 
-const StyledIcon = styled(Icon)`
-  display: none;
-  align-self: center;
-  justify-self: flex-end;
-
-  margin-right: 0.25rem;
-
-  font-size: ${({ theme }) => theme.fontSize.sm};
-
-  @media ${({ theme }) => theme.media.xl} {
-    display: block;
-  }
-`
+const iconStyles = css({
+  display: 'none',
+  alignSelf: 'center',
+  justifySelf: 'flex-end',
+  marginRight: '0.25rem',
+  fontSize: 'sm',
+  xl: {
+    display: 'block',
+  },
+})
 
 interface AvatarMenuProps {
   url?: string
@@ -74,6 +62,7 @@ interface AvatarMenuProps {
   displayName?: string
   initials?: string
   children?: ReactNode | ReactNode[]
+  className?: string
 }
 
 export const AvatarMenu: FC<AvatarMenuProps> = ({
@@ -82,22 +71,24 @@ export const AvatarMenu: FC<AvatarMenuProps> = ({
   username,
   initials,
   children,
+  className,
   ...props
 }) => {
   return (
     <Popover>
-      <StyledPopoverTrigger {...props}>
-        <StyledAvatar
+      <PopoverTrigger className={cx(popoverTriggerStyles, className)} {...props}>
+        <Avatar
+          className={avatarStyles}
           url={url}
           name={displayName}
           initials={initials}
         />
-        <StyledUserNames>
-          <StyledUserDisplayName>{displayName}</StyledUserDisplayName>
-          <StyledUsername>@{username}</StyledUsername>
-        </StyledUserNames>
-        <StyledIcon name='ellipses' />
-      </StyledPopoverTrigger>
+        <div className={usernameContainerStyles}>
+          <span className={userDisplayNameStyles}>{displayName}</span>
+          <span className={usernameStyles}>@{username}</span>
+        </div>
+        <Icon className={iconStyles} name='ellipses' />
+      </PopoverTrigger>
       {children}
     </Popover>
   )

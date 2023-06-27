@@ -1,7 +1,7 @@
 import * as AvatarPrimitive from '@radix-ui/react-avatar'
 import type { FC } from 'react'
 
-import { css, cx } from '~/style-engine/css'
+import { css, cx } from 'style-engine/css'
 
 const avatarRootStyles = css({
   userSelect: 'none',
@@ -33,7 +33,7 @@ const avatarFallbackStyles = css({
   height: '100%',
   fontSize: 'md',
   fontWeight: '400',
-  lineHeight: '1',
+  lineHeight: 'element',
   color: 'yellow',
   backgroundColor: 'charcoal',
 })

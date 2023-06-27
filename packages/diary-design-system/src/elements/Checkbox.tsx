@@ -1,13 +1,13 @@
-import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
 import type { CheckboxProps as CheckboxPrimitiveProps } from '@radix-ui/react-checkbox'
+import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
 import type { FC, ReactNode } from 'react'
 
+import { buttonStyles } from './Button'
 import { Icon } from './Icon/Icon'
-import { button } from './Button'
 
-import { css, cx } from '~/style-engine/css'
+import { css, cx } from 'style-engine/css'
 
-const checkboxRootStyles = cx(button(), css({
+const checkboxRootStyles = cx(buttonStyles(), css({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',

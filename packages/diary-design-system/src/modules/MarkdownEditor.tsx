@@ -8,7 +8,7 @@ import emoji from 'remark-emoji'
 // import remarkRehype from 'remark-rehype'
 import styled from 'styled-components'
 
-import { TabContent, TabTrigger, TabsList, TabsRoot } from '~/elements/Tabs'
+import { TabsContent, TabsTrigger, TabsList, TabsRoot } from '~/elements/Tabs'
 
 const StyledTabs = styled(TabsRoot)`
   min-height: 32rem;
@@ -24,7 +24,7 @@ const StyledTabsList = styled(TabsList)`
   z-index: 1;
 `
 
-const StyledTabTrigger = styled(TabTrigger)`
+const StyledTabTrigger = styled(TabsTrigger)`
   display: flex;
   flex-direction: column;
   flex: 0 0 auto;
@@ -52,7 +52,7 @@ const StyledTabTrigger = styled(TabTrigger)`
   }
 `
 
-const StyledTabContent = styled(TabContent)`
+const StyledTabContent = styled(TabsContent)`
   position: relative;
   padding: 0.75rem 0.5rem 0.55rem;
   border: solid 1px ${({ theme }) => theme.color.grey};

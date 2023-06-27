@@ -2,7 +2,7 @@ import { defineTokens } from '@pandacss/dev'
 
 import { generateTokens } from '../utils'
 
-const opacityTokens = {
+export const opacityTokens = {
   0: 0,
   5: 0.05,
   50: 0.5,

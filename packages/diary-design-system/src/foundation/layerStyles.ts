@@ -1,5 +1,5 @@
 import { defineLayerStyles } from '@pandacss/dev'
 
-const layerStyle = {}
+export const layerStyleTokens = {}
 
-export const layerStyles = defineLayerStyles(layerStyle)
+export const layerStyles = defineLayerStyles(layerStyleTokens)

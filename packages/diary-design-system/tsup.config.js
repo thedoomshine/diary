@@ -1,10 +1,12 @@
 import { defineConfig } from 'tsup'
 
+
 export default defineConfig((options) => ({
   clean: false,
   dts: true,
-  entry: ['src/index.tsx'],
+  entry: ['src/index.ts'],
   external: [
+    'style-engine/*',
     'react',
     'react-markdown',
     'rehype-sanitize',
@@ -14,10 +16,9 @@ export default defineConfig((options) => ({
     'remark-gfm',
     'remark-parse',
     'remark-rehype',
-    'style-engine',
     'unified',
   ],
-  format: 'module',
+  format: 'cjs',
   outDir: 'dist',
   declarationDir: './dist/@types',
   sourcemap: true,

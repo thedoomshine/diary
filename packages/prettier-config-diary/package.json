@@ -4,7 +4,6 @@
   "private": true,
   "license": "MIT",
   "main": "prettier.config.js",
-  "type": "module",
   "scripts": {
     "clean": "rm -rf .turbo && rm -rf tsconfig.tsbuildinfo && rm -rf node_modules"
   },

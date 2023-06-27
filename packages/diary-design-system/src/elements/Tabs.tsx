@@ -1,45 +1,62 @@
+import type { TabsContentProps, TabsListProps, TabsProps, TabsTriggerProps } from '@radix-ui/react-tabs'
 import * as TabsPrimitive from '@radix-ui/react-tabs'
-import styled from 'styled-components'
+import { type FC } from 'react'
 
-const TabsRoot = styled(TabsPrimitive.Root)`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  border-radius: 0.5rem;
-`
+import { css, cx } from 'style-engine/css'
 
-const TabsList = styled(TabsPrimitive.List)`
-  flex-shrink: 0;
-  display: flex;
-`
+const tabsRootStyles = css({
+  display: 'flex',
+  flexDirection: 'column',
+  width: '100%',
+  borderRadius: 'md',
+})
 
-const TabTrigger = styled(TabsPrimitive.Trigger)`
-  font-family: inherit;
-  padding: 0.5rem 1rem;
-  flex: 1 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
-  user-select: none;
-  cursor: pointer;
-  position: relative;
-  &:focus-visible {
-    position: relative;
-    outline: solid 0.0125rem ${({ theme }) => theme.color.yellow};
-  }
-  &[data-state='active'] {
-    font-weight: ${({ theme }) => theme.fontWeight[800]};
-  }
-`
+const tabListStyles = css({
+  display: 'flex',
+  flexShrink: 0,
+})
 
-const TabContent = styled(TabsPrimitive.Content)`
-  display: flex;
-  flex: 1 1 auto;
-  background-color: ${({ theme }) => theme.color.charcoal};
-  &[data-state='inactive'] {
-    display: none;
-  }
-`
+const tabTriggerStyles = css({
+  fontFamily: 'inherit',
+  padding: '0.5rem 1rem',
+  flex: '1 0 auto',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  lineHeight: 'element',
+  userSelect: 'none',
+  cursor: 'pointer',
+  position: 'relative',
+  '&:focus-visible': {
+    position: 'relative',
+    outline: 'solid 0.0125rem {colors.yellow}',
+  },
+  '&[data-state="active"]': {
+    fontWeight: '700',
+  },
+})
 
-export { TabsRoot, TabContent, TabTrigger, TabsList }
+const tabContentStyles = css({
+  display: 'flex',
+  flex: '1 1 auto',
+  backgroundColor: 'charcoal',
+  '&[data-state="inactive"]': {
+    display: 'none',
+  },
+})
+
+export const TabsRoot: FC<TabsProps> = ({ className, ...props }) => (
+  <TabsPrimitive.Root className={cx(tabsRootStyles, className)} {...props} />
+)
+
+export const TabsContent: FC<TabsContentProps> = ({ className, ...props }) => (
+  <TabsPrimitive.Content className={cx(tabContentStyles, className)} {...props} />
+)
+
+export const TabsTrigger: FC<TabsTriggerProps> = ({ className, ...props }) => (
+  <TabsPrimitive.Trigger className={cx(tabTriggerStyles, className)} {...props} />
+)
+
+export const TabsList: FC<TabsListProps> = ({ className, ...props }) => (
+  <TabsPrimitive.List className={cx(tabListStyles, className)} {...props} />
+)

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "rm -rf .next && next dev",
     "clean": "rm -rf .turbo && rm -rf tsconfig.tsbuildinfo && rm -rf node_modules",
     "prettier": "prettier \"**/*.{ts,tsx,cjs,js,jsx,json}\" --write",
     "eslint": "next lint --fix",

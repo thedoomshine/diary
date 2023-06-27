@@ -1,9 +1,9 @@
 import { defineTokens } from '@pandacss/dev'
 
-import { generateTokens } from '../utils'
 import { ScalePrefix } from '../@types/foundation'
+import { generateTokens } from '../utils'
 
-const radiiTokens = {
+export const radiiTokens = {
   [ScalePrefix.SM]: `0.25rem`,
   [ScalePrefix.MD]: `0.5rem`,
   [ScalePrefix.LG]: `02rem`,

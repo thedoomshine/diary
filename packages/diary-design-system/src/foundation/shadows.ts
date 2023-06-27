@@ -2,7 +2,7 @@ import { defineTokens } from '@pandacss/dev'
 
 import { generateTokens } from '../utils'
 
-const shadowTokens = {
+export const shadowTokens = {
   normal: '0 0.25rem 0.5rem 0 rgba(0, 0, 0, 0.5)',
   isometric: `0 0 0 {colors.black},
   -1px 1px 0 {colors.black},

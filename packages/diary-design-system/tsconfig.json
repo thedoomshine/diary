@@ -3,9 +3,7 @@
   "display": "Design System",
   "extends": "tsconfig-diary/react-library.json",
   "include": [
-    "src/**/*.ts",
-    "src/**/*.tx",
-    "src/**/*.d.ts",
+    "src/**/*",
     "node_modules/**/*.d.ts",
     "panda.config.ts"
   ],
