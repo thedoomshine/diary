@@ -6,7 +6,6 @@ export default defineConfig((options) => ({
   dts: true,
   entry: ['src/index.ts'],
   external: [
-    'style-engine/*',
     'react',
     'react-markdown',
     'rehype-sanitize',

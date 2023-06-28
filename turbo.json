@@ -1,13 +1,20 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": ["**/.env.*local", ".env", ".env/local"],
+  "globalDependencies": [".env", ".env/local"],
   "globalEnv": ["NODE_ENV"],
   "pipeline": {
     "build": {
       "cache": false,
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", "umd/**", "build/**", "api/**", "public/build/**", "storybook-static/**"],
-      "inputs": ["!_web"]
+      "outputs": [
+        "dist/**",
+        "umd/**",
+        "build/**",
+        "api/**",
+        "public/build/**",
+        "storybook-static/**"
+      ],
+      "inputs": ["!_web", "!workshop"]
     },
     "clean": {
       "cache": false,
@@ -30,12 +37,12 @@
     "eslint": {
       "cache": false,
       "dependsOn": [],
-      "inputs": ["!supabase",  "!_web"],
+      "inputs": ["!supabase", "!_web"],
       "outputs": []
     },
     "stylelint": {
       "cache": false,
-      "inputs": ["!supabase",  "!_web"],
+      "inputs": ["!supabase", "!_web"],
       "outputs": []
     },
     "test": {
@@ -44,15 +51,17 @@
     },
     "typecheck": {
       "cache": false,
-      "outputs": []
+      "outputs": ["topo"]
     },
     "prepare": {
+      "cache": false
+    },
+    "codegen": {
       "cache": false,
-      "outputs": ["style-engine/**"],
-      "dependsOn": ["topo"]
+      "dependsOn": ["^build"]
     },
     "topo": {
-      "dependsOn": ["^build"]
+      "dependsOn": ["^topo"]
     }
   }
 }

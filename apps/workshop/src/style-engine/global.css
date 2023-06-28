@@ -1,0 +1,105 @@
+@layer base {
+  :root {
+    --made-with-panda: '🐼'
+    }
+
+  *, *::before, *::after, ::backdrop {
+    --scroll-snap-strictness: proximity;
+    --border-spacing-x: 0;
+    --border-spacing-y: 0;
+    --translate-x: 0;
+    --translate-y: 0;
+    --rotate: 0;
+    --skew-x: 0;
+    --skew-y: 0;
+    --scale-x: 1;
+    --scale-y: 1
+    }
+
+  html {
+    display: flex;
+    width: 100%;
+    min-height: 100dvh;
+    font-size: clamp(1rem, 0.52vw + 0.83rem, 1.25rem);
+    color: var(--colors-white);
+    text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    color-scheme: dark;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: grayscale
+    }
+
+  body {
+    margin: 0;
+    font-family: var(--fonts-sans);
+    font-size: var(--font-sizes-md);
+    font-weight: var(--font-weights-400);
+    font-style: normal;
+    line-height: var(--line-heights-body)
+    }
+
+  body,#root {
+    display: flex;
+    flex: 1 1 auto;
+    width: 100%
+    }
+
+  #root {
+    flex-direction: column
+    }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: var(--font-weights-700);
+    line-height: var(--line-heights-title)
+    }
+
+  h1 {
+    font-size: var(--font-sizes-h1)
+    }
+
+  h2 {
+    font-size: var(--font-sizes-h2)
+    }
+
+  h3 {
+    font-size: var(--font-sizes-h3)
+    }
+
+  h4 {
+    font-size: var(--font-sizes-h4)
+    }
+
+  h5 {
+    font-size: var(--font-sizes-h5)
+    }
+
+  h6 {
+    font-size: var(--font-sizes-h6)
+    }
+
+  a {
+    color: var(--colors-yellow);
+    text-decoration: underline;
+    text-decoration-skip-ink: all
+    }
+
+  pre {
+    width: 100%;
+    word-break: break-word;
+    tab-size: 4;
+    white-space: pre-wrap
+    }
+
+  dialog::backdrop {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(13,13,13,0.75);
+    animation: none
+    }
+
+  :where(dialog:modal) {
+    width: calc(100% - 1rem);
+    max-width: 40rem;
+    padding: 0.5rem
+    }
+}
