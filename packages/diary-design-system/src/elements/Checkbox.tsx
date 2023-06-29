@@ -5,7 +5,7 @@ import type { FC, ReactNode } from 'react'
 import { buttonStyles } from './Button'
 import { Icon } from './Icon/Icon'
 
-import { css, cx } from 'style-engine/css'
+import { css, cx } from '@diaryco/style-engine/css'
 
 const checkboxRootStyles = cx(buttonStyles(), css({
   display: 'flex',
@@ -15,9 +15,9 @@ const checkboxRootStyles = cx(buttonStyles(), css({
   width: '1.5rem',
   height: '1.5rem',
   backgroundColor: 'black',
-  border: 'solid 1px {colors.grey}',
+  border: 'solid 1px token(colors.grey)',
   '&:focus-visible': {
-    boxShadow: '0 0 0 0.0125rem {colors.yellow}',
+    boxShadow: '0 0 0 0.0125rem token(colors.yellow)',
   },
   '&:checked, &[data-state="checked"]': {
     '& > svg': {

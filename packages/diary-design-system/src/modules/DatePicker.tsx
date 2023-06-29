@@ -5,9 +5,9 @@ import ReactDatePicker, {
   ReactDatePickerCustomHeaderProps,
 } from 'react-datepicker'
 
-import { css, cx } from 'style-engine/css'
-import { token } from 'style-engine/tokens'
-import { SystemStyleObject } from 'style-engine/types'
+import { css, cx } from '@diaryco/style-engine/css'
+import { token } from '@diaryco/style-engine/tokens'
+import { SystemStyleObject } from '@diaryco/style-engine/types'
 import { Button, baseButtonStyles, buttonStyles } from '~/elements'
 
 const triangleArrowPseudoStyles = {
@@ -216,7 +216,7 @@ const DatePickerHeader: FC<ReactDatePickerCustomHeaderProps> = ({
 const datepickerInputWrapperStyles = cx(
   buttonStyles({ type: 'fill' }),
   css({
-    border: 'solid 1px {colors.grey}',
+    border: 'solid 1px token(colors.grey)',
     padding: '0.5rem',
     position: 'relative',
     '& > input': {

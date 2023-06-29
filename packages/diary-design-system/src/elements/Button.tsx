@@ -8,9 +8,9 @@ import type {
 } from 'react'
 import { forwardRef } from 'react'
 
-import { cva, cx } from 'style-engine/css'
-import { token } from 'style-engine/tokens'
-import { SystemStyleObject } from 'style-engine/types'
+import { cva, cx } from '@diaryco/style-engine/css'
+import { token } from '@diaryco/style-engine/tokens'
+import { SystemStyleObject } from '@diaryco/style-engine/types'
 
 import { Icon } from './Icon/Icon'
 

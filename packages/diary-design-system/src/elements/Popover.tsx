@@ -2,7 +2,7 @@ import type { PopoverContentProps as PopoverContentPrimitiveProps } from '@radix
 import * as PopoverPrimitive from '@radix-ui/react-popover';
 import { ReactNode, forwardRef } from 'react';
 
-import { css, cx } from 'style-engine/css';
+import { css, cx } from '@diaryco/style-engine/css';
 import { buttonStyles } from './Button';
 import { Icon } from './Icon/Icon';
 

@@ -6,7 +6,7 @@
     "app/**/*.ts",
     "app/**/*.tsx",
     "server.ts",
-    "node_modules/@types/**/*.d.ts"
+    "node_modules/**/*.d.ts"
   ],
   "exclude": ["build", "node_modules", "!node_modules/@types/**/*.d.ts"],
   "compilerOptions": {

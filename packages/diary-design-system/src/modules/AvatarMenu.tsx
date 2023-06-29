@@ -5,7 +5,7 @@ import { buttonStyles } from '~/elements/Button'
 import { Icon } from '~/elements/Icon/Icon'
 import { Popover, PopoverContent, PopoverTrigger } from '~/elements/Popover'
 
-import { css, cx } from 'style-engine/css'
+import { css, cx } from '@diaryco/style-engine/css'
 
 const popoverTriggerStyles = cx(buttonStyles(), css({
   display: 'flex',

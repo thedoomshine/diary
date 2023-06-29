@@ -2,7 +2,7 @@ import type { TooltipProps as TooltipPrimitiveProps } from '@radix-ui/react-tool
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 import { FC, ReactNode } from 'react'
 
-import { css } from 'style-engine/css'
+import { css } from '@diaryco/style-engine/css'
 
 const tooltipContentStyles = css({
   willChange: 'transform, opacity',

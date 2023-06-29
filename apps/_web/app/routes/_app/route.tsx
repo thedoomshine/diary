@@ -37,7 +37,7 @@ const StyledMain = styled.main`
   flex: 1 1 auto;
   flex-direction: column;
 
-  max-height: 100vh;
+  max-height: 100dvh;
 
   border: solid 0.0125rem ${({ theme }) => theme.color.grey};
   border-top: 0;

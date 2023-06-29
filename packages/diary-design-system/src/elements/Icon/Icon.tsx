@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import React from 'react'
-import { css } from 'style-engine/css'
+import { css } from '@diaryco/style-engine/css'
 
 import { IconNames, Icons } from './Library'
 

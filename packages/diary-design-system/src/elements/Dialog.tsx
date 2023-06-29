@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react'
 import { IconButton } from './Button'
 // import { grainyGradientBackground } from '~/utils/grainy-gradient'
 
-import { css } from 'style-engine/css'
+import { css } from '@diaryco/style-engine/css'
 
 const dialogContentStyles = css({
   display: 'grid',

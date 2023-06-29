@@ -4,8 +4,8 @@ import { lighten, rgba } from 'polished'
 import type { ReactNode } from 'react'
 import { forwardRef } from 'react'
 
-import { css, cx } from 'style-engine/css'
-import { token } from 'style-engine/tokens'
+import { css, cx } from '@diaryco/style-engine/css'
+import { token } from '@diaryco/style-engine/tokens'
 
 import { buttonStyles } from './Button'
 import { Icon } from './Icon/Icon'

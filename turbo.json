@@ -1,24 +1,25 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": [".env", ".env/local"],
+  "globalDependencies": [
+    ".env",
+    ".env.local",
+    "./eslint.config.js",
+    "./prettier.config.js"
+  ],
   "globalEnv": ["NODE_ENV"],
   "pipeline": {
     "build": {
-      "cache": false,
-      "dependsOn": ["^build"],
+      "dependsOn": ["topo"],
       "outputs": [
         "dist/**",
-        "umd/**",
-        "build/**",
-        "api/**",
-        "public/build/**",
+        ".next/**",
+        "!.next/cache/**",
         "storybook-static/**"
       ],
       "inputs": ["!_web", "!workshop"]
     },
     "clean": {
-      "cache": false,
-      "outputs": []
+      "cache": false
     },
     "deploy": {
       "cache": true,
@@ -26,8 +27,9 @@
     },
     "dev": {
       "cache": false,
-      "dependsOn": ["^build"],
-      "inputs": ["!_web"],
+      "dependsOn": ["^build", "topo"],
+      "dotEnv": [".env.local", ".env.development.local"],
+      "inputs": ["!_web", "!workshop"],
       "persistent": true
     },
     "prettier": {
@@ -51,14 +53,17 @@
     },
     "typecheck": {
       "cache": false,
-      "outputs": ["topo"]
+      "dependsOn": ["topo"]
     },
     "prepare": {
-      "cache": false
+      "dependsOn": ["^build"],
+      "outputs": ["node_modules/@diaryco/style-engine/**"]
     },
     "codegen": {
-      "cache": false,
-      "dependsOn": ["^build"]
+      "cache": false
+    },
+    "panda:ship": {
+      "cache": false
     },
     "topo": {
       "dependsOn": ["^topo"]

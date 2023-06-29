@@ -2,7 +2,7 @@ import type { TabsContentProps, TabsListProps, TabsProps, TabsTriggerProps } fro
 import * as TabsPrimitive from '@radix-ui/react-tabs'
 import { type FC } from 'react'
 
-import { css, cx } from 'style-engine/css'
+import { css, cx } from '@diaryco/style-engine/css'
 
 const tabsRootStyles = css({
   display: 'flex',
@@ -29,7 +29,7 @@ const tabTriggerStyles = css({
   position: 'relative',
   '&:focus-visible': {
     position: 'relative',
-    outline: 'solid 0.0125rem {colors.yellow}',
+    outline: 'solid 0.0125rem token(colors.yellow)',
   },
   '&[data-state="active"]': {
     fontWeight: '700',

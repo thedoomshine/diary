@@ -9,8 +9,8 @@ import {
     useState,
 } from 'react'
 
-import { css } from 'style-engine/css'
-import { token } from 'style-engine/tokens'
+import { css } from '@diaryco/style-engine/css'
+import { token } from '@diaryco/style-engine/tokens'
 
 import { Button } from '../Button'
 import { Icon } from '../Icon/Icon'

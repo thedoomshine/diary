@@ -1,314 +1,87 @@
 import type { ChangeEvent } from 'react'
-import ReactMarkdown from 'react-markdown'
-// import rehypeSanitize from 'rehype-sanitize'
-// import rehypeStringify from 'rehype-stringify'
 import remarkBreaks from 'remark-breaks'
+import ReactMarkdown from 'react-markdown'
 import emoji from 'remark-emoji'
-// import remarkParse from 'remark-parse'
-// import remarkRehype from 'remark-rehype'
-import styled from 'styled-components'
+
+import { css } from '@diaryco/style-engine/css'
 
 import { TabsContent, TabsTrigger, TabsList, TabsRoot } from '~/elements/Tabs'
 
-const StyledTabs = styled(TabsRoot)`
-  min-height: 32rem;
-  border-bottom-left-radius: 0.5rem;
-  border-bottom-right-radius: 0.5rem;
-  border-top-right-radius: 0.5rem;
-`
+import './markdown.css'
 
-const StyledTabsList = styled(TabsList)`
-  margin: 0 0.75rem;
-  bottom: -1px;
-  position: relative;
-  z-index: 1;
-`
+const tabsStyles = css({
+  minHeight: '32rem',
+  borderBottomLeftRadius: '0.5rem',
+  borderBottomRightRadius: '0.5rem',
+  borderTopRightRadius: '0.5rem',
+})
 
-const StyledTabTrigger = styled(TabsTrigger)`
-  display: flex;
-  flex-direction: column;
-  flex: 0 0 auto;
-  position: relative;
-  &[data-state='active'] {
-    background-color: ${({ theme }) => theme.color.charcoal};
-    border: solid 1px ${({ theme }) => theme.color.grey};
-    border-top-left-radius: 0.5rem;
-    border-top-right-radius: 0.5rem;
-    border-bottom-color: transparent;
-  }
+const tabsListStyles = css({
+  margin: '0 0.75rem',
+  bottom: '-1px',
+  position: 'relative',
+  zIndex: '1',
+})
 
-  &::after {
-    content: attr(data-title);
+const tabsTriggerStyles = css({
+  display: 'flex',
+  flexDirection: 'column',
+  flex: '0 0 auto',
+  position: 'relative',
+  '&[data-state="active"]': {
+    backgroundColor: 'charcoal',
+    border: 'solid 1px token(colors.grey)',
+    borderTopLeftRadius: 'md',
+    borderTopRightRadius: 'md',
+    borderBottomColor: 'transparent',
+  },
+  _after: {
+    content: 'attr(data-title)',
+    overflow: 'hidden',
+    display: 'block',
+    height: '1px',
+    fontWeight: '700',
+    color: 'transparent',
+    visibility: 'hidden',
+  },
+})
 
-    overflow: hidden;
-    display: block;
+const tabsContentStyles = css({
+  position: 'relative',
+  padding: '0.75rem 0.5rem 0.55rem',
+  border: 'solid 1px token(colors.grey)',
+  borderRadius: 'md',
+  backgroundColor: 'charcoal',
+  maxHeight: '32rem',
+  overflow: 'auto',
+})
 
-    height: 1px;
+const textareaStyles = css({
+  position: 'relative',
+  overflow: 'auto',
+  display: 'flex',
+  flex: '1 1 auto',
+  width: '100%',
+  fontSize: 'md',
+  color: 'white',
+  backgroundColor: 'black',
+  padding: '1rem',
+  colorScheme: 'dark',
+  borderRadius: 'md',
+  border: 'solid 1px token(colors.grey)',
+})
 
-    font-weight: ${({ theme }) => theme.fontWeight['800']};
-    color: transparent;
-
-    visibility: hidden;
-  }
-`
-
-const StyledTabContent = styled(TabsContent)`
-  position: relative;
-  padding: 0.75rem 0.5rem 0.55rem;
-  border: solid 1px ${({ theme }) => theme.color.grey};
-  border-radius: 0.5rem;
-  background-color: ${({ theme }) => theme.color.charcoal};
-  max-height: 32rem;
-  overflow: auto;
-`
-
-const Textarea = styled.textarea`
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex: 1 1 auto;
-  width: 100%;
-  font-size: ${({ theme }) => theme.fontSize.md};
-  color: ${({ theme }) => theme.color.white};
-  background-color: ${({ theme }) => theme.color.black};
-  padding: 1rem;
-  font-size: inherit;
-  color-scheme: dark;
-  border-radius: 0.5rem;
-  border: solid 1px ${({ theme }) => theme.color.grey};
-  overflow: auto;
-`
-
-const MarkdownPreview = styled(ReactMarkdown)`
-  display: flex;
-  flex-direction: column;
-  padding: 0.5rem;
-  white-space: pre-wrap;
-  width: 100%;
-  height: 100%;
-  position: relative;
-  word-wrap: break-word;
-  line-height: 1.5;
-
-  & > :first-child {
-    margin-top: 0 !important;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    padding-bottom: 0.3em;
-    margin-bottom: 1rem;
-    margin-top: 1.5rem;
-    line-height: 1.15;
-  }
-
-  h1 {
-    font-size: ${({ theme }) => theme.fontSize.xxxl};
-    border-bottom: solid 1px ${({ theme }) => theme.color.grey};
-  }
-
-  h2 {
-    font-size: ${({ theme }) => theme.fontSize.xxl};
-  }
-
-  h3 {
-    font-size: ${({ theme }) => theme.fontSize.xl};
-  }
-
-  h4 {
-    font-size: ${({ theme }) => theme.fontSize.lg};
-  }
-
-  h5 {
-    font-size: ${({ theme }) => theme.fontSize.md};
-  }
-
-  p,
-  blockquote,
-  ul,
-  ol,
-  dl,
-  table,
-  pre,
-  details {
-    margin-top: 0;
-    margin-bottom: 1rem;
-  }
-
-  ul ul,
-  ul ol,
-  ol ol,
-  ol ul {
-    display: inline-flex;
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-
-  ul {
-    list-style-type: disc;
-  }
-
-  ul ul {
-    list-style-type: circle;
-  }
-
-  ol {
-    list-style-type: none;
-    counter-reset: item;
-    margin: 0;
-    padding: 0;
-    li {
-      counter-increment: item;
-      &::marker {
-        content: counters(item, ".") ". ";
-      }
-      ol li::marker {
-        content: counters(item, ".") " ";
-      }
-    }
-  }
-
-  ol,
-  ul {
-    padding-left: 2rem;
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1rem;
-  }
-
-  li {
-    display: list-item;
-  }
-
-  strong {
-    font-weight: ${({ theme }) => theme.fontWeight[800]};
-  }
-
-  em {
-    font-style: italic;
-  }
-
-  blockquote {
-    display: flex;
-    flex-direction: column;
-    border-left: solid 0.25rem ${({ theme }) => theme.color.grey};
-    padding-left: 0.5rem;
-    & > :last-child {
-      margin-bottom: 0;
-    }
-  }
-
-  hr {
-    height: 0.25em;
-    padding: 0;
-    margin: 2rem 0;
-    background-color: ${({ theme }) => theme.color.grey};
-  }
-`
-
-// type Emoji = {
-//   key: string
-//   emoji: string
-// }
-
-// function SuggestionList({ items }: { items: Array<Emoji> }) {
-//   return (
-//     <ul>
-//       {items.map(({ key, emoji }: Emoji) => (
-//         <li
-//           key={key}
-//           role='option'
-//           data-value={key}
-//         >
-//           <span>{emoji}</span> {key}
-//         </li>
-//       ))}
-//     </ul>
-//   )
-// }
-
-// function searchEmoji(key: string, text: string) {
-//   if (key === ':') {
-//     const emojiList = nodeEmoji.search(text)
-//     if (emojiList.length === 0) {
-//       return Promise.resolve({ matched: false })
-//     }
-//     return Promise.resolve({
-//       matched: true,
-//       fragment: <SuggestionList items={emojiList.slice(0, 5)} />,
-//     })
-//   }
-//   return Promise.resolve({ matched: false })
-// }
-
-// type ChangeListerEvent = Event & {
-//   detail: {
-//     key: string
-//     text: string
-//     provide(value: Promise<{ matched: boolean }>): void
-//   }
-// }
-
-// type ValueListerEvent = Event & {
-//   detail: {
-//     key: string
-//     value: string
-//     item: HTMLLIElement
-//   }
-// }
-
-// export const TextExpander = ({ children }: { children: ReactNode }) => {
-//   const expanderRef = useRef<HTMLElement>(null)
-//   useEffect(() => {
-//     if (expanderRef.current) {
-//       const expander = expanderRef.current
-//       const textExpanderChangeLister: EventListener = (event: Event) => {
-//         const { provide, key, text } = (event as ChangeListerEvent).detail
-//         provide(searchEmoji(key, text))
-//       }
-//       const textExpanderValueListener = (event: Event) => {
-//         const { key, item } = (event as ValueListerEvent).detail
-//         if (key === ':') {
-//           (event as ValueListerEvent).detail.value = `:${item.dataset.value}:`
-//         }
-//       }
-//       expander.addEventListener(
-//         'text-expander-change',
-//         textExpanderChangeLister
-//       )
-//       expander.addEventListener(
-//         'text-expander-value',
-//         textExpanderValueListener
-//       )
-//       return () => {
-//         expander.removeEventListener(
-//           'text-expander-change',
-//           textExpanderChangeLister
-//         )
-//         expander.removeEventListener(
-//           'text-expander-value',
-//           textExpanderValueListener
-//         )
-//       }
-//     }
-//     return () => undefined
-//   }, [])
-
-//   return (
-//     <Suspense>
-//       <GithubTextExpander
-//         keys={': @'}
-//         ref={expanderRef}
-//       >
-//         {children}
-//       </GithubTextExpander>
-//     </Suspense>
-//   )
-// }
+const markdownPreviewStyles = css({
+  display: 'flex',
+  flexDirection: 'column',
+  padding: '0.5rem',
+  whiteSpace: 'pre-wrap',
+  width: '100%',
+  height: '100%',
+  position: 'relative',
+  wordWrap: 'break-word',
+  lineHeight: 'body',
+})
 
 export const MarkdownEditor = ({
   markdown,
@@ -318,34 +91,37 @@ export const MarkdownEditor = ({
   setMarkdownSource: (event: ChangeEvent<HTMLTextAreaElement>) => void
 }) => {
   return (
-    <StyledTabs defaultValue='edit'>
-      <StyledTabsList>
-        <StyledTabTrigger
+    <TabsRoot className={tabsStyles} defaultValue='edit'>
+      <TabsList className={tabsListStyles}>
+        <TabsTrigger
+          className={tabsTriggerStyles}
           data-title='edit'
           value='edit'
           aria-label='edit event description'
         >
           edit
-        </StyledTabTrigger>
-        <StyledTabTrigger
+        </TabsTrigger>
+        <TabsTrigger
+          className={tabsTriggerStyles}
           data-title='preview'
           value='preview'
           aria-label='preview event description'
         >
           preview
-        </StyledTabTrigger>
-      </StyledTabsList>
-      <StyledTabContent value='edit'>
-        <Textarea
+        </TabsTrigger>
+      </TabsList>
+      <TabsContent className={tabsContentStyles} value='edit'>
+        <textarea
+          className={textareaStyles}
           value={markdown}
           onChange={setMarkdownSource}
         />
-      </StyledTabContent>
-      <StyledTabContent value='preview'>
-        <MarkdownPreview remarkPlugins={[emoji, remarkBreaks]}>
+      </TabsContent>
+      <TabsContent className={tabsContentStyles} value='preview'>
+        <ReactMarkdown className={markdownPreviewStyles} remarkPlugins={[emoji, remarkBreaks]}>
           {markdown}
-        </MarkdownPreview>
-      </StyledTabContent>
-    </StyledTabs>
+        </ReactMarkdown>
+      </TabsContent>
+    </TabsRoot>
   )
 }

@@ -51,7 +51,7 @@ const StyledHeader = styled.header`
   flex: 0 0 auto;
   flex-direction: column;
 
-  height: 100vh;
+  height: 100dvh;
   padding: ${({ theme }) => `${theme.space.sm} ${theme.space.xs}`};
 
   @media ${({ theme }) => theme.media.xl} {

@@ -7,13 +7,12 @@ import { breakpoints } from './src/foundation/sizes'
 
 export default defineConfig({
   clean: true,
-  cwd: './src',
   emitPackage: true,
   exclude: [],
   globalCss,
   include: ['./src/**/*'],
   jsxFramework: 'react',
-  outdir: 'style-engine',
+  outdir: '@diaryco/style-engine',
   preflight: false,
   presets: [preset],
   theme: {

@@ -1,7 +1,7 @@
 import * as AvatarPrimitive from '@radix-ui/react-avatar'
 import type { FC } from 'react'
 
-import { css, cx } from 'style-engine/css'
+import { css, cx } from '@diaryco/style-engine/css'
 
 const avatarRootStyles = css({
   userSelect: 'none',

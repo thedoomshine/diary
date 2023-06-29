@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import { readableColor } from 'polished'
 
-import { type Token, token } from '../../style-engine/tokens'
+import { type Token, token } from '../../@diaryco/style-engine/tokens'
 
 const COLORS = Object.keys(colorTokens).reduce((acc, key) => {
   return [...acc, key]

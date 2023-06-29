@@ -17,7 +17,7 @@ export default defineConfig((options) => ({
     'remark-rehype',
     'unified',
   ],
-  format: 'cjs',
+  format: 'esm,cjs',
   outDir: 'dist',
   declarationDir: './dist/@types',
   sourcemap: true,
