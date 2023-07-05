@@ -1,6 +1,6 @@
-import { Atkinson_Hyperlegible } from 'next/font/google'
-
 import './global.css'
+import './index.css'
+import { Atkinson_Hyperlegible } from 'next/font/google'
 
 const hyperlegible = Atkinson_Hyperlegible({
   style: ['normal', 'italic'],

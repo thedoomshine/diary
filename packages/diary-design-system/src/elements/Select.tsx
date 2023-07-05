@@ -1,60 +1,73 @@
-import type { SelectItemProps as SelectItemPrimitiveProps, SelectProps as SelectPrimitiveProps } from '@radix-ui/react-select'
+import type {
+  SelectItemProps as SelectItemPrimitiveProps,
+  SelectProps as SelectPrimitiveProps,
+} from '@radix-ui/react-select'
 import * as SelectPrimitive from '@radix-ui/react-select'
+import { style } from '@vanilla-extract/css'
+import clsx from 'clsx'
 import { lighten, rgba } from 'polished'
 import type { ReactNode } from 'react'
 import { forwardRef } from 'react'
 
-import { css, cx } from '@diaryco/style-engine/css'
-import { token } from '@diaryco/style-engine/tokens'
+import { themeVars } from '~/foundation/theme.css'
 
-import { buttonStyles } from './Button'
+import { buttonStyles, buttonVariantStyles } from './Button'
 import { Icon } from './Icon/Icon'
 
-const selectTriggerStyles = cx(buttonStyles({ type: 'fill' }), css({
-  border: 'solid 1px $grey',
-  gap: '0.5rem',
-  padding: '0.5rem',
-  '&[data-disabled]': {
-    pointerEvents: 'none',
+const selectTriggerStyles = style([
+  buttonVariantStyles.fill,
+  {
+    border: `solid 1px ${themeVars.color.grey}`,
+    gap: '0.5rem',
+    padding: '0.5rem',
+    selectors: {
+      '&[data-disabled]': {
+        pointerEvents: 'none',
+      },
+    },
   },
-}))
+])
 
-const selectButtonStyles = buttonStyles()
+const selectButtonStyles = style([buttonStyles])
 
-const selectContentStyles = css({
-  zIndex: 'dropdown',
+const selectContentStyles = style({
+  zIndex: themeVars.zIndex.dropdown,
   overflow: 'hidden',
-  backgroundColor: 'black',
-  borderRadius: 'md',
-  boxShadow: 'normal',
+  backgroundColor: themeVars.color.black,
+  borderRadius: themeVars.radii.md,
+  boxShadow: themeVars.shadow.normal,
   maxHeight: '16rem',
-  '--radix-select-content-available-height': '16rem',
+  vars: {
+    '--radix-select-content-min-width': '16rem',
+  },
 })
 
-const selectItemStyles = css({
+const selectItemStyles = style({
   cursor: 'pointer',
   userSelect: 'none',
   position: 'relative',
   display: 'flex',
   alignItems: 'center',
   padding: '1rem 2rem 1rem 0.5rem',
-  borderRadius: 'sm',
-  '&[data-disabled]': {
-    pointerEvents: 'none',
-    color: rgba(token('colors.silver'), 0.05),
-  },
-  '&[data-highlighted], &:hover': {
-    backgroundColor: lighten(0.025, token('colors.black')),
-    outline: 'none',
+  borderRadius: themeVars.radii.sm,
+  selectors: {
+    '&[data-disabled]': {
+      pointerEvents: 'none',
+      color: rgba(themeVars.color.silver, 0.05),
+    },
+    '&[data-highlighted], &:hover': {
+      backgroundColor: lighten(0.025, themeVars.color.black),
+      outline: 'none',
+    },
   },
 })
 
-const selectItemIndicatorStyles = css({
+const selectItemIndicatorStyles = style({
   position: 'absolute',
   right: '0.5rem',
   display: 'inline-flex',
   alignItems: 'center',
-  color: 'yellow',
+  color: themeVars.color.yellow,
 })
 
 interface SelectProps extends SelectPrimitiveProps {
@@ -93,7 +106,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
       >
         <SelectPrimitive.Trigger
           ref={forwardedRef}
-          className={cx(selectTriggerStyles, className)}
+          className={clsx(selectTriggerStyles, className)}
         >
           <SelectPrimitive.Value />
           {!hideIcon && (
@@ -130,10 +143,10 @@ interface SelectItemProps extends SelectItemPrimitiveProps {
 }
 
 export const SelectItem = forwardRef<HTMLDivElement, SelectItemProps>(
-  ({ children, hideIndicator = false, ...props }, forwardedRef) => {
+  ({ children, className, hideIndicator = false, ...props }, forwardedRef) => {
     return (
       <SelectPrimitive.Item
-        className={selectItemStyles}
+        className={clsx(selectItemStyles, className)}
         ref={forwardedRef}
         {...props}
       >

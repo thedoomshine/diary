@@ -1,8 +1,4 @@
-import { defineTokens } from '@pandacss/dev'
-
-import { generateTokens } from '../utils'
-
-export const spacingTokens = {
+export const spacing = {
   '1-8': '.125rem',
   '1-4': '.25rem',
   '1-2': '.5rem',
@@ -13,5 +9,3 @@ export const spacingTokens = {
   '5-2': '2.5rem',
   '3-1': '3rem',
 } as const
-
-export const spacing = defineTokens.spacing(generateTokens(spacingTokens))

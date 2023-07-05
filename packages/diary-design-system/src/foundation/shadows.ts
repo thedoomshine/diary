@@ -1,8 +1,4 @@
-import { defineTokens } from '@pandacss/dev'
-
-import { generateTokens } from '../utils'
-
-export const shadowTokens = {
+export const shadow = {
   normal: '0 0.25rem 0.5rem 0 rgba(0, 0, 0, 0.5)',
   isometric: `0 0 0 {colors.black},
   -1px 1px 0 {colors.black},
@@ -15,5 +11,3 @@ export const shadowTokens = {
   -8px 8px 0 {colors.black}`,
   glow: '0 0 16rem 0.125rem {colors.yellow}',
 } as const
-
-export const shadows = defineTokens.shadows(generateTokens(shadowTokens))

@@ -1,10 +1,8 @@
-import { defineTokens } from '@pandacss/dev'
 import { remToPx } from 'polished'
 
 import { ScalePrefix } from '../@types/foundation'
-import { generateTokens } from '../utils'
 
-export const sizeTokens = {
+export const size = {
   [ScalePrefix.XS]: `32rem`,
   [ScalePrefix.SM]: `48rem`,
   [ScalePrefix.MD]: `64rem`,
@@ -12,9 +10,17 @@ export const sizeTokens = {
   [ScalePrefix.XL]: `96rem`,
 } as const
 
-export const sizes = defineTokens.sizes(generateTokens(sizeTokens))
+type BreakpointsObj = {
+  [key in ScalePrefix]: string
+}
 
-export const breakpoints = Object.entries(sizeTokens).reduce(
-  (acc, [key, value]: [string, string]) => ({ ...acc, [key]: remToPx(value) }),
-  {}
+export const breakpoints = Object
+  .entries(size)
+  .reduce(
+    (acc, [key, value]: [string, string]) => (
+      {
+        ...acc,
+        [key as ScalePrefix]: `(min-width: ${remToPx(value)})`
+      }),
+  {} as BreakpointsObj
 )

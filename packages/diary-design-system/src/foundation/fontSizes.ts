@@ -1,53 +1,55 @@
-import { defineTokens } from '@pandacss/dev'
+const HeadingPrefix = {
+  H6: 'h6',
+  H5: 'h5',
+  H4: 'h4',
+  H3: 'h3',
+  H2: 'h2',
+  H1: 'h1',
+} as const
 
-import { generateTokens } from '../utils'
+const BodyPrefix = {
+  XS: 'xs',
+  SM: 'sm',
+  MD: 'md',
+  LG: 'lg',
+  XL: 'xl',
+} as const
 
-enum HeadingPrefix {
-  H6 = 'h6',
-  H5 = 'h5',
-  H4 = 'h4',
-  H3 = 'h3',
-  H2 = 'h2',
-  H1 = 'h1',
+type ValueOf<T> = T[keyof T]
+
+type HeadingPrefixKey = ValueOf<typeof HeadingPrefix>
+type BodyPrefixKey = ValueOf<typeof BodyPrefix>
+
+type SizePrefixKey = HeadingPrefixKey | BodyPrefixKey
+type SizePrefixObj = typeof HeadingPrefix | typeof BodyPrefix
+
+type TypescaleObj = {
+  [key in SizePrefixKey]: string
 }
-
-enum BodyPrefix {
-  XS = 'xs',
-  SM = 'sm',
-  MD = 'md',
-  LG = 'lg',
-  XL = 'xl',
-}
-
 // typographic scale formula
 // fᵢ = f₀rᶦ
-const generateTypeScale = ({
-  ratio,
-  prefix,
-}: {
-  ratio: number
-  prefix: typeof HeadingPrefix | typeof BodyPrefix
-}) =>
+const generateTypeScale = (
+  ratio: number,
+  prefix: SizePrefixObj
+): TypescaleObj =>
   Array.from(
     { length: Object.values(prefix).length },
     (_, i) => `${Number(Math.pow(ratio, i - 1).toFixed(4))}rem`
-  ).reduce((a, v, i) => ({ ...a, [Object.values(prefix)[i]]: v }), {})
+  ).reduce(
+    (acc, value: string, i: number) => ({
+      ...acc,
+      [Object.values(prefix)[i] as SizePrefixKey]: value,
+    }),
+    {} as TypescaleObj
+  )
 
 // typographic scale of √2:1 (tritone)[https://en.wikipedia.org/wiki/Tritone]
-const HEADING_TYPESCALE = generateTypeScale({
-  ratio: Math.sqrt(2),
-  prefix: HeadingPrefix,
-})
+const HEADING_TYPESCALE = generateTypeScale(Math.sqrt(2), HeadingPrefix)
 
 // typographic scale of ∜2:1 (minor third)[https://en.wikipedia.org/wiki/Minor_third]
-const BODY_TYPESCALE = generateTypeScale({
-  ratio: Math.pow(2, 1 / 4),
-  prefix: BodyPrefix,
-})
+const BODY_TYPESCALE = generateTypeScale(Math.pow(2, 1 / 4), BodyPrefix)
 
-export const fontSizeTokens = {
+export const fontSize = {
   ...HEADING_TYPESCALE,
   ...BODY_TYPESCALE,
 } as const
-
-export const fontSizes = defineTokens.fontSizes(generateTokens(fontSizeTokens))

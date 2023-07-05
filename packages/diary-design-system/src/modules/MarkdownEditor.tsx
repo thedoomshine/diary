@@ -1,77 +1,76 @@
+import { style } from '@vanilla-extract/css'
 import type { ChangeEvent } from 'react'
-import remarkBreaks from 'remark-breaks'
-import ReactMarkdown from 'react-markdown'
-import emoji from 'remark-emoji'
 
-import { css } from '@diaryco/style-engine/css'
-
-import { TabsContent, TabsTrigger, TabsList, TabsRoot } from '~/elements/Tabs'
+import { TabsContent, TabsList, TabsRoot, TabsTrigger } from '~/elements/Tabs'
+import { themeVars } from '~/foundation/theme.css'
 
 import './markdown.css'
 
-const tabsStyles = css({
+const tabsStyles = style({
   minHeight: '32rem',
-  borderBottomLeftRadius: '0.5rem',
-  borderBottomRightRadius: '0.5rem',
-  borderTopRightRadius: '0.5rem',
+  borderBottomLeftRadius: themeVars.radii.md,
+  borderBottomRightRadius: themeVars.radii.md,
+  borderTopRightRadius: themeVars.radii.md,
 })
 
-const tabsListStyles = css({
+const tabsListStyles = style({
   margin: '0 0.75rem',
   bottom: '-1px',
   position: 'relative',
   zIndex: '1',
 })
 
-const tabsTriggerStyles = css({
+const tabsTriggerStyles = style({
   display: 'flex',
   flexDirection: 'column',
   flex: '0 0 auto',
   position: 'relative',
-  '&[data-state="active"]': {
-    backgroundColor: 'charcoal',
-    border: 'solid 1px token(colors.grey)',
-    borderTopLeftRadius: 'md',
-    borderTopRightRadius: 'md',
-    borderBottomColor: 'transparent',
-  },
-  _after: {
-    content: 'attr(data-title)',
-    overflow: 'hidden',
-    display: 'block',
-    height: '1px',
-    fontWeight: '700',
-    color: 'transparent',
-    visibility: 'hidden',
+  selectors: {
+    '[data-state="active"]': {
+      backgroundColor: themeVars.color.charcoal,
+      border: `solid 1px ${themeVars.color.grey}`,
+      borderTopLeftRadius: themeVars.radii.md,
+      borderTopRightRadius: themeVars.radii.md,
+      borderBottomColor: 'transparent',
+    },
+    '::after': {
+      content: 'attr(data-title)',
+      overflow: 'hidden',
+      display: 'block',
+      height: '1px',
+      fontWeight: themeVars.fontWeight.bold,
+      color: 'transparent',
+      visibility: 'hidden',
+    },
   },
 })
 
-const tabsContentStyles = css({
+const tabsContentStyles = style({
   position: 'relative',
   padding: '0.75rem 0.5rem 0.55rem',
-  border: 'solid 1px token(colors.grey)',
-  borderRadius: 'md',
-  backgroundColor: 'charcoal',
+  border: `solid 1px ${themeVars.color.grey}`,
+  borderRadius: themeVars.radii.md,
+  backgroundColor: themeVars.color.charcoal,
   maxHeight: '32rem',
   overflow: 'auto',
 })
 
-const textareaStyles = css({
+const textareaStyles = style({
   position: 'relative',
   overflow: 'auto',
   display: 'flex',
   flex: '1 1 auto',
   width: '100%',
-  fontSize: 'md',
-  color: 'white',
-  backgroundColor: 'black',
+  fontSize: themeVars.fontSize.md,
+  color: themeVars.color.white,
+  backgroundColor: themeVars.color.black,
   padding: '1rem',
   colorScheme: 'dark',
-  borderRadius: 'md',
-  border: 'solid 1px token(colors.grey)',
+  borderRadius: themeVars.radii.md,
+  border: `solid 1px ${themeVars.color.grey}`,
 })
 
-const markdownPreviewStyles = css({
+const markdownPreviewStyles = style({
   display: 'flex',
   flexDirection: 'column',
   padding: '0.5rem',
@@ -80,7 +79,7 @@ const markdownPreviewStyles = css({
   height: '100%',
   position: 'relative',
   wordWrap: 'break-word',
-  lineHeight: 'body',
+  lineHeight: themeVars.lineHeight.body,
 })
 
 export const MarkdownEditor = ({
@@ -91,7 +90,10 @@ export const MarkdownEditor = ({
   setMarkdownSource: (event: ChangeEvent<HTMLTextAreaElement>) => void
 }) => {
   return (
-    <TabsRoot className={tabsStyles} defaultValue='edit'>
+    <TabsRoot
+      className={tabsStyles}
+      defaultValue='edit'
+    >
       <TabsList className={tabsListStyles}>
         <TabsTrigger
           className={tabsTriggerStyles}
@@ -110,17 +112,23 @@ export const MarkdownEditor = ({
           preview
         </TabsTrigger>
       </TabsList>
-      <TabsContent className={tabsContentStyles} value='edit'>
+      <TabsContent
+        className={tabsContentStyles}
+        value='edit'
+      >
         <textarea
           className={textareaStyles}
           value={markdown}
           onChange={setMarkdownSource}
         />
       </TabsContent>
-      <TabsContent className={tabsContentStyles} value='preview'>
-        <ReactMarkdown className={markdownPreviewStyles} remarkPlugins={[emoji, remarkBreaks]}>
+      <TabsContent
+        className={tabsContentStyles}
+        value='preview'
+      >
+        {/* <ReactMarkdown className={markdownPreviewStyles} remarkPlugins={[emoji, remarkBreaks]}>
           {markdown}
-        </ReactMarkdown>
+        </ReactMarkdown> */}
       </TabsContent>
     </TabsRoot>
   )

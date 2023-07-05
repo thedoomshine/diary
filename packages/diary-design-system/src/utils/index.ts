@@ -1,1 +1,1 @@
-export { generateTokens } from './generateTokens'
+export { generate } from './generate'

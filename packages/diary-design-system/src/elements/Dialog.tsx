@@ -1,44 +1,40 @@
 import type { MouseEvent } from 'react'
 import { useEffect, useRef } from 'react'
-
 import { IconButton } from './Button'
 // import { grainyGradientBackground } from '~/utils/grainy-gradient'
+import { globalStyle, style } from '@vanilla-extract/css'
+import { themeVars } from '~/foundation/theme.css'
 
-import { css } from '@diaryco/style-engine/css'
-
-const dialogContentStyles = css({
+const dialogContentStyles = style({
   display: 'grid',
   gridTemplateRows: 'repeat(3, min-content)',
   gap: '0.5rem',
   padding: '0.5rem',
-  color: 'white',
+  color: themeVars.color.white,
   border: '0',
-  borderRadius: '0.5rem',
-  boxShadow: 'normal',
-  '&[open]': {
-    animation: 'scaleUp',
-
-    '&::backdrop': {
-      animation: 'fadeIn'
-    }
-  }
+  borderRadius: themeVars.radii.md,
+  boxShadow: themeVars.shadow.normal,
+  animationDuration: themeVars.duration[500],
+  animationTimingFunction: themeVars.easing.easeOutQuart,
+  animationName: themeVars.animation.scaleUp,
 })
 
-const dialogHeaderStyles = css({
+const dialogHeaderStyles = style({
   display: 'grid',
   alignItems: 'center',
   justifyContent: 'space-between',
-  '& > h1': {
-    fontSize: 'md',
-  },
 })
 
-// const dialogFooterStyles = css({
+globalStyle(`${dialogContentStyles} > h1`, {
+  fontSize: themeVars.fontSize.md,
+})
+
+// const dialogFooterStyles = style({
 //   display: 'flex',
 //   justifyContent: 'space-between',
 // })
 
-const dialogCloseButtonStyles = css({
+const dialogCloseButtonStyles = style({
   gridColumn: 2,
 })
 

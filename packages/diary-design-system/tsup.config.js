@@ -1,22 +1,12 @@
+import { vanillaExtractPlugin } from '@vanilla-extract/esbuild-plugin'
 import { defineConfig } from 'tsup'
-
 
 export default defineConfig((options) => ({
   clean: false,
   dts: true,
   entry: ['src/index.ts'],
-  external: [
-    'react',
-    'react-markdown',
-    'rehype-sanitize',
-    'rehype-stringify',
-    'remark-breaks',
-    'remark-emoji',
-    'remark-gfm',
-    'remark-parse',
-    'remark-rehype',
-    'unified',
-  ],
+  external: ['react'],
+  esbuildPlugins: [vanillaExtractPlugin],
   format: 'esm,cjs',
   outDir: 'dist',
   declarationDir: './dist/@types',

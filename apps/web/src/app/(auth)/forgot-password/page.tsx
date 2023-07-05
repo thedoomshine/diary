@@ -3,6 +3,6 @@ import AuthForm from '../_components/auth-form'
 
 export default function SignInPage() {
   return (
-    <AuthForm view='sign_up' />
+    <AuthForm view='forgotten_password' />
   )
 }

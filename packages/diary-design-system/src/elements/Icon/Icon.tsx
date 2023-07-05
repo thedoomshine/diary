@@ -1,6 +1,6 @@
+import { style } from '@vanilla-extract/css'
 import clsx from 'clsx'
 import React from 'react'
-import { css } from '@diaryco/style-engine/css'
 
 import { IconNames, Icons } from './Library'
 
@@ -12,7 +12,7 @@ interface IconProperties {
   name: string
 }
 
-const iconStyles = css({
+const iconStyles = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',

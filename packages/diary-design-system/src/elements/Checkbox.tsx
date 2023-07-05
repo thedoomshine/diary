@@ -1,30 +1,43 @@
+import { css, cx } from '@diaryco/style-engine/css'
 import type { CheckboxProps as CheckboxPrimitiveProps } from '@radix-ui/react-checkbox'
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
+import { globalStyle, style } from '@vanilla-extract/css'
 import type { FC, ReactNode } from 'react'
 
 import { buttonStyles } from './Button'
 import { Icon } from './Icon/Icon'
+import { themeVars } from '~/foundation/theme.css'
 
-import { css, cx } from '@diaryco/style-engine/css'
-
-const checkboxRootStyles = cx(buttonStyles(), css({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  padding: '0.5rem',
-  width: '1.5rem',
-  height: '1.5rem',
-  backgroundColor: 'black',
-  border: 'solid 1px token(colors.grey)',
-  '&:focus-visible': {
-    boxShadow: '0 0 0 0.0125rem token(colors.yellow)',
-  },
-  '&:checked, &[data-state="checked"]': {
-    '& > svg': {
-      fill: 'yellow',
+const checkboxRootStyles = style([
+  buttonStyles,
+  {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '0.5rem',
+    width: '1.5rem',
+    height: '1.5rem',
+    backgroundColor: themeVars.color.black,
+    border: `solid 1px ${themeVars.color.grey}`,
+    selectors: {
+      ':focus-visible': {
+        boxShadow: themeVars.shadow.glow,
+      },
     },
   },
-}))
+])
+
+const iconStyles = style({
+  selectors: {
+    [`${checkboxRootStyles}:checked > &, ${checkboxRootStyles}[data-state="checked"]`]: {
+      fill: themeVars.color.yellow,
+    }
+  }
+})
+
+globalStyle(`${checkboxRootStyles} > svg`, {
+  fill: themeVars.color.yellow
+})
 
 const labelStyles = css({
   cursor: 'pointer',
@@ -32,7 +45,7 @@ const labelStyles = css({
   gap: '0.5rem',
   alignItems: 'center',
   justifyContent: 'center',
-  lineHeight: 'title',
+  lineHeight: themeVars.lineHeight.element,
 })
 
 interface CheckboxProps extends CheckboxPrimitiveProps {
@@ -70,7 +83,7 @@ export const Checkbox: FC<CheckboxProps> = ({
       {...props}
     >
       <CheckboxPrimitive.Indicator>
-        <Icon name='check' />
+        <Icon className={iconStyles} name='check' />
       </CheckboxPrimitive.Indicator>
       {children}
     </CheckboxPrimitive.Root>

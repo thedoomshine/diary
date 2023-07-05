@@ -1,57 +1,60 @@
+import { style } from '@vanilla-extract/css'
 import { FC, ReactNode } from 'react'
 
 import { Avatar } from '~/elements/Avatar'
 import { buttonStyles } from '~/elements/Button'
 import { Icon } from '~/elements/Icon/Icon'
 import { Popover, PopoverContent, PopoverTrigger } from '~/elements/Popover'
+import { themeVars } from '~/foundation/theme.css'
 
-import { css, cx } from '@diaryco/style-engine/css'
+const popoverTriggerStyles = style([
+  buttonStyles,
+  {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
+    borderRadius: themeVars.radii.lg,
+  },
+])
 
-const popoverTriggerStyles = cx(buttonStyles(), css({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  width: '100%',
-  borderRadius: 'lg',
-}))
-
-const avatarStyles = css({
+const avatarStyles = style({
   flex: '0 0 auto',
   width: '1em',
   height: '1em',
-  fontSize: 'xl',
+  fontSize: themeVars.fontSize.xl,
 })
 
-const usernameContainerStyles = css({
+const usernameContainerStyles = style({
   display: 'none',
   flex: '1 1 auto',
   flexDirection: 'column',
   alignItems: 'flex-start',
   justifyContent: 'flex-start',
   marginLeft: '0.5rem',
-  lineHeight: 'element',
-  xl: {
+  lineHeight: themeVars.lineHeight.element,
+  [`@media screen and ${themeVars.breakpoints.xl}`]: {
     display: 'flex',
-  }
+  },
 })
 
-const userDisplayNameStyles = css({
-  fontSize: 'md',
-  fontWeight: '700',
+const userDisplayNameStyles = style({
+  fontSize: themeVars.fontSize.md,
+  fontWeight: themeVars.fontWeight.bold,
 })
 
-const usernameStyles = css({
-  fontSize: 'sm',
-  color: 'silver',
+const usernameStyles = style({
+  fontSize: themeVars.fontSize.sm,
+  color: themeVars.color.silver,
 })
 
-const iconStyles = css({
+const iconStyles = style({
   display: 'none',
   alignSelf: 'center',
   justifySelf: 'flex-end',
   marginRight: '0.25rem',
-  fontSize: 'sm',
-  xl: {
+  fontSize: themeVars.fontSize.sm,
+  [`@media screen and ${themeVars.breakpoints.xl}`]: {
     display: 'block',
   },
 })
@@ -76,7 +79,10 @@ export const AvatarMenu: FC<AvatarMenuProps> = ({
 }) => {
   return (
     <Popover>
-      <PopoverTrigger className={cx(popoverTriggerStyles, className)} {...props}>
+      <PopoverTrigger
+        className={cx(popoverTriggerStyles, className)}
+        {...props}
+      >
         <Avatar
           className={avatarStyles}
           url={url}
@@ -87,7 +93,10 @@ export const AvatarMenu: FC<AvatarMenuProps> = ({
           <span className={userDisplayNameStyles}>{displayName}</span>
           <span className={usernameStyles}>@{username}</span>
         </div>
-        <Icon className={iconStyles} name='ellipses' />
+        <Icon
+          className={iconStyles}
+          name='ellipses'
+        />
       </PopoverTrigger>
       {children}
     </Popover>

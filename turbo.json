@@ -9,6 +9,7 @@
   "globalEnv": ["NODE_ENV"],
   "pipeline": {
     "build": {
+      "cache": false,
       "dependsOn": ["topo"],
       "outputs": [
         "dist/**",
@@ -54,16 +55,6 @@
     "typecheck": {
       "cache": false,
       "dependsOn": ["topo"]
-    },
-    "prepare": {
-      "dependsOn": ["^build"],
-      "outputs": ["node_modules/@diaryco/style-engine/**"]
-    },
-    "codegen": {
-      "cache": false
-    },
-    "panda:ship": {
-      "cache": false
     },
     "topo": {
       "dependsOn": ["^topo"]

@@ -1,9 +1,12 @@
 import * as AvatarPrimitive from '@radix-ui/react-avatar'
 import type { FC } from 'react'
 
-import { css, cx } from '@diaryco/style-engine/css'
+import clsx from 'clsx'
 
-const avatarRootStyles = css({
+import { style } from '@vanilla-extract/css'
+import { themeVars } from '~/foundation/theme.css'
+
+const avatarRootStyles = style({
   userSelect: 'none',
   overflow: 'hidden',
   display: 'inline-flex',
@@ -12,30 +15,30 @@ const avatarRootStyles = css({
   aspectRatio: '1',
   width: '1em',
   height: '1em',
-  fontSize: 'xl',
+  fontSize: themeVars.fontSize.xl,
   verticalAlign: 'middle',
-  backgroundColor: 'black',
-  borderRadius: 'full',
+  backgroundColor: themeVars.color.black,
+  borderRadius: themeVars.radii.full,
 })
 
-const avatarImageStyles = css({
+const avatarImageStyles = style({
   width: '100%',
   height: '100%',
   objectFit: 'cover',
   borderRadius: 'inherit',
 })
 
-const avatarFallbackStyles = css({
+const avatarFallbackStyles = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   width: '100%',
   height: '100%',
-  fontSize: 'md',
+  fontSize: themeVars.fontSize.md,
   fontWeight: '400',
-  lineHeight: 'element',
-  color: 'yellow',
-  backgroundColor: 'charcoal',
+  lineHeight: themeVars.lineHeight.element,
+  color: themeVars.color.yellow,
+  backgroundColor: themeVars.color.charcoal,
 })
 
 interface AvatarProps {
@@ -46,7 +49,7 @@ interface AvatarProps {
 }
 
 export const Avatar: FC<AvatarProps> = ({ className, url, name, initials, ...props }) => (
-  <AvatarPrimitive.Root className={cx(avatarRootStyles, className)} {...props}>
+  <AvatarPrimitive.Root className={clsx(avatarRootStyles, className)} {...props}>
     <AvatarPrimitive.Image
       className={avatarImageStyles}
       src={url}

@@ -1,4 +1,4 @@
-export const generateTokens = (obj: {
+export const generate = (obj: {
   [key: string]: string | number | string[] | number[]
 }) =>
   Object.entries(obj).reduce(

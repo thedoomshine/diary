@@ -1,3 +1,5 @@
+import { globalStyle, style, styleVariants } from '@vanilla-extract/css'
+import clsx from 'clsx'
 import { lighten, rgba } from 'polished'
 import type {
   FC,
@@ -8,9 +10,7 @@ import type {
 } from 'react'
 import { forwardRef } from 'react'
 
-import { cva, cx } from '@diaryco/style-engine/css'
-import { token } from '@diaryco/style-engine/tokens'
-import { SystemStyleObject } from '@diaryco/style-engine/types'
+import { themeVars } from '~/foundation/theme.css'
 
 import { Icon } from './Icon/Icon'
 
@@ -46,61 +46,94 @@ export const baseButtonStyles = {
   color: 'inherit',
   textAlign: 'center',
   textDecoration: 'none',
-  borderRadius: 'md',
-  _hover: {
-    '& > svg': {
-      fill: token('colors.yellow'),
+  borderRadius: themeVars.radii.md,
+  selectors: {
+    ':hover:not(:disabled)': {
+      backgroundColor: rgba(themeVars.color.white, 0.05),
     },
-    backgroundColor: rgba(token('colors.white'), 0.05),
-  },
-  '&:focus-visible': {
-    outline: `solid 0.0125rem ${token('colors.yellow')}`,
-  },
-  '&:disabled': {
-    pointerEvents: 'none',
-    opacity: 0.5,
-    _hover: {
-      backgroundColor: 'unset',
+    ':focus-visible': {
+      outline: `solid 0.0125rem ${themeVars.color.yellow}`,
+    },
+    ':disabled': {
+      pointerEvents: 'none',
+      opacity: 0.5,
     },
   },
-} as SystemStyleObject
+}
 
-export const buttonStyles = cva({
-  base: baseButtonStyles,
-  variants: {
-    type: {
-      icon: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '0.5rem',
-        gap: '0.25rem',
+export const buttonStyles = style({
+  position: 'relative',
+  cursor: 'pointer',
+  display: 'flex',
+  flex: '0 0 auto',
+  alignItems: 'center',
+  justifyContent: 'center',
+  padding: '0.5rem 1rem',
+  color: 'inherit',
+  textAlign: 'center',
+  textDecoration: 'none',
+  borderRadius: themeVars.radii.md,
+  selectors: {
+    ':hover:not(:disabled)': {
+      backgroundColor: rgba(themeVars.color.white, 0.05),
+    },
+    ':focus-visible': {
+      outline: `solid 0.0125rem ${themeVars.color.yellow}`,
+    },
+    ':disabled': {
+      pointerEvents: 'none',
+      opacity: 0.5,
+    },
+  },
+})
+
+globalStyle(`${buttonStyles} > svg:hover`, {
+  fill: themeVars.color.yellow,
+})
+
+export const buttonVariantStyles = styleVariants({
+  icon: [
+    buttonStyles,
+    {
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '0.5rem',
+      gap: '0.25rem',
+    },
+  ],
+  outline: [
+    buttonStyles,
+    {
+      border: 'solid 0.125rem currentColor',
+    },
+  ],
+  fill: [
+    buttonStyles,
+    {
+      color: themeVars.color.white,
+      backgroundColor: themeVars.color.black,
+      ':hover': {
+        backgroundColor: lighten(0.025, themeVars.color.black),
       },
-      outline: {
-        border: 'solid 0.125rem currentColor',
+    },
+  ],
+  cta: [
+    buttonStyles,
+    {
+      color: themeVars.color.white,
+      backgroundColor: themeVars.color.black,
+      perspective: '64rem',
+      fontWeight: themeVars.fontWeight.bold,
+      transitionDuration: themeVars.duration[500],
+      transitionProperty: 'box-shadow, transform',
+      ':hover': {
+        willChange: 'box-shadow, transform',
+        transform: 'translate(8px, -8px)',
+        boxShadow: themeVars.shadow.isometric,
+        backgroundColor: lighten(0.025, themeVars.color.black),
       },
-      fill: {
-        color: 'white',
-        backgroundColor: 'black',
-        _hover: {
-          backgroundColor: lighten(0.025, token('colors.black')),
-        },
-      },
-      cta: {
-        color: 'white',
-        backgroundColor: 'black',
-        perspective: '64rem',
-        fontWeight: '700',
-        transitionDuration: '0.25s',
-        transitionProperty: 'box-shadow, transform',
-        _hover: {
-          willChange: 'box-shadow, transform',
-          transform: 'translate(8px, -8px)',
-          boxShadow: 'isometric',
-          backgroundColor: lighten(0.025, token('colors.black')),
-        },
-      }
-    }
-  }
+    },
+  ],
 })
 
 export const Button = forwardRef<ButtonBaseElements, any>(
@@ -125,7 +158,7 @@ export const Button = forwardRef<ButtonBaseElements, any>(
       role={role ?? href ? 'link' : 'button'}
       type={type}
       disabled={disabled}
-      classNames={cx(buttonStyles({ type: variant }), classNames)}
+      classNames={clsx(buttonStyles[variant], classNames)}
       onClick={onClick}
       {...props}
     >
@@ -146,21 +179,46 @@ export const IconButton: FC<IconButtonProps> = ({
   className,
   ...props
 }) => (
-  <Button variant='icon' className={className} {...props}>
+  <Button
+    variant='icon'
+    className={className}
+    {...props}
+  >
     {iconPosition === 'start' && <Icon name={icon} />}
     {children}
     {iconPosition === 'end' && <Icon name={icon} />}
   </Button>
 )
 
-export const OutlineButton: FC<ButtonBaseElementProps> = ({ className, ...props }) => (
-  <Button variant='outline' className={className} {...props} />
+export const OutlineButton: FC<ButtonBaseElementProps> = ({
+  className,
+  ...props
+}) => (
+  <Button
+    variant='outline'
+    className={className}
+    {...props}
+  />
 )
 
-export const FillButton: FC<ButtonBaseElementProps> = ({ className, ...props }) => (
-  <Button variant='fill' classNames={className} {...props} />
+export const FillButton: FC<ButtonBaseElementProps> = ({
+  className,
+  ...props
+}) => (
+  <Button
+    variant='fill'
+    classNames={className}
+    {...props}
+  />
 )
 
-export const CTAButton: FC<ButtonBaseElementProps> = ({ className, ...props }) => (
-  <Button variant='cta' className={className} {...props} />
+export const CTAButton: FC<ButtonBaseElementProps> = ({
+  className,
+  ...props
+}) => (
+  <Button
+    variant='cta'
+    className={className}
+    {...props}
+  />
 )

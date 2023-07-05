@@ -1,35 +1,38 @@
 import type { TooltipProps as TooltipPrimitiveProps } from '@radix-ui/react-tooltip'
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
+import { style } from '@vanilla-extract/css'
 import { FC, ReactNode } from 'react'
 
-import { css } from '@diaryco/style-engine/css'
+import { themeVars } from '~/foundation/theme.css'
 
-const tooltipContentStyles = css({
+const tooltipContentStyles = style({
   willChange: 'transform, opacity',
-  zIndex: 'tooltip',
+  zIndex: themeVars.zIndex.tooltip,
   padding: '0.5em 1em',
-  fontSize: 'sm',
-  backgroundColor: 'black',
-  borderRadius: 'md',
-  boxShadow: 'normal',
-  animationDuration: '500',
-  animationTimingFunction: 'easeOutQuart',
-  '&[data-side="top"]': {
-    animationName: 'slideDownAndFade',
-  },
-  '&[data-side="right"]': {
-    animationName: 'slideLeftAndFade',
-  },
-  '&[data-side="bottom"]': {
-    animationName: 'slideUpAndFade',
-  },
-  '&[data-side="left"]': {
-    animationName: 'slideRightAndFade',
+  fontSize: themeVars.fontSize.sm,
+  backgroundColor: themeVars.color.black,
+  borderRadius: themeVars.radii.md,
+  boxShadow: themeVars.shadow.normal,
+  animationDuration: themeVars.duration[500],
+  animationTimingFunction: themeVars.easing.easeOutQuart,
+  selectors: {
+    '&[data-side="top"]': {
+      animationName: themeVars.keyframes.slideDownAndFade,
+    },
+    '&[data-side="right"]': {
+      animationName: themeVars.keyframes.slideLeftAndFade,
+    },
+    '&[data-side="bottom"]': {
+      animationName: themeVars.keyframes.slideUpAndFade,
+    },
+    '&[data-side="left"]': {
+      animationName: themeVars.keyframes.slideRightAndFade,
+    },
   },
 })
 
-const toolTipArrowStyles = css({
-  fill: 'black',
+const toolTipArrowStyles = style({
+  fill: themeVars.color.black,
 })
 
 interface TooltipProps extends TooltipPrimitiveProps {

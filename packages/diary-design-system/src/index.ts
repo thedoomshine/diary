@@ -42,19 +42,19 @@ export {
 export type { TimePickerOption } from '~/modules/TimePicker'
 
 export {
-  colorTokens,
-  durationTokens,
-  easingTokens,
-  fontSizeTokens,
-  fontTokens,
-  fontWeightTokens,
-  lineHeightTokens,
-  opacityTokens,
-  radiiTokens,
-  shadowTokens,
-  sizeTokens,
-  spacingTokens,
-  zIndexTokens
+  color,
+  duration,
+  easing,
+  fontSize,
+  font,
+  fontWeight,
+  lineHeight,
+  opacity,
+  radii,
+  shadow,
+  size,
+  spacing,
+  zIndex
 } from '~/foundation'
 export { globalCss } from '~/foundation/globalCss'
 export { preset } from './diary.theme'

@@ -1,8 +1,4 @@
-import { defineTokens } from '@pandacss/dev'
-
-import { generateTokens } from '../utils'
-
-export const colorTokens = {
+export const color = {
   black: `#0d0d0d`,
   blue: `#00a3d1`,
   charcoal: `#1f1f1f`,
@@ -15,5 +11,3 @@ export const colorTokens = {
   white: `#f5f5f5`,
   yellow: `#f8c630`,
 } as const
-
-export const colors = defineTokens.colors(generateTokens(colorTokens))
