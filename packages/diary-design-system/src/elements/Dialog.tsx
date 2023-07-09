@@ -3,7 +3,7 @@ import type { MouseEvent } from 'react'
 import styled from 'styled-components'
 
 import { IconButton } from '~/elements'
-import { grainyGradientBackground } from '~/foundation/utilities'
+import { grainyGradientBackground } from '~/utils'
 
 const StyledDialogContent = styled.div`
   ${({ theme }) =>

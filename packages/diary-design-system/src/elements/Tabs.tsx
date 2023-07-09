@@ -1,7 +1,7 @@
 import * as TabsPrimitive from '@radix-ui/react-tabs'
-import styled from 'styled-components'
+import styled, { type IStyledComponent } from 'styled-components'
 
-const TabsRoot = styled(TabsPrimitive.Root)`
+const TabsRoot: IStyledComponent<"web", TabsPrimitive.TabsProps & React.RefAttributes<HTMLDivElement>> = styled(TabsPrimitive.Root)`
   display: flex;
   flex-direction: column;
   width: 100%;

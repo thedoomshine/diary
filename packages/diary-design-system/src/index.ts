@@ -40,20 +40,20 @@ export {
 export type { TimePickerOption } from '~/modules/TimePicker'
 
 export {
+  GlobalStyle,
   color,
   duration,
   easing,
-  fontSize,
   font,
+  fontSize,
   fontWeight,
   lineHeight,
   opacity,
   radii,
+  reset,
   shadow,
   size,
   spacing,
-  zIndex,
-  GlobalStyle,
-  reset,
   theme,
+  zIndex,
 } from '~/foundation'
