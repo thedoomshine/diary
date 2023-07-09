@@ -1,60 +1,60 @@
 import * as AvatarPrimitive from '@radix-ui/react-avatar'
 import type { FC } from 'react'
+import styled from 'styled-components'
 
-import clsx from 'clsx'
+const AvatarRoot = styled(AvatarPrimitive.Root)`
+  user-select: none;
 
-import { style } from '@vanilla-extract/css'
-import { themeVars } from '~/foundation/theme.css'
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 
-const avatarRootStyles = style({
-  userSelect: 'none',
-  overflow: 'hidden',
-  display: 'inline-flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  aspectRatio: '1',
-  width: '1em',
-  height: '1em',
-  fontSize: themeVars.fontSize.xl,
-  verticalAlign: 'middle',
-  backgroundColor: themeVars.color.black,
-  borderRadius: themeVars.radii.full,
-})
+  aspect-ratio: 1;
+  width: 1em;
+  height: 1em;
 
-const avatarImageStyles = style({
-  width: '100%',
-  height: '100%',
-  objectFit: 'cover',
-  borderRadius: 'inherit',
-})
+  font-size: ${({ theme }) => theme.fontSize.xl};
+  vertical-align: middle;
 
-const avatarFallbackStyles = style({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: '100%',
-  height: '100%',
-  fontSize: themeVars.fontSize.md,
-  fontWeight: '400',
-  lineHeight: themeVars.lineHeight.element,
-  color: themeVars.color.yellow,
-  backgroundColor: themeVars.color.charcoal,
-})
+  background-color: ${({ theme }) => theme.color.black};
+  border-radius: ${({ theme }) => theme.radii.full};
+`
+
+const AvatarImage = styled(AvatarPrimitive.Image)`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+`
+
+const AvatarFallback = styled(AvatarPrimitive.Fallback)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  font-size: ${({ theme }) => theme.fontSize.md};
+  line-height: ${({ theme }) => theme.lineHeight.element};
+  color: ${({ theme }) => theme.color.purple};
+
+  background-color: ${({ theme }) => theme.color.charcoal};
+`
 
 interface AvatarProps {
-  className?: string
   url?: string
   name?: string
   initials?: string
 }
 
-export const Avatar: FC<AvatarProps> = ({ className, url, name, initials, ...props }) => (
-  <AvatarPrimitive.Root className={clsx(avatarRootStyles, className)} {...props}>
-    <AvatarPrimitive.Image
-      className={avatarImageStyles}
+export const Avatar: FC<AvatarProps> = ({ url, name, initials, ...props }) => (
+  <AvatarRoot {...props}>
+    <AvatarImage
       src={url}
       alt={name}
     />
-    <AvatarPrimitive.Fallback className={avatarFallbackStyles} delayMs={600}>{initials}</AvatarPrimitive.Fallback>
-  </AvatarPrimitive.Root>
+    <AvatarFallback delayMs={600}>{initials}</AvatarFallback>
+  </AvatarRoot>
 )

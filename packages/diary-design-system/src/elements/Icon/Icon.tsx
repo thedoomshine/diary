@@ -1,6 +1,5 @@
-import { style } from '@vanilla-extract/css'
-import clsx from 'clsx'
 import React from 'react'
+import styled from 'styled-components'
 
 import { IconNames, Icons } from './Library'
 
@@ -12,29 +11,31 @@ interface IconProperties {
   name: string
 }
 
-const iconStyles = style({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: '1em',
-  height: '1em',
-  fill: 'currentcolor',
-})
+const StyledSVG = styled.svg`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 1em;
+  height: 1em;
+
+  fill: currentcolor;
+  stroke: currentcolor;
+  stroke-width: 0;
+`
 
 export const Icon: React.FC<IconProperties> = ({
   viewBox = '0 0 32 32',
   title,
   name,
   role = 'img',
-  className,
   ...props
 }) => {
   const iconName = name as IconNames
   const icon = Icons[iconName]
 
   return (
-    <svg
-      className={clsx(iconStyles, className)}
+    <StyledSVG
       viewBox={viewBox}
       role={role}
       fill='none'
@@ -42,6 +43,6 @@ export const Icon: React.FC<IconProperties> = ({
     >
       {title && <title>{title}</title>}
       {icon}
-    </svg>
+    </StyledSVG>
   )
 }

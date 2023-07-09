@@ -1,63 +1,72 @@
-import { style } from '@vanilla-extract/css'
 import { FC, ReactNode } from 'react'
+import styled from 'styled-components'
 
-import { Avatar } from '~/elements/Avatar'
-import { buttonStyles } from '~/elements/Button'
-import { Icon } from '~/elements/Icon/Icon'
-import { Popover, PopoverContent, PopoverTrigger } from '~/elements/Popover'
-import { themeVars } from '~/foundation/theme.css'
+import {
+  Avatar,
+  ButtonStyles,
+  Icon,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '~/elements'
 
-const popoverTriggerStyles = style([
-  buttonStyles,
-  {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '100%',
-    borderRadius: themeVars.radii.lg,
-  },
-])
+const StyledPopoverTrigger = styled(PopoverTrigger)`
+  ${ButtonStyles};
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-const avatarStyles = style({
-  flex: '0 0 auto',
-  width: '1em',
-  height: '1em',
-  fontSize: themeVars.fontSize.xl,
-})
+  width: 100%;
 
-const usernameContainerStyles = style({
-  display: 'none',
-  flex: '1 1 auto',
-  flexDirection: 'column',
-  alignItems: 'flex-start',
-  justifyContent: 'flex-start',
-  marginLeft: '0.5rem',
-  lineHeight: themeVars.lineHeight.element,
-  [`@media screen and ${themeVars.breakpoints.xl}`]: {
-    display: 'flex',
-  },
-})
+  border-radius: 2rem;
+`
 
-const userDisplayNameStyles = style({
-  fontSize: themeVars.fontSize.md,
-  fontWeight: themeVars.fontWeight.bold,
-})
+const StyledAvatar = styled(Avatar)`
+  flex: 0 0 auto;
+  width: 1em;
+  height: 1em;
+  font-size: ${({ theme }) => theme.fontSize.xl};
+`
 
-const usernameStyles = style({
-  fontSize: themeVars.fontSize.sm,
-  color: themeVars.color.silver,
-})
+const StyledUserNames = styled.div`
+  display: none;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
 
-const iconStyles = style({
-  display: 'none',
-  alignSelf: 'center',
-  justifySelf: 'flex-end',
-  marginRight: '0.25rem',
-  fontSize: themeVars.fontSize.sm,
-  [`@media screen and ${themeVars.breakpoints.xl}`]: {
-    display: 'block',
-  },
-})
+  margin-left: 0.5rem;
+
+  line-height: 1;
+
+  @media ${({ theme }) => theme.media.xl} {
+    display: flex;
+  }
+`
+
+const StyledUserDisplayName = styled.span`
+  font-size: ${({ theme }) => theme.fontSize.md};
+  font-weight: ${({ theme }) => theme.fontWeight[800]};
+`
+
+const StyledUsername = styled.span`
+  font-size: ${({ theme }) => theme.fontSize.sm};
+  color: ${({ theme }) => theme.color.silver};
+`
+
+const StyledIcon = styled(Icon)`
+  display: none;
+  align-self: center;
+  justify-self: flex-end;
+
+  margin-right: 0.25rem;
+
+  font-size: ${({ theme }) => theme.fontSize.sm};
+
+  @media ${({ theme }) => theme.media.xl} {
+    display: block;
+  }
+`
 
 interface AvatarMenuProps {
   url?: string
@@ -65,7 +74,6 @@ interface AvatarMenuProps {
   displayName?: string
   initials?: string
   children?: ReactNode | ReactNode[]
-  className?: string
 }
 
 export const AvatarMenu: FC<AvatarMenuProps> = ({
@@ -74,30 +82,22 @@ export const AvatarMenu: FC<AvatarMenuProps> = ({
   username,
   initials,
   children,
-  className,
   ...props
 }) => {
   return (
     <Popover>
-      <PopoverTrigger
-        className={cx(popoverTriggerStyles, className)}
-        {...props}
-      >
-        <Avatar
-          className={avatarStyles}
+      <StyledPopoverTrigger {...props}>
+        <StyledAvatar
           url={url}
           name={displayName}
           initials={initials}
         />
-        <div className={usernameContainerStyles}>
-          <span className={userDisplayNameStyles}>{displayName}</span>
-          <span className={usernameStyles}>@{username}</span>
-        </div>
-        <Icon
-          className={iconStyles}
-          name='ellipses'
-        />
-      </PopoverTrigger>
+        <StyledUserNames>
+          <StyledUserDisplayName>{displayName}</StyledUserDisplayName>
+          <StyledUsername>@{username}</StyledUsername>
+        </StyledUserNames>
+        <StyledIcon name='ellipses' />
+      </StyledPopoverTrigger>
       {children}
     </Popover>
   )

@@ -1,214 +1,232 @@
-import { style } from '@vanilla-extract/css'
-import clsx from 'clsx'
 import { format } from 'date-fns'
 import { darken, lighten } from 'polished'
-import {
-  type FC,
-  type FocusEvent,
-  forwardRef,
-  useEffect,
-  useState,
-} from 'react'
+import { forwardRef, useEffect, useState } from 'react'
+import type { FC, FocusEvent } from 'react'
 import ReactDatePicker, {
   ReactDatePickerCustomHeaderProps,
 } from 'react-datepicker'
+import styled, { css } from 'styled-components'
 
-import { Button, baseButtonStyles, buttonVariantStyles } from '~/elements'
-import { themeVars } from '~/foundation/theme.css'
+import { ButtonStyles, FillButtonStyles, IconButton, IconButtonStyles } from '~/elements'
 
-const triangleArrowPseudoStyles = {
-  content: '',
-  position: 'absolute',
-  zIndex: -1,
-  left: '-0.5rem',
-  boxSizing: 'content-box',
-  width: '1px',
-  height: 0,
-  borderWidth: themeVars.radii.md,
-}
+const triangleArrow = css`
+  position: absolute;
+  width: 0;
+  margin-left: calc(-0.5rem * 0.5);
 
-const triangleArrowStyles = {
-  position: 'absolute',
-  width: 0,
-  marginLeft: '-0.25rem',
-  selectors: {
-    '::after': {
-      ...triangleArrowPseudoStyles,
-    },
-    '::before': {
-      ...triangleArrowPseudoStyles,
-      borderBottomColor: themeVars.color.black,
-    },
-  },
-}
+  &::before,
+  &::after {
+    content: '';
 
-const triangleArrowUpPseudoStyles = {
-  borderTop: 'none',
-  borderBottomColor: themeVars.color.black,
-}
+    position: absolute;
+    z-index: -1;
+    left: -0.5rem;
 
-const triangleArrowUpStyles = {
-  ...triangleArrowStyles,
-  top: 0,
-  marginTop: '-0.5rem',
-  selectors: {
-    '::after': {
-      ...triangleArrowStyles.selectors['::after'],
-      ...triangleArrowUpPseudoStyles,
-      top: 0,
-    },
-    '::before': {
-      ...triangleArrowStyles.selectors['::before'],
-      ...triangleArrowUpPseudoStyles,
-      top: '-1px',
-      borderBottomColor: themeVars.color.black,
-    },
-  },
-}
+    box-sizing: content-box;
+    width: 1px;
+    height: 0;
 
-const triangleArrowDownPseudoStyles = {
-  borderTopColor: themeVars.color.black,
-  borderBottom: 'none',
-}
-const triangleArrowDownStyles = {
-  ...triangleArrowStyles,
-  bottom: 0,
-  marginBottom: '-0.5rem',
-  selectors: {
-    '::after': {
-      ...triangleArrowStyles.selectors['::after'],
-      ...triangleArrowDownPseudoStyles,
-      bottom: 0,
-    },
-    '::before': {
-      ...triangleArrowStyles.selectors['::before'],
-      ...triangleArrowDownPseudoStyles,
-      bottom: '-1px',
-      borderTopColor: themeVars.color.black,
-    },
-  },
-}
+    border: 0.5rem solid transparent;
+    border-width: 0.5rem;
+  }
 
-const datepickerPopperStyles = style({
-  zIndex: 3,
-  top: '0.5rem',
-  padding: '0.25rem',
-  paddingBottom: '0.125rem',
-  backgroundColor: themeVars.color.black,
-  borderRadius: '0.5rem',
-  boxShadow: themeVars.shadow.normal,
-  selectors: {
-    '&[data-placement^="bottom"]': {
-      paddingTop: 'calc(0.5rem + 2px)',
-    },
-    // '&[data-placement^="bottom"] > .react-datepicker__triangle': {
-    //   ...triangleArrowUpStyles,
-    // },
-    [`& > [data-placement="bottom-end"] > .react-datepicker__triangle,
-    &[data-placement="top-end"] > .react-datepicker__triangle`
-    ]: {
-      right: '50px',
-      left: 'auto',
-    },
-    '& > [data-placement^="top"]': {
-      paddingBottom: 'calc(0.5rem + 2px)',
-    },
-    // '& > [data-placement^="top"] > .react-datepicker__triangle': {
-    //   ...triangleArrowDownStyles,
-    // },
-    '& > [data-placement^="right"]': {
-      paddingLeft: '0.5rem',
-    },
-    '& > [data-placement^="right"] > .react-datepicker__triangle': {
-      right: '42px',
-      left: 'auto',
-    },
-    '&[data-placement^="left"]': {
-      paddingRight: '0.5rem',
-    },
-    '&[data-placement^="left"] > .react-datepicker__triangle': {
-      right: 'auto',
-      left: '42px',
-    },
-  },
-})
+  &::before {
+    border-bottom-color: ${({ theme }) => theme.color.black};
+  }
+`
 
-const datepickerWrapperStyles = style({
-  position: 'relative',
-  alignSelf: 'flex-start',
-  textTransform: 'lowercase',
-  selectors: {
-    '& > .react-datepicker__triangle': {
-      position: 'absolute',
-      left: '50px',
-    },
-    '& > .react-datepicker__month': {
-      display: 'grid',
-      gap: '0.25rem',
-    },
-    // [`& > .react-datepicker__navigation,
-    // & > .react-datepicker__day`]: {
-    //   ...baseButtonStyles,
-    // },
-    '& > .react-datepicker__navigation, & > .react-datepicker__day-name, & > .react-datepicker__day':
-      {
-        display: 'flex',
-        gap: '0.25rem',
-        aspectRatio: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-      },
-    '& > . react-datepicker__day-name': {
-      fontWeight: themeVars.fontWeight.bold,
-      textAlign: 'center',
-    },
-    '& > .react-datepicker__day-names, & > .react-datepicker__week': {
-      display: 'grid',
-      gridTemplateColumns: 'repeat(7, 2.5rem)',
-      textTransform: 'lowercase',
-    },
-    // '& > .react-datepicker__today-button': {
-    //   ...baseButtonStyles,
-    //   fontWeight: themeVars.fontWeight.bold,
-    //   width: '100%',
-    // },
-    '& > .react-datepicker__day--outside-month': {
-      color: themeVars.color.silver,
-    },
-    '& > .react-datepicker__day--keyboard-selected': {
-      backgroundColor: darken(0.25, themeVars.color.yellow),
-      border: 0,
-    },
-    '& > .react-datepicker__day--selected': {
-      color: themeVars.color.black,
-      backgroundColor: themeVars.color.yellow,
-      // ':hover': {
-      //   backgroundColor: lighten(0.025, themeVars.color.yellow),
-      // },
-    },
-    '& > .react-datepicker__day--today': {
-      fontWeight: themeVars.fontWeight.bold,
-    },
-    '& > .react-datepicker__aria-live': {
-      position: 'absolute',
-      overflow: 'hidden',
-      width: '1px',
-      height: '1px',
-      margin: '-1px',
-      padding: 0,
-      whiteSpace: 'nowrap',
-      clipPath: 'circle(0)',
-      border: 0,
-    },
-  },
-})
+const triangleArrowUp = css`
+  ${triangleArrow}
+  top: 0;
+  margin-top: -0.5rem;
 
-const datepickerHeaderStyles = style({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-around',
-  padding: '0 0.125rem',
-})
+  &::before,
+  &::after {
+    border-top: none;
+    border-bottom-color: ${({ theme }) => theme.color.black};
+  }
+
+  &::after {
+    top: 0;
+  }
+
+  &::before {
+    top: -1px;
+    border-bottom-color: ${({ theme }) => theme.color.black};
+  }
+`
+
+const triangleArrowDown = css`
+  ${triangleArrow}
+  bottom: 0;
+  margin-bottom: -0.5rem;
+
+  &::before,
+  &::after {
+    border-top-color: ${({ theme }) => theme.color.black};
+    border-bottom: none;
+  }
+
+  &::after {
+    bottom: 0;
+  }
+
+  &::before {
+    bottom: -1px;
+    border-top-color: ${({ theme }) => theme.color.black};
+  }
+`
+
+const Wrapper = styled.div`
+  position: relative;
+  align-self: flex-start;
+  text-transform: lowercase;
+
+  .react-datepicker__triangle {
+    position: absolute;
+    left: 50px;
+  }
+
+  .react-datepicker-popper {
+    z-index: 3;
+    top: 0.5rem;
+
+    padding: ${({ theme }) => theme.space.xs};
+    padding-bottom: ${({ theme }) => theme.space.xxs};
+
+    background-color: ${({ theme }) => theme.color.black};
+    border-radius: ${({ theme }) => theme.radii.md};
+    box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 50%);
+
+    &[data-placement^='bottom'] {
+      padding-top: 0.5rem + 2px;
+
+      .react-datepicker__triangle {
+        ${triangleArrowUp}
+      }
+    }
+
+    &[data-placement='bottom-end'],
+    &[data-placement='top-end'] {
+      .react-datepicker__triangle {
+        right: 50px;
+        left: auto;
+      }
+    }
+
+    &[data-placement^='top'] {
+      padding-bottom: 0.5rem + 2px;
+
+      .react-datepicker__triangle {
+        ${triangleArrowDown}
+      }
+    }
+
+    &[data-placement^='right'] {
+      padding-left: 0.5rem;
+
+      .react-datepicker__triangle {
+        right: 42px;
+        left: auto;
+      }
+    }
+
+    &[data-placement^='left'] {
+      padding-right: 0.5rem;
+
+      .react-datepicker__triangle {
+        right: auto;
+        left: 42px;
+      }
+    }
+  }
+
+  .react-datepicker__month {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  .react-datepicker__navigation,
+  .react-datepicker__day {
+    ${IconButtonStyles}
+  }
+
+  .react-datepicker__navigation,
+  .react-datepicker__day-name,
+  .react-datepicker__day {
+    display: flex;
+    gap: 0.25rem;
+    aspect-ratio: 1;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .react-datepicker__day-name {
+    font-weight: ${({ theme }) => theme.fontWeight[800]};
+    text-align: center;
+  }
+
+  .react-datepicker__day-names,
+  .react-datepicker__week {
+    display: grid;
+    grid-template-columns: repeat(7, 2.5rem);
+    text-transform: lowercase;
+  }
+
+  .react-datepicker__today-button {
+    ${ButtonStyles}
+    font-weight: ${({ theme }) => theme.fontWeight[800]};
+  }
+
+  .react-datepicker__today-button {
+    width: 100%;
+  }
+
+  .react-datepicker__day--outside-month {
+    color: ${({ theme }) => theme.color.silver};
+  }
+
+  .react-datepicker__day--keyboard-selected {
+    background-color: ${({ theme }) => darken(0.25, theme.color.yellow)};
+    border: 0;
+  }
+
+  .react-datepicker__day--selected {
+    color: ${({ theme }) => theme.color.black};
+    background-color: ${({ theme }) => theme.color.yellow};
+
+    &:hover {
+      background-color: ${({ theme }) => lighten(0.025, theme.color.yellow)};
+    }
+  }
+
+  .react-datepicker__day--today {
+    font-weight: ${({ theme }) => theme.fontWeight[800]};
+  }
+
+  .react-datepicker__aria-live {
+    position: absolute;
+
+    overflow: hidden;
+
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+
+    white-space: nowrap;
+
+    clip-path: circle(0);
+    border: 0;
+  }
+`
+
+const StyledHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: ${({ theme }) => `0 ${theme.space.xxs}`};
+`
 
 const DatePickerHeader: FC<ReactDatePickerCustomHeaderProps> = ({
   date,
@@ -218,48 +236,46 @@ const DatePickerHeader: FC<ReactDatePickerCustomHeaderProps> = ({
   nextMonthButtonDisabled,
 }) => {
   return (
-    <div className={datepickerHeaderStyles}>
-      <Button
-        variant='icon'
+    <StyledHeader>
+      <IconButton
         onClick={decreaseMonth}
         disabled={prevMonthButtonDisabled}
         icon='chevron-left'
       />
       {format(date, 'MMMM yyyy').toLocaleLowerCase()}
-      <Button
-        variant='icon'
+      <IconButton
         onClick={increaseMonth}
         disabled={nextMonthButtonDisabled}
         icon='chevron-right'
       />
-    </div>
+    </StyledHeader>
   )
 }
 
-const datepickerInputWrapperStyles = style([
-  buttonVariantStyles['fill'],
-  style({
-    border: `solid 1px ${themeVars.color.grey}`,
-    padding: '0.5rem',
-    position: 'relative',
-    selectors: {
-      '& > input': {
-        position: 'absolute',
-        width: '100%',
-        margin: 0,
-        padding: '0.25rem',
-        verticalAlign: 'top',
-        border: 'none',
-      },
-    },
-  }),
-])
+const InputWrapper = styled.div`
+  ${FillButtonStyles}
+  border: solid 1px ${({ theme }) => theme.color.grey};
+  padding: 0.5rem;
+  position: relative;
 
-const datepickerTemplateStyles = style({
-  position: 'relative',
-  zIndex: 'behind',
-  color: 'transparent',
-})
+  input {
+    position: absolute;
+
+    width: 100%;
+    margin: 0;
+    padding: 0.25rem;
+
+    vertical-align: top;
+
+    border: none;
+  }
+`
+
+const Template = styled.span`
+  position: relative;
+  z-index: -1;
+  color: transparent;
+`
 
 interface DatePickerInputProps {
   dateFormat: string
@@ -281,20 +297,15 @@ const DatePickerInput = forwardRef<HTMLInputElement, DatePickerInputProps>(
     }, [selected, isFocused])
 
     return (
-      <div className={clsx(datepickerInputWrapperStyles, className)}>
-        <span
-          className={datepickerTemplateStyles}
-          aria-hidden
-        >
-          {temp}
-        </span>
+      <InputWrapper className={className}>
+        <Template aria-hidden>{temp}</Template>
         <input
           ref={ref}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           {...props}
         />
-      </div>
+      </InputWrapper>
     )
   }
 )
@@ -328,7 +339,7 @@ export const DatePicker: FC<DatePickerProps> = ({
   }
 
   return (
-    <div className={datepickerWrapperStyles}>
+    <Wrapper>
       <ReactDatePicker
         customInput={
           <DatePickerInput
@@ -338,7 +349,6 @@ export const DatePicker: FC<DatePickerProps> = ({
             setTemp={setTemp}
           />
         }
-        popperClassName={datepickerPopperStyles}
         dateFormat={dateFormat}
         disabled={disabled}
         onChange={() => {
@@ -367,6 +377,6 @@ export const DatePicker: FC<DatePickerProps> = ({
         todayButton='today'
         {...props}
       />
-    </div>
+    </Wrapper>
   )
 }

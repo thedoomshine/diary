@@ -1,39 +1,44 @@
-import type { TooltipProps as TooltipPrimitiveProps } from '@radix-ui/react-tooltip'
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
-import { style } from '@vanilla-extract/css'
+import type { TooltipProps as TooltipPrimitiveProps } from '@radix-ui/react-tooltip'
 import { FC, ReactNode } from 'react'
+import styled from 'styled-components'
 
-import { themeVars } from '~/foundation/theme.css'
+const TooltipContent = styled(TooltipPrimitive.Content)`
+  will-change: transform, opacity;
 
-const tooltipContentStyles = style({
-  willChange: 'transform, opacity',
-  zIndex: themeVars.zIndex.tooltip,
-  padding: '0.5em 1em',
-  fontSize: themeVars.fontSize.sm,
-  backgroundColor: themeVars.color.black,
-  borderRadius: themeVars.radii.md,
-  boxShadow: themeVars.shadow.normal,
-  animationDuration: themeVars.duration[500],
-  animationTimingFunction: themeVars.easing.easeOutQuart,
-  selectors: {
-    '&[data-side="top"]': {
-      animationName: themeVars.keyframes.slideDownAndFade,
-    },
-    '&[data-side="right"]': {
-      animationName: themeVars.keyframes.slideLeftAndFade,
-    },
-    '&[data-side="bottom"]': {
-      animationName: themeVars.keyframes.slideUpAndFade,
-    },
-    '&[data-side="left"]': {
-      animationName: themeVars.keyframes.slideRightAndFade,
-    },
-  },
-})
+  z-index: ${({ theme }) => theme.zIndex.toolTip};
 
-const toolTipArrowStyles = style({
-  fill: themeVars.color.black,
-})
+  padding: 0.5em 1em;
+
+  font-size: ${({ theme }) => theme.fontSize.sm};
+
+  background-color: ${({ theme }) => theme.color.black};
+  border-radius: ${({ theme }) => theme.radii.md};
+  box-shadow: ${({ theme }) => theme.shadow.normal};
+
+  animation-duration: ${({ theme }) => theme.duration[250]};
+  animation-timing-function: ${({ theme }) => theme.easing.easeOutQuart};
+
+  &[data-side='top'] {
+    animation-name: ${({ theme }) => theme.keyframes.slideDownAndFade};
+  }
+
+  &[data-side='right'] {
+    animation-name: ${({ theme }) => theme.keyframes.slideLeftAndFade};
+  }
+
+  &[data-side='bottom'] {
+    animation-name: ${({ theme }) => theme.keyframes.slideUpAndFade};
+  }
+
+  &[data-side='left'] {
+    animation-name: ${({ theme }) => theme.keyframes.slideRightAndFade};
+  }
+`
+
+const TooltipArrow = styled(TooltipPrimitive.Arrow)`
+  fill: ${({ theme }) => theme.color.black};
+`
 
 interface TooltipProps extends TooltipPrimitiveProps {
   align?: 'start' | 'center' | 'end'
@@ -69,8 +74,7 @@ export const Tooltip: FC<TooltipProps> = ({
       delayDuration={delayDuration}
     >
       <TooltipPrimitive.Trigger asChild>{children}</TooltipPrimitive.Trigger>
-      <TooltipPrimitive.Content
-        className={tooltipContentStyles}
+      <TooltipContent
         align={align}
         alignOffset={alignOffset}
         side={side}
@@ -78,12 +82,11 @@ export const Tooltip: FC<TooltipProps> = ({
         {...props}
       >
         {content}
-        <TooltipPrimitive.Arrow
-          className={toolTipArrowStyles}
+        <TooltipArrow
           height={8}
           width={16}
         />
-      </TooltipPrimitive.Content>
+      </TooltipContent>
     </TooltipPrimitive.Root>
   )
 }

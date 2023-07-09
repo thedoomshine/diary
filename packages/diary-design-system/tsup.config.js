@@ -1,12 +1,10 @@
-import { vanillaExtractPlugin } from '@vanilla-extract/esbuild-plugin'
 import { defineConfig } from 'tsup'
 
 export default defineConfig((options) => ({
   clean: false,
   dts: true,
   entry: ['src/index.ts'],
-  external: ['react'],
-  esbuildPlugins: [vanillaExtractPlugin],
+  external: ['react', 'styled-components'],
   format: 'esm,cjs',
   outDir: 'dist',
   declarationDir: './dist/@types',

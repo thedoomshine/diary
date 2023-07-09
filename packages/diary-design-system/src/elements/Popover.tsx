@@ -1,53 +1,59 @@
+import * as PopoverPrimitive from '@radix-ui/react-popover';
 import type { PopoverContentProps as PopoverContentPrimitiveProps } from '@radix-ui/react-popover'
-import * as PopoverPrimitive from '@radix-ui/react-popover'
-import { style } from '@vanilla-extract/css'
-import clsx from 'clsx'
 import { ReactNode, forwardRef } from 'react'
+import styled from 'styled-components'
 
-import { themeVars } from '~/foundation/theme.css'
+import { ButtonStyles, Icon } from '~/elements'
 
-import { buttonVariantStyles } from './Button'
-import { Icon } from './Icon/Icon'
+const StyledPopoverContent = styled(PopoverPrimitive.Content)`
+  will-change: transform, opacity;
 
-const popoverContentStyles = style({
-  willChange: 'transform, opacity',
-  zIndex: themeVars.zIndex.popover,
-  width: '100%',
-  padding: '2rem',
-  backgroundColor: themeVars.color.charcoal,
-  borderRadius: themeVars.radii.md,
-  boxShadow: themeVars.shadow.normal,
-  animationDuration: themeVars.duration[500],
-  animationTimingFunction: themeVars.easing.easeOutQuart,
-  selectors: {
-    '&[data-state="open"][data-side="top"]': {
-      animationName: themeVars.keyframes.slideDownAndFade,
-    },
-    '&[data-state="open"][data-side="right"]': {
-      animationName: themeVars.keyframes.slideLeftAndFade,
-    },
-    '&[data-state="open"][data-side="bottom"]': {
-      animationName: themeVars.keyframes.slideUpAndFade,
-    },
-    '&[data-state="open"][data-side="left"]': {
-      animationName: themeVars.keyframes.slideRightAndFade,
-    },
-  },
-})
+  z-index: ${({ theme }) => theme.zIndex.popover};
 
-const popoverArrowStyles = style({
-  fill: themeVars.color.charcoal,
-})
+  width: 100%;
+  padding: 2rem;
 
-const popoverCloseStyles = style([
-  buttonVariantStyles.icon,
-  {
-    position: 'absolute',
-    top: '0.5rem',
-    right: '0.5rem',
-    color: themeVars.color.white,
-  },
-])
+  background-color: ${({ theme }) => `var(
+    --popover-background-color, ${theme.color.charcoal})`};
+  border-radius: ${({ theme }) => theme.radii.md};
+  box-shadow: ${({ theme }) => theme.shadow.normal};
+
+  animation-duration: ${({ theme }) => theme.duration[250]};
+  animation-timing-function: ${({ theme }) => theme.easeOutQuart};
+
+  &[data-state='open'][data-side='top'] {
+    animation-name: ${({ theme }) => theme.keyframes.slideDownAndFade};
+  }
+
+  &[data-state='open'][data-side='right'] {
+    animation-name: ${({ theme }) => theme.keyframes.slideLeftAndFade};
+  }
+
+  &[data-state='open'][data-side='bottom'] {
+    animation-name: ${({ theme }) => theme.keyframes.slideUpAndFade};
+  }
+
+  &[data-state='open'][data-side='left'] {
+    animation-name: ${({ theme }) => theme.keyframes.slideRightAndFade};
+  }
+`
+
+const PopoverArrow = styled(PopoverPrimitive.Arrow)`
+  fill: ${({ theme }) => `var(
+    --popover-background-color, ${theme.color.charcoal})`};
+`
+const StyledPopoverClose = styled(PopoverPrimitive.Close)`
+  ${ButtonStyles};
+  padding: 0.5rem;
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+
+  align-items: center;
+  justify-content: center;
+
+  color: ${({ theme }) => theme.color.white};
+`
 
 export interface PopoverProps extends PopoverContentPrimitiveProps {
   children?: ReactNode | ReactNode[]
@@ -55,30 +61,25 @@ export interface PopoverProps extends PopoverContentPrimitiveProps {
 }
 
 export const PopoverContent = forwardRef<HTMLDivElement, PopoverProps>(
-  ({ children, sideOffset = 8, className, ...props }, forwardedRef) => (
-    <PopoverPrimitive.Content
-      className={clsx(popoverContentStyles, className)}
+  ({ children, sideOffset = 8, ...props }, forwardedRef) => (
+    <StyledPopoverContent
       ref={forwardedRef}
       sideOffset={sideOffset}
       {...props}
     >
       {children}
-      <PopoverPrimitive.Arrow
-        className={popoverArrowStyles}
+      <PopoverArrow
         height={12}
         width={24}
       />
-    </PopoverPrimitive.Content>
+    </StyledPopoverContent>
   )
 )
 
 export const PopoverClose = () => (
-  <PopoverPrimitive.Close
-    className={popoverCloseStyles}
-    aria-label='Close'
-  >
+  <StyledPopoverClose aria-label='Close'>
     <Icon name='close' />
-  </PopoverPrimitive.Close>
+  </StyledPopoverClose>
 )
 
 export const Popover = PopoverPrimitive.Root

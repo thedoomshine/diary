@@ -1,9 +1,7 @@
-import { keyframes as kf } from '@vanilla-extract/css'
+import { keyframes as kf } from 'styled-components'
 
-export const animation = {
-  scaleUp: 'scaleUp {durations.150} {easings.easeOutQuart} normal',
-  fadeIn: 'fadeIn {durations.150} {easings.easeOutQuart} normal',
-}
+import { duration } from './durations'
+import { easing } from './easings'
 
 export const keyframes = {
   fadeIn: kf({
@@ -54,4 +52,9 @@ export const keyframes = {
     '0%': { opacity: '0', transform: 'translate(-50%; -48%) scale(.96)' },
     '100%': { opacity: '1', transform: 'translate(-50%; -50%) scale(1)' },
   }),
+}
+
+export const animation = {
+  scaleUp: `${keyframes.scaleUp} ${duration['150']} ${easing.easeOutQuart} normal`,
+  fadeIn: `${keyframes.fadeIn} ${duration['150']} ${easing.easeOutQuart} normal`,
 }

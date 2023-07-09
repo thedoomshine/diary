@@ -7,5 +7,5 @@ const FONT_FALLBACK = {
 export const font = {
   mono: `'IBM Plex Mono', ${FONT_FALLBACK.MONO}`,
   sans: `'Atkinson Hyperlegible', ${FONT_FALLBACK.SANS}`,
-  serif: `'Playfair Display', ${FONT_FALLBACK.SERIF}`,
+  serif: `${FONT_FALLBACK.SERIF}`,
 } as const

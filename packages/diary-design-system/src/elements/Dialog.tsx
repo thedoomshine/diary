@@ -1,42 +1,64 @@
-import type { MouseEvent } from 'react'
 import { useEffect, useRef } from 'react'
-import { IconButton } from './Button'
-// import { grainyGradientBackground } from '~/utils/grainy-gradient'
-import { globalStyle, style } from '@vanilla-extract/css'
-import { themeVars } from '~/foundation/theme.css'
+import type { MouseEvent } from 'react'
+import styled from 'styled-components'
 
-const dialogContentStyles = style({
-  display: 'grid',
-  gridTemplateRows: 'repeat(3, min-content)',
-  gap: '0.5rem',
-  padding: '0.5rem',
-  color: themeVars.color.white,
-  border: '0',
-  borderRadius: themeVars.radii.md,
-  boxShadow: themeVars.shadow.normal,
-  animationDuration: themeVars.duration[500],
-  animationTimingFunction: themeVars.easing.easeOutQuart,
-  animationName: themeVars.animation.scaleUp,
-})
+import { IconButton } from '~/elements'
+import { grainyGradientBackground } from '~/foundation/utilities'
 
-const dialogHeaderStyles = style({
-  display: 'grid',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-})
+const StyledDialogContent = styled.div`
+  ${({ theme }) =>
+    grainyGradientBackground({
+      background: theme.color.charcoal,
+      color1: theme.color.charcoal,
+    })}
 
-globalStyle(`${dialogContentStyles} > h1`, {
-  fontSize: themeVars.fontSize.md,
-})
+  overflow: visible;
+  display: grid;
+  grid-template-rows: repeat(3, min-content);
+  gap: 0.5rem;
 
-// const dialogFooterStyles = style({
-//   display: 'flex',
-//   justifyContent: 'space-between',
-// })
+  padding: 0.5rem;
 
-const dialogCloseButtonStyles = style({
-  gridColumn: 2,
-})
+  color: ${({ theme }) => theme.color.white};
+
+  border: 0;
+  border-radius: ${({ theme }) => theme.radii.md};
+  box-shadow: ${({ theme }) => theme.shadow.normal};
+
+  animation: ${({ theme }) => theme.animation.scaleUp};
+
+  &[open] {
+    animation: ${({ theme }) => theme.animation.scaleUp};
+
+    &::backdrop {
+      animation: ${({ theme }) => theme.animation.fadeIn};
+    }
+  }
+`
+
+const DialogHeader = styled.div`
+  display: grid;
+  align-items: center;
+  justify-content: space-between;
+
+  h1 {
+    font-size: ${({ theme }) => theme.fontSize.md};
+  }
+`
+
+// const DialogFooter = styled.div`
+//   display: flex;
+//   justify-content: space-between;
+// `
+
+const StyledCloseButton = styled(IconButton)`
+  grid-column: 2;
+`
+
+// const StyledButton = styled(Button)`
+//   color: ${({ theme }) => theme.color.black};
+//   background-color: ${({ theme }) => theme.color.yellow};
+// `
 
 const isClickInside = (event: MouseEvent, element: HTMLElement) => {
   const box = element.getBoundingClientRect()
@@ -112,19 +134,19 @@ export const Dialog = ({
       onCancel={handleClose}
       onClick={handleClick}
     >
-      <div className={dialogContentStyles}>
-        <div className={dialogHeaderStyles}>
+      <StyledDialogContent>
+        <DialogHeader>
           {title && <h1>{title}</h1>}
-          <IconButton className={dialogCloseButtonStyles} onClick={handleClose} icon='close' />
-        </div>
+          <StyledCloseButton onClick={handleClose} icon='close' />
+        </DialogHeader>
 
         {children}
 
-        {/* <div className={dialogFooterStyles}>
+        {/* <DialogFooter>
           <OutlineButton onClick={handleClose}>close</OutlineButton>
-          <FillButton onClick={proceedAndClose}>okay</FillButton>
-        </div> */}
-      </div>
+          <StyledButton onClick={proceedAndClose}>okay</StyledButton>
+        </DialogFooter> */}
+      </StyledDialogContent>
     </dialog>
   )
 }

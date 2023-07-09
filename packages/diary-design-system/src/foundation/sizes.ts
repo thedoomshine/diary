@@ -10,8 +10,10 @@ export const size = {
   [ScalePrefix.XL]: `96rem`,
 } as const
 
+type SizePrefixKey = keyof typeof size
+
 type BreakpointsObj = {
-  [key in ScalePrefix]: string
+  [key in SizePrefixKey]: string
 }
 
 export const breakpoints = Object
@@ -20,7 +22,7 @@ export const breakpoints = Object
     (acc, [key, value]: [string, string]) => (
       {
         ...acc,
-        [key as ScalePrefix]: `(min-width: ${remToPx(value)})`
+        [key as SizePrefixKey]: `(min-width: ${remToPx(value)})`
       }),
   {} as BreakpointsObj
 )

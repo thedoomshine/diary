@@ -1,5 +1,17 @@
 export { Avatar } from './Avatar'
-export { Button, baseButtonStyles, buttonVariantStyles, buttonStyles } from './Button'
+export {
+  CTAButton,
+  CTAButtonStyles,
+  Button,
+  ButtonStyles,
+  FillButton,
+  FillButtonStyles,
+  IconButton,
+  IconButtonStyles,
+  OutlineButton,
+  OutlineButtonStyles,
+  StyledButton,
+} from './Button'
 export { Checkbox } from './Checkbox'
 export { Dialog } from './Dialog'
 export { Icon } from './Icon/Icon'

@@ -1,74 +1,80 @@
+import * as SelectPrimitive from '@radix-ui/react-select'
 import type {
   SelectItemProps as SelectItemPrimitiveProps,
   SelectProps as SelectPrimitiveProps,
 } from '@radix-ui/react-select'
-import * as SelectPrimitive from '@radix-ui/react-select'
-import { style } from '@vanilla-extract/css'
-import clsx from 'clsx'
 import { lighten, rgba } from 'polished'
-import type { ReactNode } from 'react'
 import { forwardRef } from 'react'
+import type { ReactNode } from 'react'
+import styled from 'styled-components'
 
-import { themeVars } from '~/foundation/theme.css'
+import { ButtonStyles, FillButtonStyles, Icon } from '~/elements'
 
-import { buttonStyles, buttonVariantStyles } from './Button'
-import { Icon } from './Icon/Icon'
+const SelectTrigger = styled(SelectPrimitive.Trigger)`
+  ${FillButtonStyles};
+  border: solid 1px ${({ theme }) => theme.color.grey};
+  gap: 0.5rem;
+  padding: 0.5rem;
 
-const selectTriggerStyles = style([
-  buttonVariantStyles.fill,
-  {
-    border: `solid 1px ${themeVars.color.grey}`,
-    gap: '0.5rem',
-    padding: '0.5rem',
-    selectors: {
-      '&[data-disabled]': {
-        pointerEvents: 'none',
-      },
-    },
-  },
-])
+  &[data-disabled] {
+    pointer-events: none;
+  }
+`
 
-const selectButtonStyles = style([buttonStyles])
+const SelectScrollUp = styled(SelectPrimitive.ScrollUpButton)`
+  ${ButtonStyles};
+`
 
-const selectContentStyles = style({
-  zIndex: themeVars.zIndex.dropdown,
-  overflow: 'hidden',
-  backgroundColor: themeVars.color.black,
-  borderRadius: themeVars.radii.md,
-  boxShadow: themeVars.shadow.normal,
-  maxHeight: '16rem',
-  vars: {
-    '--radix-select-content-min-width': '16rem',
-  },
-})
+const SelectScrollDown = styled(SelectPrimitive.ScrollDownButton)`
+  ${ButtonStyles};
+`
 
-const selectItemStyles = style({
-  cursor: 'pointer',
-  userSelect: 'none',
-  position: 'relative',
-  display: 'flex',
-  alignItems: 'center',
-  padding: '1rem 2rem 1rem 0.5rem',
-  borderRadius: themeVars.radii.sm,
-  selectors: {
-    '&[data-disabled]': {
-      pointerEvents: 'none',
-      color: rgba(themeVars.color.silver, 0.05),
-    },
-    '&[data-highlighted], &:hover': {
-      backgroundColor: lighten(0.025, themeVars.color.black),
-      outline: 'none',
-    },
-  },
-})
+const SelectContent = styled(SelectPrimitive.Content)`
+  z-index: ${({ theme }) => theme.zIndex.select};
 
-const selectItemIndicatorStyles = style({
-  position: 'absolute',
-  right: '0.5rem',
-  display: 'inline-flex',
-  alignItems: 'center',
-  color: themeVars.color.yellow,
-})
+  overflow: hidden;
+
+  background-color: ${({ theme }) => theme.color.black};
+  border-radius: ${({ theme }) => theme.radii.md};
+  box-shadow: ${({ theme }) => theme.shadow.normal};
+  --radix-select-content-available-height: 16rem;
+  max-height: 16rem;
+`
+
+const StyledSelectItem = styled(SelectPrimitive.Item)`
+  cursor: pointer;
+  user-select: none;
+
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  padding: 1rem 2rem 1rem 0.5rem;
+
+  border-radius: ${({ theme }) => theme.radii.sm};
+
+  &[data-disabled] {
+    pointer-events: none;
+    color: ${({ theme }) => rgba(theme.color.silver, 0.05)};
+  }
+
+  &[data-highlighted],
+  &:hover {
+    background-color: ${({ theme }) => lighten(0.025, theme.color.black)};
+    outline: none;
+  }
+`
+
+const SelectItemIndicator = styled(SelectPrimitive.ItemIndicator)`
+  position: absolute;
+  right: 0.5rem;
+
+  display: inline-flex;
+  align-items: center;
+
+  color: ${({ theme }) => theme.color.yellow};
+`
 
 interface SelectProps extends SelectPrimitiveProps {
   children: ReactNode | ReactNode[]
@@ -104,9 +110,9 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
         disabled={disabled}
         {...props}
       >
-        <SelectPrimitive.Trigger
+        <SelectTrigger
           ref={forwardedRef}
-          className={clsx(selectTriggerStyles, className)}
+          className={className}
         >
           <SelectPrimitive.Value />
           {!hideIcon && (
@@ -114,24 +120,23 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
               <Icon name='chevron-down' />
             </SelectPrimitive.Icon>
           )}
-        </SelectPrimitive.Trigger>
-        <SelectPrimitive.Content
-          className={selectContentStyles}
+        </SelectTrigger>
+        <SelectContent
           sticky='always'
           position='popper'
         >
           {showScrollButtons && (
-            <SelectPrimitive.ScrollUpButton className={selectButtonStyles}>
+            <SelectScrollUp>
               <Icon name='chevron-up' />
-            </SelectPrimitive.ScrollUpButton>
+            </SelectScrollUp>
           )}
           <SelectPrimitive.Viewport>{children}</SelectPrimitive.Viewport>
           {showScrollButtons && (
-            <SelectPrimitive.ScrollDownButton className={selectButtonStyles}>
+            <SelectScrollDown>
               <Icon name='chevron-down' />
-            </SelectPrimitive.ScrollDownButton>
+            </SelectScrollDown>
           )}
-        </SelectPrimitive.Content>
+        </SelectContent>
       </SelectPrimitive.Root>
     )
   }
@@ -143,20 +148,19 @@ interface SelectItemProps extends SelectItemPrimitiveProps {
 }
 
 export const SelectItem = forwardRef<HTMLDivElement, SelectItemProps>(
-  ({ children, className, hideIndicator = false, ...props }, forwardedRef) => {
+  ({ children, hideIndicator = false, ...props }, forwardedRef) => {
     return (
-      <SelectPrimitive.Item
-        className={clsx(selectItemStyles, className)}
+      <StyledSelectItem
         ref={forwardedRef}
         {...props}
       >
         <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
         {!hideIndicator && (
-          <SelectPrimitive.ItemIndicator className={selectItemIndicatorStyles}>
+          <SelectItemIndicator>
             <Icon name='check' />
-          </SelectPrimitive.ItemIndicator>
+          </SelectItemIndicator>
         )}
-      </SelectPrimitive.Item>
+      </StyledSelectItem>
     )
   }
 )

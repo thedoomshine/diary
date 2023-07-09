@@ -2,7 +2,7 @@ import { style } from '@vanilla-extract/css'
 import type { ChangeEvent } from 'react'
 
 import { TabsContent, TabsList, TabsRoot, TabsTrigger } from '~/elements/Tabs'
-import { themeVars } from '~/foundation/theme.css'
+import { themeVars } from '~/foundation/theme'
 
 import './markdown.css'
 

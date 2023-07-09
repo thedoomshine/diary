@@ -1,100 +1,104 @@
 import clsx from 'clsx'
 import { lighten } from 'polished'
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
 import type { ChangeEvent, FC } from 'react'
-import {
-    forwardRef,
-    useEffect,
-    useImperativeHandle,
-    useRef,
-    useState,
-} from 'react'
-
-import { css } from '@diaryco/style-engine/css'
-import { token } from '@diaryco/style-engine/tokens'
+import styled from 'styled-components'
 
 import { Button } from '../Button'
 import { Icon } from '../Icon/Icon'
 import { Tooltip, TooltipProvider } from '../Tooltip'
 
-const containerStyles = css({
-  display: 'flex',
-  flexDirection: 'column',
-})
+const InputContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`
 
-const labelStyles = css({
-  marginBottom: '0.25em',
-  marginLeft: '0.25em',
-  fontSize: 'md',
-  color: 'white',
-  '&:has(~ * > [data-input-error-message]:not(:placeholder-shown))': {
-    color: 'red',
-  },
-})
+const StyledLabel = styled.label`
+  margin-bottom: 0.25em;
+  margin-left: 0.25em;
+  font-size: ${({ theme }) => theme.fontSize.md};
+  color: ${({ theme }) => theme.color.white};
 
-const wrapperStyles = css({
-  position: 'relative',
-  overflow: 'hidden',
-  display: 'flex',
-  flex: '1 1 auto',
-  width: '100%',
-  fontSize: 'md',
-  color: 'white',
-  backgroundColor: 'black',
-  border: 'solid 1px grey',
-  borderRadius: 'md',
-  _hover: {
-    backgroundColor: lighten(0.025, token('colors.black')),
-  },
-  '&:has(~ * > [data-input-error-message]:not(:placeholder-shown))': {
-    borderColor: 'red',
-  },
-})
+  &:has(~ * > [data-input-error-message]:not(:placeholder-shown)) {
+    color: ${({ theme }) => theme.color.red};
+  }
+`
 
-const inputStyles = css({
-  flex: '1 1 auto',
-  padding: '0.5rem',
-  fontSize: 'inherit',
-  colorScheme: 'dark',
-  '&::placeholder': {
-    fontStyle: 'italic',
-    color: 'grey',
-    opacity: 0.75,
-  },
-})
+const InputWrapper = styled.div`
+  position: relative;
 
-const toggleButtonStyles = css({
-  paddingRight: '0.75em',
-  paddingLeft: '0.75em',
-  borderTopLeftRadius: 0,
-  borderBottomLeftRadius: 0,
-})
+  overflow: hidden;
+  display: flex;
+  flex: 1 1 auto;
 
-const toggleIconStyles = css({
-  color: 'white',
-  '&.masked': {
-    color: 'grey',
-  },
-})
+  width: 100%;
 
-const errorMessageStyles = css({
-  display: 'flex',
-  alignItems: 'center',
-  height: '1.25em',
-  marginTop: '0.5em',
-  marginLeft: '0.5em',
-  fontSize: 'sm',
-  color: 'red',
-})
+  font-size: ${({ theme }) => theme.fontSize.md};
+  color: ${({ theme }) => theme.color.white};
 
-const errorIconStyles = css({
-  display: 'none',
-  height: '1.25em',
-  marginRight: '0.5em',
-  fontSize: 'inherit',
-  '&:has(~ * > [data-input-error-message]:not(:placeholder-shown))': {
-    display: 'block',
-  },
-})
+  background-color: ${({ theme }) => theme.color.black};
+  border: solid 1px ${({ theme }) => theme.color.grey};
+  border-radius: ${({ theme }) => theme.radii.md};
+
+  &:hover {
+    background-color: ${({ theme }) => lighten(0.025, theme.color.black)};
+  }
+
+  &:has(~ * > [data-input-error-message]:not(:placeholder-shown)) {
+    border-color: ${({ theme }) => theme.color.red};
+  }
+`
+
+const StyledInput = styled.input`
+  flex: 1 1 auto;
+  padding: 0.5rem;
+  font-size: inherit;
+  color-scheme: dark;
+
+  &::placeholder {
+    font-style: italic;
+    color: ${({ theme }) => theme.color.grey};
+    opacity: 0.75;
+  }
+`
+
+const PasswordToggleButton = styled(Button)`
+  padding-right: 0.75em;
+  padding-left: 0.75em;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+`
+
+const PasswordToggleIcon = styled(Icon)`
+  color: ${({ theme }) => theme.color.white};
+
+  &.masked {
+    color: ${({ theme }) => theme.color.grey};
+  }
+`
+
+const ErrorMessage = styled.div`
+  display: flex;
+  align-items: center;
+
+  height: 1.25em;
+  margin-top: 0.5em;
+  margin-left: 0.5em;
+
+  font-size: ${({ theme }) => theme.fontSize.sm};
+  color: ${({ theme }) => theme.color.red};
+`
+
+const ErrorIcon = styled(Icon)`
+  display: none;
+  height: 1.25em;
+  margin-right: 0.5em;
+  font-size: inherit;
+
+  &:has(~ :not(:placeholder-shown)) {
+    display: block;
+  }
+`
 
 export type InputProps = {
   defaultValue?: string | number | readonly string[]
@@ -133,16 +137,15 @@ const PasswordToggle: FC<PasswordToggleProps> = ({
         side='bottom'
         content={`${isMasked ? 'show' : 'hide'} password`}
       >
-        <Button
-          className={toggleButtonStyles}
+        <PasswordToggleButton
           onClick={onClick}
           {...props}
         >
-          <Icon
-            className={clsx({masked: isMasked}, toggleIconStyles)}
+          <PasswordToggleIcon
+            className={clsx({ masked: isMasked })}
             name={isMasked ? 'eye-slash' : 'eye'}
           />
-        </Button>
+        </PasswordToggleButton>
       </Tooltip>
     </TooltipProvider>
   )
@@ -240,12 +243,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     }
 
     return (
-      <div className={containerStyles}>
-        {label && <label className={labelStyles} htmlFor={name}>{label}</label>}
-        <div className={wrapperStyles}>
+      <InputContainer>
+        {label && <StyledLabel htmlFor={name}>{label}</StyledLabel>}
+        <InputWrapper>
           {prefixIcon && <Icon name={prefixIcon} />}
-          <input
-            className={inputStyles}
+          <StyledInput
             defaultValue={defaultValue}
             disabled={disabled}
             id={name}
@@ -271,11 +273,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           ) : (
             suffixIcon && <Icon name={suffixIcon} />
           )}
-        </div>
-        <div className={errorMessageStyles} aria-live='polite'>
-          <Icon className={errorIconStyles} name='error' />{' '}
-          <input
-            className={inputStyles}
+        </InputWrapper>
+        <ErrorMessage aria-live='polite'>
+          <ErrorIcon name='error' />{' '}
+          <StyledInput
             aria-readonly
             data-input-error-message
             disabled
@@ -284,8 +285,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             tabIndex={-1}
             value={error}
           />
-        </div>
-      </div>
+        </ErrorMessage>
+      </InputContainer>
     )
   }
 )
