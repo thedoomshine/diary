@@ -1,24 +1,27 @@
-export enum APP_ROUTES {
-  CALENDAR = '/calendar',
-  EXPLORE = '/explore',
-  NOTIFICATIONS = '/notifications',
-  BOOKMARKS = '/bookmarks',
-  SETTINGS = '/settings',
-  HOME = '/',
-  PROFILE = '/',
-}
+export const APP_ROUTES = {
+  CALENDAR: '/calendar',
+  EXPLORE: '/explore',
+  NOTIFICATIONS: '/notifications',
+  BOOKMARKS: '/bookmarks',
+  SETTINGS: '/settings',
+  HOME: '/',
+  PROFILE: '/',
+  SIGN_OUT: '/sign-out',
+} as const
 
-export enum AUTH_ROUTES {
-  SIGN_UP = '/sign-up',
-  SIGN_IN = '/sign-in',
-  SIGN_OUT = '/sign-out',
-}
+export const AUTH_ROUTES = {
+  SIGN_UP: '/sign-up',
+  SIGN_IN: '/sign-in',
+  FORGOT_PASSWORD: '/forgot-password',
+  UPDATE_PASSWORD: '/update-password',
+  MAGIC_LINK: '/magic-link',
+} as const
 
-export enum CALENDAR_ROUTES {
-  MONTH = '/month',
-  WEEK = '/week',
-  DAY = '/day',
-}
+export const CALENDAR_ROUTES = {
+  MONTH: '/month',
+  WEEK: '/week',
+  DAY: '/day',
+} as const
 
 export const CALENDAR_LINKS = [
   {

@@ -18,7 +18,7 @@ const StyledPopoverTrigger = styled(PopoverTrigger)`
 
   width: 100%;
 
-  border-radius: 2rem;
+  border-radius: ${({ theme }) => theme.radii.lg};
 `
 
 const StyledAvatar = styled(Avatar)`

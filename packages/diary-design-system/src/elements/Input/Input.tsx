@@ -1,10 +1,10 @@
 import clsx from 'clsx'
 import { lighten } from 'polished'
-import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
-import type { ChangeEvent, FC } from 'react'
+import { forwardRef, useImperativeHandle, useRef, useState } from 'react'
+import type { FC, HTMLProps } from 'react'
 import styled from 'styled-components'
 
-import { Button } from '../Button'
+import { IconButton } from '../Button'
 import { Icon } from '../Icon/Icon'
 import { Tooltip, TooltipProvider } from '../Tooltip'
 
@@ -13,13 +13,18 @@ const InputContainer = styled.div`
   flex-direction: column;
 `
 
-const StyledLabel = styled.label`
-  margin-bottom: 0.25em;
-  margin-left: 0.25em;
-  font-size: ${({ theme }) => theme.fontSize.md};
-  color: ${({ theme }) => theme.color.white};
+const StyledLabelWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
 
-  &:has(~ * > [data-input-error-message]:not(:placeholder-shown)) {
+  margin: 0 0.25rem 0.25rem;
+`
+
+const StyledLabel = styled.label`
+  cursor: pointer;
+
+  &.error {
     color: ${({ theme }) => theme.color.red};
   }
 `
@@ -27,9 +32,11 @@ const StyledLabel = styled.label`
 const InputWrapper = styled.div`
   position: relative;
 
-  overflow: hidden;
   display: flex;
+  align-items: center;
   flex: 1 1 auto;
+
+  overflow: hidden;
 
   width: 100%;
 
@@ -37,21 +44,26 @@ const InputWrapper = styled.div`
   color: ${({ theme }) => theme.color.white};
 
   background-color: ${({ theme }) => theme.color.black};
-  border: solid 1px ${({ theme }) => theme.color.grey};
+  border: ${({ theme }) => `solid ${theme.spacing[1]} ${theme.color.grey}`};
   border-radius: ${({ theme }) => theme.radii.md};
 
   &:hover {
     background-color: ${({ theme }) => lighten(0.025, theme.color.black)};
   }
 
-  &:has(~ * > [data-input-error-message]:not(:placeholder-shown)) {
+  &:has(input:focus-visible) {
+    outline: ${({ theme }) =>
+      `solid ${theme.spacing[1]} ${theme.color.yellow}`};
+  }
+
+  &.error:not(:has(input:focus-visible)) {
     border-color: ${({ theme }) => theme.color.red};
   }
 `
 
 const StyledInput = styled.input`
   flex: 1 1 auto;
-  padding: 0.5rem;
+  padding: 0.5rem 0.75rem;
   font-size: inherit;
   color-scheme: dark;
 
@@ -62,14 +74,15 @@ const StyledInput = styled.input`
   }
 `
 
-const PasswordToggleButton = styled(Button)`
-  padding-right: 0.75em;
-  padding-left: 0.75em;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-`
+const PasswordToggleButton = styled(IconButton)`
+  padding: 0 0.75em;
 
-const PasswordToggleIcon = styled(Icon)`
+  aspect-ratio: 1 / 1;
+
+  border: ${({ theme }) => `solid ${theme.spacing[1]} transparent`};
+  border-radius: 0;
+  border-left-color: ${({ theme }) => theme.color.grey};
+
   color: ${({ theme }) => theme.color.white};
 
   &.masked {
@@ -79,46 +92,57 @@ const PasswordToggleIcon = styled(Icon)`
 
 const ErrorMessage = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 
-  height: 1.25em;
+  min-height: 0;
   margin-top: 0.5em;
   margin-left: 0.5em;
+  gap: 0.5em;
 
   font-size: ${({ theme }) => theme.fontSize.sm};
   color: ${({ theme }) => theme.color.red};
 `
 
 const ErrorIcon = styled(Icon)`
-  display: none;
   height: 1.25em;
+  margin-top: 0.125rem;
   margin-right: 0.5em;
   font-size: inherit;
+`
 
-  &:has(~ :not(:placeholder-shown)) {
-    display: block;
+const StyledIconWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  aspect-ratio: 1 / 1;
+
+  padding: 0.5rem 0.75rem;
+
+  pointer-events: none;
+
+  &.prefix {
+    border-right: ${({ theme }) =>
+      `solid ${theme.spacing[1]} ${theme.color.grey}`};
+  }
+
+  &.suffix {
+    border-left: ${({ theme }) =>
+      `solid ${theme.spacing[1]} ${theme.color.grey}`};
   }
 `
 
 export type InputProps = {
+  ForgotPasswordLink?: React.ReactNode
   defaultValue?: string | number | readonly string[]
-  disabled?: boolean
-  errorMessages?: { [key: string]: string }
+  error?: string
   label?: string
-  minLength?: string | number
-  maxLength?: string | number
   name: string
-  onChange?: (event: ChangeEvent) => void
-  pattern?: string
   placeholder?: string
   prefixIcon?: string
   required?: boolean
-  serverError?: string
-  step?: string | number
   suffixIcon?: string
-  title?: string
-  type?: React.HTMLInputTypeAttribute
-}
+} & HTMLProps<HTMLInputElement>
 
 interface PasswordToggleProps {
   isMasked: boolean
@@ -138,14 +162,11 @@ const PasswordToggle: FC<PasswordToggleProps> = ({
         content={`${isMasked ? 'show' : 'hide'} password`}
       >
         <PasswordToggleButton
+          className={clsx({ masked: isMasked })}
+          icon={isMasked ? 'eye-slash' : 'eye'}
           onClick={onClick}
           {...props}
-        >
-          <PasswordToggleIcon
-            className={clsx({ masked: isMasked })}
-            name={isMasked ? 'eye-slash' : 'eye'}
-          />
-        </PasswordToggleButton>
+        />
       </Tooltip>
     </TooltipProvider>
   )
@@ -154,20 +175,15 @@ const PasswordToggle: FC<PasswordToggleProps> = ({
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   (
     {
+      ForgotPasswordLink,
       defaultValue,
       disabled = false,
-      errorMessages,
+      error,
+      id,
       label,
-      maxLength,
-      minLength,
       name,
-      onChange,
-      pattern,
       placeholder,
       prefixIcon,
-      required,
-      serverError,
-      step,
       suffixIcon,
       title,
       type = 'text',
@@ -177,8 +193,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
   ) => {
     const internalRef = useRef<HTMLInputElement | null>(null)
     const [isMasked, setIsMasked] = useState(true)
-    const [showError, setShowError] = useState(Boolean(serverError))
-    const [error, setError] = useState(serverError)
 
     const isPassword = type === 'password'
 
@@ -187,13 +201,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       () => internalRef.current
     )
 
-    useEffect(() => {
-      if (serverError) {
-        setError(serverError)
-        setShowError(Boolean(serverError))
-      }
-    }, [serverError])
-
     const getInputType = () =>
       isPassword ? (isMasked ? 'password' : 'text') : type
 
@@ -201,68 +208,35 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       setIsMasked((prev) => !prev)
     }
 
-    const handleValidate = () => {
-      if (!internalRef?.current) {
-        return
-      }
-      const el = internalRef.current
-
-      if (el.validity.valid) {
-        setError('')
-        setShowError(false)
-      } else {
-        handleShowError()
-      }
-    }
-
-    const handleInput = (event: ChangeEvent) => {
-      if (onChange) {
-        onChange(event)
-      }
-      if (showError) {
-        handleValidate()
-      }
-    }
-
-    const handleShowError = () => {
-      if (!internalRef?.current) {
-        return
-      }
-      const el = internalRef.current
-
-      if (el.validity.valueMissing && errorMessages?.required) {
-        setError(errorMessages.required)
-      } else if (el.validity.tooShort && errorMessages?.minLength) {
-        setError(errorMessages.minLength)
-      } else if (el.validity.tooLong && errorMessages?.maxLength) {
-        setError(errorMessages.maxLength)
-      } else if (el.validity.patternMismatch && errorMessages?.pattern) {
-        setError(errorMessages.pattern)
-      }
-      setShowError(true)
-    }
-
     return (
       <InputContainer>
-        {label && <StyledLabel htmlFor={name}>{label}</StyledLabel>}
-        <InputWrapper>
-          {prefixIcon && <Icon name={prefixIcon} />}
+        <StyledLabelWrapper>
+          {label && (
+            <StyledLabel
+              className={clsx({ error })}
+              htmlFor={id || name}
+            >
+              {label}
+            </StyledLabel>
+          )}
+          {isPassword && ForgotPasswordLink}
+        </StyledLabelWrapper>
+        <InputWrapper className={clsx({ error })}>
+          {prefixIcon && (
+            <StyledIconWrapper className='prefix'>
+              <Icon name={prefixIcon} />
+            </StyledIconWrapper>
+          )}
           <StyledInput
             defaultValue={defaultValue}
             disabled={disabled}
-            id={name}
-            min={minLength}
-            max={maxLength}
+            id={id || name}
             name={name}
-            onBlur={handleValidate}
-            onChange={handleInput}
-            pattern={pattern}
             placeholder={placeholder}
             ref={internalRef}
-            required={required}
-            step={step}
             title={title}
             type={getInputType()}
+            className={clsx({ password: isPassword })}
             {...props}
           />
           {isPassword ? (
@@ -271,20 +245,20 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               onClick={togglePasswordMask}
             />
           ) : (
-            suffixIcon && <Icon name={suffixIcon} />
+            suffixIcon && (
+              <StyledIconWrapper className='suffix'>
+                <Icon name={suffixIcon} />
+              </StyledIconWrapper>
+            )
           )}
         </InputWrapper>
         <ErrorMessage aria-live='polite'>
-          <ErrorIcon name='error' />{' '}
-          <StyledInput
-            aria-readonly
-            data-input-error-message
-            disabled
-            placeholder=' '
-            readOnly
-            tabIndex={-1}
-            value={error}
-          />
+          {Boolean(error) && (
+            <>
+              <ErrorIcon name='error' />
+              <p>{error}</p>
+            </>
+          )}
         </ErrorMessage>
       </InputContainer>
     )

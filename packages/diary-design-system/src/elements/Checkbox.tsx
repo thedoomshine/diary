@@ -16,7 +16,7 @@ const CheckboxRoot = styled(CheckboxPrimitive.Root)`
   height: 1.5rem;
 
   background-color: ${({ theme }) => theme.color.black};
-  border: solid 1px ${({ theme }) => theme.color.grey};
+  border: ${({ theme }) => `solid ${theme.spacing[1]} ${theme.color.grey}`};
 
   &:focus-visible {
     box-shadow: 0 0 0 0.0125rem ${({ theme }) => theme.color.yellow};

@@ -1,4 +1,4 @@
-import { keyframes as kf } from 'styled-components'
+import { css, keyframes as kf } from 'styled-components'
 
 import { duration } from './durations'
 import { easing } from './easings'
@@ -55,6 +55,6 @@ export const keyframes = {
 }
 
 export const animation = {
-  scaleUp: `${keyframes.scaleUp} ${duration['150']} ${easing.easeOutQuart} normal`,
-  fadeIn: `${keyframes.fadeIn} ${duration['150']} ${easing.easeOutQuart} normal`,
+  scaleUp: css`animation: ${keyframes.scaleUp} ${duration['150']} ${easing.easeOutQuart} normal`,
+  fadeIn: css`animation: ${keyframes.fadeIn} ${duration['150']} ${easing.easeOutQuart} normal`,
 }

@@ -1,11 +1,156 @@
-import { rgba } from 'polished'
+import { rgba, remToPx } from 'polished'
 import { createGlobalStyle } from 'styled-components'
 
-import { reset } from '~/foundation'
 import { fluidType, grainyGradientBackground } from '~/utils'
+import { objToVar } from '~/utils/obj-to-var'
+import {
+  color,
+  duration,
+  easing,
+  fontSize,
+  fontWeight,
+  font,
+  lineHeight,
+  opacity,
+  radii,
+  shadow,
+  size,
+  spacing,
+  zIndex,
+} from '~/foundation'
+
+const theme = {
+  color,
+  duration,
+  easing,
+  fontSize,
+  fontWeight,
+  font,
+  lineHeight,
+  opacity,
+  radii,
+  shadow,
+  size,
+  spacing,
+  zIndex,
+}
 
 export const GlobalStyle = createGlobalStyle`
-  ${reset}
+  /***
+    The new CSS reset - version 1.8.4 (last updated 14.2.2023)
+    GitHub page: https://github.com/elad2412/the-new-css-reset
+  ***/
+  /*
+    Remove all the styles of the "User-Agent-Stylesheet", except for the 'display' property
+    - The "symbol *" part is to solve Firefox SVG sprite bug
+ */
+    *:where(:not(html, iframe, canvas, img, svg, video, audio, svg *, symbol *)) {
+    all: unset;
+    display: revert;
+  }
+
+  /* Preferred box-sizing value */
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  /* Reapply the pointer cursor for anchor tags */
+  a,
+  button {
+    cursor: revert;
+  }
+
+  /* Remove list styles (bullets/numbers) */
+  ol,
+  ul,
+  menu {
+    list-style: none;
+  }
+
+  /* For images to not be able to exceed their container */
+  img {
+    max-inline-size: 100%;
+    max-block-size: 100%;
+  }
+
+  /* removes spacing between cells in tables */
+  table {
+    border-collapse: collapse;
+  }
+
+  /* Safari - solving issue when using user-select:none on the <body> text input doesn't working */
+  input,
+  textarea {
+    user-select: auto;
+  }
+
+  /* revert the 'white-space' property for textarea elements on Safari */
+  textarea {
+    white-space: revert;
+  }
+
+  /* minimum style to allow to style meter element */
+  meter {
+    appearance: revert;
+  }
+
+  /* preformatted text - use only for this feature */
+  :where(pre) {
+    all: revert;
+  }
+
+  /* reset default text opacity of input placeholder */
+  ::placeholder {
+    color: unset;
+  }
+
+  /* remove default dot (•) sign */
+  ::marker {
+    content: initial;
+  }
+
+  /* fix the feature of 'hidden' attribute.
+   display:revert; revert to element instead of attribute */
+  :where([hidden]) {
+    display: none;
+  }
+
+  /* revert for bug in Chromium browsers
+    - fix for the content editable attribute will work properly.
+    - webkit-user-select: auto; added for Safari in case of using user-select:none on wrapper element */
+  :where([contenteditable]:not([contenteditable='false'])) {
+    user-select: auto;
+
+    -webkit-line-break: after-white-space;
+    line-break: after-white-space;
+    overflow-wrap: break-word;
+
+    -moz-user-modify: read-write;
+    -webkit-user-modify: read-write;
+  }
+
+  /* apply back the draggable feature - exist only in Chromium and Safari */
+  :where([draggable='true']) {
+    -webkit-user-drag: element;
+  }
+
+  /* Revert Modal native behavior */
+  :where(dialog:modal) {
+    all: revert;
+
+    overflow: visible;
+
+    padding: 0;
+
+    background-color: transparent;
+    border: none;
+  }
+
+  :root {
+    ${objToVar(theme)}
+  }
 
   html {
     display: flex;
@@ -17,10 +162,10 @@ export const GlobalStyle = createGlobalStyle`
 
     font-size: ${({ theme }) =>
       fluidType(
-        theme.size.sm,
+        theme.size.md,
         theme.size.xl,
-        theme.fontSize._min,
-        theme.fontSize._max
+        remToPx(theme.fontSize.md),
+        remToPx(theme.fontSize.xl)
       )};
     color: ${({ theme }) => theme.color.white};
     text-size-adjust: 100%;
@@ -36,6 +181,7 @@ export const GlobalStyle = createGlobalStyle`
   body {
     display: flex;
     flex: 1 1 auto;
+    flex-direction: column;
 
     width: 100%;
     margin: 0;
@@ -47,16 +193,13 @@ export const GlobalStyle = createGlobalStyle`
     line-height: ${({ theme }) => theme.lineHeight.body};
   }
 
-  #root {
-    display: flex;
-    flex: 1 1 auto;
-    flex-direction: column;
-    width: 100%;
-  }
-
   h1, h2, h3, h4, h5, h6 {
     font-weight: ${({ theme }) => theme.fontWeight.bold};
     line-height: ${({ theme }) => theme.lineHeight.title};
+  }
+
+  h1,h2,h3,h4,h5,h6,p {
+    text-wrap: balance;
   }
 
   h1 {
@@ -85,7 +228,25 @@ export const GlobalStyle = createGlobalStyle`
 
   a {
     color: ${({ theme }) => theme.color.yellow};
-    text-decoration: underline;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &:focus-visible {
+      outline: ${({ theme }) => `dotted ${theme.spacing[2]} ${theme.color.yellow}`};
+      outline-offset: ${({ theme }) => theme.spacing[2]};
+      text-decoration: underline;
+    }
+  }
+
+  strong {
+    font-weight: ${({ theme }) => theme.fontWeight.bold};
+  }
+
+  em {
+    font-style: italic;
   }
 
   pre {

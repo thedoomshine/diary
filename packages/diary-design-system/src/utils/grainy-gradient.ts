@@ -32,7 +32,6 @@ export const grainyGradientBackground = (
     bottom: 0;
     left: 0;
     opacity: 0.125;
-    border-radius: ${({ theme }) => theme.radii.md};
     width: 100%;
     height: 100%;
     content: '';

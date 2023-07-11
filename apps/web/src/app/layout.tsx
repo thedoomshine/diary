@@ -1,11 +1,8 @@
-import './global.css'
-import './index.css'
 import { Atkinson_Hyperlegible } from 'next/font/google'
 
 import StyledComponentsRegistry from '~/utils/registry'
-import { ThemeProvider } from 'styled-components'
 
-import { theme, GlobalStyle } from '@diaryco/design-system'
+import { RootLayoutContainer } from './root-layout-container'
 
 const hyperlegible = Atkinson_Hyperlegible({
   style: ['normal', 'italic'],
@@ -28,10 +25,9 @@ export default function RootLayout({
     <html lang='en'>
       <body className={hyperlegible.className}>
         <StyledComponentsRegistry>
-          <GlobalStyle />
-          <ThemeProvider theme={theme}>
+          <RootLayoutContainer>
             {children}
-          </ThemeProvider>
+          </RootLayoutContainer>
         </StyledComponentsRegistry>
       </body>
     </html>

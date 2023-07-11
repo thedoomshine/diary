@@ -1,14 +1,19 @@
 export { Avatar } from '~/elements/Avatar'
 export {
-  Button,
   CTAButton,
+  CTAButtonStyles,
+  Button,
+  ButtonStyles,
   FillButton,
+  FillButtonStyles,
   IconButton,
+  IconButtonStyles,
   OutlineButton,
+  OutlineButtonStyles,
+  StyledButton,
 } from '~/elements/Button'
 export type {
-  ButtonBaseElements,
-  ButtonBaseRef,
+  ButtonProps,
   IconButtonProps,
 } from '~/elements/Button'
 export { Checkbox } from '~/elements/Checkbox'
@@ -57,3 +62,5 @@ export {
   theme,
   zIndex,
 } from '~/foundation'
+
+export { grainyGradientBackground } from '~/utils'

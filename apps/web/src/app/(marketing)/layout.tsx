@@ -1,75 +1,70 @@
-import { buttonStyles } from '@diaryco/design-system'
-import { css, cx } from '@diaryco/style-engine/css'
+'use client'
+
+import { ButtonStyles, OutlineButtonStyles } from '@diaryco/design-system'
+
 import Link from 'next/link'
 
-const layoutStyles = css({
-  display: 'flex',
-  flex: '1 1 auto',
-  flexDirection: 'column',
-  maxWidth: 'xl',
-  minHeight: '100%',
-  margin: '0 auto',
-})
+import styled from 'styled-components'
 
-const headerStyles = css({
-  display: 'flex',
-  padding: '0.5rem',
-})
+import { AUTH_ROUTES } from '~/@types'
 
-const buttonsContainerStyles = css({
-  display: 'flex',
-  marginRight: 0,
-  marginLeft: 'auto',
-})
+const StyledLayout = styled.div`
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
 
-const mainStyles = css({
-  display: 'flex',
-  flex: '1 1 auto',
-  flexDirection: 'column',
-  padding: '0.5rem',
-})
+  max-width: ${({ theme }) => theme.size.xl};
+  min-height: 100%;
+  margin: 0 auto;
+`
 
-const navLinkStyles = css({
-  flex: '0 1 auto',
-  padding: '0.25rem 0.5rem',
-  '&:last-of-type': {
-    marginLeft: '0.5rem',
-  },
-})
+const StyledHeader = styled.header`
+  display: flex;
+  padding: 0.5rem;
+`
 
-const signInStyles = cx(buttonStyles(), navLinkStyles)
+const StyledButtonsContainer = styled.div`
+  display: flex;
+  margin-right: 0;
+  margin-left: auto;
+`
 
-const signOutStyles = cx(
-  buttonStyles({ type: 'outline' }),
-  css({
-    padding: '0.25rem 0.5rem',
-  })
-)
+const StyledMain = styled.main`
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  padding: ${({ theme }) => theme.spacing[8]};
+`
 
-export default function MarketingLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+const StyledLink = styled(Link)`
+  ${ButtonStyles};
+  flex: 0 1 auto;
+  padding: 0.25rem 0.5rem;
+
+  &:last-of-type {
+    margin-left: 0.5rem;
+  }
+`
+
+const StyledSignInLink = styled(StyledLink)``
+
+const StyledSignUpLink = styled(StyledLink)`
+  ${OutlineButtonStyles};
+  padding: 0.25rem 0.5rem;
+`
+
+export default function MarketingLayout({ children }: { children: React.ReactNode}) {
   return (
-    <div className={layoutStyles}>
-      <header className={headerStyles}>
-        <div className={buttonsContainerStyles}>
-          <Link
-            className={signInStyles}
-            href='/sign-in'
-          >
-            sign in
-          </Link>
-          <Link
-            className={signOutStyles}
-            href='/sign-up'
-          >
-            sign up
-          </Link>
-        </div>
-      </header>
-      <main className={mainStyles}>{children}</main>
-    </div>
+    <StyledLayout>
+      <StyledHeader>
+        <StyledButtonsContainer>
+          <StyledSignInLink href={AUTH_ROUTES.SIGN_IN}>sign in</StyledSignInLink>
+          <StyledSignUpLink href={AUTH_ROUTES.SIGN_UP}>sign up</StyledSignUpLink>
+        </StyledButtonsContainer>
+      </StyledHeader>
+      <StyledMain>
+        {children}
+      </StyledMain>
+    </StyledLayout>
   )
 }

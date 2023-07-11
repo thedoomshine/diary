@@ -10,7 +10,7 @@ const AvatarRoot = styled(AvatarPrimitive.Root)`
   align-items: center;
   justify-content: center;
 
-  aspect-ratio: 1;
+  aspect-ratio: 1 / 1;
   width: 1em;
   height: 1em;
 

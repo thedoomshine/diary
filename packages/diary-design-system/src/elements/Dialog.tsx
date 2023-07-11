@@ -25,13 +25,13 @@ const StyledDialogContent = styled.div`
   border-radius: ${({ theme }) => theme.radii.md};
   box-shadow: ${({ theme }) => theme.shadow.normal};
 
-  animation: ${({ theme }) => theme.animation.scaleUp};
+  ${({ theme }) => theme.animation.scaleUp};
 
   &[open] {
-    animation: ${({ theme }) => theme.animation.scaleUp};
+    ${({ theme }) => theme.animation.scaleUp};
 
     &::backdrop {
-      animation: ${({ theme }) => theme.animation.fadeIn};
+      ${({ theme }) => theme.animation.fadeIn};
     }
   }
 `

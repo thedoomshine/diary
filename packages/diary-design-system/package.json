@@ -12,28 +12,26 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm",
+    "build": "tsup src/index.ts",
     "clean": "rm -rf .turbo && rm -rf tsconfig.tsbuildinfo && rm -rf node_modules && rm -rf dist",
-    "dev": "tsup src/index.ts --format cjs,esm --watch",
+    "dev": "tsup src/index.ts --watch",
     "prettier": "prettier \"**/*.{ts,tsx,cjs,js,jsx,json}\" --write",
     "eslint": "eslint --ext \"**/*.{ts,tsx,cjs,js,jsx}\" --fix",
     "stylelint": "stylelint \"**/*.{tsx,jsx}\" --fix",
     "typecheck": "tsc"
   },
   "dependencies": {
-    "tsup": "^6.7.0"
+    "tsup": "^7.1.0"
   },
   "peerDependencies": {
     "@tiptap/pm": "^2.0.3",
     "@tiptap/react": "^2.0.3",
     "@tiptap/starter-kit": "^2.0.3",
-    "@vanilla-extract/css": "^1.12.0",
-    "@vanilla-extract/sprinkles": "^1.6.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "styled-components": "^6.0.3"
   },
   "devDependencies": {
-    "@github/text-expander-element": "^2.3.0",
     "@radix-ui/react-avatar": "^1.0.2",
     "@radix-ui/react-checkbox": "^1.0.4",
     "@radix-ui/react-hover-card": "^1.0.6",
@@ -46,14 +44,14 @@
     "@radix-ui/react-toggle-group": "^1.0.4",
     "@radix-ui/react-toolbar": "^1.0.4",
     "@radix-ui/react-tooltip": "^1.0.5",
+    "@tiptap/pm": "^2.0.3",
+    "@tiptap/react": "^2.0.3",
+    "@tiptap/starter-kit": "^2.0.3",
     "@types/node": "^20.2.5",
     "@types/node-emoji": "^1.8.2",
     "@types/react": "^18.2.9",
     "@types/react-datepicker": "^4.11.2",
     "@types/react-dom": "^18.2.4",
-    "@vanilla-extract/esbuild-plugin": "^2.2.2",
-    "autoprefixer": "^10.4.14",
-    "browserslist": "^4.21.7",
     "clsx": "^1.2.1",
     "date-fns": "^2.30.0",
     "date-fns-tz": "^2.0.0",
@@ -61,8 +59,6 @@
     "eslint-config-diary": "workspace:*",
     "node-emoji": "^2.0.2",
     "polished": "^4.2.2",
-    "postcss": "^8.4.24",
-    "postcss-nested": "^6.0.1",
     "prettier-config-diary": "workspace:*",
     "react-datepicker": "^4.12.0",
     "react-imask": "^6.6.1",
@@ -70,7 +66,6 @@
     "stylis": "^4.3.0",
     "stylelint-config-diary": "workspace:*",
     "tsconfig-diary": "workspace:*",
-    "typescript": "^5.1.3",
-    "unified": "^10.1.2"
+    "typescript": "^5.1.3"
   }
 }

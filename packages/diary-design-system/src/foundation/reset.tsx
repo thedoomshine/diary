@@ -90,6 +90,7 @@ export const reset = css`
     user-select: auto;
 
     -webkit-line-break: after-white-space;
+    line-break: after-white-space;
     overflow-wrap: break-word;
 
     -moz-user-modify: read-write;

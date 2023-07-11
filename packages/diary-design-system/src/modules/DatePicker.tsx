@@ -96,7 +96,7 @@ const Wrapper = styled.div`
 
     background-color: ${({ theme }) => theme.color.black};
     border-radius: ${({ theme }) => theme.radii.md};
-    box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 50%);
+    box-shadow: ${({ theme }) => theme.shadow.normal};
 
     &[data-placement^='bottom'] {
       padding-top: 0.5rem + 2px;
@@ -156,7 +156,7 @@ const Wrapper = styled.div`
   .react-datepicker__day {
     display: flex;
     gap: 0.25rem;
-    aspect-ratio: 1;
+    aspect-ratio: 1 / 1;
     align-items: center;
     justify-content: center;
   }
@@ -254,7 +254,7 @@ const DatePickerHeader: FC<ReactDatePickerCustomHeaderProps> = ({
 
 const InputWrapper = styled.div`
   ${FillButtonStyles}
-  border: solid 1px ${({ theme }) => theme.color.grey};
+  border: ${({ theme }) => `solid ${theme.spacing[1]} ${theme.color.grey}`};
   padding: 0.5rem;
   position: relative;
 

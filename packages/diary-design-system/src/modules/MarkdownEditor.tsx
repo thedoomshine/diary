@@ -12,7 +12,7 @@ const StyledTabs = styled(TabsRoot)`
 
 const StyledTabsList = styled(TabsList)`
   margin: 0 0.75rem;
-  bottom: -1px;
+  bottom: ${({ theme }) =>theme.spacing[1]};
   position: relative;
   z-index: 1;
 `
@@ -24,7 +24,7 @@ const StyledTabTrigger = styled(TabsTrigger)`
   position: relative;
   &[data-state='active'] {
     background-color: ${({ theme }) => theme.color.charcoal};
-    border: solid 1px ${({ theme }) => theme.color.grey};
+    border: ${({ theme }) => `solid ${theme.spacing[1]} ${theme.color.grey}`};
     border-top-left-radius: 0.5rem;
     border-top-right-radius: 0.5rem;
     border-bottom-color: transparent;
@@ -48,8 +48,8 @@ const StyledTabTrigger = styled(TabsTrigger)`
 const StyledTabContent = styled(TabsContent)`
   position: relative;
   padding: 0.75rem 0.5rem 0.55rem;
-  border: solid 1px ${({ theme }) => theme.color.grey};
-  border-radius: 0.5rem;
+  border: ${({ theme }) => `solid ${theme.spacing[1]} ${theme.color.grey}`};
+  border-radius: ${({ theme }) => theme.radii.md};
   background-color: ${({ theme }) => theme.color.charcoal};
   max-height: 20rem;
   overflow: auto;
@@ -67,8 +67,8 @@ const Textarea = styled.textarea`
   padding: 1rem;
   font-size: inherit;
   color-scheme: dark;
-  border-radius: 0.5rem;
-  border: solid 1px ${({ theme }) => theme.color.grey};
+  border-radius: ${({ theme }) => theme.radii.md};
+  border: ${({ theme }) => `solid ${theme.spacing[1]} ${theme.color.grey}`};
   overflow: auto;
 `
 
@@ -101,7 +101,7 @@ const MarkdownPreview = styled.div`
 
   h1 {
     font-size: ${({ theme }) => theme.fontSize.xxxl};
-    border-bottom: solid 1px ${({ theme }) => theme.color.grey};
+    border-bottom: ${({ theme }) => `solid ${theme.spacing[1]} ${theme.color.grey}`};
   }
 
   h2 {

@@ -9,7 +9,7 @@
   "globalEnv": ["NODE_ENV"],
   "pipeline": {
     "build": {
-      "cache": false,
+      "cache": true,
       "dependsOn": ["topo"],
       "outputs": [
         "dist/**",

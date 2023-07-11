@@ -8,7 +8,6 @@ const HeadingPrefix = {
 } as const
 
 const BodyPrefix = {
-  XS: 'xs',
   SM: 'sm',
   MD: 'md',
   LG: 'lg',
@@ -52,6 +51,4 @@ const BODY_TYPESCALE = generateTypeScale(Math.pow(2, 1 / 4), BodyPrefix)
 export const fontSize = {
   ...HEADING_TYPESCALE,
   ...BODY_TYPESCALE,
-  _min: '16px',
-  _max: '24px',
 } as const

@@ -3,25 +3,14 @@ import { forwardRef } from 'react'
 import type {
   HTMLProps,
   MouseEventHandler,
-  MutableRefObject,
   ReactNode,
 } from 'react'
-import type { FC } from 'react'
 import styled, { css } from 'styled-components'
 
 import { Icon } from './Icon/Icon'
 
-export type ButtonBaseElements = HTMLAnchorElement | HTMLButtonElement
-export type ButtonBaseRef =
-  | ((instance: ButtonBaseElements | null) => void)
-  | MutableRefObject<ButtonBaseElements | null>
-  | null
-
-export type ButtonBaseElementProps = HTMLProps<
-  HTMLAnchorElement | HTMLButtonElement
-> & {
+export type ButtonProps = {
   as?: never
-  ref?: ButtonBaseRef
   classNames?: string
   href?: string
   disabled?: boolean
@@ -29,7 +18,7 @@ export type ButtonBaseElementProps = HTMLProps<
   onClick?: MouseEventHandler<HTMLButtonElement>
   role?: React.AriaRole
   type?: 'button' | 'submit' | 'reset'
-}
+} & HTMLProps<HTMLButtonElement>
 
 export const ButtonStyles = css`
   position: relative;
@@ -49,6 +38,8 @@ export const ButtonStyles = css`
 
   border-radius: ${({ theme }) => theme.radii.md};
 
+  border: ${({ theme }) => `solid ${theme.spacing[1]} transparent`};
+
   &:hover {
     background-color: ${({ theme }) => rgba(theme.color.white, 0.05)};
     svg {
@@ -57,7 +48,8 @@ export const ButtonStyles = css`
   }
 
   &:focus-visible {
-    outline: solid 0.0125rem ${({ theme }) => theme.color.yellow};
+    outline: ${({ theme }) =>
+      `solid ${theme.spacing[1]} ${theme.color.yellow}`};
   }
 
   &:disabled {
@@ -72,28 +64,17 @@ export const StyledButton = styled.button`
   ${ButtonStyles};
 `
 
-export const Button = forwardRef<ButtonBaseElements, any>(
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
-    {
-      href,
-      disabled,
-      children,
-      onClick,
-      role,
-      type = 'button',
-      classNames,
-      ...props
-    },
+    { disabled, children, onClick, role, type = 'button', className, ...props },
     ref
   ) => (
     <StyledButton
-      ref={ref as MutableRefObject<ButtonBaseElements>}
-      as={href ? 'a' : 'button'}
-      href={href}
-      role={role ?? href ? 'link' : 'button'}
+      ref={ref}
+      role={role ?? 'button'}
       type={type}
       disabled={disabled}
-      classNames={classNames}
+      className={className}
       onClick={onClick}
       {...props}
     >
@@ -106,28 +87,36 @@ export const IconButtonStyles = css`
   ${ButtonStyles};
   padding: 0.5rem;
   gap: 0.25rem;
+
+  &:focus-visible {
+    background-color: ${({ theme }) => rgba(theme.color.white, 0.05)};
+    svg {
+      fill: ${({ theme }) => theme.color.yellow};
+    }
+  }
 `
 
 const StyledIconButton = styled(Button)`
   ${IconButtonStyles}
 `
 
-export type IconButtonProps = ButtonBaseElementProps & {
+export type IconButtonProps = {
   icon: string
   iconPosition?: 'start' | 'end'
-}
+} & Omit<ButtonProps, 'ref'>
 
-export const IconButton: FC<IconButtonProps> = ({
-  icon,
-  iconPosition = 'start',
-  children,
-  ...props
-}) => (
-  <StyledIconButton {...props}>
-    {iconPosition === 'start' && <Icon name={icon} />}
-    {children}
-    {iconPosition === 'end' && <Icon name={icon} />}
-  </StyledIconButton>
+export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
+  ({ icon, iconPosition = 'start', children, onClick, ...props }, ref) => (
+    <StyledIconButton
+      ref={ref}
+      onClick={onClick}
+      {...props}
+    >
+      {iconPosition === 'start' && <Icon name={icon} />}
+      {children}
+      {iconPosition === 'end' && <Icon name={icon} />}
+    </StyledIconButton>
+  )
 )
 
 export const OutlineButtonStyles = css`
@@ -146,6 +135,7 @@ export const FillButtonStyles = css`
 
   color: ${({ theme }) => theme.color.white};
   background-color: ${({ theme }) => theme.color.black};
+  border: ${({ theme }) => `solid ${theme.spacing[1]} ${theme.color.grey}`};
 
   &:hover {
     background-color: ${({ theme }) => lighten(0.025, theme.color.black)};
