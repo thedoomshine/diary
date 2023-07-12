@@ -4,6 +4,16 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
+  experimental: {
+    serverActions: true,
+  },
 }
 
-module.exports = nextConfig
+module.exports = (phase, { defaultConfig }) => {
+  const config = {
+    ...defaultConfig,
+    ...nextConfig,
+  }
+
+  return config
+}

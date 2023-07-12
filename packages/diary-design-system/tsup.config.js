@@ -3,8 +3,6 @@ import { defineConfig } from 'tsup'
 export default defineConfig((options) => ({
   banner: {
     js: "'use client'",
-    cjs: "'use client'",
-    mjs: "'use client'",
   },
   clean: false,
   dts: true,

@@ -38,7 +38,7 @@ const StyledTabTrigger = styled(TabsTrigger)`
 
     height: 1px;
 
-    font-weight: ${({ theme }) => theme.fontWeight['800']};
+    font-weight: ${({ theme }) => theme.fontWeight.bold};
     color: transparent;
 
     visibility: hidden;

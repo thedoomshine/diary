@@ -28,6 +28,7 @@ export {
 } from '~/elements/Popover'
 export type { PopoverProps } from '~/elements/Popover'
 export { Select, SelectItem } from '~/elements/Select'
+export { Skeleton } from '~/elements/Skeleton'
 export { TabsContent, TabsList, TabsRoot, TabsTrigger } from '~/elements/Tabs'
 export { Tooltip, TooltipProvider } from '~/elements/Tooltip'
 

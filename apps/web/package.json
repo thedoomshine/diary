@@ -9,7 +9,8 @@
     "eslint": "next lint --fix",
     "stylelint": "stylelint \"**/*.{tsx,jsx}\" --fix",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "update-types": "supabase gen types typescript --project-id \"$PROJECT_REF\" > src/@types/db.ts"
   },
   "dependencies": {
     "@diaryco/design-system": "workspace:*",
@@ -18,6 +19,7 @@
     "@supabase/auth-ui-react": "^0.4.2",
     "@supabase/auth-ui-shared": "^0.1.6",
     "@supabase/supabase-js": "^2.22.0",
+    "@tanstack/react-query": "^4.29.19",
     "@tiptap/pm": "^2.0.3",
     "@tiptap/react": "^2.0.3",
     "@tiptap/starter-kit": "^2.0.3",
@@ -26,6 +28,7 @@
     "clsx": "^1.2.1",
     "date-fns": "^2.30.0",
     "date-fns-tz": "^2.0.0",
+    "jotai": "^2.2.2",
     "next": "^13.4.9",
     "node-cache": "^5.1.2",
     "polished": "^4.2.2",
@@ -41,6 +44,9 @@
   },
   "devDependencies": {
     "@emotion/is-prop-valid": "^1.2.1",
+    "@swc-jotai/debug-label": "^0.0.10",
+    "@swc-jotai/react-refresh": "^0.0.8",
+    "@tanstack/eslint-plugin-query": "^4.29.9",
     "@types/node": "^20.2.5",
     "@types/react": "18.2.13",
     "@types/react-dom": "18.2.6",

@@ -13,8 +13,9 @@ const StyledLayout = styled.div`
   flex: 1 1 auto;
   flex-direction: column;
 
-  max-width: ${({ theme }) => theme.size.xl};
+  max-width: ${({ theme }) => theme.size.md};
   min-height: 100%;
+  width: 100%;
   margin: 0 auto;
 `
 

@@ -3,7 +3,7 @@
 import { Icon, grainyGradientBackground } from '@diaryco/design-system'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import styled, { useTheme } from 'styled-components'
+import styled from 'styled-components'
 
 import { AUTH_ROUTES, ValueOf } from '~/@types'
 
@@ -48,12 +48,8 @@ const DesktopLogo = styled.h1`
   display: none;
   margin-bottom: 1rem;
   color: ${({ theme }) => theme.color.white};
-  font-size: ${({ theme }) => theme.fontSize.h4};
+  font-size: ${({ theme }) => theme.fontSize.h3};
   text-decoration: none;
-  &:hover,
-  &:focus-visible {
-    text-decoration: none !important;
-  }
   @media ${({ theme }) => theme.breakpoints.md} {
     display: block;
   }
@@ -147,8 +143,11 @@ const HEADER_COPY = {
   ),
   [AUTH_ROUTES.SIGN_UP]: (
     <>
-      welcome to diary
-      <Period />
+      welcome to{' '}
+      <strong>
+        diary
+        <Period />
+      </strong>
     </>
   ),
   [AUTH_ROUTES.FORGOT_PASSWORD]: (
@@ -185,6 +184,7 @@ export default function AuthForm({ children }: { children: React.ReactNode }) {
         <Link
           title='diary.'
           href='/'
+          style={{ textDecoration: 'none' }}
         >
           <DesktopLogo>
             diary

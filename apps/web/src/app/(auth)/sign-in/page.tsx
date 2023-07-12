@@ -4,12 +4,13 @@ import { FillButton, Icon, Input } from '@diaryco/design-system'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import Link from 'next/link'
+import { redirect } from 'next/navigation'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import styled from 'styled-components'
 import { object } from 'yup'
 
-import { AUTH_ROUTES, ValueOf } from '~/@types'
+import { AUTH_ROUTES, APP_ROUTES } from '~/@types'
 import { emailSchema, passwordSchema } from '~/utils/form-validations'
 
 import AuthForm from '../_components/auth-form'
@@ -69,17 +70,9 @@ const ForgotPasswordLink = () => (
   </StyledForgotPasswordLink>
 )
 
-const VIEW_TYPE = {
-  SIGN_IN: 'sign_in',
-  SIGN_UP: 'sign_up',
-  FORGOT: 'forgotten_password',
-  MAGIC_LINK: 'magic_link',
-  UPDATE_PASSWORD: 'update_password',
-} as const
-
-type ViewType = ValueOf<typeof VIEW_TYPE>
-
 export default function SignInPage() {
+  const supabase = createClientComponentClient()
+
   const formSchema = object({
     ...emailSchema,
     ...passwordSchema,
@@ -94,8 +87,17 @@ export default function SignInPage() {
     resolver: yupResolver(formSchema),
   })
 
-  const onSubmit = (data: any) => {
-    console.log(data)
+  const onSubmit = async ({ email, password }: { email: string, password: string }) => {
+    try {
+      await supabase.auth.signInWithPassword({
+        email,
+        password,
+      })
+
+      redirect(APP_ROUTES.CALENDAR)
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (

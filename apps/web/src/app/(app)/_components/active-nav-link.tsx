@@ -1,11 +1,12 @@
 'use client'
 
-import { Icon, ButtonStyles } from '@diaryco/design-system'
+import { ButtonStyles, Icon } from '@diaryco/design-system'
 import clsx from 'clsx'
 import Link, { LinkProps } from 'next/link'
-import { useRouter } from 'next/router'
-import React, { PropsWithChildren, useMemo } from 'react'
+import { usePathname } from 'next/navigation'
+import React, { PropsWithChildren } from 'react'
 import styled from 'styled-components'
+import { UrlObject } from 'url'
 
 const StyledNavLink = styled(Link)`
   ${ButtonStyles};
@@ -14,7 +15,9 @@ const StyledNavLink = styled(Link)`
   color: ${({ theme }) => theme.color.white};
   text-decoration: none;
 
-  &:visited, &:hover, &:active {
+  &:visited,
+  &:hover,
+  &:active {
     color: ${({ theme }) => theme.color.white};
   }
 
@@ -66,50 +69,34 @@ const StyledLinkName = styled.span`
 
 type ActiveLinkProps = LinkProps & {
   className?: string
-  activeClassName: string
   icon: string
   name: string
 }
 
 export const ActiveNavLink = ({
   children,
-  activeClassName,
   className,
+  href,
   icon,
   name,
   ...props
 }: PropsWithChildren<ActiveLinkProps>) => {
-  const { asPath, isReady } = useRouter()
+  const pathname = usePathname()
 
-  const isActive = useMemo(() => {
-    if (isReady) {
-      const linkPathname = new URL(
-        (props.as || props.href) as string,
-        location.href
-      ).pathname
-
-      const activePathname = new URL(asPath, location.href).pathname
-
-      return linkPathname === activePathname
-    }
-    return false
-  }, [asPath, isReady, props.as, props.href, activeClassName])
+  const active = pathname.startsWith(href.toString())
 
   return (
     <StyledNavLink
-      className={clsx(className, isActive ?? activeClassName)}
+      href={href}
+      className={clsx(className, { active })}
       {...props}
     >
       <>
         <StyledNavIcon
-          name={isActive ? `${icon}-filled` : icon}
+          name={active ? `${icon}-filled` : icon}
           aria-hidden
         />
-        <StyledLinkName
-          title={name}
-        >
-          {name}
-        </StyledLinkName>
+        <StyledLinkName title={name}>{name}</StyledLinkName>
         {children}
       </>
     </StyledNavLink>

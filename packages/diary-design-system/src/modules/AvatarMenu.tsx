@@ -14,11 +14,17 @@ const StyledPopoverTrigger = styled(PopoverTrigger)`
   ${ButtonStyles};
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 
   width: 100%;
 
+  gap: 0.25rem;
+  padding: 0.5rem;
+
   border-radius: ${({ theme }) => theme.radii.lg};
+  @media ${({ theme }) => theme.breakpoints.xl} {
+    justify-content: space-between;
+  }
 `
 
 const StyledAvatar = styled(Avatar)`
@@ -35,11 +41,9 @@ const StyledUserNames = styled.div`
   align-items: flex-start;
   justify-content: flex-start;
 
-  margin-left: 0.5rem;
-
   line-height: 1;
 
-  @media ${({ theme }) => theme.media.xl} {
+  @media ${({ theme }) => theme.breakpoints.xl} {
     display: flex;
   }
 `
@@ -59,11 +63,9 @@ const StyledIcon = styled(Icon)`
   align-self: center;
   justify-self: flex-end;
 
-  margin-right: 0.25rem;
-
   font-size: ${({ theme }) => theme.fontSize.sm};
 
-  @media ${({ theme }) => theme.media.xl} {
+  @media ${({ theme }) => theme.breakpoints.xl} {
     display: block;
   }
 `

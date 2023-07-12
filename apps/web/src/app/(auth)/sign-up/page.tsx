@@ -3,6 +3,7 @@
 import { FillButton, Icon, Input } from '@diaryco/design-system'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { redirect } from 'next/navigation'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import styled from 'styled-components'
@@ -15,6 +16,7 @@ import {
 } from '~/utils/form-validations'
 
 import AuthForm from '../_components/auth-form'
+import { APP_ROUTES } from '~/@types'
 
 const AuthFormWrapper = styled.form`
   display: flex;
@@ -53,11 +55,13 @@ const ErrorIcon = styled(Icon)`
 `
 
 export default function SignUpPage() {
+  const supabase = createClientComponentClient()
+
   const formSchema = object({
     ...emailSchema,
-    ...passwordSchema,
     ...usernameSchema,
-  }).required()
+    ...passwordSchema,
+  })
 
   const {
     handleSubmit,
@@ -68,8 +72,17 @@ export default function SignUpPage() {
     resolver: yupResolver(formSchema),
   })
 
-  const onSubmit = (data: any) => {
-    console.log(data)
+  const onSubmit = async ({ email, password }: { email: string, password: string }) => {
+    try {
+      await supabase.auth.signUp({
+        email,
+        password,
+      })
+
+      redirect(APP_ROUTES.CALENDAR)
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (

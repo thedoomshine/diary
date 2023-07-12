@@ -8,6 +8,7 @@ const HeadingPrefix = {
 } as const
 
 const BodyPrefix = {
+  XS: 'xs',
   SM: 'sm',
   MD: 'md',
   LG: 'lg',
@@ -33,7 +34,7 @@ const generateTypeScale = (
 ): TypescaleObj =>
   Array.from(
     { length: Object.values(prefix).length },
-    (_, i) => `${Number(Math.pow(ratio, i - 1).toFixed(4))}rem`
+    (_, i) => `${Number(Math.pow(ratio, i - 2).toFixed(2))}rem`
   ).reduce(
     (acc, value: string, i: number) => ({
       ...acc,

@@ -150,7 +150,7 @@ export const CTAButtonStyles = css`
   --button-shadow-color: ${({ theme }) => theme.color.black};
   ${FillButtonStyles};
   perspective: 64rem;
-  font-weight: ${({ theme }) => theme.fontWeight['800']};
+  font-weight: ${({ theme }) => theme.fontWeight.bold};
 
   transition-duration: 0.25s;
   transition-property: box-shadow, transform;

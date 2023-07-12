@@ -91,8 +91,8 @@ const Wrapper = styled.div`
     z-index: 3;
     top: 0.5rem;
 
-    padding: ${({ theme }) => theme.space.xs};
-    padding-bottom: ${({ theme }) => theme.space.xxs};
+    padding: ${({ theme }) => theme.spacing.xs};
+    padding-bottom: ${({ theme }) => theme.spacing.xxs};
 
     background-color: ${({ theme }) => theme.color.black};
     border-radius: ${({ theme }) => theme.radii.md};
@@ -225,7 +225,7 @@ const StyledHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-around;
-  padding: ${({ theme }) => `0 ${theme.space.xxs}`};
+  padding: ${({ theme }) => `0 ${theme.spacing.xxs}`};
 `
 
 const DatePickerHeader: FC<ReactDatePickerCustomHeaderProps> = ({
