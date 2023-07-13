@@ -2,7 +2,7 @@ import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 import { type NextRequest, NextResponse } from 'next/server'
 
-import { ROUTES } from '~/@types'
+import { APP_ROUTES } from '~/@types'
 
 export async function GET(req: NextRequest) {
   const supabase = createRouteHandlerClient({ cookies })
@@ -13,5 +13,5 @@ export async function GET(req: NextRequest) {
     await supabase.auth.exchangeCodeForSession(code)
   }
 
-  return NextResponse.redirect(new URL(ROUTES.CALENDAR, req.url))
+  return NextResponse.redirect(new URL(APP_ROUTES.CALENDAR, req.url))
 }

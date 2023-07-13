@@ -6,7 +6,6 @@ import Link, { LinkProps } from 'next/link'
 import { usePathname } from 'next/navigation'
 import React, { PropsWithChildren } from 'react'
 import styled from 'styled-components'
-import { UrlObject } from 'url'
 
 const StyledNavLink = styled(Link)`
   ${ButtonStyles};
@@ -14,6 +13,8 @@ const StyledNavLink = styled(Link)`
   margin-top: 0.5em;
   color: ${({ theme }) => theme.color.white};
   text-decoration: none;
+
+  padding: 0.5rem;
 
   &:visited,
   &:hover,

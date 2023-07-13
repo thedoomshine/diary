@@ -35,6 +35,7 @@ export const ButtonStyles = css`
   color: inherit;
   text-align: center;
   text-decoration: none;
+  line-height: ${({ theme }) => theme.lineHeight.element};
 
   border-radius: ${({ theme }) => theme.radii.md};
 
@@ -121,7 +122,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
 
 export const OutlineButtonStyles = css`
   ${ButtonStyles};
-  border: solid 0.125rem currentColor;
+  border: ${({ theme }) => `solid ${theme.spacing[2]} ${theme.color.white}`};
 `
 
 export const OutlineButton = styled(Button)`

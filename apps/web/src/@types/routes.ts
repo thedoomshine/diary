@@ -6,6 +6,7 @@ export const APP_ROUTES = {
   PROFILE: '/[username]',
   SETTINGS: '/settings',
   SIGN_OUT: '/sign-out',
+  CREATE_EVENT: '/create/event'
 } as const
 
 export const AUTH_ROUTES = {
@@ -18,25 +19,15 @@ export const AUTH_ROUTES = {
 
 export const MARKETING_ROUTES = {
   HOME: '/',
+  ABOUT: '/about',
+  CONTACT: '/contact',
 } as const
 
-export const UNPROTECTED_ROUTES = new Set<string>([
-  AUTH_ROUTES.SIGN_UP,
-  AUTH_ROUTES.SIGN_IN,
-  AUTH_ROUTES.FORGOT_PASSWORD,
-  AUTH_ROUTES.UPDATE_PASSWORD,
-  AUTH_ROUTES.MAGIC_LINK,
-  MARKETING_ROUTES.HOME,
-])
-
-export const PROTECTED_ROUTES = new Set<string>([
-  APP_ROUTES.CALENDAR,
-  APP_ROUTES.EXPLORE,
-  APP_ROUTES.NOTIFICATIONS,
-  APP_ROUTES.BOOKMARKS,
-  APP_ROUTES.SETTINGS,
-  APP_ROUTES.SIGN_OUT,
-])
+export const LEGAL_ROUTES = {
+  ALLOWED: '/allowed',
+  PRIVACY: '/privacy',
+  TERMS: '/terms',
+} as const
 
 export const CALENDAR_ROUTES = {
   MONTH: 'month',
@@ -58,12 +49,6 @@ export const CALENDAR_LINKS = [
     route: CALENDAR_ROUTES.DAY,
   },
 ] as const
-
-export const ROUTES = {
-  ...APP_ROUTES,
-  ...AUTH_ROUTES,
-  ...MARKETING_ROUTES,
-} as const
 
 export const NAV_LINKS = [
   {
@@ -103,3 +88,43 @@ export const NAV_LINKS = [
     links: null
   },
 ] as const
+
+export const FOOTER_LINKS = [
+  {
+    name: 'terms of service',
+    route: LEGAL_ROUTES.TERMS,
+  },
+  {
+    name: 'privacy policy',
+    route: LEGAL_ROUTES.PRIVACY,
+  },
+  {
+    name: 'allowed use',
+    route: LEGAL_ROUTES.ALLOWED,
+  },
+] as const
+
+export const ALL_ROUTES = {
+  ...APP_ROUTES,
+  ...AUTH_ROUTES,
+  ...MARKETING_ROUTES,
+  ...LEGAL_ROUTES,
+} as const
+
+export const LOGGED_OUT_ROUTES = new Set<string>([
+  AUTH_ROUTES.SIGN_UP,
+  AUTH_ROUTES.SIGN_IN,
+  AUTH_ROUTES.FORGOT_PASSWORD,
+  AUTH_ROUTES.UPDATE_PASSWORD,
+  AUTH_ROUTES.MAGIC_LINK,
+  MARKETING_ROUTES.HOME,
+])
+
+export const PROTECTED_ROUTES = new Set<string>([
+  APP_ROUTES.CALENDAR,
+  APP_ROUTES.EXPLORE,
+  APP_ROUTES.NOTIFICATIONS,
+  APP_ROUTES.BOOKMARKS,
+  APP_ROUTES.SETTINGS,
+  APP_ROUTES.SIGN_OUT,
+])

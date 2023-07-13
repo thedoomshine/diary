@@ -1,6 +1,6 @@
 'use client'
 
-import { Icon, OutlineButton } from '@diaryco/design-system'
+import { IconButton, OutlineButton } from '@diaryco/design-system'
 import { useParams } from 'next/navigation'
 import { type ReactNode } from 'react'
 import styled from 'styled-components'
@@ -38,22 +38,34 @@ const StyledH1 = styled.h1`
   }
 `
 
-const StyledIcon = styled(Icon)`
-  display: inline-block;
+const ButtonsWrapper = styled.div`
+  display: flex;
+  justify-content: flex-start;
+`
 
-  &.left {
-    margin-right: 0.5em;
-  }
+const StyledOutlineButton = styled(OutlineButton)`
+  border-radius: 0;
 
-  &.right {
-    margin-left: 0.5em;
+  &:hover {
+    color: ${({ theme }) => theme.color.yellow};
   }
 `
 
-const ButtonsWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  min-width: 42%;
+const StyledIconButton = styled(IconButton)`
+  border-color: ${({ theme }) => theme.color.white};
+  border-width: ${({ theme }) => theme.spacing[2]};
+
+  &:first-child {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right: 0;
+  }
+
+  &:last-child {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left: 0;
+  }
 `
 
 export default function CalendarLayout({ children }: { children: ReactNode }) {
@@ -132,21 +144,15 @@ export default function CalendarLayout({ children }: { children: ReactNode }) {
     <>
       <NavBar>
         <ButtonsWrapper>
-          <OutlineButton onClick={onPrevClick}>
-            <StyledIcon
-              className='left'
-              name='chevron-left'
-            />{' '}
-            prev
-          </OutlineButton>
-          <OutlineButton onClick={onTodayClick}>today</OutlineButton>
-          <OutlineButton onClick={onNextClick}>
-            next{' '}
-            <StyledIcon
-              className='right'
-              name='chevron-right'
-            />
-          </OutlineButton>
+          <StyledIconButton
+            onClick={onPrevClick}
+            icon='chevron-left'
+          />
+          <StyledOutlineButton onClick={onTodayClick}>today</StyledOutlineButton>
+          <StyledIconButton
+            onClick={onNextClick}
+            icon='chevron-right'
+          />
         </ButtonsWrapper>
         <StyledH1>{title}</StyledH1>
       </NavBar>

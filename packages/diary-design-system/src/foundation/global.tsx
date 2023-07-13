@@ -1,15 +1,13 @@
-import { rgba, remToPx } from 'polished'
+import { remToPx, rgba } from 'polished'
 import { createGlobalStyle } from 'styled-components'
 
-import { fluidType, grainyGradientBackground } from '~/utils'
-import { objToVar } from '~/utils/obj-to-var'
 import {
   color,
   duration,
   easing,
+  font,
   fontSize,
   fontWeight,
-  font,
   lineHeight,
   opacity,
   radii,
@@ -18,6 +16,8 @@ import {
   spacing,
   zIndex,
 } from '~/foundation'
+import { fluidType, grainyGradientBackground } from '~/utils'
+import { objToVar } from '~/utils/obj-to-var'
 
 const theme = {
   color,
@@ -198,7 +198,7 @@ export const GlobalStyle = createGlobalStyle`
     line-height: ${({ theme }) => theme.lineHeight.title};
   }
 
-  h1,h2,h3,h4,h5,h6,p {
+  h1, h2, h3, h4, h5, h6 {
     text-wrap: balance;
   }
 
@@ -235,7 +235,8 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     &:focus-visible {
-      outline: ${({ theme }) => `dotted ${theme.spacing[2]} ${theme.color.yellow}`};
+      outline: ${({ theme }) =>
+        `dotted ${theme.spacing[2]} ${theme.color.yellow}`};
       outline-offset: ${({ theme }) => theme.spacing[2]};
       text-decoration: underline;
     }

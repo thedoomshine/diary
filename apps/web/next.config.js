@@ -6,14 +6,9 @@ const nextConfig = {
   },
   experimental: {
     serverActions: true,
+    mdxRs: true,
   },
 }
 
-module.exports = (phase, { defaultConfig }) => {
-  const config = {
-    ...defaultConfig,
-    ...nextConfig,
-  }
-
-  return config
-}
+const withMDX = require('@next/mdx')()
+module.exports = withMDX(nextConfig)

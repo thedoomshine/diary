@@ -16,7 +16,7 @@ import {
 } from '~/utils/form-validations'
 
 import AuthForm from '../_components/auth-form'
-import { APP_ROUTES } from '~/@types'
+import { APP_ROUTES, CALENDAR_ROUTES } from '~/@types'
 
 const AuthFormWrapper = styled.form`
   display: flex;

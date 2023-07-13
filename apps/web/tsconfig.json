@@ -13,8 +13,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "node_modules/**/*.d.ts",
-    "@diaryco/style-engine",
-    "panda.config.ts"
   ],
   "exclude": ["node_modules", "!node_modules/@types/**/*.d.ts"]
 }

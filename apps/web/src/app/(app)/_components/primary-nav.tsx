@@ -12,6 +12,7 @@ import { type CurrentUserResponseSuccess, getCurrentUser } from '~/utils'
 
 import { ActiveNavLink } from './active-nav-link'
 import { UserMenu } from './user-menu'
+import { usePathname } from 'next/navigation'
 
 const StyledIcon = styled(Icon)`
   font-size: ${({ theme }) => theme.fontSize.xl};
@@ -89,12 +90,21 @@ const NavLinkWrapper = styled.div`
 
     text-align: center;
 
-    transition: height 250ms ${({ theme }) => theme.easing.easeOut};
+    transition-property: height;
+    transition-duration: ${({ theme }) => theme.duration[250]};
+    transition-timing-function: ${({ theme }) => theme.easing.easeOut};
 
     li a {
+      color: ${({ theme }) => theme.color.white};
       display: block;
       padding: 0.5rem 0;
       text-decoration: none;
+
+      font-size: ${({ theme }) => theme.fontSize.sm};
+
+      &:hover, &.active {
+        color: ${({ theme }) => theme.color.yellow};
+      }
 
       &.active {
         font-weight: ${({ theme }) => theme.fontWeight.bold};
@@ -126,6 +136,8 @@ type CurrentUserType = CurrentUserResponseSuccess
 const userAtom = atom<CurrentUserType | null>(null)
 
 export const PrimaryNav = () => {
+  const pathname = usePathname()
+
   const [user, setUser] = useAtom(userAtom)
 
   useEffect(() => {
@@ -169,7 +181,7 @@ export const PrimaryNav = () => {
                   {links &&
                     links.map(({ name: linkName, route: linkRoute }) => (
                       <li key={linkName}>
-                        <Link href={getRouteUrl(linkName, linkRoute)}>
+                        <Link className={clsx({ active:  pathname.includes(linkRoute.toString())})} href={getRouteUrl(linkName, linkRoute)}>
                           {linkName}
                         </Link>
                       </li>

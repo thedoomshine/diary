@@ -13,6 +13,7 @@ const BodyPrefix = {
   MD: 'md',
   LG: 'lg',
   XL: 'xl',
+  XXL: 'xxl',
 } as const
 
 type ValueOf<T> = T[keyof T]

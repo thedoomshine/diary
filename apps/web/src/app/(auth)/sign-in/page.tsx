@@ -10,7 +10,7 @@ import { useForm } from 'react-hook-form'
 import styled from 'styled-components'
 import { object } from 'yup'
 
-import { AUTH_ROUTES, APP_ROUTES } from '~/@types'
+import { AUTH_ROUTES, APP_ROUTES, CALENDAR_ROUTES } from '~/@types'
 import { emailSchema, passwordSchema } from '~/utils/form-validations'
 
 import AuthForm from '../_components/auth-form'
@@ -89,12 +89,14 @@ export default function SignInPage() {
 
   const onSubmit = async ({ email, password }: { email: string, password: string }) => {
     try {
-      await supabase.auth.signInWithPassword({
+      const { data } = await supabase.auth.signInWithPassword({
         email,
         password,
       })
 
-      redirect(APP_ROUTES.CALENDAR)
+      if ('user' in data) {
+        redirect(APP_ROUTES.CALENDAR)
+      }
     } catch (error) {
       console.error(error)
     }
