@@ -1,3 +1,5 @@
+'use client'
+
 import { Select, SelectItem } from '@diaryco/design-system'
 import { TimezoneMap } from 'diary-utils'
 import { memo } from 'react';

@@ -7,7 +7,7 @@ export default defineConfig((options) => ({
   clean: false,
   dts: true,
   entry: ['src/index.ts'],
-  external: ['react', 'styled-components'],
+  external: ['react'],
   format: ['esm', 'cjs'],
   outDir: 'dist',
   declarationDir: './dist/@types',

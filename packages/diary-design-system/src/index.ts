@@ -34,7 +34,7 @@ export { Tooltip, TooltipProvider } from '~/elements/Tooltip'
 
 export { AvatarMenu, AvatarMenuContent } from '~/modules/AvatarMenu'
 export { DatePicker } from '~/modules/DatePicker'
-export { MarkdownEditor } from '~/modules/MarkdownEditor'
+export { WYSIWYGEditor } from '~/modules/WYSIWYGEditor'
 export {
   TimePicker,
   defaultTimePickerArray,

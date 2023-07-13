@@ -6,7 +6,7 @@ import type {
 import { lighten, rgba } from 'polished'
 import { forwardRef } from 'react'
 import type { ReactNode } from 'react'
-import styled from 'styled-components'
+import styled, { useTheme } from 'styled-components'
 
 import { ButtonStyles, FillButtonStyles, Icon } from '~/elements'
 
@@ -30,11 +30,11 @@ const SelectScrollDown = styled(SelectPrimitive.ScrollDownButton)`
 `
 
 const SelectContent = styled(SelectPrimitive.Content)`
-  z-index: ${({ theme }) => theme.zIndex.select};
-
   overflow: hidden;
 
   background-color: ${({ theme }) => theme.color.black};
+
+  border: ${({ theme }) => `solid ${theme.spacing[1]} ${theme.color.grey}`};
   border-radius: ${({ theme }) => theme.radii.md};
   box-shadow: ${({ theme }) => theme.shadow.normal};
   --radix-select-content-available-height: 16rem;
@@ -50,7 +50,7 @@ const StyledSelectItem = styled(SelectPrimitive.Item)`
   display: flex;
   align-items: center;
 
-  padding: 1rem 2rem 1rem 0.5rem;
+  padding: 0.5rem 2rem 0.5rem 0.5rem;
 
   border-radius: ${({ theme }) => theme.radii.sm};
 
@@ -105,6 +105,8 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
     },
     forwardedRef
   ) => {
+    const theme = useTheme()
+
     return (
       <SelectPrimitive.Root
         disabled={disabled}
@@ -124,6 +126,10 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
         <SelectContent
           sticky='always'
           position='popper'
+          sideOffset={4}
+          style={{
+            zIndex: theme.zIndex.dropdown,
+          }}
         >
           {showScrollButtons && (
             <SelectScrollUp>

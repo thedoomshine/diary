@@ -7,7 +7,12 @@ import ReactDatePicker, {
 } from 'react-datepicker'
 import styled, { css } from 'styled-components'
 
-import { ButtonStyles, FillButtonStyles, IconButton, IconButtonStyles } from '~/elements'
+import {
+  ButtonStyles,
+  FillButtonStyles,
+  IconButton,
+  IconButtonStyles,
+} from '~/elements'
 
 const triangleArrow = css`
   position: absolute;
@@ -91,15 +96,12 @@ const Wrapper = styled.div`
     z-index: 3;
     top: 0.5rem;
 
-    padding: ${({ theme }) => theme.spacing.xs};
-    padding-bottom: ${({ theme }) => theme.spacing.xxs};
-
     background-color: ${({ theme }) => theme.color.black};
     border-radius: ${({ theme }) => theme.radii.md};
     box-shadow: ${({ theme }) => theme.shadow.normal};
 
     &[data-placement^='bottom'] {
-      padding-top: 0.5rem + 2px;
+      padding-top: calc(0.5rem + 2px);
 
       .react-datepicker__triangle {
         ${triangleArrowUp}
@@ -115,7 +117,7 @@ const Wrapper = styled.div`
     }
 
     &[data-placement^='top'] {
-      padding-bottom: 0.5rem + 2px;
+      padding-bottom: calc(0.5rem + 2px);
 
       .react-datepicker__triangle {
         ${triangleArrowDown}
@@ -209,9 +211,9 @@ const Wrapper = styled.div`
 
     overflow: hidden;
 
-    width: 1px;
-    height: 1px;
-    margin: -1px;
+    width: ${({ theme }) => theme.spacing[1]};
+    height: ${({ theme }) => theme.spacing[1]};
+    margin: ${({ theme }) => -theme.spacing[2]};
     padding: 0;
 
     white-space: nowrap;
@@ -225,7 +227,7 @@ const StyledHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-around;
-  padding: ${({ theme }) => `0 ${theme.spacing.xxs}`};
+  padding: ${({ theme }) => `0 ${theme.spacing[4]} ${theme.spacing[4]}`};
 `
 
 const DatePickerHeader: FC<ReactDatePickerCustomHeaderProps> = ({

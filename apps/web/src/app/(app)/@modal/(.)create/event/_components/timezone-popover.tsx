@@ -1,3 +1,5 @@
+'use client'
+
 import {
   Button,
   Checkbox,
@@ -84,7 +86,7 @@ export interface TimeZonePopoverProps extends PopoverProps {
   onClick: () => void
   onOpenChange: (open: boolean) => void
   open: boolean
-  setSelectedTimezones: Dispatch<SetStateAction<TimezoneEntry>>
+  setSelectedTimezones: Dispatch<SetStateAction<TimezoneEntry[]>>
   eventStartTime: Date
   selectedTimezones: TimezoneEntry[]
   timezoneOptions: TimezoneMap
@@ -107,7 +109,7 @@ export const TimeZonePopover: FC<TimeZonePopoverProps> = ({
   const [tempTzs, setTempTzs] = useState([...selectedTimezones])
 
   const handleValueChange = (value: string, index: number) => {
-    const nextValue = timezoneOptions.get(value)
+    const nextValue = timezoneOptions.get(value)!
     if (!separateTimezones) {
       return setTempTzs([nextValue, nextValue])
     }
@@ -180,7 +182,7 @@ export const TimeZonePopover: FC<TimeZonePopoverProps> = ({
                   <TimeZonePicker
                     timezoneOptions={timezoneOptions}
                     defaultValue={tzCode}
-                    onValueChange={(value: TimezoneEntry) =>
+                    onValueChange={(value: string) =>
                       handleValueChange(value, index)
                     }
                     value={tzCode}
