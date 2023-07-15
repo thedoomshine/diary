@@ -156,9 +156,6 @@ export const GlobalStyle = createGlobalStyle`
     display: flex;
 
     width: 100%;
-    min-height: 100vh;
-    min-height: -webkit-fill-available;
-    min-height: 100dvh;
 
     font-size: ${({ theme }) =>
       fluidType(
@@ -184,6 +181,9 @@ export const GlobalStyle = createGlobalStyle`
     flex-direction: column;
 
     width: 100%;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    min-height: 100dvh;
     margin: 0;
 
     font-family: ${({ theme }) => theme.font.sans};

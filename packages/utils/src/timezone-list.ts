@@ -731,5 +731,6 @@ export const groupedTimezones: GroupedTimezonesType = Object.entries([...timezon
     identifier,
     name,
   })
+
   return groups
 }, {} as GroupedTimezonesObjectType))

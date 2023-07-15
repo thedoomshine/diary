@@ -32,7 +32,10 @@ import { TimeZonePopover } from './timezone-popover'
 import placeholderContent from './placeholder-content.json'
 
 const StyledForm = styled.form`
+  display: flex;
+  flex-direction: column;
   padding: 0.5rem;
+  height: 100%;
 `
 
 const Fieldset = styled.fieldset`

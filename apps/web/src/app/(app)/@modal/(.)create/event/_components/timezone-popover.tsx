@@ -145,21 +145,31 @@ export const TimeZonePopover: FC<TimeZonePopoverProps> = ({
     onOpenChange(boolean)
   }
 
-  const localTz = Boolean(tempTzs.find((item) => item !== localTimeZone))
+  const localTz = Boolean(tempTzs[0] === localTimeZone)
   const differentTimezones = tempTzs[0] !== tempTzs[1]
   const PICKER_LABELS = ['start', 'end']
 
-  const popoverTriggerLabel =
-    !separateTimezones && selectedTimezones[0] !== localTimeZone
-      ? selectedTimezones[0]
-      : 'time zone'
+  const getIdentifier = (value: string | string[]) => {
+    if (Array.isArray(value)) {
+      return value.map((item) => timezoneOptions.get(item)?.name).join(' - ')
+    }
+    return timezoneOptions.get(value)?.name
+  }
+
+  const popoverTriggerLabel = !localTz
+    ? separateTimezones
+      ? getIdentifier(selectedTimezones)
+      : getIdentifier(selectedTimezones[0])
+    : 'time zone'
 
   return (
     <Popover
       open={open}
       onOpenChange={handleOpenChange}
     >
-      <StyledPopoverTrigger>{popoverTriggerLabel}</StyledPopoverTrigger>
+      <StyledPopoverTrigger>
+        {popoverTriggerLabel}
+      </StyledPopoverTrigger>
       <StyledPopoverContent {...props}>
         <StyledCheckbox
           checked={separateTimezones}
