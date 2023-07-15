@@ -3,6 +3,12 @@ import type { TooltipProps as TooltipPrimitiveProps } from '@radix-ui/react-tool
 import { FC, ReactNode } from 'react'
 import styled from 'styled-components'
 
+const TooltipTrigger = styled(TooltipPrimitive.Trigger)`
+  &[data-state='open'] {
+    border-color: ${({ theme }) => theme.color.yellow};
+  }
+`
+
 const TooltipContent = styled(TooltipPrimitive.Content)`
   will-change: transform, opacity;
 
@@ -63,7 +69,7 @@ export const Tooltip: FC<TooltipProps> = ({
   onOpenChange,
   open,
   side = 'top',
-  sideOffset = 0,
+  sideOffset = 4,
   ...props
 }) => {
   return (
@@ -73,7 +79,7 @@ export const Tooltip: FC<TooltipProps> = ({
       onOpenChange={onOpenChange}
       delayDuration={delayDuration}
     >
-      <TooltipPrimitive.Trigger asChild>{children}</TooltipPrimitive.Trigger>
+      <TooltipTrigger asChild>{children}</TooltipTrigger>
       <TooltipContent
         align={align}
         alignOffset={alignOffset}

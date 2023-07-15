@@ -16,6 +16,10 @@ const SelectTrigger = styled(SelectPrimitive.Trigger)`
   gap: 0.5rem;
   padding: 0.5rem;
 
+  &[data-state='open'] {
+    border-color: ${({ theme }) => theme.color.yellow};
+  }
+
   &[data-disabled] {
     pointer-events: none;
   }
@@ -66,6 +70,15 @@ const StyledSelectItem = styled(SelectPrimitive.Item)`
   }
 `
 
+export const SelectGroup = styled(SelectPrimitive.Group)``
+
+export const SelectLabel = styled(SelectPrimitive.Label)`
+  padding: 0 1.5rem;
+  font-size: ${({ theme }) => theme.fontSize.sm};
+  line-height: ${({ theme }) => theme.lineHeight.title};
+  color: ${({ theme }) => theme.color.silver};
+`
+
 const SelectItemIndicator = styled(SelectPrimitive.ItemIndicator)`
   position: absolute;
   right: 0.5rem;
@@ -77,6 +90,8 @@ const SelectItemIndicator = styled(SelectPrimitive.ItemIndicator)`
 `
 
 interface SelectProps extends SelectPrimitiveProps {
+  align?: 'start' | 'center' | 'end'
+  alignOffset?: number
   children: ReactNode | ReactNode[]
   className?: string
   defaultOpen?: boolean
@@ -90,17 +105,24 @@ interface SelectProps extends SelectPrimitiveProps {
   open?: boolean
   required?: boolean
   showScrollButtons?: boolean
+  side?: 'top' | 'right' | 'bottom' | 'left'
+  sideOffset?: number
   value?: string
 }
 
 export const Select = forwardRef<HTMLButtonElement, SelectProps>(
   (
     {
+      align = 'start',
+      alignOffset = 0,
       children,
       disabled,
       hideIcon = false,
       className,
       showScrollButtons = false,
+      side = 'top',
+      sideOffset = 4,
+      value,
       ...props
     },
     forwardedRef
@@ -110,6 +132,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
     return (
       <SelectPrimitive.Root
         disabled={disabled}
+        value={value}
         {...props}
       >
         <SelectTrigger
@@ -124,9 +147,12 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
           )}
         </SelectTrigger>
         <SelectContent
+          align={align}
+          alignOffset={alignOffset}
           sticky='always'
           position='popper'
-          sideOffset={4}
+          side={side}
+          sideOffset={sideOffset}
           style={{
             zIndex: theme.zIndex.dropdown,
           }}

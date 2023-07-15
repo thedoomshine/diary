@@ -271,6 +271,11 @@ const InputWrapper = styled.div`
 
     border: none;
   }
+
+  &:has(input:focus-visible) {
+    outline: ${({ theme }) =>
+      `solid ${theme.spacing[1]} ${theme.color.yellow}`};
+  }
 `
 
 const Template = styled.span`
@@ -362,7 +367,7 @@ export const DatePicker: FC<DatePickerProps> = ({
           {
             name: 'offset',
             options: {
-              offset: [0, 12],
+              offset: [12, 14],
             },
           },
           {

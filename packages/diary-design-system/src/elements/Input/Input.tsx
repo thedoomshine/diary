@@ -66,6 +66,7 @@ const StyledInput = styled.input`
   padding: 0.5rem 0.75rem;
   font-size: inherit;
   color-scheme: dark;
+  line-height: ${({ theme }) => theme.lineHeight.element};
 
   &::placeholder {
     font-style: italic;

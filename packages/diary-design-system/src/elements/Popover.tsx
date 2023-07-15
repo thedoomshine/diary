@@ -55,6 +55,12 @@ const StyledPopoverClose = styled(PopoverPrimitive.Close)`
   color: ${({ theme }) => theme.color.white};
 `
 
+export const PopoverTrigger = styled(PopoverPrimitive.Trigger)`
+  &[data-state='open'] {
+    border-color: ${({ theme }) => theme.color.yellow};
+  }
+`
+
 export interface PopoverProps extends PopoverContentPrimitiveProps {
   children?: ReactNode | ReactNode[]
   sideOffset?: number
@@ -83,4 +89,3 @@ export const PopoverClose = () => (
 )
 
 export const Popover = PopoverPrimitive.Root
-export const PopoverTrigger = PopoverPrimitive.Trigger

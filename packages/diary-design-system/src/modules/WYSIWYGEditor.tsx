@@ -1,6 +1,6 @@
-import Dropcursor from '@tiptap/extension-dropcursor'
 import Image from '@tiptap/extension-image'
-import { EditorContent, JSONContent, useEditor } from '@tiptap/react'
+import Mention from '@tiptap/extension-mention'
+import { EditorContent, type JSONContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import styled from 'styled-components'
 
@@ -146,7 +146,7 @@ export const WYSIWYGEditor = ({
   setContentSource: (content: JSONContent) => void
 }) => {
   const editor = useEditor({
-    extensions: [StarterKit, Dropcursor, Image],
+    extensions: [StarterKit, Image, Mention],
     content: content,
     onUpdate: ({ editor }) => {
       setContentSource(editor.getJSON())

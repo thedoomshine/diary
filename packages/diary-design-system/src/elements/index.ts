@@ -23,6 +23,6 @@ export {
   PopoverTrigger,
 } from './Popover'
 export { Skeleton } from './Skeleton'
-export { Select, SelectItem } from './Select'
+export { Select, SelectGroup, SelectItem, SelectLabel } from './Select'
 export { TabsContent, TabsList, TabsRoot, TabsTrigger } from './Tabs'
 export { Tooltip, TooltipProvider } from './Tooltip'

@@ -1,4 +1,4 @@
-import { CreateEventForm } from '../../_components/create-event-form'
+import { CreateEventForm } from '../../@modal/(.)create/event/_components/create-event-form'
 
 export default function CreateEventPage() {
   return (

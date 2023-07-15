@@ -11,7 +11,7 @@ import {
   formatTimePickerOptions,
 } from '@diaryco/design-system'
 import type { TimePickerOption } from '@diaryco/design-system'
-import { JSONContent } from '@tiptap/react'
+import { type JSONContent } from '@tiptap/react'
 import {
   addDays,
   addMinutes,
@@ -27,7 +27,7 @@ import { useCallback, useMemo, useState } from 'react'
 import type { FocusEvent } from 'react'
 import styled from 'styled-components'
 
-import { TimeZonePopover } from '../@modal/(.)create/event/_components/timezone-popover'
+import { TimeZonePopover } from './timezone-popover'
 
 import placeholderContent from './placeholder-content.json'
 
@@ -97,12 +97,13 @@ export const CreateEventForm = () => {
   const isSingleDay = isSameDay(eventStartTime, eventEndTime)
   const localTimeZone = DEFAULT_TIMEZONES.get(
     Intl.DateTimeFormat().resolvedOptions().timeZone
-  )!
+  ) || 'UTC'
 
   const [selectedTimezones, setSelectedTimezones] = useState([
     localTimeZone,
     localTimeZone,
   ])
+
 
   const getNextDate = (next: Date, prev: Date) =>
     new Date(
@@ -216,7 +217,7 @@ export const CreateEventForm = () => {
               />
             )}
           </DateTimeWrapper>
-          –
+          &mdash;
           <DateTimeWrapper>
             {!allDayEvent && (
               <TimePicker
@@ -247,23 +248,21 @@ export const CreateEventForm = () => {
         </Checkbox>
         <TimeZonePopover
           eventEndTime={eventEndTime}
+          eventStartTime={eventStartTime}
           handleClosePopover={() => setPopoverOpen(false)}
           localTimeZone={localTimeZone}
           onClick={() => setPopoverOpen(true)}
           onOpenChange={setPopoverOpen}
           open={popoverOpen}
-          setSelectedTimezones={setSelectedTimezones}
-          eventStartTime={eventStartTime}
-          timezoneOptions={DEFAULT_TIMEZONES}
           selectedTimezones={selectedTimezones}
+          setSelectedTimezones={setSelectedTimezones}
+          timezoneOptions={DEFAULT_TIMEZONES}
         />
       </Fieldset>
-      <Fieldset>
-        <WYSIWYGEditor
-          content={content}
-          setContentSource={setContentSource}
-        />
-      </Fieldset>
+      <WYSIWYGEditor
+        content={content}
+        setContentSource={setContentSource}
+      />
     </StyledForm>
   )
 }
