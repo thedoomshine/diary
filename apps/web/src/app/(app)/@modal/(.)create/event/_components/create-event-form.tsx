@@ -29,13 +29,14 @@ import styled from 'styled-components'
 
 import { TimeZonePopover } from './timezone-popover'
 
-import placeholderContent from './placeholder-content.json'
+// import placeholderContent from './placeholder-content.json'
 
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   padding: 0.5rem;
   height: 100%;
+  flex: 1 1 auto;
 `
 
 const Fieldset = styled.fieldset`
@@ -70,14 +71,14 @@ const getDistance = (start: Date, finish: Date) => {
   return `${Number((diff / 60).toFixed(1))} hrs`
 }
 
-const defaultContent = placeholderContent
+// const defaultContent = placeholderContent
 
 
 const defaultStartDate = roundToNearestMinutes(new Date(), { nearestTo: 15 })
 
 const defaultFormData = {
   allDay: false,
-  description: defaultContent,
+  description: undefined,
   duration: 60,
   startDate: defaultStartDate,
   title: '',
@@ -86,9 +87,7 @@ const defaultFormData = {
 export const CreateEventForm = () => {
   const formData = { ...defaultFormData }
   const [eventStartTime, setEventStartTime] = useState(formData.startDate!)
-  const [content, setContentSource] = useState<JSONContent>(
-    formData.description
-  )
+  const [content, setContentSource] = useState<JSONContent | undefined>()
   const [allDayEvent, setAllDayEvent] = useState(formData.allDay!)
   const [duration, setDuration] = useState(formData.duration!)
   const [popoverOpen, setPopoverOpen] = useState(false)

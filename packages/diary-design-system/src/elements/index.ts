@@ -22,7 +22,7 @@ export {
   PopoverContent,
   PopoverTrigger,
 } from './Popover'
-export { ScrollArea, ScrollAreaContent } from './ScrollArea'
+export { ScrollArea } from './ScrollArea'
 export { Skeleton } from './Skeleton'
 export { Select, SelectGroup, SelectItem, SelectLabel } from './Select'
 export { TabsContent, TabsList, TabsRoot, TabsTrigger } from './Tabs'

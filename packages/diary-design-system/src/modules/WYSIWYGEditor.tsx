@@ -16,14 +16,16 @@ import Underline from '@tiptap/extension-underline'
 import { EditorContent, type JSONContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import styled from 'styled-components'
+import { useTheme } from 'styled-components'
 
-import { ScrollArea, ScrollAreaContent } from '~/elements'
+import { ScrollArea } from '~/elements'
 
 const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100%;
+  height: 0;
+  flex: 1 1 auto;
 `
 
 const StyledToolbar = styled(ToolbarPrimitive.Root)`
@@ -44,8 +46,10 @@ const StyledToolbar = styled(ToolbarPrimitive.Root)`
 const StyledFooter = styled.div`
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   flex: 0 0 auto;
   padding: 0.5rem;
+  gap: 0.5rem;
   width: 100%;
 
   border: ${({ theme }) => `solid ${theme.spacing[1]} ${theme.color.grey}`};
@@ -56,7 +60,7 @@ const StyledFooter = styled.div`
   border-top-left-radius: 0;
 `
 
-const StyledScrollAreaContent = styled(ScrollAreaContent)`
+const StyledScrollArea = styled(ScrollArea)`
   display: flex;
   flex-direction: column;
   padding: 0 1rem;
@@ -72,6 +76,13 @@ const StyledScrollAreaContent = styled(ScrollAreaContent)`
 
   .ProseMirror {
     padding: 1rem 0;
+    p.is-editor-empty:first-child::before {
+      color: ${({ theme }) => theme.color.grey};
+      content: attr(data-placeholder);
+      float: left;
+      height: 0;
+      pointer-events: none;
+    }
     & > :first-child {
       margin-top: 0 !important;
     }
@@ -198,19 +209,20 @@ const StyledScrollAreaContent = styled(ScrollAreaContent)`
   }
 `
 
-const POST_LIMIT = 512
+const CHAR_LIMIT = 512
 
 export const WYSIWYGEditor = ({
   content,
   setContentSource,
 }: {
-  content: JSONContent
+  content?: JSONContent
   setContentSource: (content: JSONContent) => void
 }) => {
+  const theme = useTheme()
   const editor = useEditor({
     extensions: [
       CharacterCount.configure({
-        limit: POST_LIMIT,
+        limit: CHAR_LIMIT,
       }),
       Color,
       FontFamily,
@@ -223,7 +235,7 @@ export const WYSIWYGEditor = ({
       }),
       Mention,
       Placeholder.configure({
-        placeholder: 'tell us all about it...',
+        placeholder: 'tell us all about it.',
       }),
       Subscript,
       Superscript,
@@ -241,17 +253,50 @@ export const WYSIWYGEditor = ({
     },
   })
 
+  const characterCount = editor?.storage.characterCount.characters() || '0'
+
+  const percentage = Math.round((100 / CHAR_LIMIT) * characterCount)
+
   return (
-    <ScrollArea>
-      <StyledWrapper>
-        <StyledToolbar>toolbar</StyledToolbar>
-        <StyledScrollAreaContent>
-          <EditorContent editor={editor} />
-        </StyledScrollAreaContent>
-        <StyledFooter>
-          {editor?.storage.characterCount.characters()}
-        </StyledFooter>
-      </StyledWrapper>
-    </ScrollArea>
+    <StyledWrapper>
+      <StyledToolbar>toolbar</StyledToolbar>
+      <StyledScrollArea>
+        <EditorContent editor={editor} />
+      </StyledScrollArea>
+
+      <StyledFooter>
+        {percentage >= 90 && `${CHAR_LIMIT - characterCount}`}{' '}
+        <svg
+          height='32'
+          width='32'
+          viewBox='0 0 20 20'
+        >
+          <circle
+            r='10'
+            cx='10'
+            cy='10'
+            fill={theme.color.grey}
+          />
+          <circle
+            r='5'
+            cx='10'
+            cy='10'
+            fill='transparent'
+            stroke={percentage >= 100 ? theme.color.red : theme.color.yellow}
+            strokeWidth='10'
+            strokeDasharray={`calc(${percentage} * ${Math.PI} / 10) ${
+              Math.PI * 10
+            }`}
+            transform='rotate(-90) translate(-20)'
+          />
+          <circle
+            r='6'
+            cx='10'
+            cy='10'
+            fill={theme.color.black}
+          />
+        </svg>
+      </StyledFooter>
+    </StyledWrapper>
   )
 }

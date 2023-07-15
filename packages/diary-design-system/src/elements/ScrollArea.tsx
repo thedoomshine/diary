@@ -5,11 +5,12 @@ import styled from 'styled-components'
 const ScrollAreaRoot = styled(ScrollAreaPrimitive.Root)`
   --scrollbar-size: 1rem;
   display: flex;
+  flex-direction: column;
   flex: 1 1 auto;
   overflow: hidden;
 `
 
-const StyledScrollAreaContent = styled(ScrollAreaPrimitive.Viewport)`
+const ScrollAreaViewport = styled(ScrollAreaPrimitive.Viewport)`
   width: 100%;
   height: 100%;
   border-radius: inherit;
@@ -73,23 +74,7 @@ export const ScrollArea = ({
     type={type}
     {...props}
   >
-    {children}
-  </ScrollAreaRoot>
-)
-
-export const ScrollAreaContent = ({
-  className,
-  children,
-  ...props
-}: {
-  children: ReactNode
-  className?: string
-}) => (
-  <StyledScrollAreaContent
-    className={className}
-    {...props}
-  >
-    {children}
+    <ScrollAreaViewport>{children}</ScrollAreaViewport>
     <ScrollAreaScrollbar orientation='vertical'>
       <ScrollAreaThumb />
     </ScrollAreaScrollbar>
@@ -97,5 +82,5 @@ export const ScrollAreaContent = ({
       <ScrollAreaThumb />
     </ScrollAreaScrollbar>
     <ScrollAreaCorner />
-  </StyledScrollAreaContent>
+  </ScrollAreaRoot>
 )
