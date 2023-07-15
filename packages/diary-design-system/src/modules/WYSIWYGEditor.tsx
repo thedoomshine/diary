@@ -1,4 +1,5 @@
 import Image from '@tiptap/extension-image'
+import Link from '@tiptap/extension-link'
 import Mention from '@tiptap/extension-mention'
 import { EditorContent, type JSONContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
@@ -146,7 +147,7 @@ export const WYSIWYGEditor = ({
   setContentSource: (content: JSONContent) => void
 }) => {
   const editor = useEditor({
-    extensions: [StarterKit, Image, Mention],
+    extensions: [StarterKit, Image, Link, Mention],
     content: content,
     onUpdate: ({ editor }) => {
       setContentSource(editor.getJSON())

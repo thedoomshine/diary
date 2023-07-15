@@ -109,7 +109,7 @@ export const TimeZonePopover: FC<TimeZonePopoverProps> = ({
   const [tempTzs, setTempTzs] = useState([...selectedTimezones])
 
   const handleValueChange = (value: string, index: number) => {
-    const nextValue = timezoneOptions.get(value)
+    const nextValue = timezoneOptions.get(value)?.identifier
     if (!nextValue) return
 
     if (!separateTimezones) {

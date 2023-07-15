@@ -38,6 +38,7 @@ export const TimeZonePicker: FC<TimeZonePickerProps> = ({
 }) => {
   return (
     <Select
+      defaultValue={value}
       onValueChange={onValueChange}
       value={value}
       disabled={disabled}

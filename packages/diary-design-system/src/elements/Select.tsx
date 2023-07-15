@@ -70,10 +70,14 @@ const StyledSelectItem = styled(SelectPrimitive.Item)`
   }
 `
 
-export const SelectGroup = styled(SelectPrimitive.Group)``
+export const SelectGroup = styled(SelectPrimitive.Group)`
+  &:first-of-type label {
+    margin-top: 0;
+  }
+`
 
 export const SelectLabel = styled(SelectPrimitive.Label)`
-  padding: 0 1.5rem;
+  margin: 1.5rem 0.5rem 0.5rem;
   font-size: ${({ theme }) => theme.fontSize.sm};
   line-height: ${({ theme }) => theme.lineHeight.title};
   color: ${({ theme }) => theme.color.silver};

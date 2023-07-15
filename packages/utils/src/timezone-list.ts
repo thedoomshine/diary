@@ -1,592 +1,735 @@
-export interface TimezoneEntry {
+export type TimezoneEntry = {
   identifier: string
   name: string
   group: string
 }
 
-export type TimezoneMap = Map<string, string>
+type GroupedTimezoneEntry = Omit<TimezoneEntry, 'group'>
+
+type GroupedTimezonesObjectType = { [key: string]: GroupedTimezoneEntry[] }
+
+type GroupedTimezonesType = [string, GroupedTimezoneEntry[]][]
+
+export type TimezoneMap = Map<string, TimezoneEntry>
 
 export const timezones: TimezoneMap = new Map([
-  ['America/Los_Angeles', 'Pacific Time - US & Canada'],
-  ['America/Denver', 'Mountain Time - US & Canada'],
-  ['America/Chicago', 'Central Time - US & Canada'],
-  ['America/New_York', 'Eastern Time - US & Canada'],
-  ['America/Anchorage', 'Alaska Time'],
-  ['America/Phoenix', 'Arizona, Yukon Time'],
-  ['America/St_Johns', 'Newfoundland Time'],
-  ['Pacific/Honolulu', 'Hawaii Time'],
-  ['America/Adak', 'America/Adak'],
-  ['America/Argentina/Buenos_Aires', 'Buenos Aires Time'],
-  ['America/Asuncion', 'Asuncion Time'],
-  ['America/Bogota', 'Bogota, Jamaica, Lima Time'],
-  ['America/Campo_Grande', 'America/Campo Grande'],
-  ['America/Caracas', 'Caracas Time'],
-  ['America/Godthab', 'America/Godthab'],
-  ['America/Goose_Bay', 'Atlantic Time'],
-  ['America/Guatemala', 'Saskatchewan, Guatemala, Costa Rica Time'],
-  ['America/Havana', 'America/Havana'],
-  ['America/Mazatlan', 'America/Mazatlan'],
-  ['America/Mexico_City', 'Mexico City Time'],
-  ['America/Montevideo', 'Montevideo Time'],
-  ['America/Miquelon', 'America/Miquelon'],
-  ['America/Noronha', 'America/Noronha'],
-  ['America/Santiago', 'Santiago Time'],
-  ['America/Santa_Isabel', 'America/Santa Isabel'],
-  ['America/Santo_Domingo', 'Atlantic Standard Time'],
-  ['America/Sao_Paulo', 'Brasilia Time'],
-  ['Africa/Cairo', 'Africa/Cairo'],
-  ['Africa/Johannesburg', 'Central Africa Time'],
-  ['Africa/Lagos', 'West Africa Time'],
-  ['Africa/Windhoek', 'Africa/Windhoek'],
-  ['Asia/Amman', 'Jordan Time'],
-  ['Asia/Baghdad', 'Baghdad, East Africa Time'],
-  ['Asia/Baku', 'Asia/Baku'],
-  ['Asia/Beirut', 'Lebanon Time'],
-  ['Asia/Damascus', 'Syria Time'],
-  ['Asia/Dhaka', 'Asia/Dhaka'],
-  ['Asia/Dubai', 'Dubai Time'],
-  ['Asia/Gaza', 'Asia/Gaza'],
-  ['Asia/Irkutsk', 'Asia/Irkutsk'],
-  ['Asia/Jakarta', 'Indochina Time'],
-  ['Asia/Jerusalem', 'Israel Time'],
-  ['Asia/Kabul', 'Kabul Time'],
-  ['Asia/Kamchatka', 'Pacific/Majuro'],
-  ['Asia/Karachi', 'Pakistan, Maldives Time'],
-  ['Asia/Kathmandu', 'Kathmandu Time'],
-  ['Asia/Kolkata', 'India, Sri Lanka Time'],
-  ['Asia/Krasnoyarsk', 'Krasnoyarsk Time'],
-  ['Asia/Omsk', 'Asia/Omsk'],
-  ['Asia/Rangoon', 'Asia/Rangoon'],
-  ['Asia/Shanghai', 'China, Singapore, Perth'],
-  ['Asia/Tehran', 'Tehran Time'],
-  ['Asia/Tokyo', 'Japan, Korea Time'],
-  ['Asia/Vladivostok', 'Asia/Vladivostok'],
-  ['Asia/Yakutsk', 'Asia/Yakutsk'],
-  ['Asia/Yekaterinburg', 'Yekaterinburg Time'],
-  ['Asia/Yerevan', 'Asia/Yerevan'],
-  ['Atlantic/Azores', 'Azores Time'],
-  ['Atlantic/Cape_Verde', 'Cape Verde Time'],
-  ['Australia/Adelaide', 'Adelaide Time'],
-  ['Australia/Brisbane', 'Brisbane Time'],
-  ['Australia/Darwin', 'Australia/Darwin'],
-  ['Australia/Eucla', 'Australia/Eucla'],
-  ['Australia/Lord_Howe', 'Australia/Lord Howe'],
-  ['Australia/Perth', 'Australia/Perth'],
-  ['Australia/Sydney', 'Sydney, Melbourne Time'],
-  ['UTC', 'UTC Time'],
-  ['Europe/Berlin', 'Central European Time'],
-  ['Europe/Helsinki', 'Eastern European Time'],
-  ['Europe/London', 'UK, Ireland, Lisbon Time'],
-  ['Europe/Minsk', 'Minsk Time'],
-  ['Europe/Moscow', 'Moscow Time'],
-  ['Europe/Istanbul', 'Turkey Time'],
-  ['Pacific/Apia', 'Pacific/Apia'],
-  ['Pacific/Auckland', 'Auckland Time'],
-  ['Pacific/Chatham', 'Pacific/Chatham'],
-  ['Pacific/Easter', 'Pacific/Easter'],
-  ['Pacific/Fiji', 'Pacific/Fiji'],
-  ['Pacific/Gambier', 'Pacific/Gambier'],
-  ['Pacific/Kiritimati', 'Pacific/Kiritimati'],
-  ['Pacific/Majuro', 'Pacific/Majuro'],
-  ['Pacific/Marquesas', 'Pacific/Marquesas'],
-  ['Pacific/Norfolk', 'Pacific/Norfolk'],
-  ['Pacific/Noumea', 'Pacific/Noumea'],
-  ['Pacific/Pago_Pago', 'Pacific/Pago Pago'],
-  ['Pacific/Pitcairn', 'Pacific/Pitcairn'],
-  ['Pacific/Tarawa', 'Pacific/Tarawa'],
-  ['Pacific/Tongatapu', 'Pacific/Tongatapu'],
-])
-
-export const groupedTimezones: [
-  string,
-  {
-    identifier: string
-    name: string
-    group: string
-  }[]][] = [
   [
-    'US/Canada',
-    [
-      {
-        identifier: 'America/Los_Angeles',
-        name: 'Pacific Time - US & Canada',
-        group: 'US/Canada',
-      },
-      {
-        identifier: 'America/Denver',
-        name: 'Mountain Time - US & Canada',
-        group: 'US/Canada',
-      },
-      {
-        identifier: 'America/Chicago',
-        name: 'Central Time - US & Canada',
-        group: 'US/Canada',
-      },
-      {
-        identifier: 'America/New_York',
-        name: 'Eastern Time - US & Canada',
-        group: 'US/Canada',
-      },
-      {
-        identifier: 'America/Anchorage',
-        name: 'Alaska Time',
-        group: 'US/Canada',
-      },
-      {
-        identifier: 'America/Phoenix',
-        name: 'Arizona, Yukon Time',
-        group: 'US/Canada',
-      },
-      {
-        identifier: 'America/St_Johns',
-        name: 'Newfoundland Time',
-        group: 'US/Canada',
-      },
-      {
-        identifier: 'Pacific/Honolulu',
-        name: 'Hawaii Time',
-        group: 'US/Canada',
-      },
-    ],
+    'America/Los_Angeles',
+    {
+      identifier: 'America/Los_Angeles',
+      name: 'Pacific Time - US & Canada',
+      group: 'US/Canada',
+    },
   ],
   [
-    'America',
-    [
-      {
-        identifier: 'America/Adak',
-        name: 'America/Adak',
-        group: 'America',
-      },
-      {
-        identifier: 'America/Argentina/Buenos_Aires',
-        name: 'Buenos Aires Time',
-        group: 'America',
-      },
-      {
-        identifier: 'America/Asuncion',
-        name: 'Asuncion Time',
-        group: 'America',
-      },
-      {
-        identifier: 'America/Bogota',
-        name: 'Bogota, Jamaica, Lima Time',
-        group: 'America',
-      },
-      {
-        identifier: 'America/Campo_Grande',
-        name: 'America/Campo Grande',
-        group: 'America',
-      },
-      {
-        identifier: 'America/Caracas',
-        name: 'Caracas Time',
-        group: 'America',
-      },
-      {
-        identifier: 'America/Godthab',
-        name: 'America/Godthab',
-        group: 'America',
-      },
-      {
-        identifier: 'America/Goose_Bay',
-        name: 'Atlantic Time',
-        group: 'America',
-      },
-      {
-        identifier: 'America/Guatemala',
-        name: 'Saskatchewan, Guatemala, Costa Rica Time',
-        group: 'America',
-      },
-      {
-        identifier: 'America/Havana',
-        name: 'America/Havana',
-        group: 'America',
-      },
-      {
-        identifier: 'America/Mazatlan',
-        name: 'America/Mazatlan',
-        group: 'America',
-      },
-      {
-        identifier: 'America/Mexico_City',
-        name: 'Mexico City Time',
-        group: 'America',
-      },
-      {
-        identifier: 'America/Montevideo',
-        name: 'Montevideo Time',
-        group: 'America',
-      },
-      {
-        identifier: 'America/Miquelon',
-        name: 'America/Miquelon',
-        group: 'America',
-      },
-      {
-        identifier: 'America/Noronha',
-        name: 'America/Noronha',
-        group: 'America',
-      },
-      {
-        identifier: 'America/Santiago',
-        name: 'Santiago Time',
-        group: 'America',
-      },
-      {
-        identifier: 'America/Santa_Isabel',
-        name: 'America/Santa Isabel',
-        group: 'America',
-      },
-      {
-        identifier: 'America/Santo_Domingo',
-        name: 'Atlantic Standard Time',
-        group: 'America',
-      },
-      {
-        identifier: 'America/Sao_Paulo',
-        name: 'Brasilia Time',
-        group: 'America',
-      },
-    ],
+    'America/Denver',
+    {
+      identifier: 'America/Denver',
+      name: 'Mountain Time - US & Canada',
+      group: 'US/Canada',
+    },
   ],
   [
-    'Africa',
-    [
-      {
-        identifier: 'Africa/Cairo',
-        name: 'Africa/Cairo',
-        group: 'Africa',
-      },
-      {
-        identifier: 'Africa/Johannesburg',
-        name: 'Central Africa Time',
-        group: 'Africa',
-      },
-      {
-        identifier: 'Africa/Lagos',
-        name: 'West Africa Time',
-        group: 'Africa',
-      },
-      {
-        identifier: 'Africa/Windhoek',
-        name: 'Africa/Windhoek',
-        group: 'Africa',
-      },
-    ],
+    'America/Chicago',
+    {
+      identifier: 'America/Chicago',
+      name: 'Central Time - US & Canada',
+      group: 'US/Canada',
+    },
   ],
   [
-    'Asia',
-    [
-      {
-        identifier: 'Asia/Amman',
-        name: 'Jordan Time',
-        group: 'Asia',
-      },
-      {
-        identifier: 'Asia/Baghdad',
-        name: 'Baghdad, East Africa Time',
-        group: 'Asia',
-      },
-      {
-        identifier: 'Asia/Baku',
-        name: 'Asia/Baku',
-        group: 'Asia',
-      },
-      {
-        identifier: 'Asia/Beirut',
-        name: 'Lebanon Time',
-        group: 'Asia',
-      },
-      {
-        identifier: 'Asia/Damascus',
-        name: 'Syria Time',
-        group: 'Asia',
-      },
-      {
-        identifier: 'Asia/Dhaka',
-        name: 'Asia/Dhaka',
-        group: 'Asia',
-      },
-      {
-        identifier: 'Asia/Dubai',
-        name: 'Dubai Time',
-        group: 'Asia',
-      },
-      {
-        identifier: 'Asia/Gaza',
-        name: 'Asia/Gaza',
-        group: 'Asia',
-      },
-      {
-        identifier: 'Asia/Irkutsk',
-        name: 'Asia/Irkutsk',
-        group: 'Asia',
-      },
-      {
-        identifier: 'Asia/Jakarta',
-        name: 'Indochina Time',
-        group: 'Asia',
-      },
-      {
-        identifier: 'Asia/Jerusalem',
-        name: 'Israel Time',
-        group: 'Asia',
-      },
-      {
-        identifier: 'Asia/Kabul',
-        name: 'Kabul Time',
-        group: 'Asia',
-      },
-      {
-        identifier: 'Asia/Kamchatka',
-        name: 'Pacific/Majuro',
-        group: 'Asia',
-      },
-      {
-        identifier: 'Asia/Karachi',
-        name: 'Pakistan, Maldives Time',
-        group: 'Asia',
-      },
-      {
-        identifier: 'Asia/Kathmandu',
-        name: 'Kathmandu Time',
-        group: 'Asia',
-      },
-      {
-        identifier: 'Asia/Kolkata',
-        name: 'India, Sri Lanka Time',
-        group: 'Asia',
-      },
-      {
-        identifier: 'Asia/Krasnoyarsk',
-        name: 'Krasnoyarsk Time',
-        group: 'Asia',
-      },
-      {
-        identifier: 'Asia/Omsk',
-        name: 'Asia/Omsk',
-        group: 'Asia',
-      },
-      {
-        identifier: 'Asia/Rangoon',
-        name: 'Asia/Rangoon',
-        group: 'Asia',
-      },
-      {
-        identifier: 'Asia/Shanghai',
-        name: 'China, Singapore, Perth',
-        group: 'Asia',
-      },
-      {
-        identifier: 'Asia/Tehran',
-        name: 'Tehran Time',
-        group: 'Asia',
-      },
-      {
-        identifier: 'Asia/Tokyo',
-        name: 'Japan, Korea Time',
-        group: 'Asia',
-      },
-      {
-        identifier: 'Asia/Vladivostok',
-        name: 'Asia/Vladivostok',
-        group: 'Asia',
-      },
-      {
-        identifier: 'Asia/Yakutsk',
-        name: 'Asia/Yakutsk',
-        group: 'Asia',
-      },
-      {
-        identifier: 'Asia/Yekaterinburg',
-        name: 'Yekaterinburg Time',
-        group: 'Asia',
-      },
-      {
-        identifier: 'Asia/Yerevan',
-        name: 'Asia/Yerevan',
-        group: 'Asia',
-      },
-    ],
+    'America/New_York',
+    {
+      identifier: 'America/New_York',
+      name: 'Eastern Time - US & Canada',
+      group: 'US/Canada',
+    },
   ],
   [
-    'Atlantic',
-    [
-      {
-        identifier: 'Atlantic/Azores',
-        name: 'Azores Time',
-        group: 'Atlantic',
-      },
-      {
-        identifier: 'Atlantic/Cape_Verde',
-        name: 'Cape Verde Time',
-        group: 'Atlantic',
-      },
-    ],
+    'America/Anchorage',
+    {
+      identifier: 'America/Anchorage',
+      name: 'Alaska Time',
+      group: 'US/Canada',
+    },
   ],
   [
-    'Australia',
-    [
-      {
-        identifier: 'Australia/Adelaide',
-        name: 'Adelaide Time',
-        group: 'Australia',
-      },
-      {
-        identifier: 'Australia/Brisbane',
-        name: 'Brisbane Time',
-        group: 'Australia',
-      },
-      {
-        identifier: 'Australia/Darwin',
-        name: 'Australia/Darwin',
-        group: 'Australia',
-      },
-      {
-        identifier: 'Australia/Eucla',
-        name: 'Australia/Eucla',
-        group: 'Australia',
-      },
-      {
-        identifier: 'Australia/Lord_Howe',
-        name: 'Australia/Lord Howe',
-        group: 'Australia',
-      },
-      {
-        identifier: 'Australia/Perth',
-        name: 'Australia/Perth',
-        group: 'Australia',
-      },
-      {
-        identifier: 'Australia/Sydney',
-        name: 'Sydney, Melbourne Time',
-        group: 'Australia',
-      },
-    ],
+    'America/Phoenix',
+    {
+      identifier: 'America/Phoenix',
+      name: 'Arizona, Yukon Time',
+      group: 'US/Canada',
+    },
+  ],
+  [
+    'America/St_Johns',
+    {
+      identifier: 'America/St_Johns',
+      name: 'Newfoundland Time',
+      group: 'US/Canada',
+    },
+  ],
+  [
+    'Pacific/Honolulu',
+    {
+      identifier: 'Pacific/Honolulu',
+      name: 'Hawaii Time',
+      group: 'US/Canada',
+    },
+  ],
+  [
+    'America/Adak',
+    {
+      identifier: 'America/Adak',
+      name: 'America/Adak',
+      group: 'America',
+    },
+  ],
+  [
+    'America/Argentina/Buenos_Aires',
+    {
+      identifier: 'America/Argentina/Buenos_Aires',
+      name: 'Buenos Aires Time',
+      group: 'America',
+    },
+  ],
+  [
+    'America/Asuncion',
+    {
+      identifier: 'America/Asuncion',
+      name: 'Asuncion Time',
+      group: 'America',
+    },
+  ],
+  [
+    'America/Bogota',
+    {
+      identifier: 'America/Bogota',
+      name: 'Bogota, Jamaica, Lima Time',
+      group: 'America',
+    },
+  ],
+  [
+    'America/Campo_Grande',
+    {
+      identifier: 'America/Campo_Grande',
+      name: 'America/Campo Grande',
+      group: 'America',
+    },
+  ],
+  [
+    'America/Caracas',
+    {
+      identifier: 'America/Caracas',
+      name: 'Caracas Time',
+      group: 'America',
+    },
+  ],
+  [
+    'America/Godthab',
+    {
+      identifier: 'America/Godthab',
+      name: 'America/Godthab',
+      group: 'America',
+    },
+  ],
+  [
+    'America/Goose_Bay',
+    {
+      identifier: 'America/Goose_Bay',
+      name: 'Atlantic Time',
+      group: 'America',
+    },
+  ],
+  [
+    'America/Guatemala',
+    {
+      identifier: 'America/Guatemala',
+      name: 'Saskatchewan, Guatemala, Costa Rica Time',
+      group: 'America',
+    },
+  ],
+  [
+    'America/Havana',
+    {
+      identifier: 'America/Havana',
+      name: 'America/Havana',
+      group: 'America',
+    },
+  ],
+  [
+    'America/Mazatlan',
+    {
+      identifier: 'America/Mazatlan',
+      name: 'America/Mazatlan',
+      group: 'America',
+    },
+  ],
+  [
+    'America/Mexico_City',
+    {
+      identifier: 'America/Mexico_City',
+      name: 'Mexico City Time',
+      group: 'America',
+    },
+  ],
+  [
+    'America/Montevideo',
+    {
+      identifier: 'America/Montevideo',
+      name: 'Montevideo Time',
+      group: 'America',
+    },
+  ],
+  [
+    'America/Miquelon',
+    {
+      identifier: 'America/Miquelon',
+      name: 'America/Miquelon',
+      group: 'America',
+    },
+  ],
+  [
+    'America/Noronha',
+    {
+      identifier: 'America/Noronha',
+      name: 'America/Noronha',
+      group: 'America',
+    },
+  ],
+  [
+    'America/Santiago',
+    {
+      identifier: 'America/Santiago',
+      name: 'Santiago Time',
+      group: 'America',
+    },
+  ],
+  [
+    'America/Santa_Isabel',
+    {
+      identifier: 'America/Santa_Isabel',
+      name: 'America/Santa Isabel',
+      group: 'America',
+    },
+  ],
+  [
+    'America/Santo_Domingo',
+    {
+      identifier: 'America/Santo_Domingo',
+      name: 'Atlantic Standard Time',
+      group: 'America',
+    },
+  ],
+  [
+    'America/Sao_Paulo',
+    {
+      identifier: 'America/Sao_Paulo',
+      name: 'Brasilia Time',
+      group: 'America',
+    },
+  ],
+  [
+    'Africa/Cairo',
+    {
+      identifier: 'Africa/Cairo',
+      name: 'Africa/Cairo',
+      group: 'Africa',
+    },
+  ],
+  [
+    'Africa/Johannesburg',
+    {
+      identifier: 'Africa/Johannesburg',
+      name: 'Central Africa Time',
+      group: 'Africa',
+    },
+  ],
+  [
+    'Africa/Lagos',
+    {
+      identifier: 'Africa/Lagos',
+      name: 'West Africa Time',
+      group: 'Africa',
+    },
+  ],
+  [
+    'Africa/Windhoek',
+    {
+      identifier: 'Africa/Windhoek',
+      name: 'Africa/Windhoek',
+      group: 'Africa',
+    },
+  ],
+  [
+    'Asia/Amman',
+    {
+      identifier: 'Asia/Amman',
+      name: 'Jordan Time',
+      group: 'Asia',
+    },
+  ],
+  [
+    'Asia/Baghdad',
+    {
+      identifier: 'Asia/Baghdad',
+      name: 'Baghdad, East Africa Time',
+      group: 'Asia',
+    },
+  ],
+  [
+    'Asia/Baku',
+    {
+      identifier: 'Asia/Baku',
+      name: 'Asia/Baku',
+      group: 'Asia',
+    },
+  ],
+  [
+    'Asia/Beirut',
+    {
+      identifier: 'Asia/Beirut',
+      name: 'Lebanon Time',
+      group: 'Asia',
+    },
+  ],
+  [
+    'Asia/Damascus',
+    {
+      identifier: 'Asia/Damascus',
+      name: 'Syria Time',
+      group: 'Asia',
+    },
+  ],
+  [
+    'Asia/Dhaka',
+    {
+      identifier: 'Asia/Dhaka',
+      name: 'Asia/Dhaka',
+      group: 'Asia',
+    },
+  ],
+  [
+    'Asia/Dubai',
+    {
+      identifier: 'Asia/Dubai',
+      name: 'Dubai Time',
+      group: 'Asia',
+    },
+  ],
+  [
+    'Asia/Gaza',
+    {
+      identifier: 'Asia/Gaza',
+      name: 'Asia/Gaza',
+      group: 'Asia',
+    },
+  ],
+  [
+    'Asia/Irkutsk',
+    {
+      identifier: 'Asia/Irkutsk',
+      name: 'Asia/Irkutsk',
+      group: 'Asia',
+    },
+  ],
+  [
+    'Asia/Jakarta',
+    {
+      identifier: 'Asia/Jakarta',
+      name: 'Indochina Time',
+      group: 'Asia',
+    },
+  ],
+  [
+    'Asia/Jerusalem',
+    {
+      identifier: 'Asia/Jerusalem',
+      name: 'Israel Time',
+      group: 'Asia',
+    },
+  ],
+  [
+    'Asia/Kabul',
+    {
+      identifier: 'Asia/Kabul',
+      name: 'Kabul Time',
+      group: 'Asia',
+    },
+  ],
+  [
+    'Asia/Kamchatka',
+    {
+      identifier: 'Asia/Kamchatka',
+      name: 'Pacific/Majuro',
+      group: 'Asia',
+    },
+  ],
+  [
+    'Asia/Karachi',
+    {
+      identifier: 'Asia/Karachi',
+      name: 'Pakistan, Maldives Time',
+      group: 'Asia',
+    },
+  ],
+  [
+    'Asia/Kathmandu',
+    {
+      identifier: 'Asia/Kathmandu',
+      name: 'Kathmandu Time',
+      group: 'Asia',
+    },
+  ],
+  [
+    'Asia/Kolkata',
+    {
+      identifier: 'Asia/Kolkata',
+      name: 'India, Sri Lanka Time',
+      group: 'Asia',
+    },
+  ],
+  [
+    'Asia/Krasnoyarsk',
+    {
+      identifier: 'Asia/Krasnoyarsk',
+      name: 'Krasnoyarsk Time',
+      group: 'Asia',
+    },
+  ],
+  [
+    'Asia/Omsk',
+    {
+      identifier: 'Asia/Omsk',
+      name: 'Asia/Omsk',
+      group: 'Asia',
+    },
+  ],
+  [
+    'Asia/Rangoon',
+    {
+      identifier: 'Asia/Rangoon',
+      name: 'Asia/Rangoon',
+      group: 'Asia',
+    },
+  ],
+  [
+    'Asia/Shanghai',
+    {
+      identifier: 'Asia/Shanghai',
+      name: 'China, Singapore, Perth',
+      group: 'Asia',
+    },
+  ],
+  [
+    'Asia/Tehran',
+    {
+      identifier: 'Asia/Tehran',
+      name: 'Tehran Time',
+      group: 'Asia',
+    },
+  ],
+  [
+    'Asia/Tokyo',
+    {
+      identifier: 'Asia/Tokyo',
+      name: 'Japan, Korea Time',
+      group: 'Asia',
+    },
+  ],
+  [
+    'Asia/Vladivostok',
+    {
+      identifier: 'Asia/Vladivostok',
+      name: 'Asia/Vladivostok',
+      group: 'Asia',
+    },
+  ],
+  [
+    'Asia/Yakutsk',
+    {
+      identifier: 'Asia/Yakutsk',
+      name: 'Asia/Yakutsk',
+      group: 'Asia',
+    },
+  ],
+  [
+    'Asia/Yekaterinburg',
+    {
+      identifier: 'Asia/Yekaterinburg',
+      name: 'Yekaterinburg Time',
+      group: 'Asia',
+    },
+  ],
+  [
+    'Asia/Yerevan',
+    {
+      identifier: 'Asia/Yerevan',
+      name: 'Asia/Yerevan',
+      group: 'Asia',
+    },
+  ],
+  [
+    'Atlantic/Azores',
+    {
+      identifier: 'Atlantic/Azores',
+      name: 'Azores Time',
+      group: 'Atlantic',
+    },
+  ],
+  [
+    'Atlantic/Cape_Verde',
+    {
+      identifier: 'Atlantic/Cape_Verde',
+      name: 'Cape Verde Time',
+      group: 'Atlantic',
+    },
+  ],
+  [
+    'Australia/Adelaide',
+    {
+      identifier: 'Australia/Adelaide',
+      name: 'Adelaide Time',
+      group: 'Australia',
+    },
+  ],
+  [
+    'Australia/Brisbane',
+    {
+      identifier: 'Australia/Brisbane',
+      name: 'Brisbane Time',
+      group: 'Australia',
+    },
+  ],
+  [
+    'Australia/Darwin',
+    {
+      identifier: 'Australia/Darwin',
+      name: 'Australia/Darwin',
+      group: 'Australia',
+    },
+  ],
+  [
+    'Australia/Eucla',
+    {
+      identifier: 'Australia/Eucla',
+      name: 'Australia/Eucla',
+      group: 'Australia',
+    },
+  ],
+  [
+    'Australia/Lord_Howe',
+    {
+      identifier: 'Australia/Lord_Howe',
+      name: 'Australia/Lord Howe',
+      group: 'Australia',
+    },
+  ],
+  [
+    'Australia/Perth',
+    {
+      identifier: 'Australia/Perth',
+      name: 'Australia/Perth',
+      group: 'Australia',
+    },
+  ],
+  [
+    'Australia/Sydney',
+    {
+      identifier: 'Australia/Sydney',
+      name: 'Sydney, Melbourne Time',
+      group: 'Australia',
+    },
   ],
   [
     'UTC',
-    [
-      {
-        identifier: 'UTC',
-        name: 'UTC Time',
-        group: 'UTC',
-      },
-    ],
+    {
+      identifier: 'UTC',
+      name: 'UTC Time',
+      group: 'UTC',
+    },
   ],
   [
-    'Europe',
-    [
-      {
-        identifier: 'Europe/Berlin',
-        name: 'Central European Time',
-        group: 'Europe',
-      },
-      {
-        identifier: 'Europe/Helsinki',
-        name: 'Eastern European Time',
-        group: 'Europe',
-      },
-      {
-        identifier: 'Europe/London',
-        name: 'UK, Ireland, Lisbon Time',
-        group: 'Europe',
-      },
-      {
-        identifier: 'Europe/Minsk',
-        name: 'Minsk Time',
-        group: 'Europe',
-      },
-      {
-        identifier: 'Europe/Moscow',
-        name: 'Moscow Time',
-        group: 'Europe',
-      },
-      {
-        identifier: 'Europe/Istanbul',
-        name: 'Turkey Time',
-        group: 'Europe',
-      },
-    ],
+    'Europe/Berlin',
+    {
+      identifier: 'Europe/Berlin',
+      name: 'Central European Time',
+      group: 'Europe',
+    },
   ],
   [
-    'Pacific',
-    [
-      {
-        identifier: 'Pacific/Apia',
-        name: 'Pacific/Apia',
-        group: 'Pacific',
-      },
-      {
-        identifier: 'Pacific/Auckland',
-        name: 'Auckland Time',
-        group: 'Pacific',
-      },
-      {
-        identifier: 'Pacific/Chatham',
-        name: 'Pacific/Chatham',
-        group: 'Pacific',
-      },
-      {
-        identifier: 'Pacific/Easter',
-        name: 'Pacific/Easter',
-        group: 'Pacific',
-      },
-      {
-        identifier: 'Pacific/Fiji',
-        name: 'Pacific/Fiji',
-        group: 'Pacific',
-      },
-      {
-        identifier: 'Pacific/Gambier',
-        name: 'Pacific/Gambier',
-        group: 'Pacific',
-      },
-      {
-        identifier: 'Pacific/Kiritimati',
-        name: 'Pacific/Kiritimati',
-        group: 'Pacific',
-      },
-      {
-        identifier: 'Pacific/Majuro',
-        name: 'Pacific/Majuro',
-        group: 'Pacific',
-      },
-      {
-        identifier: 'Pacific/Marquesas',
-        name: 'Pacific/Marquesas',
-        group: 'Pacific',
-      },
-      {
-        identifier: 'Pacific/Norfolk',
-        name: 'Pacific/Norfolk',
-        group: 'Pacific',
-      },
-      {
-        identifier: 'Pacific/Noumea',
-        name: 'Pacific/Noumea',
-        group: 'Pacific',
-      },
-      {
-        identifier: 'Pacific/Pago_Pago',
-        name: 'Pacific/Pago Pago',
-        group: 'Pacific',
-      },
-      {
-        identifier: 'Pacific/Pitcairn',
-        name: 'Pacific/Pitcairn',
-        group: 'Pacific',
-      },
-      {
-        identifier: 'Pacific/Tarawa',
-        name: 'Pacific/Tarawa',
-        group: 'Pacific',
-      },
-      {
-        identifier: 'Pacific/Tongatapu',
-        name: 'Pacific/Tongatapu',
-        group: 'Pacific',
-      },
-    ],
+    'Europe/Helsinki',
+    {
+      identifier: 'Europe/Helsinki',
+      name: 'Eastern European Time',
+      group: 'Europe',
+    },
   ],
-]
+  [
+    'Europe/London',
+    {
+      identifier: 'Europe/London',
+      name: 'UK, Ireland, Lisbon Time',
+      group: 'Europe',
+    },
+  ],
+  [
+    'Europe/Minsk',
+    {
+      identifier: 'Europe/Minsk',
+      name: 'Minsk Time',
+      group: 'Europe',
+    },
+  ],
+  [
+    'Europe/Moscow',
+    {
+      identifier: 'Europe/Moscow',
+      name: 'Moscow Time',
+      group: 'Europe',
+    },
+  ],
+  [
+    'Europe/Istanbul',
+    {
+      identifier: 'Europe/Istanbul',
+      name: 'Turkey Time',
+      group: 'Europe',
+    },
+  ],
+  [
+    'Pacific/Apia',
+    {
+      identifier: 'Pacific/Apia',
+      name: 'Pacific/Apia',
+      group: 'Pacific',
+    },
+  ],
+  [
+    'Pacific/Auckland',
+    {
+      identifier: 'Pacific/Auckland',
+      name: 'Auckland Time',
+      group: 'Pacific',
+    },
+  ],
+  [
+    'Pacific/Chatham',
+    {
+      identifier: 'Pacific/Chatham',
+      name: 'Pacific/Chatham',
+      group: 'Pacific',
+    },
+  ],
+  [
+    'Pacific/Easter',
+    {
+      identifier: 'Pacific/Easter',
+      name: 'Pacific/Easter',
+      group: 'Pacific',
+    },
+  ],
+  [
+    'Pacific/Fiji',
+    {
+      identifier: 'Pacific/Fiji',
+      name: 'Pacific/Fiji',
+      group: 'Pacific',
+    },
+  ],
+  [
+    'Pacific/Gambier',
+    {
+      identifier: 'Pacific/Gambier',
+      name: 'Pacific/Gambier',
+      group: 'Pacific',
+    },
+  ],
+  [
+    'Pacific/Kiritimati',
+    {
+      identifier: 'Pacific/Kiritimati',
+      name: 'Pacific/Kiritimati',
+      group: 'Pacific',
+    },
+  ],
+  [
+    'Pacific/Majuro',
+    {
+      identifier: 'Pacific/Majuro',
+      name: 'Pacific/Majuro',
+      group: 'Pacific',
+    },
+  ],
+  [
+    'Pacific/Marquesas',
+    {
+      identifier: 'Pacific/Marquesas',
+      name: 'Pacific/Marquesas',
+      group: 'Pacific',
+    },
+  ],
+  [
+    'Pacific/Norfolk',
+    {
+      identifier: 'Pacific/Norfolk',
+      name: 'Pacific/Norfolk',
+      group: 'Pacific',
+    },
+  ],
+  [
+    'Pacific/Noumea',
+    {
+      identifier: 'Pacific/Noumea',
+      name: 'Pacific/Noumea',
+      group: 'Pacific',
+    },
+  ],
+  [
+    'Pacific/Pago_Pago',
+    {
+      identifier: 'Pacific/Pago_Pago',
+      name: 'Pacific/Pago Pago',
+      group: 'Pacific',
+    },
+  ],
+  [
+    'Pacific/Pitcairn',
+    {
+      identifier: 'Pacific/Pitcairn',
+      name: 'Pacific/Pitcairn',
+      group: 'Pacific',
+    },
+  ],
+  [
+    'Pacific/Tarawa',
+    {
+      identifier: 'Pacific/Tarawa',
+      name: 'Pacific/Tarawa',
+      group: 'Pacific',
+    },
+  ],
+  [
+    'Pacific/Tongatapu',
+    {
+      identifier: 'Pacific/Tongatapu',
+      name: 'Pacific/Tongatapu',
+      group: 'Pacific',
+    },
+  ],
+])
+
+export const groupedTimezones: GroupedTimezonesType = Object.entries([...timezones.entries()].reduce((groups,
+  [_,
+    { identifier, name, group },
+  ]: [string, TimezoneEntry]) => {
+  if (!(group in groups)) {
+    groups[group] = []
+  }
+
+  groups[group].push({
+    identifier,
+    name,
+  })
+  return groups
+}, {} as GroupedTimezonesObjectType))

@@ -97,7 +97,7 @@ export const CreateEventForm = () => {
   const isSingleDay = isSameDay(eventStartTime, eventEndTime)
   const localTimeZone = DEFAULT_TIMEZONES.get(
     Intl.DateTimeFormat().resolvedOptions().timeZone
-  ) || 'UTC'
+  )?.identifier || 'UTC'
 
   const [selectedTimezones, setSelectedTimezones] = useState([
     localTimeZone,
