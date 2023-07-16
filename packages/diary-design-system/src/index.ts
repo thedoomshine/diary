@@ -28,7 +28,7 @@ export {
 } from '~/elements/Popover'
 export type { PopoverProps } from '~/elements/Popover'
 export { ScrollArea } from '~/elements/ScrollArea'
-export { Select, SelectGroup, SelectItem, SelectLabel } from '~/elements/Select'
+export { Select, SelectGroup, SelectItem, SelectLabel, SelectValue } from '~/elements/Select'
 export { Skeleton } from '~/elements/Skeleton'
 export { TabsContent, TabsList, TabsRoot, TabsTrigger } from '~/elements/Tabs'
 export { Tooltip, TooltipProvider } from '~/elements/Tooltip'

@@ -1,8 +1,10 @@
 'use client'
 
 import {
+  Button,
   Checkbox,
   DatePicker,
+  FillButton,
   Input,
   TimePicker,
   WYSIWYGEditor,
@@ -28,6 +30,7 @@ import type { FocusEvent } from 'react'
 import styled from 'styled-components'
 
 import { TimeZonePopover } from './timezone-popover'
+import { lighten } from 'polished'
 
 // import placeholderContent from './placeholder-content.json'
 
@@ -58,6 +61,22 @@ const DatesWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 0.25rem;
+`
+
+const StyledFormFooter = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+`
+
+const StyledSubmitButton = styled(FillButton)`
+  background-color: ${({ theme }) => theme.color.yellow};
+  color: ${({ theme }) => theme.color.black};
+  border-color: ${({ theme }) => theme.color.yellow};
+
+  &:hover {
+    background-color: ${({ theme }) => lighten(0.125, theme.color.yellow)};
+  }
 `
 
 const getDistance = (start: Date, finish: Date) => {
@@ -265,6 +284,10 @@ export const CreateEventForm = () => {
         content={content}
         setContentSource={setContentSource}
       />
+
+      <StyledFormFooter>
+        <StyledSubmitButton type='submit'>create event</StyledSubmitButton>
+      </StyledFormFooter>
     </StyledForm>
   )
 }

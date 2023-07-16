@@ -20,27 +20,14 @@ import { useTheme } from 'styled-components'
 
 import { ScrollArea } from '~/elements'
 
+import { EditorToolbar } from './EditorToolbar'
+
 const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 0;
   flex: 1 1 auto;
-`
-
-const StyledToolbar = styled(ToolbarPrimitive.Root)`
-  background-color: ${({ theme }) => theme.color.black};
-  display: flex;
-  flex: 0 0 auto;
-  align-items: center;
-  padding: 0.5rem;
-
-  border: ${({ theme }) => `solid ${theme.spacing[1]} ${theme.color.grey}`};
-  border-radius: ${({ theme }) => theme.radii.md};
-
-  border-bottom: 0;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
 `
 
 const StyledFooter = styled.div`
@@ -218,7 +205,6 @@ export const WYSIWYGEditor = ({
   content?: JSONContent
   setContentSource: (content: JSONContent) => void
 }) => {
-  const theme = useTheme()
   const editor = useEditor({
     extensions: [
       CharacterCount.configure({
@@ -235,7 +221,7 @@ export const WYSIWYGEditor = ({
       }),
       Mention,
       Placeholder.configure({
-        placeholder: 'tell us all about it.',
+        placeholder: 'tell us all about it',
       }),
       Subscript,
       Superscript,
@@ -259,44 +245,51 @@ export const WYSIWYGEditor = ({
 
   return (
     <StyledWrapper>
-      <StyledToolbar>toolbar</StyledToolbar>
+      <EditorToolbar />
       <StyledScrollArea>
         <EditorContent editor={editor} />
       </StyledScrollArea>
 
       <StyledFooter>
-        {percentage >= 90 && `${CHAR_LIMIT - characterCount}`}{' '}
-        <svg
-          height='32'
-          width='32'
-          viewBox='0 0 20 20'
-        >
-          <circle
-            r='10'
-            cx='10'
-            cy='10'
-            fill={theme.color.grey}
-          />
-          <circle
-            r='5'
-            cx='10'
-            cy='10'
-            fill='transparent'
-            stroke={percentage >= 100 ? theme.color.red : theme.color.yellow}
-            strokeWidth='10'
-            strokeDasharray={`calc(${percentage} * ${Math.PI} / 10) ${
-              Math.PI * 10
-            }`}
-            transform='rotate(-90) translate(-20)'
-          />
-          <circle
-            r='6'
-            cx='10'
-            cy='10'
-            fill={theme.color.black}
-          />
-        </svg>
+        {percentage >= 90 && `${CHAR_LIMIT - characterCount}`}
+        <CharacterCountIndicator percentage={percentage} />
       </StyledFooter>
     </StyledWrapper>
+  )
+}
+
+const CharacterCountIndicator = ({ percentage }: { percentage: number }) => {
+  const theme = useTheme()
+  return (
+    <svg
+      height='32'
+      width='32'
+      viewBox='0 0 20 20'
+    >
+      <circle
+        r='10'
+        cx='10'
+        cy='10'
+        fill={theme.color.grey}
+      />
+      <circle
+        r='5'
+        cx='10'
+        cy='10'
+        fill='transparent'
+        stroke={percentage >= 100 ? theme.color.red : theme.color.yellow}
+        strokeWidth='10'
+        strokeDasharray={`calc(${percentage} * ${Math.PI} / 10) ${
+          Math.PI * 10
+        }`}
+        transform='rotate(-90) translate(-20)'
+      />
+      <circle
+        r='6'
+        cx='10'
+        cy='10'
+        fill={theme.color.black}
+      />
+    </svg>
   )
 }

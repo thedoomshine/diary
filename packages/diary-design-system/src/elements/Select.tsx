@@ -107,6 +107,7 @@ interface SelectProps extends SelectPrimitiveProps {
   onOpenChange?: (open: boolean) => void
   onValueChange?: (value: string) => void
   open?: boolean
+  placeholder?: string
   required?: boolean
   showScrollButtons?: boolean
   side?: 'top' | 'right' | 'bottom' | 'left'
@@ -123,6 +124,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
       disabled,
       hideIcon = false,
       className,
+      placeholder,
       showScrollButtons = false,
       side = 'top',
       sideOffset = 4,
@@ -143,7 +145,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
           ref={forwardedRef}
           className={className}
         >
-          <SelectPrimitive.Value />
+          <SelectPrimitive.Value placeholder={placeholder} />
           {!hideIcon && (
             <SelectPrimitive.Icon>
               <Icon name='chevron-down' />
@@ -200,3 +202,5 @@ export const SelectItem = forwardRef<HTMLDivElement, SelectItemProps>(
     )
   }
 )
+
+export const SelectValue = styled(SelectPrimitive.Value)``

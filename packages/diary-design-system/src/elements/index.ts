@@ -24,6 +24,6 @@ export {
 } from './Popover'
 export { ScrollArea } from './ScrollArea'
 export { Skeleton } from './Skeleton'
-export { Select, SelectGroup, SelectItem, SelectLabel } from './Select'
+export { Select, SelectGroup, SelectItem, SelectLabel, SelectValue } from './Select'
 export { TabsContent, TabsList, TabsRoot, TabsTrigger } from './Tabs'
 export { Tooltip, TooltipProvider } from './Tooltip'
