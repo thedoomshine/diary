@@ -1,4 +1,5 @@
 export { AvatarMenu, AvatarMenuContent } from './AvatarMenu'
+export { ColorPicker } from './ColorPicker'
 export { DatePicker } from './DatePicker'
 export {
   defaultTimePickerFormat,

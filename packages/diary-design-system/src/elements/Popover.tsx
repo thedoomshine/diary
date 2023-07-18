@@ -1,4 +1,4 @@
-import * as PopoverPrimitive from '@radix-ui/react-popover';
+import * as PopoverPrimitive from '@radix-ui/react-popover'
 import type { PopoverContentProps as PopoverContentPrimitiveProps } from '@radix-ui/react-popover'
 import { ReactNode, forwardRef } from 'react'
 import styled from 'styled-components'
@@ -41,6 +41,8 @@ const StyledPopoverContent = styled(PopoverPrimitive.Content)`
 const PopoverArrow = styled(PopoverPrimitive.Arrow)`
   fill: ${({ theme }) => `var(
     --popover-background-color, ${theme.color.charcoal})`};
+  position: relative;
+  top: -${({ theme }) => theme.spacing[2]};
 `
 const StyledPopoverClose = styled(PopoverPrimitive.Close)`
   ${ButtonStyles};
@@ -56,6 +58,7 @@ const StyledPopoverClose = styled(PopoverPrimitive.Close)`
 `
 
 export const PopoverTrigger = styled(PopoverPrimitive.Trigger)`
+  cursor: pointer;
   &[data-state='open'] {
     border-color: ${({ theme }) => theme.color.yellow};
   }

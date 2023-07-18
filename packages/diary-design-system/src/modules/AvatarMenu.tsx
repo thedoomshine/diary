@@ -50,7 +50,7 @@ const StyledUserNames = styled.div`
 
 const StyledUserDisplayName = styled.span`
   font-size: ${({ theme }) => theme.fontSize.md};
-  font-weight: ${({ theme }) => theme.fontWeight[800]};
+  font-weight: ${({ theme }) => theme.fontWeight.bold};
 `
 
 const StyledUsername = styled.span`

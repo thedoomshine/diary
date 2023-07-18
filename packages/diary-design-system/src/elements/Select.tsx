@@ -9,90 +9,6 @@ import type { ReactNode } from 'react'
 import styled, { useTheme } from 'styled-components'
 
 import { ButtonStyles, FillButtonStyles, Icon } from '~/elements'
-
-const SelectTrigger = styled(SelectPrimitive.Trigger)`
-  ${FillButtonStyles};
-  border: ${({ theme }) => `solid ${theme.spacing[1]} ${theme.color.grey}`};
-  gap: 0.5rem;
-  padding: 0.5rem;
-
-  &[data-state='open'] {
-    border-color: ${({ theme }) => theme.color.yellow};
-  }
-
-  &[data-disabled] {
-    pointer-events: none;
-  }
-`
-
-const SelectScrollUp = styled(SelectPrimitive.ScrollUpButton)`
-  ${ButtonStyles};
-`
-
-const SelectScrollDown = styled(SelectPrimitive.ScrollDownButton)`
-  ${ButtonStyles};
-`
-
-const SelectContent = styled(SelectPrimitive.Content)`
-  overflow: hidden;
-
-  background-color: ${({ theme }) => theme.color.black};
-
-  border: ${({ theme }) => `solid ${theme.spacing[1]} ${theme.color.grey}`};
-  border-radius: ${({ theme }) => theme.radii.md};
-  box-shadow: ${({ theme }) => theme.shadow.normal};
-  --radix-select-content-available-height: 16rem;
-  max-height: 16rem;
-`
-
-const StyledSelectItem = styled(SelectPrimitive.Item)`
-  cursor: pointer;
-  user-select: none;
-
-  position: relative;
-
-  display: flex;
-  align-items: center;
-
-  padding: 0.5rem 2rem 0.5rem 0.5rem;
-
-  border-radius: ${({ theme }) => theme.radii.sm};
-
-  &[data-disabled] {
-    pointer-events: none;
-    color: ${({ theme }) => rgba(theme.color.silver, 0.05)};
-  }
-
-  &[data-highlighted],
-  &:hover {
-    background-color: ${({ theme }) => lighten(0.025, theme.color.black)};
-    outline: none;
-  }
-`
-
-export const SelectGroup = styled(SelectPrimitive.Group)`
-  &:first-of-type label {
-    margin-top: 0;
-  }
-`
-
-export const SelectLabel = styled(SelectPrimitive.Label)`
-  margin: 1.5rem 0.5rem 0.5rem;
-  font-size: ${({ theme }) => theme.fontSize.sm};
-  line-height: ${({ theme }) => theme.lineHeight.title};
-  color: ${({ theme }) => theme.color.silver};
-`
-
-const SelectItemIndicator = styled(SelectPrimitive.ItemIndicator)`
-  position: absolute;
-  right: 0.5rem;
-
-  display: inline-flex;
-  align-items: center;
-
-  color: ${({ theme }) => theme.color.yellow};
-`
-
 interface SelectProps extends SelectPrimitiveProps {
   align?: 'start' | 'center' | 'end'
   alignOffset?: number
@@ -204,3 +120,86 @@ export const SelectItem = forwardRef<HTMLDivElement, SelectItemProps>(
 )
 
 export const SelectValue = styled(SelectPrimitive.Value)``
+
+const SelectTrigger = styled(SelectPrimitive.Trigger)`
+  ${FillButtonStyles};
+  border: ${({ theme }) => `solid ${theme.spacing[1]} ${theme.color.grey}`};
+  gap: 0.5rem;
+  padding: 0.5rem;
+
+  &[data-state='open'] {
+    border-color: ${({ theme }) => theme.color.yellow};
+  }
+
+  &[data-disabled] {
+    pointer-events: none;
+  }
+`
+
+const SelectScrollUp = styled(SelectPrimitive.ScrollUpButton)`
+  ${ButtonStyles};
+`
+
+const SelectScrollDown = styled(SelectPrimitive.ScrollDownButton)`
+  ${ButtonStyles};
+`
+
+const SelectContent = styled(SelectPrimitive.Content)`
+  overflow: hidden;
+
+  background-color: ${({ theme }) => theme.color.black};
+
+  border: ${({ theme }) => `solid ${theme.spacing[1]} ${theme.color.grey}`};
+  border-radius: ${({ theme }) => theme.radii.md};
+  box-shadow: ${({ theme }) => theme.shadow.normal};
+  --radix-select-content-available-height: 16rem;
+  max-height: 16rem;
+`
+
+const StyledSelectItem = styled(SelectPrimitive.Item)`
+  cursor: pointer;
+  user-select: none;
+
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  padding: 0.5rem 2rem 0.5rem 0.5rem;
+
+  border-radius: ${({ theme }) => theme.radii.sm};
+
+  &[data-disabled] {
+    pointer-events: none;
+    color: ${({ theme }) => rgba(theme.color.silver, 0.05)};
+  }
+
+  &[data-highlighted],
+  &:hover {
+    background-color: ${({ theme }) => lighten(0.025, theme.color.black)};
+    outline: none;
+  }
+`
+
+export const SelectGroup = styled(SelectPrimitive.Group)`
+  &:first-of-type label {
+    margin-top: 0;
+  }
+`
+
+export const SelectLabel = styled(SelectPrimitive.Label)`
+  margin: 1.5rem 0.5rem 0.5rem;
+  font-size: ${({ theme }) => theme.fontSize.sm};
+  line-height: ${({ theme }) => theme.lineHeight.title};
+  color: ${({ theme }) => theme.color.silver};
+`
+
+const SelectItemIndicator = styled(SelectPrimitive.ItemIndicator)`
+  position: absolute;
+  right: 0.5rem;
+
+  display: inline-flex;
+  align-items: center;
+
+  color: ${({ theme }) => theme.color.yellow};
+`

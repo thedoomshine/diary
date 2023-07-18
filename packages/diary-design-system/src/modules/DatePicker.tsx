@@ -164,7 +164,7 @@ const Wrapper = styled.div`
   }
 
   .react-datepicker__day-name {
-    font-weight: ${({ theme }) => theme.fontWeight[800]};
+    font-weight: ${({ theme }) => theme.fontWeight.bold};
     text-align: center;
   }
 
@@ -177,7 +177,7 @@ const Wrapper = styled.div`
 
   .react-datepicker__today-button {
     ${ButtonStyles}
-    font-weight: ${({ theme }) => theme.fontWeight[800]};
+    font-weight: ${({ theme }) => theme.fontWeight.bold};
   }
 
   .react-datepicker__today-button {
@@ -203,7 +203,7 @@ const Wrapper = styled.div`
   }
 
   .react-datepicker__day--today {
-    font-weight: ${({ theme }) => theme.fontWeight[800]};
+    font-weight: ${({ theme }) => theme.fontWeight.bold};
   }
 
   .react-datepicker__aria-live {

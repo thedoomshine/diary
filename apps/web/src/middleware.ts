@@ -10,8 +10,10 @@ export async function middleware(req: NextRequest) {
   )
 
   const {
-    data: { user },
-  } = await supabase.auth.getUser()
+    data: { session },
+  } = await supabase.auth.getSession()
+
+  const user = session?.user
 
   if (user && LOGGED_OUT_ROUTES.has(req.nextUrl.pathname)) {
     return NextResponse.redirect(new URL(ALL_ROUTES.CALENDAR, req.url))

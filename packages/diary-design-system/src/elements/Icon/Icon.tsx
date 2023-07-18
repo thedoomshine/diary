@@ -1,10 +1,12 @@
-import React from 'react'
+import clsx from 'clsx'
+import React, { type CSSProperties } from 'react'
 import styled from 'styled-components'
 
 import { IconNames, Icons } from './Library'
 
 interface IconProperties {
   className?: string
+  style?: Record<string, CSSProperties>
   viewBox?: string
   title?: string
   role?: string
@@ -27,6 +29,7 @@ const StyledSVG = styled.svg`
 `
 
 export const Icon: React.FC<IconProperties> = ({
+  className,
   viewBox = '0 0 32 32',
   title,
   name,
@@ -38,6 +41,7 @@ export const Icon: React.FC<IconProperties> = ({
 
   return (
     <StyledSVG
+      className={clsx('icon', className)}
       viewBox={viewBox}
       role={role}
       fill='none'

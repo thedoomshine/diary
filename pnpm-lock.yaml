@@ -344,6 +344,58 @@ importers:
 
   packages/diary-design-system:
     dependencies:
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
+      tsup:
+        specifier: ^7.1.0
+        version: 7.1.0(postcss@8.4.24)(typescript@5.1.3)
+    devDependencies:
+      '@hello-pangea/color-picker':
+        specifier: ^3.2.2
+        version: 3.2.2(react@18.2.0)
+      '@js-temporal/polyfill':
+        specifier: ^0.4.4
+        version: 0.4.4
+      '@radix-ui/react-avatar':
+        specifier: ^1.0.2
+        version: 1.0.2(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-checkbox':
+        specifier: ^1.0.4
+        version: 1.0.4(@types/react-dom@18.2.4)(@types/react@18.2.9)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-hover-card':
+        specifier: ^1.0.6
+        version: 1.0.6(@types/react-dom@18.2.4)(@types/react@18.2.9)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-popover':
+        specifier: ^1.0.5
+        version: 1.0.5(@types/react@18.2.9)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-scroll-area':
+        specifier: ^1.0.4
+        version: 1.0.4(@types/react-dom@18.2.4)(@types/react@18.2.9)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-select':
+        specifier: ^1.2.2
+        version: 1.2.2(@types/react-dom@18.2.4)(@types/react@18.2.9)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-switch':
+        specifier: ^1.0.3
+        version: 1.0.3(@types/react-dom@18.2.4)(@types/react@18.2.9)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-tabs':
+        specifier: ^1.0.4
+        version: 1.0.4(@types/react-dom@18.2.4)(@types/react@18.2.9)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-toggle':
+        specifier: ^1.0.3
+        version: 1.0.3(@types/react-dom@18.2.4)(@types/react@18.2.9)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-toggle-group':
+        specifier: ^1.0.4
+        version: 1.0.4(@types/react-dom@18.2.4)(@types/react@18.2.9)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-toolbar':
+        specifier: ^1.0.4
+        version: 1.0.4(@types/react-dom@18.2.4)(@types/react@18.2.9)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-tooltip':
+        specifier: ^1.0.5
+        version: 1.0.5(@types/react@18.2.9)(react-dom@18.2.0)(react@18.2.0)
       '@tiptap/extension-character-count':
         specifier: ^2.0.3
         version: 2.0.3(@tiptap/core@2.0.3)(@tiptap/pm@2.0.3)
@@ -395,61 +447,6 @@ importers:
       '@tiptap/extension-underline':
         specifier: ^2.0.3
         version: 2.0.3(@tiptap/core@2.0.3)
-      jotai:
-        specifier: ^2.2.2
-        version: 2.2.2(react@18.2.0)
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-color:
-        specifier: ^2.19.3
-        version: 2.19.3(react@18.2.0)
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
-      tsup:
-        specifier: ^7.1.0
-        version: 7.1.0(postcss@8.4.24)(typescript@5.1.3)
-    devDependencies:
-      '@js-temporal/polyfill':
-        specifier: ^0.4.4
-        version: 0.4.4
-      '@radix-ui/react-avatar':
-        specifier: ^1.0.2
-        version: 1.0.2(react-dom@18.2.0)(react@18.2.0)
-      '@radix-ui/react-checkbox':
-        specifier: ^1.0.4
-        version: 1.0.4(@types/react-dom@18.2.4)(@types/react@18.2.9)(react-dom@18.2.0)(react@18.2.0)
-      '@radix-ui/react-hover-card':
-        specifier: ^1.0.6
-        version: 1.0.6(@types/react-dom@18.2.4)(@types/react@18.2.9)(react-dom@18.2.0)(react@18.2.0)
-      '@radix-ui/react-popover':
-        specifier: ^1.0.5
-        version: 1.0.5(@types/react@18.2.9)(react-dom@18.2.0)(react@18.2.0)
-      '@radix-ui/react-scroll-area':
-        specifier: ^1.0.4
-        version: 1.0.4(@types/react-dom@18.2.4)(@types/react@18.2.9)(react-dom@18.2.0)(react@18.2.0)
-      '@radix-ui/react-select':
-        specifier: ^1.2.2
-        version: 1.2.2(@types/react-dom@18.2.4)(@types/react@18.2.9)(react-dom@18.2.0)(react@18.2.0)
-      '@radix-ui/react-switch':
-        specifier: ^1.0.3
-        version: 1.0.3(@types/react-dom@18.2.4)(@types/react@18.2.9)(react-dom@18.2.0)(react@18.2.0)
-      '@radix-ui/react-tabs':
-        specifier: ^1.0.4
-        version: 1.0.4(@types/react-dom@18.2.4)(@types/react@18.2.9)(react-dom@18.2.0)(react@18.2.0)
-      '@radix-ui/react-toggle':
-        specifier: ^1.0.3
-        version: 1.0.3(@types/react-dom@18.2.4)(@types/react@18.2.9)(react-dom@18.2.0)(react@18.2.0)
-      '@radix-ui/react-toggle-group':
-        specifier: ^1.0.4
-        version: 1.0.4(@types/react-dom@18.2.4)(@types/react@18.2.9)(react-dom@18.2.0)(react@18.2.0)
-      '@radix-ui/react-toolbar':
-        specifier: ^1.0.4
-        version: 1.0.4(@types/react-dom@18.2.4)(@types/react@18.2.9)(react-dom@18.2.0)(react@18.2.0)
-      '@radix-ui/react-tooltip':
-        specifier: ^1.0.5
-        version: 1.0.5(@types/react@18.2.9)(react-dom@18.2.0)(react@18.2.0)
       '@tiptap/pm':
         specifier: ^2.0.3
         version: 2.0.3(@tiptap/core@2.0.3)
@@ -489,6 +486,9 @@ importers:
       eslint-config-diary:
         specifier: workspace:*
         version: link:../eslint-config-diary
+      jotai:
+        specifier: ^2.2.2
+        version: 2.2.2(react@18.2.0)
       node-emoji:
         specifier: ^2.0.2
         version: 2.0.2(postcss@8.4.24)(typescript@5.1.3)
@@ -4248,6 +4248,18 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: true
 
+  /@hello-pangea/color-picker@3.2.2(react@18.2.0):
+    resolution: {integrity: sha512-1JIWv8zh9SVDXlfzlCtzdbsRElLWGX+Ljh5RYzJKigVFroycTToP/6I7qISoeQJr3B045Uq6sZXyE/F/cKmz3g==}
+    engines: {node: '>=14.6.0'}
+    peerDependencies:
+      react: '>=16.8.0'
+    dependencies:
+      '@babel/runtime': 7.22.3
+      lodash: 4.17.21
+      react: 18.2.0
+      tinycolor2: 1.6.0
+    dev: true
+
   /@hookform/resolvers@3.1.1(react-hook-form@7.45.1):
     resolution: {integrity: sha512-tS16bAUkqjITNSvbJuO1x7MXbn7Oe8ZziDTJdA9mMvsoYthnOOiznOTGBYwbdlYBgU+tgpI/BtTU3paRbCuSlg==}
     peerDependencies:
@@ -4272,14 +4284,6 @@ packages:
 
   /@humanwhocodes/object-schema@1.2.1:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
-
-  /@icons/material@0.2.4(react@18.2.0):
-    resolution: {integrity: sha512-QPcGmICAPbGLGb6F/yNf/KzKqvFx8z5qx3D1yFqVAjoFmXK35EgyW+cJ57Te3CNsmzblwtzakLGFqHPqrfb4Tw==}
-    peerDependencies:
-      react: '*'
-    dependencies:
-      react: 18.2.0
-    dev: false
 
   /@internationalized/date@3.2.0:
     resolution: {integrity: sha512-VDMHN1m33L4eqPs5BaihzgQJXyaORbMoHOtrapFxx179J8ucY5CRIHYsq5RRLKPHZWgjNfa5v6amWWDkkMFywA==}
@@ -7327,7 +7331,7 @@ packages:
     dependencies:
       '@tiptap/core': 2.0.3(@tiptap/pm@2.0.3)
       '@tiptap/pm': 2.0.3(@tiptap/core@2.0.3)
-    dev: false
+    dev: true
 
   /@tiptap/extension-code-block@2.0.3(@tiptap/core@2.0.3)(@tiptap/pm@2.0.3):
     resolution: {integrity: sha512-F4xMy18EwgpyY9f5Te7UuF7UwxRLptOtCq1p2c2DfxBvHDWhAjQqVqcW/sq/I/WuED7FwCnPLyyAasPiVPkLPw==}
@@ -7353,7 +7357,7 @@ packages:
     dependencies:
       '@tiptap/core': 2.0.3(@tiptap/pm@2.0.3)
       '@tiptap/extension-text-style': 2.0.3(@tiptap/core@2.0.3)
-    dev: false
+    dev: true
 
   /@tiptap/extension-document@2.0.3(@tiptap/core@2.0.3):
     resolution: {integrity: sha512-PsYeNQQBYIU9ayz1R11Kv/kKNPFNIV8tApJ9pxelXjzcAhkjncNUazPN/dyho60mzo+WpsmS3ceTj/gK3bCtWA==}
@@ -7389,7 +7393,7 @@ packages:
     dependencies:
       '@tiptap/core': 2.0.3(@tiptap/pm@2.0.3)
       '@tiptap/extension-text-style': 2.0.3(@tiptap/core@2.0.3)
-    dev: false
+    dev: true
 
   /@tiptap/extension-gapcursor@2.0.3(@tiptap/core@2.0.3)(@tiptap/pm@2.0.3):
     resolution: {integrity: sha512-6I9EzzsYOyyqDvDvxIK6Rv3EXB+fHKFj8ntHO8IXmeNJ6pkhOinuXVsW6Yo7TcDYoTj4D5I2MNFAW2rIkgassw==}
@@ -7420,7 +7424,7 @@ packages:
       '@tiptap/core': ^2.0.0
     dependencies:
       '@tiptap/core': 2.0.3(@tiptap/pm@2.0.3)
-    dev: false
+    dev: true
 
   /@tiptap/extension-history@2.0.3(@tiptap/core@2.0.3)(@tiptap/pm@2.0.3):
     resolution: {integrity: sha512-00KHIcJ8kivn2ARI6NQYphv2LfllVCXViHGm0EhzDW6NQxCrriJKE3tKDcTFCu7LlC5doMpq9Z6KXdljc4oVeQ==}
@@ -7446,7 +7450,7 @@ packages:
       '@tiptap/core': ^2.0.0
     dependencies:
       '@tiptap/core': 2.0.3(@tiptap/pm@2.0.3)
-    dev: false
+    dev: true
 
   /@tiptap/extension-italic@2.0.3(@tiptap/core@2.0.3):
     resolution: {integrity: sha512-cfS5sW0gu7qf4ihwnLtW/QMTBrBEXaT0sJl3RwkhjIBg/65ywJKE5Nz9ewnQHmDeT18hvMJJ1VIb4j4ze9jj9A==}
@@ -7464,7 +7468,7 @@ packages:
       '@tiptap/core': 2.0.3(@tiptap/pm@2.0.3)
       '@tiptap/pm': 2.0.3(@tiptap/core@2.0.3)
       linkifyjs: 4.1.1
-    dev: false
+    dev: true
 
   /@tiptap/extension-list-item@2.0.3(@tiptap/core@2.0.3):
     resolution: {integrity: sha512-p7cUsk0LpM1PfdAuFE8wYBNJ3gvA0UhNGR08Lo++rt9UaCeFLSN1SXRxg97c0oa5+Ski7SrCjIJ5Ynhz0viTjQ==}
@@ -7483,7 +7487,7 @@ packages:
       '@tiptap/core': 2.0.3(@tiptap/pm@2.0.3)
       '@tiptap/pm': 2.0.3(@tiptap/core@2.0.3)
       '@tiptap/suggestion': 2.0.3(@tiptap/core@2.0.3)(@tiptap/pm@2.0.3)
-    dev: false
+    dev: true
 
   /@tiptap/extension-ordered-list@2.0.3(@tiptap/core@2.0.3):
     resolution: {integrity: sha512-ZB3MpZh/GEy1zKgw7XDQF4FIwycZWNof1k9WbDZOI063Ch4qHZowhVttH2mTCELuyvTMM/o9a8CS7qMqQB48bw==}
@@ -7507,7 +7511,7 @@ packages:
     dependencies:
       '@tiptap/core': 2.0.3(@tiptap/pm@2.0.3)
       '@tiptap/pm': 2.0.3(@tiptap/core@2.0.3)
-    dev: false
+    dev: true
 
   /@tiptap/extension-strike@2.0.3(@tiptap/core@2.0.3):
     resolution: {integrity: sha512-RO4/EYe2iPD6ifDHORT8fF6O9tfdtnzxLGwZIKZXnEgtweH+MgoqevEzXYdS+54Wraq4TUQGNcsYhe49pv7Rlw==}
@@ -7522,7 +7526,7 @@ packages:
       '@tiptap/core': ^2.0.0
     dependencies:
       '@tiptap/core': 2.0.3(@tiptap/pm@2.0.3)
-    dev: false
+    dev: true
 
   /@tiptap/extension-superscript@2.0.3(@tiptap/core@2.0.3):
     resolution: {integrity: sha512-5EBjUvkw2SXL1e8C1i0UF26/GBNHxEbiNQKw7Shy88omVa4HTY+D8KWC/j29ZW/IomUbGPlbpXp1z+1TETzmyw==}
@@ -7530,7 +7534,7 @@ packages:
       '@tiptap/core': ^2.0.0
     dependencies:
       '@tiptap/core': 2.0.3(@tiptap/pm@2.0.3)
-    dev: false
+    dev: true
 
   /@tiptap/extension-task-item@2.0.3(@tiptap/core@2.0.3)(@tiptap/pm@2.0.3):
     resolution: {integrity: sha512-13u1Q769WiSNcjFieYAMuJyWXNaY9yOdw6WFg9tQg4EZ5h6+2DaxB0qmu6I3pH+wwSn2UkCkXIirAo/k7wnzbw==}
@@ -7540,7 +7544,7 @@ packages:
     dependencies:
       '@tiptap/core': 2.0.3(@tiptap/pm@2.0.3)
       '@tiptap/pm': 2.0.3(@tiptap/core@2.0.3)
-    dev: false
+    dev: true
 
   /@tiptap/extension-task-list@2.0.3(@tiptap/core@2.0.3):
     resolution: {integrity: sha512-NdW0RtMF2L96qy+j946mTB5Av6Qn5L3vGVWFmJA6/JPXr9Uj/grItCmqUQKHfPBSFow7UqBY82ODblP+GQFgew==}
@@ -7548,7 +7552,7 @@ packages:
       '@tiptap/core': ^2.0.0
     dependencies:
       '@tiptap/core': 2.0.3(@tiptap/pm@2.0.3)
-    dev: false
+    dev: true
 
   /@tiptap/extension-text-align@2.0.3(@tiptap/core@2.0.3):
     resolution: {integrity: sha512-VlLgqncKdjMjVjbU60/ALYhFs0wUdjAyvjDXnH1OoM/HuzbILvufPMYz4DUieJIWVJOYUKHQgg4XwBWceAM2Tw==}
@@ -7556,7 +7560,7 @@ packages:
       '@tiptap/core': ^2.0.0
     dependencies:
       '@tiptap/core': 2.0.3(@tiptap/pm@2.0.3)
-    dev: false
+    dev: true
 
   /@tiptap/extension-text-style@2.0.3(@tiptap/core@2.0.3):
     resolution: {integrity: sha512-yHIYtZVewSwfBfI6TffnsDRiOuXzytppcCsaDlsZFm8OtLG8v9ioH0ItMoOstmZZBiWJOm8iOy2yWSc4rNQEJw==}
@@ -7564,7 +7568,7 @@ packages:
       '@tiptap/core': ^2.0.0
     dependencies:
       '@tiptap/core': 2.0.3(@tiptap/pm@2.0.3)
-    dev: false
+    dev: true
 
   /@tiptap/extension-text@2.0.3(@tiptap/core@2.0.3):
     resolution: {integrity: sha512-LvzChcTCcPSMNLUjZe/A9SHXWGDHtvk73fR7CBqAeNU0MxhBPEBI03GFQ6RzW3xX0CmDmjpZoDxFMB+hDEtW1A==}
@@ -7579,7 +7583,7 @@ packages:
       '@tiptap/core': ^2.0.0
     dependencies:
       '@tiptap/core': 2.0.3(@tiptap/pm@2.0.3)
-    dev: false
+    dev: true
 
   /@tiptap/extension-underline@2.0.3(@tiptap/core@2.0.3):
     resolution: {integrity: sha512-oMYa7qib/5wJjpUp79GZEe+E/iyf1oZBsgiG26IspEtVTHZmpn3+Ktud7l43y/hpTeEzFTKOF1/uVbayHtSERg==}
@@ -7587,7 +7591,7 @@ packages:
       '@tiptap/core': ^2.0.0
     dependencies:
       '@tiptap/core': 2.0.3(@tiptap/pm@2.0.3)
-    dev: false
+    dev: true
 
   /@tiptap/pm@2.0.3(@tiptap/core@2.0.3):
     resolution: {integrity: sha512-I9dsInD89Agdm1QjFRO9dmJtU1ldVSILNPW0pEhv9wYqYVvl4HUj/JMtYNqu2jWrCHNXQcaX/WkdSdvGJtmg5g==}
@@ -7664,7 +7668,7 @@ packages:
     dependencies:
       '@tiptap/core': 2.0.3(@tiptap/pm@2.0.3)
       '@tiptap/pm': 2.0.3(@tiptap/core@2.0.3)
-    dev: false
+    dev: true
 
   /@trivago/prettier-plugin-sort-imports@4.1.1(prettier@2.8.8):
     resolution: {integrity: sha512-dQ2r2uzNr1x6pJsuh/8x0IRA3CBUB+pWEW3J/7N98axqt7SQSm+2fy0FLNXvXGg77xEDC7KHxJlHfLYyi7PDcw==}
@@ -13337,7 +13341,6 @@ packages:
         optional: true
     dependencies:
       react: 18.2.0
-    dev: false
 
   /joycon@3.1.1:
     resolution: {integrity: sha512-34wB/Y7MW7bzjKRjUKTa46I2Z7eV62Rkhva+KkopW7Qvv/OSWBqvkSY7vusOPrNuZcUG3tApvdVgNB8POj3SPw==}
@@ -13606,7 +13609,7 @@ packages:
 
   /linkifyjs@4.1.1:
     resolution: {integrity: sha512-zFN/CTVmbcVef+WaDXT63dNzzkfRBKT1j464NJQkV7iSgJU0sLBus9W0HBwnXK13/hf168pbrx/V/bjEHOXNHA==}
-    dev: false
+    dev: true
 
   /load-tsconfig@0.2.5:
     resolution: {integrity: sha512-IXO6OCs9yg8tMKzfPZ1YmheJbZCiEsnBdcB03l0OcfK9prKnJb96siuHCr5Fl37/yo9DnKU+TLpxzTUspw9shg==}
@@ -13658,10 +13661,6 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       p-locate: 5.0.0
-
-  /lodash-es@4.17.21:
-    resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
-    dev: false
 
   /lodash.debounce@4.0.8:
     resolution: {integrity: sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==}
@@ -13817,10 +13816,6 @@ packages:
     dependencies:
       react: 18.2.0
     dev: true
-
-  /material-colors@1.2.6:
-    resolution: {integrity: sha512-6qE4B9deFBIa9YSpOc9O0Sgc43zTeVYbgDT5veRKSlB2+ZuHNoVVxA1L/ckMUayV9Ay9y7Z/SZCLcGteW9i7bg==}
-    dev: false
 
   /mathml-tag-names@2.1.3:
     resolution: {integrity: sha512-APMBEanjybaPzUrfqU0IMU5I0AswKMH7k8OTLs0vvV4KZpExkTkY87nR/zpbuTPj+gARop7aGUbl11pnDfW6xg==}
@@ -15729,21 +15724,6 @@ packages:
       unpipe: 1.0.0
     dev: true
 
-  /react-color@2.19.3(react@18.2.0):
-    resolution: {integrity: sha512-LEeGE/ZzNLIsFWa1TMe8y5VYqr7bibneWmvJwm1pCn/eNmrabWDh659JSPn9BuaMpEfU83WTOJfnCcjDZwNQTA==}
-    peerDependencies:
-      react: '*'
-    dependencies:
-      '@icons/material': 0.2.4(react@18.2.0)
-      lodash: 4.17.21
-      lodash-es: 4.17.21
-      material-colors: 1.2.6
-      prop-types: 15.8.1
-      react: 18.2.0
-      reactcss: 1.2.3(react@18.2.0)
-      tinycolor2: 1.6.0
-    dev: false
-
   /react-colorful@5.6.1(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-1exovf0uGTGyq5mXQT0zgQ80uvj2PCwvF8zY1RN9/vbJVSjSo3fsB/4L3ObbF7u70NduSiK4xu4Y6q1MHoUGEw==}
     peerDependencies:
@@ -15980,15 +15960,6 @@ packages:
     engines: {node: '>=0.10.0'}
     dependencies:
       loose-envify: 1.4.0
-
-  /reactcss@1.2.3(react@18.2.0):
-    resolution: {integrity: sha512-KiwVUcFu1RErkI97ywr8nvx8dNOpT03rbnma0SSalTYjkrPYaEajR4a/MRt6DZ46K6arDRbWMNHF+xH7G7n/8A==}
-    peerDependencies:
-      react: '*'
-    dependencies:
-      lodash: 4.17.21
-      react: 18.2.0
-    dev: false
 
   /read-pkg-up@7.0.1:
     resolution: {integrity: sha512-zK0TB7Xd6JpCLmlLmufqykGE+/TlOePD6qKClNW7hHDKFh/J7/7gCWGR7joEQEW1bKq3a3yUZSObOoWLFQ4ohg==}
@@ -17378,7 +17349,7 @@ packages:
 
   /tinycolor2@1.6.0:
     resolution: {integrity: sha512-XPaBkWQJdsf3pLKJV9p4qN/S+fm2Oj8AIPo1BTUhg5oxkvm9+SVEGFdhyOz7tTdUTfvxMiAs4sp6/eZO2Ew+pw==}
-    dev: false
+    dev: true
 
   /tippy.js@6.3.7:
     resolution: {integrity: sha512-E1d3oP2emgJ9dRQZdf3Kkn0qJgI6ZLpyS5z6ZkY1DF3kaQaBsGZsndEpHwx+eC+tYM41HaSNvNtLx8tU57FzTQ==}

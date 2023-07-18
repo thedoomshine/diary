@@ -6,13 +6,13 @@ export const getCurrentUser = async () => {
   const db = createClientComponentClient<Database>()
 
   const {
-    data: { user }
-  } = await db.auth.getUser()
+    data
+  } = await db.auth.getSession()
 
   return await db
     .from('users')
     .select('display_name, username, profile_image_url')
-    .match({ id: user?.id })
+    .match({ id: data?.session?.user?.id })
 }
 
 export type CurrentUserResponse = Awaited<ReturnType<typeof getCurrentUser>>

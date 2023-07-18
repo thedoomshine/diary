@@ -177,6 +177,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
   (
     {
       ForgotPasswordLink,
+      className,
       defaultValue,
       disabled = false,
       error,
@@ -210,7 +211,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     }
 
     return (
-      <InputContainer>
+      <InputContainer className={clsx(className)}>
         <StyledLabelWrapper>
           {label && (
             <StyledLabel

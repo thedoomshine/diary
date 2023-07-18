@@ -6,7 +6,6 @@ const ScrollAreaRoot = styled(ScrollAreaPrimitive.Root)`
   --scrollbar-size: 1rem;
   display: flex;
   flex-direction: column;
-  flex: 1 1 auto;
   overflow: hidden;
 `
 
@@ -60,7 +59,7 @@ const ScrollAreaCorner = styled(ScrollAreaPrimitive.Corner)``
 export const ScrollArea = ({
   className,
   children,
-  type = 'auto',
+  type = 'hover',
   ...props
 }: {
   children: ReactNode

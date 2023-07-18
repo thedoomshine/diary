@@ -1,4 +1,3 @@
-import * as ToolbarPrimitive from '@radix-ui/react-toolbar'
 import CharacterCount from '@tiptap/extension-character-count'
 import Color from '@tiptap/extension-color'
 import FontFamily from '@tiptap/extension-font-family'
@@ -9,10 +8,13 @@ import Mention from '@tiptap/extension-mention'
 import Placeholder from '@tiptap/extension-placeholder'
 import Subscript from '@tiptap/extension-subscript'
 import Superscript from '@tiptap/extension-superscript'
+import TaskList from '@tiptap/extension-task-list'
+import TaskItem from '@tiptap/extension-task-item'
 import TextAlign from '@tiptap/extension-text-align'
 import TextStyle from '@tiptap/extension-text-style'
 import TextTypography from '@tiptap/extension-typography'
 import Underline from '@tiptap/extension-underline'
+
 import { EditorContent, type JSONContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import styled from 'styled-components'
@@ -25,8 +27,8 @@ import { EditorToolbar } from './EditorToolbar'
 const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: 0;
+  /* width: 100%;
+  height: 0; */
   flex: 1 1 auto;
 `
 
@@ -50,6 +52,7 @@ const StyledFooter = styled.div`
 const StyledScrollArea = styled(ScrollArea)`
   display: flex;
   flex-direction: column;
+  flex: 1 1 auto;
   padding: 0 1rem;
   white-space: pre-wrap;
   position: relative;
@@ -80,10 +83,7 @@ const StyledScrollArea = styled(ScrollArea)`
 
     h1,
     h2,
-    h3,
-    h4,
-    h5,
-    h6 {
+    h3 {
       padding-bottom: 0.3em;
       margin-bottom: 1rem;
       margin-top: 1.5rem;
@@ -91,25 +91,17 @@ const StyledScrollArea = styled(ScrollArea)`
     }
 
     h1 {
-      font-size: ${({ theme }) => theme.fontSize.xxxl};
+      font-size: ${({ theme }) => theme.fontSize.h2};
       border-bottom: ${({ theme }) =>
         `solid ${theme.spacing[1]} ${theme.color.grey}`};
     }
 
     h2 {
-      font-size: ${({ theme }) => theme.fontSize.xxl};
+      font-size: ${({ theme }) => theme.fontSize.h3};
     }
 
     h3 {
-      font-size: ${({ theme }) => theme.fontSize.xl};
-    }
-
-    h4 {
-      font-size: ${({ theme }) => theme.fontSize.lg};
-    }
-
-    h5 {
-      font-size: ${({ theme }) => theme.fontSize.md};
+      font-size: ${({ theme }) => theme.fontSize.h4};
     }
 
     p,
@@ -170,7 +162,7 @@ const StyledScrollArea = styled(ScrollArea)`
     }
 
     strong {
-      font-weight: ${({ theme }) => theme.fontWeight[800]};
+      font-weight: ${({ theme }) => theme.fontWeight.bold};
     }
 
     em {
@@ -196,7 +188,7 @@ const StyledScrollArea = styled(ScrollArea)`
   }
 `
 
-const CHAR_LIMIT = 512
+const CHAR_LIMIT = 1024
 
 export const WYSIWYGEditor = ({
   content,
@@ -225,7 +217,13 @@ export const WYSIWYGEditor = ({
       }),
       Subscript,
       Superscript,
-      StarterKit,
+      StarterKit.configure({
+        heading: {
+          levels: [1, 2, 3],
+        }
+      }),
+      TaskList,
+      TaskItem,
       TextAlign.configure({
         types: ['heading', 'paragraph'],
       }),
@@ -245,7 +243,7 @@ export const WYSIWYGEditor = ({
 
   return (
     <StyledWrapper>
-      <EditorToolbar />
+      <EditorToolbar editor={editor} />
       <StyledScrollArea>
         <EditorContent editor={editor} />
       </StyledScrollArea>

@@ -43,7 +43,7 @@ export const ButtonStyles = css`
 
   &:hover {
     background-color: ${({ theme }) => rgba(theme.color.white, 0.05)};
-    svg {
+    .icon {
       fill: ${({ theme }) => theme.color.yellow};
     }
   }
@@ -91,7 +91,7 @@ export const IconButtonStyles = css`
 
   &:focus-visible {
     background-color: ${({ theme }) => rgba(theme.color.white, 0.05)};
-    svg {
+    .icon {
       fill: ${({ theme }) => theme.color.yellow};
     }
   }
