@@ -11,7 +11,6 @@ const StyledDialogContent = styled.div`
       background: theme.color.charcoal,
       color1: theme.color.charcoal,
     })}
-
   overflow: visible;
   display: grid;
   grid-template-rows: repeat(3, min-content);
@@ -137,7 +136,10 @@ export const Dialog = ({
       <StyledDialogContent>
         <DialogHeader>
           {title && <h1>{title}</h1>}
-          <StyledCloseButton onClick={handleClose} icon='close' />
+          <StyledCloseButton
+            onClick={handleClose}
+            icon='close'
+          />
         </DialogHeader>
 
         {children}

@@ -8,185 +8,21 @@ import Mention from '@tiptap/extension-mention'
 import Placeholder from '@tiptap/extension-placeholder'
 import Subscript from '@tiptap/extension-subscript'
 import Superscript from '@tiptap/extension-superscript'
-import TaskList from '@tiptap/extension-task-list'
 import TaskItem from '@tiptap/extension-task-item'
+import TaskList from '@tiptap/extension-task-list'
 import TextAlign from '@tiptap/extension-text-align'
 import TextStyle from '@tiptap/extension-text-style'
 import TextTypography from '@tiptap/extension-typography'
 import Underline from '@tiptap/extension-underline'
-
 import { EditorContent, type JSONContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
+import { debounce } from 'radash'
 import styled from 'styled-components'
 import { useTheme } from 'styled-components'
 
 import { ScrollArea } from '~/elements'
 
 import { EditorToolbar } from './EditorToolbar'
-
-const StyledWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  /* width: 100%;
-  height: 0; */
-  flex: 1 1 auto;
-`
-
-const StyledFooter = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  flex: 0 0 auto;
-  padding: 0.5rem;
-  gap: 0.5rem;
-  width: 100%;
-
-  border: ${({ theme }) => `solid ${theme.spacing[1]} ${theme.color.grey}`};
-  border-radius: ${({ theme }) => theme.radii.md};
-
-  border-top: 0;
-  border-top-right-radius: 0;
-  border-top-left-radius: 0;
-`
-
-const StyledScrollArea = styled(ScrollArea)`
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 auto;
-  padding: 0 1rem;
-  white-space: pre-wrap;
-  position: relative;
-  word-wrap: break-word;
-
-  border: ${({ theme }) => `solid ${theme.spacing[1]} ${theme.color.grey}`};
-
-  &:focus-within {
-    border-color: ${({ theme }) => theme.color.yellow};
-  }
-
-  .ProseMirror {
-    padding: 1rem 0;
-    p.is-editor-empty:first-child::before {
-      color: ${({ theme }) => theme.color.grey};
-      content: attr(data-placeholder);
-      float: left;
-      height: 0;
-      pointer-events: none;
-    }
-    & > :first-child {
-      margin-top: 0 !important;
-    }
-
-    & > :last-child {
-      margin-bottom: 0 !important;
-    }
-
-    h1,
-    h2,
-    h3 {
-      padding-bottom: 0.3em;
-      margin-bottom: 1rem;
-      margin-top: 1.5rem;
-      line-height: 1.15;
-    }
-
-    h1 {
-      font-size: ${({ theme }) => theme.fontSize.h2};
-      border-bottom: ${({ theme }) =>
-        `solid ${theme.spacing[1]} ${theme.color.grey}`};
-    }
-
-    h2 {
-      font-size: ${({ theme }) => theme.fontSize.h3};
-    }
-
-    h3 {
-      font-size: ${({ theme }) => theme.fontSize.h4};
-    }
-
-    p,
-    blockquote,
-    ul,
-    ol,
-    dl,
-    table,
-    pre,
-    details {
-      margin-top: 0;
-      margin-bottom: 1rem;
-    }
-
-    ul ul,
-    ul ol,
-    ol ol,
-    ol ul {
-      display: inline-flex;
-      margin-top: 0;
-      margin-bottom: 0;
-    }
-
-    ul {
-      list-style-type: disc;
-    }
-
-    ul ul {
-      list-style-type: circle;
-    }
-
-    ol {
-      list-style-type: none;
-      counter-reset: item;
-      margin: 0;
-      padding: 0;
-      li {
-        counter-increment: item;
-        &::marker {
-          content: counters(item, '.') '. ';
-        }
-        ol li::marker {
-          content: counters(item, '.') ' ';
-        }
-      }
-    }
-
-    ol,
-    ul {
-      padding-left: 2rem;
-      display: flex;
-      flex-direction: column;
-      margin-bottom: 1rem;
-    }
-
-    li {
-      display: list-item;
-    }
-
-    strong {
-      font-weight: ${({ theme }) => theme.fontWeight.bold};
-    }
-
-    em {
-      font-style: italic;
-    }
-
-    blockquote {
-      display: flex;
-      flex-direction: column;
-      border-left: solid 0.25rem ${({ theme }) => theme.color.grey};
-      padding-left: 0.5rem;
-      & > :last-child {
-        margin-bottom: 0;
-      }
-    }
-
-    hr {
-      height: 0.25em;
-      padding: 0;
-      margin: 2rem 0;
-      background-color: ${({ theme }) => theme.color.grey};
-    }
-  }
-`
 
 const CHAR_LIMIT = 1024
 
@@ -220,7 +56,7 @@ export const WYSIWYGEditor = ({
       StarterKit.configure({
         heading: {
           levels: [1, 2, 3],
-        }
+        },
       }),
       TaskList,
       TaskItem,
@@ -233,7 +69,9 @@ export const WYSIWYGEditor = ({
     ],
     content: content,
     onUpdate: ({ editor }) => {
-      setContentSource(editor.getJSON())
+      debounce({ delay: 100 }, () => {
+        setContentSource(editor.getJSON())
+      })
     },
   })
 
@@ -291,3 +129,257 @@ const CharacterCountIndicator = ({ percentage }: { percentage: number }) => {
     </svg>
   )
 }
+
+const StyledWrapper = styled.div`
+  display: flex;
+  /* width: 100%;
+  height: 0; */
+  flex: 1 1 auto;
+  flex-direction: column;
+`
+
+const StyledFooter = styled.div`
+  position: relative;
+
+  display: flex;
+  flex: 0 0 auto;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: flex-end;
+
+  width: 100%;
+  padding: 0.5rem;
+
+  background-color: ${({ theme }) => theme.color.black};
+  border: ${({ theme }) => `solid ${theme.spacing[1]} ${theme.color.grey}`};
+  border-top: 0;
+  border-radius: ${({ theme }) => theme.radii.md};
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+`
+
+const StyledScrollArea = styled(ScrollArea)`
+  position: relative;
+
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+
+  padding: 0 1rem;
+
+  word-wrap: break-word;
+  white-space: pre-wrap;
+
+  border: ${({ theme }) => `solid ${theme.spacing[1]} ${theme.color.grey}`};
+
+  &:focus-within {
+    border-color: ${({ theme }) => theme.color.yellow};
+  }
+
+  .ProseMirror {
+    height: 100%;
+    padding: 1rem 0;
+    p.is-editor-empty:first-child::before {
+      pointer-events: none;
+      content: attr(data-placeholder);
+
+      float: left;
+
+      height: 0;
+
+      color: ${({ theme }) => theme.color.grey};
+    }
+    & > :first-child {
+      margin-top: 0 !important;
+    }
+
+    & > :last-child {
+      margin-bottom: 0 !important;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin-top: 1.5rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.3em;
+      line-height: 1.15;
+    }
+
+    h1 {
+      font-size: ${({ theme }) => theme.fontSize.h2};
+      border-bottom: ${({ theme }) =>
+        `solid ${theme.spacing[1]} ${theme.color.grey}`};
+    }
+
+    h2 {
+      font-size: ${({ theme }) => theme.fontSize.h3};
+    }
+
+    h3 {
+      font-size: ${({ theme }) => theme.fontSize.h4};
+    }
+
+    p,
+    blockquote,
+    ul,
+    ol,
+    dl,
+    table,
+    pre,
+    details {
+      margin-top: 0;
+      margin-bottom: 1rem;
+    }
+
+    ul ul,
+    ul ol,
+    ol ol,
+    ol ul {
+      display: inline-flex;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+    ul {
+      list-style-type: disc;
+      & ul {
+        list-style-type: circle;
+        & ul {
+          list-style-type: square;
+          & ul {
+            list-style-type: disc;
+          }
+        }
+      }
+    }
+
+    ol {
+      counter-reset: item;
+      margin: 0;
+      padding: 0;
+      list-style-type: none;
+      li {
+        counter-increment: item;
+        &::marker {
+          content: counter(item, decimal) '. ';
+        }
+      }
+    }
+
+    ol,
+    ul {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 1rem;
+      padding-left: 2rem;
+    }
+
+    li {
+      display: list-item;
+    }
+
+    ul[data-type='taskList'] {
+      padding-left: 0;
+      list-style-type: none;
+      li {
+        display: inline-flex;
+        & + li {
+          margin-top: 0.5rem;
+        }
+      }
+      label {
+        display: inline-flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+
+      label + div {
+        display: flex;
+        align-items: center;
+      }
+
+      p {
+        margin: 0;
+      }
+
+      input[type='checkbox'] {
+        transform: translateY(-0.075em);
+
+        display: grid;
+        place-content: center;
+
+        width: 1.75em;
+        height: 1.75em;
+
+        color: currentColor;
+
+        appearance: initial;
+        border: ${({ theme }) =>
+          `solid ${theme.spacing[1]} ${theme.color.grey}`};
+        border-radius: ${({ theme }) => theme.radii.md};
+
+        &::before {
+          content: '';
+
+          transform: scale(0);
+
+          width: 1.25em;
+          height: 1.25em;
+
+          background-color: ${({ theme }) => theme.color.yellow};
+          clip-path: polygon(
+            28% 38%,
+            41% 53%,
+            75% 24%,
+            86% 38%,
+            40% 78%,
+            15% 50%
+          );
+        }
+
+        &:checked::before {
+          transform: scale(1);
+        }
+
+        &:focus-visible {
+          outline: ${({ theme }) =>
+            `solid ${theme.spacing[1]} ${theme.color.yellow}`};
+        }
+      }
+    }
+
+    strong {
+      font-weight: ${({ theme }) => theme.fontWeight.bold};
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    u {
+      text-decoration: underline;
+    }
+
+    s {
+      text-decoration: line-through;
+    }
+
+    blockquote {
+      display: flex;
+      flex-direction: column;
+      padding-left: 0.5rem;
+      border-left: solid 0.25rem ${({ theme }) => theme.color.grey};
+      & > :last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    hr {
+      height: 0.25em;
+      margin: 2rem 0;
+      padding: 0;
+      background-color: ${({ theme }) => theme.color.grey};
+    }
+  }
+`

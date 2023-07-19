@@ -12,10 +12,7 @@ export {
   OutlineButtonStyles,
   StyledButton,
 } from '~/elements/Button'
-export type {
-  ButtonProps,
-  IconButtonProps,
-} from '~/elements/Button'
+export type { ButtonProps, IconButtonProps } from '~/elements/Button'
 export { Checkbox } from '~/elements/Checkbox'
 export { Dialog } from '~/elements/Dialog'
 export { Icon } from '~/elements/Icon/Icon'
@@ -28,7 +25,13 @@ export {
 } from '~/elements/Popover'
 export type { PopoverProps } from '~/elements/Popover'
 export { ScrollArea } from '~/elements/ScrollArea'
-export { Select, SelectGroup, SelectItem, SelectLabel, SelectValue } from '~/elements/Select'
+export {
+  Select,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectValue,
+} from '~/elements/Select'
 export { Skeleton } from '~/elements/Skeleton'
 export { TabsContent, TabsList, TabsRoot, TabsTrigger } from '~/elements/Tabs'
 export { Tooltip, TooltipProvider } from '~/elements/Tooltip'

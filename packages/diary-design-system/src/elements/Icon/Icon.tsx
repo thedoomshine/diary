@@ -18,10 +18,9 @@ const StyledSVG = styled.svg`
   align-items: center;
   justify-content: center;
 
+  aspect-ratio: 1 / 1;
   width: 1em;
   height: 1em;
-
-  aspect-ratio: 1 / 1;
 
   fill: currentcolor;
   stroke: currentcolor;

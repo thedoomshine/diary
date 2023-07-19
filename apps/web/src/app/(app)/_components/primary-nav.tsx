@@ -90,17 +90,18 @@ const NavLinkWrapper = styled.div`
 
     text-align: center;
 
-    transition-property: height;
-    transition-duration: ${({ theme }) => theme.duration[250]};
     transition-timing-function: ${({ theme }) => theme.easing.easeOut};
+    transition-duration: ${({ theme }) => theme.duration[250]};
+    transition-property: height;
 
     li a {
-      color: ${({ theme }) => theme.color.white};
       display: block;
+
       padding: 0.5rem 0;
-      text-decoration: none;
 
       font-size: ${({ theme }) => theme.fontSize.sm};
+      color: ${({ theme }) => theme.color.white};
+      text-decoration: none;
 
       &:hover, &.active {
         color: ${({ theme }) => theme.color.yellow};

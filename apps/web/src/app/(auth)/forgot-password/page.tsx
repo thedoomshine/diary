@@ -28,19 +28,19 @@ const Fieldset = styled.fieldset`
 `
 
 const StyledButton = styled(FillButton)`
+  width: 100%;
   margin: auto;
   padding: ${({ theme }) => theme.spacing[8]} 1rem;
-  width: 100%;
 `
 
 const ErrorMessage = styled.div`
   display: flex;
+  gap: 0.5em;
   align-items: flex-start;
 
   min-height: 0;
   margin-top: 0.5em;
   margin-left: 0.5em;
-  gap: 0.5em;
 
   font-size: ${({ theme }) => theme.fontSize.sm};
   color: ${({ theme }) => theme.color.red};

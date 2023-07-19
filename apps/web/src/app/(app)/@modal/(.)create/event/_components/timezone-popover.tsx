@@ -49,9 +49,10 @@ const DropdownWrapper = styled.div`
 
 const StyledFooter = styled.div`
   display: flex;
+  gap: 0.5rem;
   align-items: center;
   justify-content: flex-end;
-  gap: 0.5rem;
+
   width: 100%;
 `
 
@@ -72,8 +73,8 @@ const StyledLabel = styled.label`
 `
 
 const StyledFillButton = styled(FillButton)`
-  background-color: ${({ theme }) => theme.color.yellow};
   color: ${({ theme }) => theme.color.black};
+  background-color: ${({ theme }) => theme.color.yellow};
   &:hover {
     background-color: ${({ theme }) => lighten(0.25, theme.color.yellow)};
   }

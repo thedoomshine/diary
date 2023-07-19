@@ -1,7 +1,10 @@
 import * as TabsPrimitive from '@radix-ui/react-tabs'
 import styled, { type IStyledComponent } from 'styled-components'
 
-const TabsRoot: IStyledComponent<"web", TabsPrimitive.TabsProps & React.RefAttributes<HTMLDivElement>> = styled(TabsPrimitive.Root)`
+const TabsRoot: IStyledComponent<
+  'web',
+  TabsPrimitive.TabsProps & React.RefAttributes<HTMLDivElement>
+> = styled(TabsPrimitive.Root)`
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -9,21 +12,25 @@ const TabsRoot: IStyledComponent<"web", TabsPrimitive.TabsProps & React.RefAttri
 `
 
 const TabsList = styled(TabsPrimitive.List)`
-  flex-shrink: 0;
   display: flex;
+  flex-shrink: 0;
 `
 
 const TabsTrigger = styled(TabsPrimitive.Trigger)`
-  font-family: inherit;
-  padding: 0.5rem 1rem;
-  flex: 1 0 auto;
+  cursor: pointer;
+  user-select: none;
+
+  position: relative;
+
   display: flex;
+  flex: 1 0 auto;
   align-items: center;
   justify-content: center;
+
+  padding: 0.5rem 1rem;
+
+  font-family: inherit;
   line-height: ${({ theme }) => theme.lineHeight.element};
-  user-select: none;
-  cursor: pointer;
-  position: relative;
   &:focus-visible {
     position: relative;
     outline: solid 0.0125rem ${({ theme }) => theme.color.yellow};

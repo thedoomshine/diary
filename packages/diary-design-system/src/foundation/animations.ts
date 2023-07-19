@@ -55,6 +55,12 @@ export const keyframes = {
 }
 
 export const animation = {
-  scaleUp: css`animation: ${keyframes.scaleUp} ${duration['150']} ${easing.easeOutQuart} normal`,
-  fadeIn: css`animation: ${keyframes.fadeIn} ${duration['150']} ${easing.easeOutQuart} normal`,
+  scaleUp: css`
+    animation: ${keyframes.scaleUp} ${duration['150']} ${easing.easeOutQuart}
+      normal;
+  `,
+  fadeIn: css`
+    animation: ${keyframes.fadeIn} ${duration['150']} ${easing.easeOutQuart}
+      normal;
+  `,
 }

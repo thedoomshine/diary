@@ -719,18 +719,20 @@ export const timezones: TimezoneMap = new Map([
   ],
 ])
 
-export const groupedTimezones: GroupedTimezonesType = Object.entries([...timezones.entries()].reduce((groups,
-  [_,
-    { identifier, name, group },
-  ]: [string, TimezoneEntry]) => {
-  if (!(group in groups)) {
-    groups[group] = []
-  }
+export const groupedTimezones: GroupedTimezonesType = Object.entries(
+  [...timezones.entries()].reduce(
+    (groups, [_, { identifier, name, group }]: [string, TimezoneEntry]) => {
+      if (!(group in groups)) {
+        groups[group] = []
+      }
 
-  groups[group].push({
-    identifier,
-    name,
-  })
+      groups[group].push({
+        identifier,
+        name,
+      })
 
-  return groups
-}, {} as GroupedTimezonesObjectType))
+      return groups
+    },
+    {} as GroupedTimezonesObjectType
+  )
+)

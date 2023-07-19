@@ -19,9 +19,11 @@ const StyledPopoverTrigger = styled(PopoverTrigger)`
   width: 100%;
 
   gap: 0.25rem;
+
   padding: 0.5rem;
 
   border-radius: ${({ theme }) => theme.radii.lg};
+
   @media ${({ theme }) => theme.breakpoints.xl} {
     justify-content: space-between;
   }
@@ -62,7 +64,6 @@ const StyledIcon = styled(Icon)`
   display: none;
   align-self: center;
   justify-self: flex-end;
-
   font-size: ${({ theme }) => theme.fontSize.sm};
 
   @media ${({ theme }) => theme.breakpoints.xl} {

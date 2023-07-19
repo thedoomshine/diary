@@ -8,9 +8,9 @@ const StyledLayout = styled.div`
   flex: 1 1 auto;
   flex-direction: column;
 
+  width: 100%;
   max-width: ${({ theme }) => theme.size.md};
   min-height: 100%;
-  width: 100%;
   margin: 0 auto;
 `
 
@@ -18,9 +18,11 @@ const StyledMain = styled.main`
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
-  padding: ${({ theme }) => theme.spacing[8]};
-  margin: 0 auto;
+
   max-width: ${({ theme }) => theme.size.sm};
+  margin: 0 auto;
+  padding: ${({ theme }) => theme.spacing[8]};
+
   line-height: ${({ theme }) => theme.lineHeight.body};
 
   & > :first-child {
@@ -33,9 +35,9 @@ const StyledMain = styled.main`
   h4,
   h5,
   h6 {
-    padding-bottom: 0.3em;
-    margin-bottom: 1rem;
     margin-top: 2rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.3em;
     line-height: ${({ theme }) => theme.lineHeight.heading};
   }
 
@@ -107,8 +109,8 @@ const StyledMain = styled.main`
   blockquote {
     display: flex;
     flex-direction: column;
-    border-left: solid 0.25rem ${({ theme }) => theme.color.grey};
     padding-left: 0.5rem;
+    border-left: solid 0.25rem ${({ theme }) => theme.color.grey};
     & > :last-child {
       margin-bottom: 0;
     }
@@ -116,8 +118,8 @@ const StyledMain = styled.main`
 
   hr {
     height: 0.25em;
-    padding: 0;
     margin: 2rem 0;
+    padding: 0;
     background-color: ${({ theme }) => theme.color.grey};
   }
 

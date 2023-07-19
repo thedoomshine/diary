@@ -1,10 +1,6 @@
 import { lighten, rgba } from 'polished'
 import { forwardRef } from 'react'
-import type {
-  HTMLProps,
-  MouseEventHandler,
-  ReactNode,
-} from 'react'
+import type { HTMLProps, MouseEventHandler, ReactNode } from 'react'
 import styled, { css } from 'styled-components'
 
 import { Icon } from './Icon/Icon'
@@ -21,9 +17,9 @@ export type ButtonProps = {
 } & HTMLProps<HTMLButtonElement>
 
 export const ButtonStyles = css`
-  position: relative;
-
   cursor: pointer;
+
+  position: relative;
 
   display: flex;
   flex: 0 0 auto;
@@ -32,14 +28,13 @@ export const ButtonStyles = css`
 
   padding: 0.5rem 1rem;
 
+  line-height: ${({ theme }) => theme.lineHeight.element};
   color: inherit;
   text-align: center;
   text-decoration: none;
-  line-height: ${({ theme }) => theme.lineHeight.element};
-
-  border-radius: ${({ theme }) => theme.radii.md};
 
   border: ${({ theme }) => `solid ${theme.spacing[1]} transparent`};
+  border-radius: ${({ theme }) => theme.radii.md};
 
   &:hover {
     background-color: ${({ theme }) => rgba(theme.color.white, 0.05)};
@@ -131,9 +126,7 @@ export const OutlineButton = styled(Button)`
 
 export const FillButtonStyles = css`
   ${ButtonStyles};
-
   display: flex;
-
   color: ${({ theme }) => theme.color.white};
   background-color: ${({ theme }) => theme.color.black};
   border: ${({ theme }) => `solid ${theme.spacing[1]} ${theme.color.grey}`};
@@ -149,10 +142,10 @@ export const FillButton = styled(Button)`
 
 export const CTAButtonStyles = css`
   --button-shadow-color: ${({ theme }) => theme.color.black};
+
   ${FillButtonStyles};
   perspective: 64rem;
   font-weight: ${({ theme }) => theme.fontWeight.bold};
-
   transition-duration: 0.25s;
   transition-property: box-shadow, transform;
 

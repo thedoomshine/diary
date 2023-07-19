@@ -2,7 +2,12 @@ import clsx from 'clsx'
 import { atom, useAtom } from 'jotai'
 import { useHydrateAtoms } from 'jotai/utils'
 import { meetsContrastGuidelines } from 'polished'
-import { useEffect, type ChangeEvent, type ReactNode} from 'react'
+import {
+  type ChangeEvent,
+  type KeyboardEvent,
+  type ReactNode,
+  useEffect,
+} from 'react'
 import styled, { useTheme } from 'styled-components'
 
 import {
@@ -12,7 +17,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '~/elements'
-import { color as colors } from '~/foundation'
 
 const tempColorAtom = atom<string>('')
 
@@ -26,6 +30,7 @@ export const ColorPicker = ({
   changeColor: (color: string) => void
 }) => {
   const theme = useTheme()
+  const COLORS: string[] = Object.values(theme.color)
   useHydrateAtoms([[tempColorAtom, activeColor]])
   const [tempColor, setTempColor] = useAtom(tempColorAtom)
 
@@ -37,7 +42,8 @@ export const ColorPicker = ({
     setTempColor(e.target.value)
   }
 
-  const handleInputSubmit = () => {
+  const handleInputSubmit = (event: KeyboardEvent) => {
+    if (event.key !== 'Enter') return
     changeColor(tempColor)
   }
 
@@ -60,7 +66,7 @@ export const ColorPicker = ({
           </span>
         </ActiveColor>
         <SwatchWrapper>
-          {Object.values(colors).map((color) => (
+          {COLORS.map((color) => (
             <Swatch
               key={color}
               title={color}
@@ -87,9 +93,8 @@ export const ColorPicker = ({
 }
 
 const StyledPopoverContent = styled(PopoverContent)<{ $activeColor: string }>`
-  padding: 0;
   max-width: 12rem;
-
+  padding: 0;
   text-transform: uppercase;
 
   svg {
@@ -101,8 +106,10 @@ const ActiveColor = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
+
   aspect-ratio: 2 / 1;
+  width: 100%;
+
   border-top-left-radius: inherit;
   border-top-right-radius: inherit;
 `
@@ -111,20 +118,23 @@ const SwatchWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 0.5rem;
-  padding: 0.5rem;
+
   margin-top: 0.5rem;
+  padding: 0.5rem;
 `
 
 const Swatch = styled(FillButton)`
-  width: 100%;
   aspect-ratio: 1/1;
+  width: 100%;
   padding: 0;
-  transition-property: transform;
-  transition-duration: ${({ theme }) => theme.duration[150]};
+
   transition-timing-function: ${({ theme }) => theme.easing.easeIn};
+  transition-duration: ${({ theme }) => theme.duration[150]};
+  transition-property: transform;
 
   &.active {
-    outline: ${({ theme }) => `solid ${theme.spacing[2]} ${theme.color.yellow}`};
+    outline: ${({ theme }) =>
+      `solid ${theme.spacing[2]} ${theme.color.yellow}`};
     outline-offset: ${({ theme }) => theme.spacing[1]};
   }
 
@@ -134,5 +144,5 @@ const Swatch = styled(FillButton)`
 `
 
 const StyledInput = styled(Input)`
-  margin: 0 .5rem;
+  margin: 0 0.5rem;
 `

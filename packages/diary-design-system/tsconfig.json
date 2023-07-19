@@ -2,11 +2,7 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Design System",
   "extends": "tsconfig-diary/react-library.json",
-  "include": [
-    "src/**/*",
-    "node_modules/**/*.d.ts",
-    "panda.config.ts"
-  ],
+  "include": ["src/**/*", "node_modules/**/*.d.ts", "panda.config.ts"],
   "exclude": ["dist", "node_modules", "!node_modules/**/*.d.ts"],
   "compilerOptions": {
     "baseUrl": ".",

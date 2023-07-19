@@ -4,21 +4,28 @@ import styled from 'styled-components'
 
 const ScrollAreaRoot = styled(ScrollAreaPrimitive.Root)`
   --scrollbar-size: 1rem;
+
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 `
 
 const ScrollAreaViewport = styled(ScrollAreaPrimitive.Viewport)`
   width: 100%;
   height: 100%;
   border-radius: inherit;
+
+  & > div,
+  & > div > div {
+    width: 100%;
+    height: 100%;
+  }
 `
 
 const ScrollAreaScrollbar = styled(ScrollAreaPrimitive.Scrollbar)`
-  display: flex;
-  user-select: none;
   touch-action: none;
+  user-select: none;
+  display: flex;
   padding: ${({ theme }) => theme.spacing[4]};
 
   &[data-orientation='vertical'] {
@@ -32,25 +39,27 @@ const ScrollAreaScrollbar = styled(ScrollAreaPrimitive.Scrollbar)`
 `
 
 const ScrollAreaThumb = styled(ScrollAreaPrimitive.Thumb)`
+  position: relative;
   flex: 1;
   background: ${({ theme }) => theme.color.grey};
   border-radius: ${({ theme }) => theme.radii.sm};
-  position: relative;
-
-  &:hover {
-    background: ${({ theme }) => theme.color.silver};
-  }
 
   &::before {
     content: '';
+
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+
     width: 100%;
-    height: 100%;
     min-width: 2.75rem;
+    height: 100%;
     min-height: 2.75rem;
+  }
+
+  &:hover {
+    background: ${({ theme }) => theme.color.silver};
   }
 `
 

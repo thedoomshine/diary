@@ -235,10 +235,10 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     &:focus-visible {
+      text-decoration: underline;
       outline: ${({ theme }) =>
         `dotted ${theme.spacing[2]} ${theme.color.yellow}`};
       outline-offset: ${({ theme }) => theme.spacing[2]};
-      text-decoration: underline;
     }
   }
 

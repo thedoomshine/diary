@@ -8,8 +8,9 @@ import { PrimaryNav } from './_components/primary-nav'
 const StyledLayout = styled.div`
   display: grid;
   grid-template-columns: 0 max-content auto 0;
-  height: 100dvh;
   width: 100%;
+  height: 100dvh;
+
   @media (min-width: ${({ theme }) => theme.breakpoints.xl}) {
     grid-template-columns: 0 14rem auto 0;
   }
@@ -20,6 +21,7 @@ const StyledMain = styled.main`
   grid-column: 3;
   flex: 1 1 auto;
   flex-direction: column;
+
   height: 100dvh;
 
   border: ${({ theme }) => `solid ${theme.spacing[1]} ${theme.color.grey}`};

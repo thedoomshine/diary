@@ -25,6 +25,7 @@ import {
   roundToNearestMinutes,
 } from 'date-fns'
 import { timezones as DEFAULT_TIMEZONES } from 'diary-utils'
+import { atom, useAtom } from 'jotai'
 import { useCallback, useMemo, useState } from 'react'
 import type { FocusEvent } from 'react'
 import styled from 'styled-components'
@@ -33,62 +34,6 @@ import { TimeZonePopover } from './timezone-popover'
 import { lighten } from 'polished'
 
 // import placeholderContent from './placeholder-content.json'
-
-const StyledForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  padding: 0.5rem;
-  height: 100%;
-  flex: 1 1 auto;
-`
-
-const Fieldset = styled.fieldset`
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-  justify-content: flex-start;
-
-  margin-bottom: 1rem;
-`
-
-const DateTimeWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-`
-
-const DatesWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-`
-
-const StyledFormFooter = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 1rem;
-`
-
-const StyledSubmitButton = styled(FillButton)`
-  background-color: ${({ theme }) => theme.color.yellow};
-  color: ${({ theme }) => theme.color.black};
-  border-color: ${({ theme }) => theme.color.yellow};
-
-  &:hover {
-    background-color: ${({ theme }) => lighten(0.125, theme.color.yellow)};
-  }
-`
-
-const getDistance = (start: Date, finish: Date) => {
-  const diff = differenceInMinutes(finish, start)
-  if (diff < 60) {
-    return `${diff} mins`
-  }
-  if (diff === 60) {
-    return `1 hr`
-  }
-  return `${Number((diff / 60).toFixed(1))} hrs`
-}
 
 // const defaultContent = placeholderContent
 
@@ -103,10 +48,12 @@ const defaultFormData = {
   title: '',
 }
 
+const contentAtom = atom<JSONContent | undefined>(undefined)
+
 export const CreateEventForm = () => {
   const formData = { ...defaultFormData }
   const [eventStartTime, setEventStartTime] = useState(formData.startDate!)
-  const [content, setContentSource] = useState<JSONContent | undefined>()
+  const [content, setContentSource] = useAtom(contentAtom)
   const [allDayEvent, setAllDayEvent] = useState(formData.allDay!)
   const [duration, setDuration] = useState(formData.duration!)
   const [popoverOpen, setPopoverOpen] = useState(false)
@@ -286,8 +233,67 @@ export const CreateEventForm = () => {
       />
 
       <StyledFormFooter>
+        <FillButton type='button'>save draft</FillButton>
         <StyledSubmitButton type='submit'>create event</StyledSubmitButton>
       </StyledFormFooter>
     </StyledForm>
   )
+}
+
+const StyledForm = styled.form`
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+
+  height: 100%;
+  padding: 0.5rem;
+`
+
+const Fieldset = styled.fieldset`
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: flex-start;
+
+  margin-bottom: 1rem;
+`
+
+const DateTimeWrapper = styled.div`
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+`
+
+const DatesWrapper = styled.div`
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+`
+
+const StyledFormFooter = styled.div`
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  margin-top: 1rem;
+`
+
+const StyledSubmitButton = styled(FillButton)`
+  color: ${({ theme }) => theme.color.black};
+  background-color: ${({ theme }) => theme.color.yellow};
+  border-color: ${({ theme }) => theme.color.yellow};
+
+  &:hover {
+    background-color: ${({ theme }) => lighten(0.125, theme.color.yellow)};
+  }
+`
+
+const getDistance = (start: Date, finish: Date) => {
+  const diff = differenceInMinutes(finish, start)
+  if (diff < 60) {
+    return `${diff} mins`
+  }
+  if (diff === 60) {
+    return `1 hr`
+  }
+  return `${Number((diff / 60).toFixed(1))} hrs`
 }

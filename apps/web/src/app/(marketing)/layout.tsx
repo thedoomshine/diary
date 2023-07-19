@@ -8,9 +8,9 @@ const StyledLayout = styled.div`
   flex: 1 1 auto;
   flex-direction: column;
 
+  width: 100%;
   max-width: ${({ theme }) => theme.size.md};
   min-height: 100%;
-  width: 100%;
   margin: 0 auto;
 `
 

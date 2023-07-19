@@ -16,13 +16,10 @@ type BreakpointsObj = {
   [key in SizePrefixKey]: string
 }
 
-export const breakpoints = Object
-  .entries(size)
-  .reduce(
-    (acc, [key, value]: [string, string]) => (
-      {
-        ...acc,
-        [key as SizePrefixKey]: `(min-width: ${remToPx(value)})`
-      }),
+export const breakpoints = Object.entries(size).reduce(
+  (acc, [key, value]: [string, string]) => ({
+    ...acc,
+    [key as SizePrefixKey]: `(min-width: ${remToPx(value)})`,
+  }),
   {} as BreakpointsObj
 )

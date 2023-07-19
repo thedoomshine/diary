@@ -15,9 +15,8 @@ const InputContainer = styled.div`
 
 const StyledLabelWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: flex-end;
-
+  justify-content: space-between;
   margin: 0 0.25rem 0.25rem;
 `
 
@@ -32,11 +31,10 @@ const StyledLabel = styled.label`
 const InputWrapper = styled.div`
   position: relative;
 
-  display: flex;
-  align-items: center;
-  flex: 1 1 auto;
-
   overflow: hidden;
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
 
   width: 100%;
 
@@ -63,10 +61,13 @@ const InputWrapper = styled.div`
 
 const StyledInput = styled.input`
   flex: 1 1 auto;
+
   padding: 0.5rem 0.75rem;
+
   font-size: inherit;
-  color-scheme: dark;
   line-height: ${({ theme }) => theme.lineHeight.element};
+
+  color-scheme: dark;
 
   &::placeholder {
     font-style: italic;
@@ -76,15 +77,14 @@ const StyledInput = styled.input`
 `
 
 const PasswordToggleButton = styled(IconButton)`
+  aspect-ratio: 1 / 1;
   padding: 0 0.75em;
 
-  aspect-ratio: 1 / 1;
+  color: ${({ theme }) => theme.color.white};
 
   border: ${({ theme }) => `solid ${theme.spacing[1]} transparent`};
-  border-radius: 0;
   border-left-color: ${({ theme }) => theme.color.grey};
-
-  color: ${({ theme }) => theme.color.white};
+  border-radius: 0;
 
   &.masked {
     color: ${({ theme }) => theme.color.grey};
@@ -93,12 +93,12 @@ const PasswordToggleButton = styled(IconButton)`
 
 const ErrorMessage = styled.div`
   display: flex;
+  gap: 0.5em;
   align-items: flex-start;
 
   min-height: 0;
   margin-top: 0.5em;
   margin-left: 0.5em;
-  gap: 0.5em;
 
   font-size: ${({ theme }) => theme.fontSize.sm};
   color: ${({ theme }) => theme.color.red};
@@ -112,15 +112,15 @@ const ErrorIcon = styled(Icon)`
 `
 
 const StyledIconWrapper = styled.div`
+  pointer-events: none;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
+
   aspect-ratio: 1 / 1;
-
+  height: 100%;
   padding: 0.5rem 0.75rem;
-
-  pointer-events: none;
 
   &.prefix {
     border-right: ${({ theme }) =>

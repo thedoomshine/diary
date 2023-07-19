@@ -31,8 +31,9 @@ const ProfileHeaderImage = styled.div`
 
 const UserProfileHead = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: flex-end;
+  justify-content: space-between;
+
   height: 4.35rem;
   padding: ${({ theme }) => `${theme.spacing[8]} ${theme.spacing[16]}`};
 `

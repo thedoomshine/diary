@@ -10,7 +10,9 @@ import styled from 'styled-components'
 const StyledNavLink = styled(Link)`
   ${ButtonStyles};
   position: relative;
+
   margin-top: 0.5em;
+
   color: ${({ theme }) => theme.color.white};
   text-decoration: none;
 

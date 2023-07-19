@@ -39,14 +39,15 @@ const StyledPopoverContent = styled(PopoverPrimitive.Content)`
 `
 
 const PopoverArrow = styled(PopoverPrimitive.Arrow)`
-  fill: ${({ theme }) => `var(
-    --popover-background-color, ${theme.color.charcoal})`};
   position: relative;
   top: -${({ theme }) => theme.spacing[2]};
+  fill: ${({ theme }) => `var(
+    --popover-background-color, ${theme.color.charcoal})`};
 `
 const StyledPopoverClose = styled(PopoverPrimitive.Close)`
   ${ButtonStyles};
   padding: 0.5rem;
+
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;

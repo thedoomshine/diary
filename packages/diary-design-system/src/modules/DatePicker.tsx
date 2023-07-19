@@ -158,9 +158,10 @@ const Wrapper = styled.div`
   .react-datepicker__day {
     display: flex;
     gap: 0.25rem;
-    aspect-ratio: 1 / 1;
     align-items: center;
     justify-content: center;
+
+    aspect-ratio: 1 / 1;
   }
 
   .react-datepicker__day-name {

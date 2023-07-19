@@ -9,6 +9,7 @@ import type { ReactNode } from 'react'
 import styled, { useTheme } from 'styled-components'
 
 import { ButtonStyles, FillButtonStyles, Icon } from '~/elements'
+
 interface SelectProps extends SelectPrimitiveProps {
   align?: 'start' | 'center' | 'end'
   alignOffset?: number
@@ -145,15 +146,16 @@ const SelectScrollDown = styled(SelectPrimitive.ScrollDownButton)`
 `
 
 const SelectContent = styled(SelectPrimitive.Content)`
+  --radix-select-content-available-height: 16rem;
+
   overflow: hidden;
 
-  background-color: ${({ theme }) => theme.color.black};
+  max-height: 16rem;
 
+  background-color: ${({ theme }) => theme.color.black};
   border: ${({ theme }) => `solid ${theme.spacing[1]} ${theme.color.grey}`};
   border-radius: ${({ theme }) => theme.radii.md};
   box-shadow: ${({ theme }) => theme.shadow.normal};
-  --radix-select-content-available-height: 16rem;
-  max-height: 16rem;
 `
 
 const StyledSelectItem = styled(SelectPrimitive.Item)`

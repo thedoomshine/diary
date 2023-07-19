@@ -133,7 +133,6 @@ const StyledCalendarCell = styled.div`
   background-color: ${({ theme }) => rgba(theme.color.charcoal, 0.25)};
   backdrop-filter: blur(0.125rem);
   box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 50%);
-
   border-radius: ${({ theme }) => theme.radii.md};
 
   ${grainyGradientBackground()}

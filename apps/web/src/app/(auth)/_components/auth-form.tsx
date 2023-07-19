@@ -23,8 +23,8 @@ const StyledMain = styled.main`
   flex-direction: column;
   align-items: center;
 
-  max-width: 26rem;
   width: 100%;
+  max-width: 26rem;
   padding: ${({ theme }) => `${theme.spacing[64]} ${theme.spacing[8]}`};
 `
 
@@ -46,10 +46,13 @@ const StyledWrapper = styled.div`
 
 const DesktopLogo = styled.h1`
   display: none;
+
   margin-bottom: 1rem;
-  color: ${({ theme }) => theme.color.white};
+
   font-size: ${({ theme }) => theme.fontSize.h3};
+  color: ${({ theme }) => theme.color.white};
   text-decoration: none;
+
   @media ${({ theme }) => theme.breakpoints.md} {
     display: block;
   }
@@ -57,9 +60,7 @@ const DesktopLogo = styled.h1`
 
 const MobileLogo = styled(Icon)`
   display: block;
-
   margin-bottom: 1rem;
-
   font-size: ${({ theme }) => theme.fontSize.h2};
 
   @media ${({ theme }) => theme.breakpoints.md} {
@@ -74,9 +75,9 @@ const StyledP = styled.p`
 
 const StyledRedirectLink = styled.div`
   display: flex;
+  gap: ${({ theme }) => theme.spacing[8]};
   align-items: center;
   justify-content: center;
-  gap: ${({ theme }) => theme.spacing[8]};
 
   width: 100%;
   margin-top: ${({ theme }) => theme.spacing[16]};
