@@ -72,7 +72,7 @@ const FontSizePicker = ({ editor }: { editor?: Editor }) => {
   ).toString()
 
   return (
-    <Select
+    <StyledSelect
       placeholder='font size'
       onValueChange={(value: string) => {
         handleChange(parseInt(value) as FontSize)
@@ -91,7 +91,7 @@ const FontSizePicker = ({ editor }: { editor?: Editor }) => {
           {title}
         </SelectItem>
       ))}
-    </Select>
+    </StyledSelect>
   )
 }
 
@@ -104,9 +104,9 @@ const FontFamilyPicker = ({ editor }: { editor?: Editor }) => {
     editor?.getAttributes('textStyle').fontFamily || WEB_FONTS['Default']
 
   return (
-    <Select
+    <StyledSelect
       placeholder='font family'
-      onValueChange={(value) => handleChange(value)}
+      onValueChange={(value: string) => handleChange(value)}
       value={currentFontFamily}
     >
       {Object.entries(WEB_FONTS).map(([title, font]) => (
@@ -118,7 +118,7 @@ const FontFamilyPicker = ({ editor }: { editor?: Editor }) => {
           {title}
         </SelectItem>
       ))}
-    </Select>
+    </StyledSelect>
   )
 }
 
@@ -419,7 +419,8 @@ const ToolbarItem = css`
   border-radius: 0;
 
   &.active {
-    background-color: ${({ theme }) => rgba(theme.color.yellow, 0.125)};
+    background-color: ${({ theme }) => rgba(theme.color.yellow, 0.5)};
+    box-shadow: inset 0 0 6px 1px ${({ theme }) => theme.color.black};
   }
 
   &:first-of-type {
@@ -448,4 +449,14 @@ const ToolbarSeparator = styled(ToolbarPrimitive.Separator)`
   height: 100%;
   margin: 0 ${({ theme }) => theme.spacing[8]};
   background-color: ${({ theme }) => theme.color.grey};
+`
+
+const StyledSelect = styled(Select)`
+  max-width: 8rem;
+
+  span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 `

@@ -29,6 +29,7 @@ interface SelectProps extends SelectPrimitiveProps {
   showScrollButtons?: boolean
   side?: 'top' | 'right' | 'bottom' | 'left'
   sideOffset?: number
+  title?:string
   value?: string
 }
 
@@ -45,6 +46,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
       showScrollButtons = false,
       side = 'top',
       sideOffset = 4,
+      title,
       value,
       ...props
     },
@@ -61,6 +63,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
         <SelectTrigger
           ref={forwardedRef}
           className={className}
+          title={title}
         >
           <SelectPrimitive.Value placeholder={placeholder} />
           {!hideIcon && (
